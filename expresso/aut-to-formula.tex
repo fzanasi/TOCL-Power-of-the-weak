@@ -1,0 +1,241 @@
+% !TEX root = main-wmso.tex
+
+%The aim of this subsection is to prove the following theorem:
+%\begin{theorem}\label{t:wmsobis}
+%%Over all models, the bisimulation invariant fragment of \wmso is included in the  fragment $\contAFMC$ of the modal $\mu$-calculus.
+%$\WMSO/{\bis} \leq \contAFMC$.
+%\end{theorem}
+%
+%For this purpose, we first observe that by Theorem \ref{t:venema} and Corollary \ref{cor:invariant} it immediately follows that:
+%
+%\begin{proposition}\label{prop:invariant}
+%The class $\yvcwAut(\ofo)$ corresponds to the bisimu\-la\-tion-invariant fragment of the class of \wmso-automata.
+%\end{proposition}
+
+In this subsection we focus on the following theorem.
+
+\begin{theorem}\label{t:autofor}
+There is an effective procedure that, given an automaton $\bbA$ in
+$\yvcwAut(\ofo)$, returns an equivalent formula $\xi_{\bbA}$ of the fragment 
+$\contAFMC$ of the modal $\mu$-calculus.
+\end{theorem}
+
+%Together with Theorem \ref{t:wmsoauto}, this means that in order to prove Theorem \ref{t:wmsobis} it is enough to verify the following:
+\begin{proof}
+The argument  is a refinement of the standard proof showing that any automaton 
+$\aut$ from $\yvAut(\ofo)$ can be translated into an equivalent $\mu$-formula 
+$\xi_\aut$ (cf. e.g. \cite{Ven08}), and it is essentially a special case of the argument proving Theorem \ref{thm:wmso_autofor}.
+
+%\end{proofsketch}
+
+
+%Together with Theorem \ref{t:wmsoauto}, this means that in order to prove Theorem \ref{t:wmsobis} it is enough to verify the following:
+%
+%
+%\begin{theorem}\label{t:autofor}
+%
+%There is an effective procedure that given an automaton in $\yvcwAut(\ofo)$, returns an equivalent formula of the fragment $\contAFMC$ of the modal $\mu$-calculus.
+%\end{theorem}
+
+
+%In order to prove Theorem \ref{t:autofor}, we are going to slightly modify define another class of automata, called $\contAFMC$-automata, show that the obtained class is equivalent to the class $\yvcwAut(\ofo)$, and then follow the proof of Theorem 6.12(2) in \cite{Ven08} stating that there is an effective procedure that given a $\contAFMC$-automaton returns an equivalent formula of the modal $\mu$-calculus.
+%%
+%%First some definitions and notations. Given a set $X$, let $Latt(X)$ denote the set of fine disjunctions and finite conjunctions of elements of $X$.
+%Given a set of propositional letters $P$, we let $\pm P$ de note the set of formulas of the form $p$ or $ \lnot p$, with $p \in P$.
+%%
+%%\begin{definition}
+%%
+%Given sets $P$ and $A$, the collection $Mterm(P,A)$ of special flat modal terms over $A$ is given by all formulas which are disjunctions of formulas of the form:
+%\[  \bigwedge \Psi \land \bigvee(\bigwedge_{i \leq \ell} \Diamond a_i \land \Box( \bigvee_{j \leq n} \bigwedge_{i_j \leq k_j} \Phi_{i_j})),\]
+%%\[
+%%\varphi := p \mid \lnot p \mid \Diamond a \mid \Box a \mid \bigwedge \Phi \mid \bigvee \Phi
+%%\]
+%where $\Psi \subseteq \pm P$, $\{a_1, \dots, a_\ell\} \subseteq A$ and $\Phi \subseteq A$.
+%%\end{definition}
+%The semantics of special flat modal terms is defined as expected, as well as the corresponding notion of continuity (cf. Subsection \ref{subsec:mu}).
+%We are now ready for the new definition of continuous weak modal automata.
+%%
+%\begin{definition}[(2)]\label{def:cont2}
+%A \emph{$\contAFMC$-automa\-ton} is a tuple $\aut = \tup{A,\tmap,\pmap,\ord}$ such that
+%\begin{enumerate}[(i)]
+%\itemsep 0 pt
+%\item $A$ is a finite set of states of the automaton,
+%\item $\ord$ is a quasi-ordering on $A$ (i.e., reflexive and transitive),
+%\item $\tmap: A \to MTerm(\pm P, A)$ %{\sf d}{\owmsoe}^+(A,A_0, A_1)
+%is the transition map s.t. $\tmap(a) \in MTerm(\pm P, \{b\in A \mid a \ord b\})$,
+%\item $\pmap: A \to \mathbb{N}$ is the parity map, satisfying the following two conditions:
+%\begin{description}
+%\item[weakness:]  if  $a \ord b$ then $\pmap(a) \leq \pmap(b)$,
+%%\item[continuity:] if $a \in A_0$ then  $\pmap(a)$ is even, while if $a \in A_1$ then  $\pmap(a)$ is odd.
+%\item[continuity:] let $a,b$ be states belonging to the same $\ord$-cycle. If ${\pmap(b)}$ is odd then $\tmap(b)$ is continuous in $a$. In case $\pmap(b)$ is even, then $\tmap(b)$ is co-continuous in $a$.
+%\end{description}
+%\end{enumerate}
+%The run is defined as expected.
+%\end{definition}
+%%
+%
+%Now, it is not difficult to verify that:
+%\begin{proposition}
+%Definitions~\ref{def:cont1} and~\ref{def:cont2} are equivalent. That is, for every automaton from Definition~\ref{def:cont1}, one can effectively construct an equivalent automaton from Definition~\ref{def:cont2}, and vice versa.
+%\end{proposition}
+%\begin{proof}
+%Firstly, by Lemma \ref{} and the correspondence between modal logic and first-order logic.
+%\end{proof}
+%
+%
+%In what follows, a continuos weak modal automaton will be an automaton from Definition~\ref{def:cont2}.
+%%
+%%The \emph{index} of a weak parity automaton is the maximal number associated to a node in a $\ord$-cycle. If there is no such cycle, we state the index is $-1$.
+
+
+From now on, we always assume that a formula $\tmap(a,c)$ is in normal form. 
+Following~\cite{Ven08}, we introduce another type of automata, called $(\prop,X)$-automata, which operate on $\p{(\prop \cup X)}$-trees.
+They differ from automata whose one-step language is defined over predicates in $(A \cup X)$ in that\footnote{Parity automata based on $\ofo$ are thus simply $(\prop,\emptyset)$-automata.}
+\begin{itemize}
+\item Monadic predicate letters from $X$ can occur in the scope of a %existential
+quantifier and only there, meaning that $(\prop,X)$-automata have transition $\tmap(a,c) \in \ofo^+(A\cup X)$
+%
+\item The transition function is uniquely determined by the restriction of the coloring to $\prop$, that is, for every $a \in A$, and $c_1, c_2 \in C$, if $c_1 \cap \prop = c_2 \cap \prop$ then $\tmap(a, c_1)= \tmap(a, c_2)$.
+\end{itemize}
+We also assume that
+for every $x \in X$ there is a unique $a \in A$ and an unique $c \in C$ such that $x$ occurs in $\tmap(a,c)$.
+The notion of acceptance is defined as expected, the only difference with being that during the acceptance game \'Eloise has to provide a valuation only for predicates in $A$ making formula given by the transition function true. %\fcnote{Maybe a bit more on the notion of acceptance?}
+It is then enough to prove the following claim.
+\begin{claimfirst}\label{c:1}
+There is an effective procedure that, given a $(\prop,X)$-automaton $\aut$ gives an equivalent  formula $\xi_{\aut} \in \contAFMC$ in which all occurrences of variables in $X$ are positive.
+\end{claimfirst}
+\begin{pfclaim} %\ref{c:1}
+%\fcwarning{where does the proof of claim start and end? use environment pfclaim}
+Without loss of generality, we can assume that:
+\begin{itemize}
+\itemsep 0 pt
+\item Every (maximal) strongly connected component (SCC) in the graph of $\ord$ has an unique entrance point,
+\item The directed acyclic graph (DAG) of the SCCs of $\ord$ is a tree, and more specifically,
+\item %Given a state $a \in A$, let $Reach(a)$ be the set of all states $b \in A$ that are not in the same SCC as $a$ but are such that $b$ occurs in $\tmap(a,c)$, for some  $c \in C$. Then, 
+$\{c \in A \mid a \leadsto c, c \prec a\}  \cap \{c \in A \mid b \leadsto c, c \prec b\}  = \emptyset$ whenever $a,b$ are in the same SCC, with $a\neq b$.
+\end{itemize}
+
+Given a $(\prop,X)$-automaton $\aut$, we are now going to define a function $\delta_\aut: A \to \ML (A \cup X \cup \prop)$
+%\fcwarning{one-step ML undefined} 
+that assigns to each state $a$ of $\aut$ a modal formula $\delta_\aut(a)$ over  $A \cup X \cup \prop$ representing all possible transitions from $a$ in the modal language with the property that if $b \in A$ is in the same $\ord$-cycle of $a$ and $\pmap(a)=1$, then  $\delta_\aut(a)$ is continuous in $b$. Dually for $\pmap(a)=0$.
+
+Let $c \in C$, and assume $\Delta(a,c)$ is in positive basic form $\bigvee \posdbnfofo{\Sigma}$. We define a first translation $TR_1$ taking as argument $\Delta(a,c)$ and giving as result a formula from the (guarded fragment of) first-order logic over $A \cup X \cup \prop$ as follows. %Assume $c \cap P= \{q_{c_1}, \dots, q_{c_\ell}\}$.
+With every disjunct
+$$
+\posdbnfofo{\Sigma} = \bigwedge_{S\in\Sigma} \exists x. \tau^+_{S}(x) \land \forall z.( \bigvee_{S\in \Sigma} \tau^+_S(z)),
+$$
+%
+%for some set of types $\Pi \subseteq \wp A$ and $T_i \subseteq A$,
+%\fcerror{The basic form for FO was wrong before}
+we associate the formula
+
+$$
+TR_1(\posdbnfofo{\Sigma}) := \bigwedge_{S\in\Sigma} \exists y. (R(x,y) \land \tau^+_{S}(y)) \land \forall z.( R(x,z) \to \bigvee_{S\in \Sigma} \tau^+_S(z)).
+$$
+\fcwarning{Why do we need to go through this?}The formula $TR_1(\posdbnfofo{\Sigma})$ is bisimulation invariant, and it is equivalent to the modal formula
+
+$$
+TR_2(\posdbnfofo{\Sigma}) := \bigwedge_{S\in\Sigma}  \Diamond(\bigwedge S) \land \Box \bigvee_{S\in \Sigma} (\bigwedge S).
+$$
+\fcwarning{Maybe better to define this directly}
+Let $TR_3(\Delta(a,c))= \bigwedge (c \cap \prop) \land \bigwedge_{p \in \prop \setminus c} \lnot p \land \bigvee TR_2(\posdbnfofo{\Sigma})$.
+ The modal formula $\delta_\aut(a)$ is then defined as
+
+ \[
+ \bigvee_{c \in C} TR_3(\Delta(a,c)).
+ \]
+By construction we have, for every $\model$,
+%
+%\begin{description}
+%\item[(*)] 
+    \begin{eqnarray*}
+    \model[x\mapsto s_I] \models \bigvee_{c \in C} \big (\tau_{(c \cap \prop)}(y) \land \bigvee TR_1(\posdbnfofo{\Sigma})\big) & \text{iff} &\model \mmodels \delta_\aut(a).
+    \end{eqnarray*}
+%\end{description}
+%\fcerror{$\model,s$ has no meaning in our setting}
+%
+A modal automaton over $\prop$ is an automaton $ \tup{A, \delta, \pmap, a_I}$ such that $\delta : A \to \ML^+ (A)$, where $\ML^+ (A)$ is the set of all modal formulas over propositions $A \cup \prop$ such that elements from $A$ appear only positively.
+The acceptance game associated with such an automaton and a tree $\model$ is determined by the (symmetric) acceptance game defined according to the rules of Table~\ref{symmetric_modal_game}.
+This means that we can equivalently see the automaton $\aut$ as a modal automaton $\tup{A, \delta_\aut, \pmap, a_I}$ whose transition function satisfies the weakness and continuity conditions. Thus, from now on we see $\aut$ as the equivalent modal automaton we have just described.%\fcwarning{Define $n_A$}
+
+\begin{table}[h]
+  \centering
+\begin{tabular}{|l|c|l|c|}
+ \hline
+  % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+  Position & Player & Admissible moves & Parity\\
+   \hline
+  $(a,s) \in A \times S$ & $\exists$ & $\{(\delta_\aut(a),s)\}$ & $\pmap(a)$\\
+  $(\psi_1 \vee \psi_2,s)$ & $\exists$ & $\{(\psi_1,s),(\psi_2,s) \}$ & $-$ \\
+  $(\psi_1 \wedge \psi_2,s)$ & $\forall$ & $\{(\psi_1,s),(\psi_2,s) \}$ & $-$ \\
+  $(\Diamond\varphi,s)$ & $\exists$ & $\{(\varphi,t)\ |\ t \in R[s] \}$ & $-$ \\
+  $(\Box\varphi,s)$ & $\forall$ & $\{(\varphi,t)\ |\ t \in R[s] \}$ & $-$ \\
+  % $(\bot,s)$ & $\exists$ & $\emptyset$ & $n_A$ \\
+  % $(\top,s)$ & $\forall$ & $\emptyset$ & $n_A$ \\
+  $(\lnot p,s) \in \prop \times S$ and $p \notin \tscolors(s)$ & $\forall$ & $\emptyset$ & $-$\\
+  $(\lnot p,s) \in \prop \times S$ and $p \in \tscolors(s)$ & $\exists$ & $\emptyset$ & $-$\\
+  $(p,s) \in \prop \times S$ and $p \in \tscolors(s)$ & $\forall$ & $\emptyset$ & $-$\\
+  $(p,s) \in \prop \times S$ and $p \notin \tscolors(s)$ & $\exists$ & $\emptyset$ & $-$\\
+
+  \hline
+\end{tabular}
+ \caption{(Symmetric) acceptance game for modal automata}
+ \label{symmetric_modal_game}
+\end{table}
+
+
+
+
+
+For the construction of $\xi_\aut$, we proceed by induction on the tree height of the DAG $t$ of SCC. If the height is 1, that is the DAG is a single point graph, we reason as follows.
+ We have two cases to consider: either the SCC is trivial (i.e. it consists of a single non looping node), or not.
+In the first case, $A=\{a_I\}$ and $\aut$ is equivalent to $\xi_\aut:=\delta_\aut(a_I)$.
+
+For the second case, let us assume that $\pmap(a_I)=1$, the case when it is $0$ being, mutatis mutandis, the same.
+Let $A=\{a_0, \dots, a_\ell\}$, and $a_I=a_\ell$.
+Since $\aut$ is a weak modal automaton satisfying the continuity condition, given $a,b \in A$, if $b$ occurs in $\delta_\aut(a)$, then $b$ is only in the scope of $\Diamond$ operator. 
+We can now see the automaton $\bbA$
+as a system of modal equations, and by applying the standard inductive procedure \emph{solves} this system of equations and
+construct the least fixpoint formula $\xi_\aut$ equivalent to $\aut$, 
+
+%Now, since every variable bounded by a $\mu$-operator  in the obtained formula  is in the scope only of $\Diamond$ operators too. 
+%The refinement that our setting requires is that if $\bbA$ is an automaton 
+%in $\yvAut(\ofo)$, then the solution of the associated system of equations 
+%can be obtained as a formula in the fragment $\yvF \sse \MC$.
+%
+Here the key observation is that the weakness and continuity conditions on
+strongly connected components of the automaton ensure that when we execute
+a single step in solving the system of equations, we 
+may work within the 
+(syntactically) continuous fragment of the modal $\mu$-calculus.
+From this, we can deduce that $\xi_\aut \in \contAFMC$. Clearly the procedure preserves the polarity of each $x \in X$, meaning that all variables in $X$ are positive in $\xi_\aut$.
+
+
+For the induction step, assume the successors of the root of $t$ are $(n_1, \dots, n_\ell)$. For each $i \in \{1,\dots,\ell\}$, let $a_i$ be the entrance point of the SCC of $n_i$, and let $\aut_{i}$ be the automaton $\aut$ but having as an initial state $a_i$. If we do not consider the states that are not reachable by $a_i$, the DAG of the SCC of $\aut_{i}$ is $t.{n_i}$ (the subtree of $t$ starting at $n_i$).
+Let $Y=\{a_1, \dots, a_\ell\}$, and $M$ be the set of states of $\aut$ that belong to the root of $t$. We assume $X \cap Y = \emptyset$. The structure
+\[
+\aut_M := \tup{M, \delta_\aut|_{M}, \pmap|_{M}, a_I}
+\] is a $(\prop, X \cup Y)$-automaton.
+
+The inductive hypothesis applies to automata $\aut_M, \aut_{1}, \dots, \aut_{\ell}$. Thus we obtain fixpoint formulas $\xi_M, \xi_1, \dots, \xi_\ell$, the former taking free variables in $\prop \cup X \cup Y$, all the remaining in $\prop \cup X$, equivalent to $\aut_M, \aut_1, \dots, \aut_\ell$ respectively.
+Notice that:
+\begin{itemize}
+\item by induction hypothesis, $\xi_M, \xi_1, \dots, \xi_\ell \in \contAFMC$, every variable $x \in X \cup Y$ is positive in each of those formulas (if $x$ occurs in it),
+\item by construction, if $x$ is free in $\xi_i$, then $x$ is not bounded in $\xi_{M}$.
+\end{itemize}
+ We can therefore deduce that
+ $\xi_\aut= \xi_{M}[a_1\mapsto\xi_{1}, \dots, a_\ell\mapsto\xi_{\ell}] \in \contAFMC$, and that each variable from $X$ occurs positively in $\xi_\aut$.
+
+ We verify that $\model \mmodels \xi_{M}[a_1\mapsto\xi_{1}, \dots, a_\ell\mapsto\xi_{\ell}]$ iff $\model \in \trees(\aut)$, for every model $\model$.
+ %\fcwarning{I think the $(\model,s)$ thould be $\model$ or rather a variant of $\model$ with a changed point}
+But this follows by the following two facts:
+\begin{enumerate}
+\item $\model\mmodels \xi_{M}[a_1\mapsto\xi_{1}, \dots, a_\ell\mapsto\xi_{\ell}]$ iff $\model[a_1\mapsto \ext{\xi_1}^{\model}, \dots, a_\ell\mapsto \ext{\xi_\ell}^{\model}  ] \mmodels \xi_M$,
+\item $\model \in \trees(\aut)$  iff $\model[a_1\mapsto \ext{\aut_1}^{\model}, \dots, a_\ell\mapsto \ext{\aut_\ell}^{\model}  ] \in \trees(\aut_M)$
+\end{enumerate}
+where %$\ext{\xi_i\ext{_{\model}=\{ s \in \model \mid s \in \ext{\xi_i\ext{^\model \}$, and 
+$\ext{\aut_i}^{\model} := \{ s \in \model \mid \model.s \in \trees(\aut_i) \}$. 
+\end{pfclaim}
+%Since $\aut$ was a weak automaton, we can thus use Lemma 2.4(1) of AlbeFac JSL and conclude that $\xi_{M}[a_1\mapsto\xi_{1}, \dots, a_\ell\mapsto\xi_{\ell}]$ is equivalent to $\aut$.
+This finishes the proof of Theorem. 
+\end{proof}

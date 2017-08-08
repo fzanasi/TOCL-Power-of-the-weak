@@ -1,0 +1,86 @@
+
+
+Consider a one-step logic $\llang_1(A)$ and formula $\varphi \in \llang_1(A)$.
+%
+We say that $\varphi$ is \emph{co-continuous in $a\in A$} if $\varphi$ is monotone in $a$ and,
+for all $(D,\val)$ and $\ass:\fovar\to D$,
+$$
+\text{if } (D,\val),\ass \not\models \varphi \text{ then } \exists U \subseteq_\omega \val(a) \text{ such that } (D, \val[a \mapsto D\setminus U]),\ass \not\models \varphi.
+$$
+
+Observe that, already with the abstract definition of Boolean dual given in Definition~\ref{d:bdual1} we can prove the expected relationship between the notions of continuity and co-continuity.
+
+\begin{proposition}\label{prop:contdualcocont}
+	Let $\varphi \in \llang_1(A)$, $\varphi$ is continuous in $a\in A$ iff $\varphi^\delta$ is co-continuous in $a$.
+\end{proposition}
+% \fbox{$\Leftarrow$} 
+% (D,V) \not\models phi 
+% iff [dual, cf.Def 5 in LICS]
+% (D,V^c) \models \phi^dual
+% iff [cont in a]
+% (D, V^c[a->F]) \models phi^dual    [F is finite]
+% iff [dual]
+% (D, V[a->D\F]) \not\models phi
+\begin{proof}
+Let $\varphi$ be continuous in $a$, we prove that $\varphi^\delta$ is co-continuous in $a$:
+\begin{align*}
+(D,\val) \not\models \varphi^\delta
+& \text{ iff } (D,\val^c) \models \varphi & \tag{Definition~\ref{d:bdual1}} \\
+& \text{ iff } \exists U \subseteq_\omega \val^c(a) \text{ such that } (D,\val^c[a\mapsto U]) \models \varphi & \tag{$\varphi$ continuous} \\
+& \text{ iff } \exists U' \subseteq_\omega \val(a) \text{ such that } (D,\val[a\mapsto D\setminus U']) \not\models \varphi & \tag{Definition of $\val^c$}
+\end{align*}
+%
+The proof of the other direction is analogous.
+\end{proof}
+
+To define a syntactic notion of co-continuity we first give a concrete definition of the dualization operator of Definition~\ref{d:bdual1} and then show that the one-step language $\olque$ is closed under Boolean duals.
+
+\begin{definition}\label{DEF_dual} 
+Let $\varphi \in {\olque}(A)$. 
+The \emph{dual} $\varphi^{\delta} \in {\olque}(A)$ of $\varphi$ is defined 
+as follows.
+\begin{align*}
+% \nonumber to remove numbering (before each equation)
+ (a(x))^{\delta} & :=  a(x) 
+\\ (\top)^{\delta} & :=  \bot 
+  & (\bot)^{\delta} & :=  \top 
+\\  (x \approx y)^{\delta} & :=  x \not\approx y 
+  & (x \not\approx y)^{\delta}& :=  x \approx y 
+\\ (\varphi \wedge \psi)^{\delta} &:=  (\varphi)^{\delta} \vee (\psi)^{\delta} 
+  &(\varphi \vee \psi)^{\delta}& :=  (\varphi)^{\delta} \wedge (\psi)^{\delta}
+\\ (\exists x.\psi)^{\delta} &:=  \forall x.(\psi)^{\delta} 
+  &(\forall x.\psi)^{\delta} &:=  \exists x.(\psi)^{\delta} 
+\\ (\exists^{\infty} x.\psi)^{\delta} &:= \forall^{\infty} x.(\psi)^{\delta} 
+  &(\forall^{\infty} x.\psi)^{\delta} &:=  \exists^{\infty} x.(\psi)^{\delta}
+\end{align*} %\hfill $\lhd$
+\end{definition}
+
+\begin{remark}
+	Observe that if $\varphi \in {\ofo}(A)$ then $\varphi^{\delta} \in {\ofo}(A)$ and that the operator preserves positivity of the predicates. That is, if $\varphi \in {\olque}^+(A)$ then $\varphi^{\delta} \in {\olque}^+(A)$ and the same occurs with $\ofo^+(A)$.
+\end{remark}
+
+The proof of the following Proposition is a routine check.
+
+\begin{proposition}\label{prop:duals}
+The sentences $\phi$ and $\phi^{\delta}$ are Boolean duals, for every $\phi 
+\in \olque(A)$.
+\end{proposition}
+
+We are now ready to give the syntactic definition of a co-continuous fragment for the one-step logics into consideration.
+
+\begin{definition}\label{def:cocontfrag}
+	Let $A$ be a set of names. The syntactic fragments of $\olque(A)$ and $\ofo(A)$ which are \emph{co-continuous} in $a\in A$ are given by
+	%
+	\begin{align*}
+		\cocont{\olque}{a}(A) &:= \{\varphi \mid \varphi^\delta \in \cont{\olque}{a}(A)\} &
+		\cocont{\ofo}{a}(A) &:= \{\varphi \mid \varphi^\delta \in \cont{\ofo}{a}(A)\} .
+	\end{align*}
+	%
+\end{definition}
+
+\begin{proposition}
+	A formula $\varphi \in \olque(A)$ is co-continuous in $a\in A$ iff $\varphi \in \cocont{\olque}{a}(A)$.
+\end{proposition}
+
+\begin{proof} This is a consequence of Proposition~\ref{prop:contdualcocont}, Theorem~\ref{thm:olquecont} and Definition~\ref{def:cocontfrag}.
+\end{proof}

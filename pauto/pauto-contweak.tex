@@ -1,0 +1,38 @@
+
+We will introduce the notion of \emph{continuous-weak (alternating) parity automata} which combines the `vertical' constraint given by the weakness condition (\emph{cf.}~Section~\ref{sec:sub-weak}) with an additional restriction on the transition map, which amounts to a `horizontal' constraint.
+
+As we discussed, the weakness condition on parity automata does not seem to be enough to capture \wmso, since we can still define infinitely branching well-founded trees. The intuition on what is missing comes the fragments of Chapter~\ref{chap:frag}:
+%
+If we look at the fragments $\mucML$ and $\mucfoei$, and particularly to Proposition~\ref{props:mucfoei2wmso} we see that restricting the (least) fixpoints to continuous formulas is tightly connected to finiteness. Namely, we observed that the least fixpoint of a continuous formula can be assumed to be finite (in the sense of Theorem~\ref{thm:propscmap}).
+%
+As the fixpoints are matched with cycles in the automata, we would like to impose some kind of continuity constraint on cycles. The resulting notion is as follows:
+
+
+\begin{definition}
+The class $\AutWC(\llang)$ of \emph{continuous-weak automata} is given by the automata
+$\aut = \tup{A,\tmap,\pmap,a_I}$ from $\Aut(\llang)$ such that for every maximal strongly connected component $\mccomp \subseteq A$ and states $a,b \in \mccomp$
+the following conditions hold:
+\begin{description}
+	\itemsep 0 pt
+	\item[(weakness)] $\pmap(a)=\pmap(b)$,
+	\item[(continuity)] for every color $c\in\wp(\props)$:\\
+	If $\pmap(a)$ is odd then $\tmap(a,c)$ is continuous in $\mccomp$.\\
+	if $\pmap(a)$ is even then $\tmap(a,c)$ is co-continuous in $\mccomp$.
+\end{description}
+\end{definition}
+
+For this definition to make sense, we need to give a notion of (co-)continuity for one-step languages. We introduce it promptly, but postpone the discussion of this particular one-step version to Chapter~\ref{chap:onestep}.
+
+\begin{definition}\label{def:os-continuity}
+We say that $\varphi\in\llang(A)$ is \emph{continuous in $a\in A$} if $\varphi$ is monotone in $a$ and additionally, for every $(D,\val)$ and assignment $\ass:\fovar\to D$,
+\[
+\text{if } (D,\val),\ass \models \varphi \text{ then } \exists U \subseteq_\omega \val(a) \text{ such that } (D, \val[a \mapsto U]),\ass \models \varphi.
+\]
+%
+We say that $\varphi$ is \emph{co-continuous in $a\in A$} if the Boolean dual $\dual{\varphi}$ of $\varphi$ (\emph{cf.}~Definition~\ref{d:bdual1}) is continuous in $a\in A$.
+\end{definition}
+%
+Recall from Section~\ref{sec:conf} that continuity in the product coincides with continuity in every variable. Therefore we say that $\varphi$ is continuous in $C \subseteq A$ iff $\varphi$ is continuous in every $a\in C$.
+
+% \medskip
+Intuitively, the continuity restriction has the following effect when combined with the weakness restriction: suppose that the run of a continuous-weak automaton stays inside a connected component $\mccomp$ for some rounds of the acceptance game. Moreover, suppose that the parity of $\mccomp$ is odd. For this case, the continuity condition lets us assume without loss of generality that the nodes of the tree coloured with some state of $\mccomp$ form a \emph{finitely branching and well-founded} subtree. The reason for this is that at each round of the acceptance game --because of continuity-- player \eloise can play a valuation where at most finitely many nodes are colored with $\mccomp$. After that, \abelard subsequently chooses an element coloured by $\mccomp$, a new round starts. Repeating this strategy for a finite number of rounds will define a finitely branching well-founded subtree. Observe also that, on trees, every finite set is included in a finitely branching and well-founded subtree; and every such subtree is finite. This is the rationale behind trying to characterize $\wmso$ with continuous-weak automata.

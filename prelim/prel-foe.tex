@@ -1,0 +1,30 @@
+
+
+We start by introducing the syntax and semantics of first-order logic and then discuss some extensions that will be used in this dissertation.
+
+\begin{definition}
+The language of \emph{first-order logic with equality} ($\foe$) on a set of predicates $\props$, and individual variables $\fovar$ is given by:\[
+\varphi ::= q(x) \mid R(x,y) \mid x \foeq y \mid \exists x.\varphi \mid \lnot\varphi \mid \varphi \lor \varphi
+\]
+where $p,q\in\props$ and $x,y\in\fovar$. We use $\fo$ to denote \emph{first-order logic without equality}, which is defined as $\foe$ but without the $\foeq$ predicate.
+\end{definition}
+
+
+The free variables $\FV(\varphi)$ of a formula $\varphi\in\foe$ are the \emph{individual} variables which are not bound by a quantifier. The inductive definition of $\FV(\varphi)$ is standard.
+
+\begin{remark}
+	Every logic in this paper will be function-free. That is, we will \emph{not} consider logics with function symbols in their signature.
+\end{remark}
+
+
+Formulas of $\foe$ will be interpreted over models $\npmodel = \tup{\npmoddom, R, \tscolors}$ with an assignment $\ass: \fovar \to \npmoddom$. Usually, first-order structures (for the signature that we use) are given as tuples $\tup{\npmoddom,R, P_1, \dots}$ where $P_i \subseteq \npmoddom$. However, this same information is encoded in $\npmodel$, since $P_i = \tsval(p_i)$. The semantics of $\foe$ (and also $\fo$) is standard, given as follows:
+%
+
+\begin{align*}
+\npmodel,\ass \models p_i(x) & \quad\text{ iff }\quad  p_i \in \tscolors(\ass(x)) \\
+\npmodel,\ass \models \mid x \foeq y & \quad\text{ iff }\quad \ass(x) = \ass(y) \\
+\npmodel,\ass \models R(x,y) & \quad\text{ iff }\quad {R}(\ass(x),\ass(y)) \\
+\npmodel,\ass \models \lnot\varphi & \quad\text{ iff }\quad  \npmodel,\ass \not\models \varphi \\
+\npmodel,\ass \models \varphi\lor\psi & \quad\text{ iff }\quad  \npmodel,\ass \models \varphi \text{ or } \npmodel,\ass \models \psi \\
+\npmodel,\ass \models \exists x.\varphi & \quad\text{ iff }\quad  \text{there is $s \in \npmoddom$ such that $\npmodel, \ass[x\mapsto s] \models \varphi$}.
+\end{align*}

@@ -1,0 +1,41 @@
+
+
+In this subsection we give an extension of $\foe$ with a unary fixed point operator. This extension is known in the literature as FO(LFP$^1$) but we will call it $\mufoe$ %. In this dissertation we focus on \unfolfp, which we denote as $\mufoe$
+to keep a consistent notation for fixpoint extensions (e.g., we use $\mu\llang$ for a base logic $\llang$) and fragments thereof (e.g.~$\mu_X\llang$ where $X$ is some restriction on the fixpoint).
+%
+% \shtbs{PTIME by Immerman, import more things from the PDLJW paper}
+% Arity hierarchy of LFP is strict~\cite{grohefphierarchy}.
+
+%As usual with (extensions of) first-order logic, $\mufoe$ will be interpreted over models with an assignment. See Section~\ref{sec:wcl} ($2\wcl$ \textsl{vs.} $\wcl$) for a discussion on how languages with individual variables fit in our setting.
+Because of the presence of individual variables, the syntax and semantics of the fixpoint operator is considerably more involved than for the modal $\mu$-calculus.
+
+
+\begin{definition}
+The language of \emph{first-order logic with equality and unary fixpoints} ($\mufoe$) on a set of predicates $\props$, actions $\acts$ and individual variables $\fovar$ is given by:\[
+\varphi ::= q(x) \mid R_\aact(x,y) \mid x \foeq y \mid \exists x.\varphi \mid \lnot\varphi \mid \varphi \lor \varphi \mid [\lfp_{p{:}x}.\varphi(p,x)](z)
+\]
+where $p,q\in\props$, $\aact\in\acts$ and $x,y\in\fovar$.
+%The formula $\varphi(p,x)$ should also satisfy that $p$ occurs only positively and if $p(y)$ is a free occurrence then $x=y$.
+Observe that $z$ is free in the fixpoint clause and the fixpoint operator binds the designated variables $x$ and $p$.
+\end{definition}
+
+The free variables $\FV(\varphi)$ of a formula $\varphi\in\mufoe$ are obtained by extending the standard definition of $\FV$ for $\foe$ with the clause 
+\[\FV([\lfp_{p{:}x}.\varphi(p,x)](z)) := (\FV(\varphi) \setminus \{x\}) \cup \{z\}.\]
+
+
+The semantics of the fixpoint formula $[\lfp_{p{:}x}.\varphi(p,x)](z)$ is the expected one (as introduced in~\cite{Chandra1982,Moschovakis2008,MoschovakisOrig}). First we give a slightly more general definition than we need right now (which will be useful later). For every model $\npmodel$, assignment $\ass$, and predicates (propositions) $\qprops$, the map $\ffunc{\varphi}{\qprops{:}x}:\wp(\npmoddom)\to \wp(\npmoddom)$ is given as:
+\[
+% \ffunc{\varphi}{p{:}x}(Y) := \{t \in \npmoddom \mid \npmodel[p \mapsto Y],\ass[x\mapsto t] \models \varphi(p, x) \}.
+\ffunc{\varphi}{\qprops{:}x}(\vlist{Y}) := \{t \in \npmoddom \mid \npmodel[\qprops \mapsto \vlist{Y}],\ass[x\mapsto t] \models \varphi(\qprops, x) \}.
+\]
+%
+The formula $\npmodel,\ass \models [\lfp_{p{:}x}.\varphi(p,x)](z)$ is then defined to hold iff $\ass(z) \in \lfp(\ffunc{\varphi}{p{:}x})$. That is, if $\ass(z)$ is in the least fixpoint of the map $\ffunc{\varphi}{p{:}x}$.
+
+\begin{remark}\label{rem:parameters}
+	
+	Suppose that $\varphi \in \mufoe$ has free variables $FV(\varphi) = \{x,\vlist{y}\}$. If we consider the fixpoint formula $\psi := [\lfp_{p{:}x}.\varphi(p,x)](z)$ then $\psi$ would have as free variables $FV(\psi) = \{z,\vlist{y}\}$. The free variables of $\varphi$ which are not bound by the fixpoint (in this case~$\vlist{y}$) are called the \emph{parameters} of the fixpoint.
+
+	Parameters can always be avoided at the expense of increasing the arity of the fixpoint~\cite[p.~184]{Libkin2004}. That is, for example, taking the fixpoint over a relation $P(x_1,\dots,x_n)$ instead of just a predicate $p$. However, in this dissertation we will only consider fixpoints over unary predicates, and therefore we will allow the use of parameters unless explicity stated.
+\end{remark}
+
+The language of $\mufoe$ can also be further extended with a \emph{greatest} fixpoint operator $[\gfp_{p{:}x}.\varphi(p,x)](z)$ whose semantics are given by $\npmodel,\ass \models [\gfp_{p{:}x}.\varphi(p,x)](z)$ iff $\ass(z) \in \gfp(\ffunc{\varphi}{p{:}x})$. However, this extension does not add expressive power, since it is possible to prove that $[\gfp_{p{:}x}.\varphi(p,x)](z) \equiv \lnot[\lfp_{p{:}x}.\lnot\varphi(\lnot p,x)](z)$.

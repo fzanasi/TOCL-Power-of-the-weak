@@ -1,0 +1,483 @@
+% !TEX root = ../main.tex
+
+\index{formula!one-step!monotone}
+Given a one-step logic $\llang(A)$ and formula $\varphi \in \llang(A)$.
+%
+We say that $\varphi$ is \emph{monotone in $\{\vlist{a}\} \subseteq A$} if for every one step model $(D,\val)$ and assignment $\ass:\fovar\to D$,
+\[
+\text{if } (D,\val),\ass \models \varphi \text{ and } \val(\vlist{a}) \subseteq \vlist{E} \text{ then } (D,\val[\vlist{a}\mapsto \vlist{E}]),\ass \models \varphi.
+\]
+%
+% We use $\llang^+(A)$ to denote the fragment of $\llang(A)$ composed of formulas monotone in all $a\in A$.
+
+\begin{remark}\label{rem:monotprodeach}
+	It is easy to prove that a formula is monotone in $\{\vlist{a}\} \subseteq A$ iff it is monotone in every $a_i$. Therefore, in the following proofs we will, in general, consider monotonicity in every single $a_i$ instead of in the full $\vlist{a}$. This is equivalent, and only done to avoid an even more complex notation.
+\end{remark}
+
+Monotonicity is usually tightly related to positivity. If the quantifiers are well-behaved (i.e., monotone) then a formula $\varphi$ will usually be monotone in $a \in A$ iff $a$ has positive polarity in $\varphi$, that is, if it only occurs under an even number of negations. This is the case for all one-step logics considered in this dissertation. In this section we give a syntactic characterization of monotonicity for several one-step logics.
+
+\index{$\tau^{A'}_S$}
+\index{type!$A'$-positive}
+\begin{definition}
+	Given $S \subseteq A$ and $A' \subseteq A$ we use the following notation
+	\[
+	\tau^{A'}_S(x) := \bigwedge_{b\in S} b(x) \land \bigwedge_{b\in A\setminus (S\cup A')}\lnot b(x) ,
+	\]
+	for what we call the \emph{$A'$-positive} $A$-type $\tau^{A'}_S$.
+	Intuitively, $\tau^{A'}_S$ works almost like the $A$-type $\tau_S$, but discarding the negative information for the names in $A'$.
+	If $A' = \{a\}$ we write $\tau^a_S$ instead of $\tau^{\{a\}}_S$. Observe that with this notation, $\tau^+_S$ is equivalent to $\tau^A_S$.
+	%Moreover, we use $\tau^+_S$ to denote the \emph{positive} $A$-type defined as $\tau^+_S(x) := \bigwedge_{b\in S} b(x)$.
+\end{definition}
+
+%	For every one-step logic $\llang$ for which we have a basic form based on disjuncts $\dbnf_{\llang}$ we use $\dbnf^p_{\llang}$ to denote the basic form that we get by replacing every type $\tau_S$ with $\tau^a_S$; analogously, we use $\dbnf_{\llang}^+$ to denote the replacement of every type $\tau_S$ with $\tau^+_S$.
+
+%%
+\subsubsection{Monotone fragment of $\ofo$}
+
+\index{fragment!monotone!$\ofo$}
+\index{$\ofo$!$\monot{}{A'}$}
+\begin{theorem}\label{thm:ofomonot}
+A formula of $\ofo(A)$ is monotone in $A' \subseteq A$ iff it is equivalent to a sentence given by:
+\[
+\varphi ::= \psi \mid a(x) \mid \exists x.\varphi \mid \forall x.\varphi \mid \varphi \land \varphi \mid \varphi \lor \varphi
+\]
+where $a \in A'$,
+$\psi \in \ofo(A\setminus A')$. We denote this fragment as $\monot{\ofo}{A'}(A)$.
+\end{theorem}
+%
+The result will follow from the following two lemmas and Remark~\ref{rem:monotprodeach}.
+
+\begin{lemma}\label{lem:monofoismonot}
+Every $\varphi \in \monot{\ofo}{a}(A)$ is monotone in $a$.
+\end{lemma}
+\begin{proof}
+	The proof is a routine argument by induction on the complexity of $\varphi$.
+\end{proof}
+% \begin{proof}
+% We show, by induction, that any one-step formula $\varphi$ in the fragment (which may not be a sentence) satisfies, for every one-step model $(D,\val:A\to\wp D)$, assignment ${\ass:\fovar\to D}$, 
+% %
+% \[(D,\val),\ass \models \varphi \text{ and } \val(a) \subseteq E \text{ then } (D,\val[a\mapsto E]),\ass \models \varphi.\] 
+% %
+% \begin{enumerate}[\textbullet]
+% \item If ${\varphi = \psi \in \ofo(A\setminus \{a\})}$ changes in the $a$ part of the valuation will make no difference and hence the condition is trivial. %The same happens if $\varphi = q(x)$ with $q\in P$ but $q \neq a$.
+
+% \item Case $\varphi = a(x)$: if $(D,\val),\ass \models a(x)$ then $\ass(x)\in \val(a)$. Clearly, $\ass(x) \in \val[a\mapsto E](a)$ because $\val(a) \subseteq E$. Therefore $(D, \val[a\mapsto E]),\ass \models a(x)$. %For the other direction assume $U \subseteq_\omega \val(a)$ and $(D, \val[a\mapsto U]),\ass \models a(x)$. This means that $\ass(x) \in U \subseteq \val(a)$, hence $(D, \val),\ass \models a(x)$.
+
+% \item Case $\varphi = \varphi_1 \lor \varphi_2$: assume $(D,\val),\ass \models \varphi$. Without loss of generality we can assume that $(D,\val),\ass \models \varphi_1$ and hence by induction hypothesis we have that $(D,\val[a\mapsto E]),\ass \models \varphi_1$ which clearly satisfies $(D,\val[a\mapsto E]),\ass \models \varphi$. %For the other direction let $U \subseteq_\omega \val(a)$ and assume wlog that $(D,\val[a\mapsto U]),\ass \models \varphi_1$. By induction hypothesis $(D,\val),\ass \models \varphi_1$ which entails $(D,\val),\ass \models \varphi$.
+
+% \item Case $\varphi = \varphi_1 \land \varphi_2$: assume $(D,\val),\ass \models \varphi$. As we have $(D,\val),\ass \models \varphi_i$, by induction hypothesis we get $(D,\val[a\mapsto E]),\ass \models \varphi_i$. Therefore $(D,\val[a\mapsto E]),\ass \models \varphi$. %The other direction is very similar to the case of disjunction.
+
+% \item Case $\varphi = \exists x.\varphi'(x)$ and $(D,\val),\ass \models \varphi$. By definition there exists $d\in D$ such that $(D,\val),\ass[x\mapsto d] \models \varphi'(x)$. By induction hypothesis $(D,\val[a\mapsto E]),\ass[x\mapsto d] \models \varphi'(x)$ and hence $(D,\val[a\mapsto E]),\ass \models \exists x.\varphi'(x)$.
+
+% \item Case $\varphi = \forall x.\varphi'(x)$ and $(D,\val),\ass \models \varphi$. By definition $(D,\val),\ass[x\mapsto d] \models \varphi'(x)$ for all $d\in D$. By induction hypothesis $(D,\val[a\mapsto E]),\ass[x\mapsto d] \models \varphi'(x)$ for all $d\in D$. Hence $(D,\val[a\mapsto E]),\ass \models \forall x.\varphi'(x)$.
+% \end{enumerate}
+% %
+% This finishes the proof.
+% \end{proof}
+
+Before going on we need to introduce a bit of new notation. In Section~\ref{subsec:normalforms} we introduced the formula $\dbnfofo{\Sigma}$. We now give a few variants of this notation, which will be crucial to build the normal forms of the fragments discussed in this dissertation.
+
+\index{$\mondbnfofo{\Sigma}{A'}$}
+\index{$\mondgbnfofo{\Sigma}{\Pi}{A'}$}
+\begin{definition}
+Let $A'\subseteq A$ be a finite set of names. The $A'$-positive variant of $\dbnfofo{\Sigma}$ is given as follows:
+% \begin{align*}
+% 	\mondbnfofo{\Sigma}{A'} &:= \bigwedge_{S\in\Sigma} \exists x. \tau^{A'}_S(x) \land \forall x. \bigvee_{S\in\Sigma} \tau^{A'}_S(x) \\
+% 	\posdbnfofo{\Sigma} &:= \bigwedge_{S\in\Sigma} \exists x. \tau^+_S(x) \land \forall x. \bigvee_{S\in\Sigma} \tau^+_S(x) .
+% \end{align*}
+\[
+	\mondbnfofo{\Sigma}{A'} := \bigwedge_{S\in\Sigma} \exists x. \tau^{A'}_S(x) \land \forall x. \bigvee_{S\in\Sigma} \tau^{A'}_S(x).
+\]
+We also introduce the following generalized forms of the above notation:
+% \begin{align*}
+% 	\mondgbnfofo{\Sigma}{\Pi}{A'} &:= \bigwedge_{S\in\Sigma} \exists x. \tau^{A'}_S(x) \land \forall x. \bigvee_{S\in\Pi} \tau^{A'}_S(x) \\
+% 	\posdgbnfofo{\Sigma}{\Pi} &:= \bigwedge_{S\in\Sigma} \exists x. \tau^+_S(x) \land \forall x. \bigvee_{S\in\Pi} \tau^+_S(x) .
+% \end{align*}
+\[
+	\mondgbnfofo{\Sigma}{\Pi}{A'} := \bigwedge_{S\in\Sigma} \exists x. \tau^{A'}_S(x) \land \forall x. \bigvee_{S\in\Pi} \tau^{A'}_S(x) .
+\]
+The \emph{positive} variants of the above notations are defined as $\posdbnfofo{\Sigma} := \mondbnfofo{\Sigma}{A}$ and $\posdgbnfofo{\Sigma}{\Pi} := \mondgbnfofo{\Sigma}{\Pi}{A}$.
+\end{definition}
+
+To prove that the fragment $\monot{\ofo}{a}$ is complete for monotonicity in $a$, we need to show that every formula which is monotone in $a$ is equivalent to some formula in $\monot{\ofo}{a}$. We prove a stronger result: we give a translation that constructively maps arbitrary formulas into $\monot{\ofo}{a}$. The interesting observation is that the translation will preserve truth iff the given formula is monotone in $a$.
+
+\begin{lemma}
+There exists a translation $(-)^\tmono:\ofo(A) \to \monot{\ofo}{a}(A)$ such that
+a formula ${\varphi \in \ofo(A)}$ is monotone in $a\in A$ if and only if $\varphi\equiv \varphi^\tmono$.
+\end{lemma}
+%
+\begin{proof}
+To define the translation we assume, without loss of generality, that $\varphi$ is in the normal form $\bigvee \dbnfofo{\Sigma}$ given in Definition~\ref{def:bfofo}, that is:
+%
+\[
+\dbnfofo{\Sigma} := \bigwedge_{S\in\Sigma} \exists x. \tau_S(x) \land \forall x. \bigvee_{S\in\Sigma} \tau_S(x).
+\]
+%
+% for some types $\Sigma \subseteq \wp A$.
+%
+We define the translation as
+$(\bigvee \dbnfofo{\Sigma})^\tmono:= \bigvee \mondbnfofo{\Sigma}{a}$.
+%  where
+% %
+% \[
+% \mondbnfofo{\Sigma}{A'} := \bigwedge_{S\in\Sigma} \exists x. \tau^{A'}_S(x) \land \forall x. \bigvee_{S\in\Sigma} \tau^{A'}_S(x)
+% \]
+
+From the construction it is clear that $\varphi^\tmono \in \monot{\ofo}{a}(A)$ and therefore the right-to-left direction of the lemma is immediate by Lemma~\ref{lem:monofoismonot}. For the left-to-right direction assume that $\varphi$ is monotone in $a$, we have to prove that $(D,\val) \models \varphi$ if and only if $(D,\val) \models \varphi^\tmono$.
+
+\bigskip
+\noindent \fbox{$\Rightarrow$} This direction is trivial.
+
+\bigskip
+\noindent \fbox{$\Leftarrow$} Assume $(D,\val) \models \varphi^\tmono$ and let $\Sigma$ be such that $(D,\val) \models \mondbnfofo{\Sigma}{a}$. Because of the universal part of $\mondbnfofo{\Sigma}{a}$, it is safe to assume that the \emph{only} ($a$-positive) types realized in $(D,\val)$ are exactly those in $\Sigma$; moreover, it is also safe to assume that every type has a (single) distinct witness (this is because $(D,\val)$ can be proved to be $\ofo$-equivalent to such a model).
+%
+%We have to prove that $(D,\val) \models \varphi$. It is easy to prove that $(D,\val) \equiv_\fo (D\times \{0,1\},\val_\pi)$ where $D\times\{0,1\}$ has $2$ copies of each element of $D$ and $\val_\pi((d,i)) := \val(d)$. Hence, it is enough to prove that $(D\times \{0,1\},\val_\pi) \models \varphi$.
+%
+For every $S \in \Sigma$, let $d_S$ be the witness of the $a$-positive type $\tau^a_S(x)$ in $(D,\val)$. Let $U := \{d_S \mid S\in \Sigma, a\notin S\}$ and $\val' := \val[a \mapsto \val(a) \setminus U]$. 
+
+\begin{claimfirst}
+	$(D,\val') \models \dbnfofo{\Sigma}$.
+\end{claimfirst}
+
+\begin{pfclaim}
+First we show that the existential part of the normal form is satisfied. That is, that for every $S\in \Sigma$ we have a witness for the \emph{full} type $\tau_S(x)$. If $a\in S$ the witness is given by $\varphi^\tmono$, that is, $d_S$. If $a \notin S$ then we specially crafted $d_S$ to be a witness. The universal part is clearly satisfied.
+\end{pfclaim}
+%
+To finish observe that, by monotonicity of $\varphi$, we get $(D,\val) \models \varphi$. %This finishes the proof of the lemma.
+\end{proof}
+
+Putting together the above lemmas we obtain Theorem~\ref{thm:ofomonot}. Moreover, a careful analysis of the translation gives us the following corollary, providing normal forms for the monotone fragment of $\ofo$.
+
+\begin{corollary}\label{cor:ofopositivenf} Let $\varphi \in \ofo(A)$, the following hold:
+	\begin{enumerate}[(i)]
+		\item The formula $\varphi$ is monotone in $A' \subseteq A$ iff it is equivalent to a formula in the basic form $\bigvee \mondbnfofo{\Sigma}{A'}$ for some types $\Sigma \subseteq \wp A$.
+		%
+		\item The formula $\varphi$ is monotone in every $a\in A$ (i.e., $\varphi\in\ofo^+(A)$) iff $\varphi$ is equivalent to a formula $\bigvee \posdbnfofo{\Sigma}$ for some types $\Sigma \subseteq \wp A$. %, where
+		%
+		%For the translation, let
+		%$(\bigvee \dbnfofo{\Sigma})^\tmono:= \bigvee \mondbnfofo{\Sigma}{a}$ and
+		%
+		% \[
+		% \posdbnfofo{\Sigma} := \bigwedge_{S\in\Sigma} \exists x. \tau^+_S(x) \land \forall x. \bigvee_{S\in\Sigma} \tau^+_S(x) .
+		% \]
+	\end{enumerate}
+\end{corollary}
+
+% The following stronger normal form will be useful. Intuitively, it says that every set $\Sigma$ is comprised of types that are incomparable (in terms of containment) between each other.
+
+% \begin{proposition}\label{props:strongmonofo}
+% In the above normal form we can assume that every disjunct $\mondbnfofo{\Sigma}{A'}$ is such that for every pair of distinct $S,S'\in \Sigma$ at least one of the following conditions hold:
+% \begin{itemize}
+% 	\itemsep 0 pt
+% 	\item $S \cap (A\setminus A') \neq S' \cap (A\setminus A')$, or
+% 	\item $S \cap A' \not\subseteq S' \cap A'$ and $S' \cap A' \not\subseteq S \cap A'$.
+% \end{itemize}
+% \end{proposition}
+% %
+% \begin{proof}
+% 	Assume that for some distinct $S,S'\in\Sigma$ neither of the conditions hold. That is,
+% 	%
+% 	$S \cap (A\setminus A') = S' \cap (A\setminus A')$ and
+% 	either (1) $S \cap A' \subseteq S' \cap A'$ or (2) $S' \cap A' \subseteq S \cap A'$.
+% 	%
+% 	It is easy to observe that if (1) holds then $\tau^{A'}_{S'}(x) \models \tau^{A'}_{S}(x)$ and if (2) holds then $\tau^{A'}_{S}(x) \models \tau^{A'}_{S'}(x)$.
+
+% 	\begin{claimfirst}
+% 		In both cases $\mondbnfofo{\Sigma}{A'}\equiv \mondbnfofo{\Sigma\setminus \{S\}}{A'} \lor \mondbnfofo{\Sigma\setminus \{S'\}}{A'}$.
+% 	\end{claimfirst}
+% 	%
+% 	\begin{pfclaim}
+% 		We only prove case (1) since the cases are symmetric. Let $(D,\val) \models \mondbnfofo{\Sigma}{A'}$. Either (a) every element satisfying $\tau^{A'}_{S}(x)$ also satisfies $\tau^{A'}_{S'}(x)$ or; (b)~there are witnesses for $\tau^{A'}_{S}(x)$ which do not satisfy $\tau^{A'}_{S'}(x)$. In case~(a) we clearly have that $(D,\val) \models \mondbnfofo{\Sigma\setminus \{S\}}{A'}$. For case~(b), it is trivial to see that $(D,\val)$ satisfies the existential part of $\mondbnfofo{\Sigma\setminus \{S'\}}{A'}$ since it poses less constraints. For the universal part, suppose that some element satisfies $\tau^{A'}_{S'}(x)$, then in particular (by hypothesis) it also satisfies $\tau^{A'}_{S}(x)$. Since $S\in \Sigma\setminus \{S'\}$ this does not carry any problem. We can conclude that $(D,\val) \models \mondbnfofo{\Sigma\setminus \{S'\}}{A'}$.
+% 	\end{pfclaim}
+% 	%
+% 	This finishes the proof.
+% \end{proof}
+
+%%
+\subsubsection{Monotone fragment of $\ofoe$}
+
+\index{fragment!monotone!$\ofoe$}
+\index{$\ofoe$!$\monot{}{A'}$}
+\begin{theorem}\label{thm:ofoemonot}
+A formula of $\ofoe(A)$ is monotone in ${A'\subseteq A}$ iff it is equivalent to a sentence given by:
+\[
+\varphi ::= \psi \mid a(x) \mid \exists x.\varphi \mid \forall x.\varphi \mid \varphi \land \varphi \mid \varphi \lor \varphi
+\]
+where $a\in A'$ and $\psi \in \ofoe(A\setminus A')$. We denote this fragment as $\monot{\ofoe}{A'}(A)$.
+\end{theorem}
+
+Observe that, in this definition, the equality predicate is taken into account by the $\psi$ clause.
+Before going on we need to introduce a bit of new notation. 
+
+\index{$\mondbnfofoe{\vlist{T}}{\Pi}{A'}$}
+\index{$\posdbnfofoe{\vlist{T}}{\Pi}$}
+\begin{definition}
+Let $A'\subseteq A$ be a finite set of names. The monotone variant of $\dbnfofoe{\vlist{T}}{\Pi}$ is given as follows:
+\begin{align*}
+	\mondbnfofoe{\vlist{T}}{\Pi}{A'} &:= \exists \vlist{x}.\big(\arediff{\vlist{x}} \land \bigwedge_i \tau^{A'}_{T_i}(x_i) \land \forall z.(\arediff{\vlist{x},z} \lthen \bigvee_{S\in \Pi} \tau^{A'}_S(z))\big). 
+	% \\
+	% \posdbnfofoe{\vlist{T}}{\Pi} &:= \exists \vlist{x}.\big(\arediff{\vlist{x}} \land \bigwedge_i \tau^{+}_{T_i}(x_i) \land \forall z.(\arediff{\vlist{x},z} \lthen \bigvee_{S\in \Pi} \tau^{+}_S(z))\big) .
+\end{align*}
+When the set $A'$ is a singleton $\{a\}$ we will write $a$ instead of $A'$. The positive variant of $\dbnfofoe{\vlist{T}}{\Pi}$ is defined as above but with $+$ in place of $A'$.
+\end{definition}
+
+\noindent The result follows from the following lemma.
+
+\begin{lemma}
+The following hold:
+\begin{enumerate}
+	\itemsep 0pt
+	\item Every $\varphi \in \monot{\ofoe}{A'}(A)$ is monotone in $A'$.
+	\item There exists a translation $(-)^\tmono:\ofoe(A) \to \monot{\ofoe}{A'}(A)$ such that
+a formula ${\varphi \in \ofoe(A)}$ is monotone in $A'$ if and only if $\varphi\equiv \varphi^\tmono$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+	In Theorem~\ref{thm:ofoeimonot} this result is proved for \ofoei (i.e., \ofoe extended with generalized quantifiers). It is not difficult to adapt the proof for $\ofoe$. Intuitively, the translation is defined as $\varphi^\tmono := \varphi[\lnot a(x) \mapsto \top \mid a\in A']$ for $\varphi$ in negation normal form.
+\end{proof}
+
+Combining the normal form for $\ofoe$ and the above lemma, we obtain the following corollary providing a normal form for the monotone fragment of $\ofoe$.
+
+\begin{corollary}\label{cor:ofoepositivenf}
+	Given $\varphi \in \ofoe(A)$, the following hold:
+	\begin{enumerate}[(i)]
+		\item The formula $\varphi$ is monotone in $A'\subseteq A$ iff it is equivalent to a formula in the basic form $\bigvee \mondbnfofoe{\vlist{T}}{\Pi}{A'}$
+		where
+		%
+		% \[
+		% 	\mondbnfofoe{\vlist{T}}{\Pi}{A'} := \exists \vlist{x}.\big(\arediff{\vlist{x}} \land \bigwedge_i \tau^{A'}_{T_i}(x_i) \land \forall z.(\arediff{\vlist{x},z} \lthen \bigvee_{S\in \Pi} \tau^{A'}_S(z))\big)
+		% \]
+		% and
+		for each disjunct we have $\vlist{T} \in \wp(A)^k$ for some $k$ and $\Pi\subseteq\vlist{T}$,
+		%
+		\item The formula $\varphi$ is monotone in all $a\in A$ (i.e., $\varphi\in \ofoe^+(A)$) iff it is equivalent to a formula in the basic form $\bigvee \posdbnfofoe{\vlist{T}}{\Pi}$
+		where
+		%
+		% \[
+		% 	\posdbnfofoe{\vlist{T}}{\Pi} := \exists \vlist{x}.\big(\arediff{\vlist{x}} \land \bigwedge_i \tau^{+}_{T_i}(x_i) \land \forall z.(\arediff{\vlist{x},z} \lthen \bigvee_{S\in \Pi} \tau^{+}_S(z))\big)
+		% \]
+		% and
+		for each disjunct we have $\vlist{T} \in \wp(A)^k$ for some $k$ and $\Pi\subseteq\vlist{T}$.
+	\end{enumerate}
+\end{corollary}
+
+%%
+\subsubsection{Monotone fragment of $\ofoei$}
+
+\index{fragment!monotone!$\ofoei$}
+\index{$\ofoei$!$\monot{}{A'}$}
+\begin{theorem}\label{thm:ofoeimonot}
+A formula of $\ofoei(A)$ is monotone in ${A' \subseteq A}$ iff it is equivalent to a sentence given by:
+\[
+\varphi ::= \psi \mid a(x) \mid \exists x.\varphi \mid \forall x.\varphi \mid \varphi \land \varphi \mid \varphi \lor \varphi \mid \qu x.\varphi \mid \dqu x.\varphi
+\]
+where $a\in A'$ and $\psi \in \ofoei(A\setminus A')$. We call this fragment $\monot{\ofoei}{A'}(A)$.
+\end{theorem}
+
+Observe that $x \foeq y$ and $x \not\foeq y$ are included in the case $\psi \in \ofoei(A\setminus A')$. The result will follow from the following two lemmas and Remark~\ref{rem:monotprodeach}.
+
+\begin{lemma}\label{lem:monofoeiismonot}
+Every $\varphi \in \monot{\ofoei}{a}(A)$ is monotone in $a$.
+\end{lemma}
+\begin{proof}
+The proof is basically the same as Lemma~\ref{lem:monofoismonot}.
+That is, we show by induction, that any one-step formula $\varphi$ in the fragment (which may not be a sentence) satisfies, for every one-step model $(D,\val)$ and assignment ${\ass:\fovar\to D}$, 
+%
+\[
+\text{if } (D,\val),\ass \models \varphi \text{ and } \val(a) \subseteq E \text{ then } (D,\val[a\mapsto E]),\ass \models \varphi.
+\] 
+%
+We focus on the generalized quantifiers. Let $(D,\val),\ass \models \varphi$ and $\val(a) \subseteq E$.
+%
+\begin{enumerate}[\textbullet]
+\item Case $\varphi = \qu x.\varphi'(x)$. By definition there exists an infinite set $I\subseteq D$ such that for all $d\in I$ we have $(D,\val),\ass[x\mapsto d] \models \varphi'(x)$. By induction hypothesis $(D,\val[a\mapsto E]),\ass[x\mapsto d] \models \varphi'(x)$ for all $d \in I$. Therefore $(D,\val[a\mapsto E]),\ass \models \qu x.\varphi'(x)$.
+
+\item Case $\varphi = \dqu x.\varphi'(x)$. Hence there exists $I\subseteq D$ such that for all $d\in I$ we have $(D,\val),\ass[x\mapsto d] \models \varphi'(x)$ and $D\setminus I$ is \emph{finite}. By induction hypothesis $(D,\val[a\mapsto E]),\ass[x\mapsto d] \models \varphi'(x)$ for all $d \in I$. Therefore $(D,\val[a\mapsto E]),\ass \models \dqu x.\varphi'(x)$.
+\end{enumerate}
+%
+This finishes the proof.
+\end{proof}
+
+\noindent Before going on, we introduce some notation.
+
+\index{$\mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{A'}$}
+\index{$\mondbnfinf{\Sigma}{A'}$}
+\index{$\posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$}
+\begin{definition}
+Let $A'\subseteq A$ be a finite set of names. The $A'$-positive variant of $\dbnfofoei{\vlist{T}}{\Pi}{\Sigma}$ is given as follows:
+\begin{align*}
+	\mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{A'} &:= \mondbnfofoe{\vlist{T}}{\Pi \cup \Sigma}{A'} \land \mondbnfinf{\Sigma}{A'}\\
+	%
+	\mondbnfofoe{\vlist{T}}{\Lambda}{A'} &:= \exists \vlist{x}.\big(\arediff{\vlist{x}} \land \bigwedge_i \tau^{A'}_{T_i}(x_i) \land \forall z.(\arediff{\vlist{x},z} \lthen \bigvee_{S\in \Lambda} \tau^{A'}_S(z))\big) \\
+	%
+	\mondbnfinf{\Sigma}{A'} &:= \bigwedge_{S\in\Sigma} \qu y.\tau^{A'}_S(y) \land \dqu y.\bigvee_{S\in\Sigma} \tau^{A'}_S(y) .
+\end{align*}
+When the set $A'$ is a singleton $\{a\}$ we will write $a$ instead of $A'$. The positive variant of $\dbnfofoei{\vlist{T}}{\Pi}{\Sigma}$ is defined as $\posdbnfofoei{\vlist{T}}{\Pi}{\Sigma} := \mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{A}$.
+\end{definition}
+
+\noindent We are now ready to give the translation.
+
+\begin{lemma}
+There is a translation $(-)^\tmono:\ofoei(A) \to \monot{\ofoei}{a}(A)$ such that
+a formula ${\varphi \in \ofoei(A)}$ is monotone in $a$ if and only if $\varphi\equiv \varphi^\tmono$.
+\end{lemma}
+\begin{proof}
+We assume that $\varphi$ is in the normal form $\bigvee \dbnfofoei{\vlist{T}}{\Pi}{\Sigma}$ where 
+%
+\[
+\dbnfofoei{\vlist{T}}{\Pi}{\Sigma} = \dbnfofoe{\vlist{T}}{\Pi \cup \Sigma} \land \dbnfinf{\Sigma} .
+\]
+%
+for some sets of types $\Pi,\Sigma \subseteq \wp A$ and each $T_i \subseteq A$.
+%
+For the translation we define
+\[
+(\bigvee \dbnfofoei{\vlist{T}}{\Pi}{\Sigma})^\tmono:= \bigvee \mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{a}.
+\]
+%
+From the construction it is clear that $\varphi^\tmono \in \monot{\ofoei}{a}(A)$ and therefore the right-to-left direction of the lemma is immediate by Lemma~\ref{lem:monofoeiismonot}. For the left-to-right direction assume that $\varphi$ is monotone in $a$, we have to prove that $(D,\val) \models \varphi$ if and only if $(D,\val) \models \varphi^\tmono$.
+
+\bigskip
+\noindent \fbox{$\Rightarrow$} This direction is trivial.
+
+\bigskip
+\noindent \fbox{$\Leftarrow$}
+Assume $(D,\val) \models \varphi^\tmono$, and in particular that $(D,\val) \models \mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{a}$.
+Observe that the elements of $D$ can be partitioned in the following way:
+%
+\begin{enumerate}[(a)]
+	\itemsep 0 pt
+	\item Distinct elements $t_i \in D$ such that each $t_i$ satisfies $\tau^{a}_{T_i}(x)$,% witnessing the $a$-positive type $T_i \in \vlist{T}$,
+	\item\label{it:dpi} Disjoint sets $\compset{D_S \subseteq D \mid S \in \Sigma}$ such that each $D_S$ is \emph{infinite} and every $d \in D_S$ is a witness for the $a$-positive type $S \in \Sigma$,
+	\item\label{it:ds} A \emph{finite} set $D_\Pi \subseteq D$ of witnesses of the $a$-positive types in $\Pi$.
+\end{enumerate}
+%
+Following this partition, every element $d\in D$ is be the witness of an $a$-type in either (a)~$\vlist{T}$, (b)~$\Sigma$, or (c)~$\Pi$. We use $S_d \in \vlist{T}\cup \Pi \cup \Sigma$ to denote the $a$-type which $d$ witnesses. Now, we are talking about $a$-types, there might be a slight difference between $S_d$ and the actual type that each $d$ has (namely $\val^\natural(d)$). That is, it could be that $d\in\val(a)$ but that $a\notin S_d$. What we want to do now is to shrink $\val$ in such a way that the witnessed ($S_d$) type and the actual type coincide. We give a new valuation $\uval$ defined as $\uval^\natural(d) := S_d$.\footnote{Recall that a valuation $\uval:A\to\wp \osmoddom$ can also be represented as a marking $\uval^\natural: \osmoddom\to\wp A$ given by $\uval^\natural(d) := \{a \in A \mid d\in \val(a)\}$.} Observe that $\uval(a) \subseteq \val(a)$ and $\uval(b) = \val(b)$ for $b\in A\setminus\{a\}$.
+%
+\begin{claimfirst}
+	$(D,\uval) \models \varphi$.
+\end{claimfirst}
+%
+\begin{pfclaim}
+	First we check that $(D,\uval) \models \dbnfofoe{\vlist{T}}{\Pi \cup \Sigma}$. It is easy to see that the elements $t_i$ work as witnesses for the \emph{full} types $T_i$. That is $(D,\uval) \models \tau_{T_i}(t_i)$ for every $i$. To prove the universal part of the formula it is enough to show that:
+	%
+	\begin{enumerate}
+		\itemsep 0 pt
+		\item Every element $d\in D_\Pi$ realizes the full type $S_d \in \Pi$,
+		\item For all $S\in \Sigma$, every element of $D_S$ realizes the full type $S$.
+	\end{enumerate}
+	%
+	Let $d$ be an element of either $D_\Pi$ or any of the $D_S$. By~\eqref{it:dpi} and~\eqref{it:ds} we know $(D,\val) \models \tau_{S_d}^a(d)$. If $a\in S_d$ we can trivially conclude $(D,\uval) \models \tau_{S_d}(d)$. If $a\notin S_d$, by definition of $\uval$ we know that $d \notin \uval(a)$ and hence we can also conclude that $(D,\uval) \models \tau_{S_d}(d)$.
+
+	To prove that $(D,\uval) \models \bigwedge_{S\in\Sigma} \qu y.\tau_S(y) \land \dqu y.\bigvee_{S\in\Sigma} \tau_S(y)$ we only need to observe that the existential part is satisfied because each $D_S$ is infinite by~\eqref{it:ds} and the universal part is satisfied because the set $D_\Pi \cup \vlist{T}$ is finite by~\eqref{it:dpi}.
+\end{pfclaim}
+%
+To finish the proof, note that by monotonicity of $\varphi$ we get $(D,\val) \models \varphi$.
+%
+% \begin{itemize}
+% 	\itemsep 0 pt
+% 	\item $(D,\val') \models \varphi^\tmono$,
+% 	\item $\val'(a) \subseteq \val(a)$ and $\val'(b) = \val(b)$ for all $b\in A\setminus\{a\}$,
+% 	\item For every $W \subset \val'(a)$ we have $(D,\val'[a\mapsto W]) \not\models \varphi^\tmono$.
+% \end{itemize}
+% %
+% We prove that $(D,\val') \models \varphi$ and by monotonicity we get $(D,\val) \models \varphi$.
+% Let $\vlist{d}$ be the sequence of pairwise distinct elements of $D$
+% witnessing the types $\vlist{T}$ in $\mondbnfofoe{\vlist{T}}{\Pi \cup \Sigma}{a}$.
+% %making $\arediff{\vlist{x}} \land \bigwedge_i \tau^a_{T_i}(x_i)  \land \forall z.(\arediff{\vlist{x},z} \lthen \bigvee_{S\in \Sigma \cup \Pi} \tau^a_S(z))$ true. Now, we modify $\val$ as follows. We state that $\val_1|_{D\setminus \vlist{d}}=\val|_{D\setminus \vlist{d}}$, while over $d_i \in \vlist{d}$ it is defined by
+% % \[
+% % \val_1(d_i)= \begin{cases}
+% % \val(d_i) & \text{if } a \in T_i \\
+% % \val(d_i) \setminus \{a\} & \text{else.} 
+% % \end{cases}
+% % \]
+% % This means that 
+% % \begin{equation}\label{eq:start}
+% % (D,\val_1) \models \tau_{T_i}(d_i).
+% %  \end{equation}
+% % Now, we have that 
+% %
+% % \begin{claimfirst}\label{eq:1}
+% % 	$(D\setminus \vlist{d},\val) \models  \forall z.\bigvee_{S\in \Sigma\cup\Pi} \tau^a_S(z) \land \bigwedge_{S\in\Sigma} \qu y.\tau^a_S(y) \land \dqu y.\bigvee_{S\in\Sigma} \tau^a_S(y)$.
+% % \end{claimfirst}
+% % %
+% % \begin{pfclaim}
+% % 	Prove.
+% % \end{pfclaim}
+%
+% % \begin{equation}\label{eq:1}
+% % (D\setminus \vlist{d},\val_1) \models  \forall z.\bigvee_{S\in \Sigma\cup\Pi} \tau^a_S(z)\land
+% % \bigwedge_{S\in\Sigma} \qu y.\tau^a_S(y) \land \dqu y.\bigvee_{S\in\Sigma} \tau^a_S(y).
+% % \end{equation}
+%
+% Let $D_\Pi= \{ d' \in D\setminus \vlist{d} \mid (D\setminus \vlist{d}, \val) \not\models \tau^a_S(d'), \forall S\in \Sigma\}$, and $D_\Sigma = D\setminus (\vlist{d} \cup D_\Pi)$. 
+% By (\ref{eq:1}), $D_\Pi$ is finite and therefore it holds that
+% \begin{equation}\label{eq:2}
+% (D_\Sigma, \val_1)\models \forall z.\bigvee_{S\in \Sigma} \tau^a_S(z)\land
+% \bigwedge_{S\in\Sigma} \qu y.\tau^a_S(y) \land \dqu y.\bigvee_{S\in\Sigma} \tau^a_S(y).
+% \end{equation}
+% Let $(D_S : S \in \Sigma)$ be a partition of $D_\Sigma$ such that, for each $D_S$:
+% \begin{enumerate}
+% \item $D_S$ is infinite, and
+% \item $(D,\val) \models  \tau^a_S(d)$, for every $d \in D_S$. 
+% \end{enumerate}
+% We modify $\val_1$ by stating that $\val_2|_{ \vlist{d}}=\val_1|_{\vlist{d}}$, while over $d' \in D\setminus \vlist{d},$ $\val_2$ is defined as follows. If $d' \in D_\Sigma$, then there is an unique $S\in \Sigma$ such that $d' \in D_S$. Thence
+% \[
+% \val_2(d')= \begin{cases}
+% \val(d') & \text{if } a \in S \\
+% \val(d') \setminus \{a\} & \text{else.} 
+% \end{cases}
+% \]
+% If $d' \in D_\Pi$, then let $S_1, \dots, S_\ell$ be the list of all types in $\Pi$ such that  $(D,\val) \models  \tau^a_{S_k}(d')$. Thus
+% \[
+% \val_2(d')= \begin{cases}
+% \val(d') & \text{if } a \in S_1 \cup \dots \cup S_\ell \\
+% \val(d') \setminus \{a\} & \text{else.} 
+% \end{cases}
+% \]
+% By construction, we have that the following two facts hold:
+%  \begin{itemize}
+% \item $(D, \val_2) \models \bigvee_{S\in \Pi} \tau_S(d)$,
+%  for each $d \in D_\Pi$, 
+%  \item $(D, \val_2) \models \tau_S(d)$, for each $S \in \Sigma$ and $d \in D_S$. 
+% \end{itemize}
+% In particular, this means that 
+% $(D, \val_2) \models \bigvee_{S\in \Sigma\cup\Pi} \tau_S(d),
+% \text{ for each }d \in D_\Sigma \cup D_\Pi.
+% $
+% Thus, since $D_\Pi$ was chosen to be finite and each $D_S$ is infinite, for $S \in \Sigma$,
+% \begin{equation}\label{eq:3}
+% (D\setminus \vlist{d}, \val_2) \models \forall z.\bigvee_{S\in \Sigma\cup\Pi} \tau_S(z)\land
+% \bigwedge_{S\in\Sigma} \qu y.\tau_S(y) \land \dqu y.\bigvee_{S\in\Sigma} \tau_S(y).
+% \end{equation}
+%  By (\ref{eq:start}) and (\ref{eq:3}) and the fact that $\val_2|_{ \vlist{d}}=\val_1|_{\vlist{d}}$, we have that $(D, \val_2) \models \varphi$.
+% Now, notice that $\val_2(a) \subseteq \val(a)$ and $\val_1(a)=\val(a)$, for each $a \in A\setminus \{a\}$. By monotonicity of $\varphi$ in $a$ we can conclude that $(D, V) \models \varphi$.
+\end{proof}
+
+Putting together the above lemmas we obtain Theorem~\ref{thm:ofoeimonot}. Moreover, a careful analysis of the translation gives us the following corollary, providing normal forms for the monotone fragment of $\ofoei$.
+
+\begin{corollary}\label{cor:ofoeipositivenf}
+	Let $\varphi \in \ofoei(A)$, the following hold:
+	\begin{enumerate}[(i)]
+		\item The formula $\varphi$ is monotone in $A' \subseteq A$ iff it is equivalent to a formula $\bigvee \mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{A'}$ for $\Sigma\subseteq\Pi \subseteq \wp A$ and $\vlist{T} \in \wp(A)^k$ for some $k$.
+		%
+		\item The formula $\varphi$ is monotone in every $a\in A$ (i.e., $\varphi\in{\ofoei}^+(A)$) iff it is equivalent to a formula in the basic form $\bigvee \posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$ for types $\Sigma\subseteq\Pi \subseteq \wp A$ and $\vlist{T} \in \wp(A)^k$ for some $k$.
+		% , where
+		% %
+		% %For the translation, let
+		% %$(\bigvee \dbnfofo{\Sigma})^\tmono:= \bigvee \mondbnfofo{\Sigma}{a}$ and
+		% %
+		% \begin{align*}
+		% 	\posdbnfofoei{\vlist{T}}{\Pi}{\Sigma} :=\ & \mondbnfofoe{\vlist{T}}{\Pi \cup \Sigma}{+} \land \posdbnfinf{\Sigma} \\
+		% 	%
+		% 	\posdbnfofoe{\vlist{T}}{\Lambda} :=\ & \exists \vlist{x}.\big(\arediff{\vlist{x}} \land \bigwedge_i \tau^+_{T_i}(x_i) \land \forall z.(\arediff{\vlist{x},z} \lthen \bigvee_{S\in \Lambda} \tau^+_S(z))\big) \\
+		% 	%
+		% 	\posdbnfinf{\Sigma} :=\ & \bigwedge_{S\in\Sigma} \qu y.\tau^+_S(y) \land \dqu y.\bigvee_{S\in\Sigma} \tau^+_S(y) .
+		% \end{align*}
+		% %for some types $\Pi,\Sigma \subseteq \wp A$ and $T_i \subseteq A$.
+	\end{enumerate}
+	%
+\end{corollary}
+\begin{proof}
+	We only remark that to obtain $\Sigma\subseteq\Pi$ in the above normal forms it is enough to use Proposition~\ref{prop:bfofoei-sigmapi} before applying the translation.
+\end{proof}

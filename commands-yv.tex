@@ -1,0 +1,557 @@
+% version of May 12, 2004 by YV
+%preamble
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{latexsym}
+
+%%%%%%%%%%%%%%% SIZES %%%%%%%%%%%%%%
+
+\setlength{\textwidth}{6.125in}
+\setlength{\textheight}{210mm}
+\setlength{\topmargin}{5mm}
+\setlength{\headsep}{7mm}
+\setlength{\marginparsep}{2mm}
+\setlength{\marginparwidth}{0.75in}
+\setlength{\oddsidemargin}{0.125in}
+\setlength{\evensidemargin}{0.125in}
+
+%%%%%%%%%%%%%%% SIZES %%%%%%%%%%%%%%
+
+\newcommand{\emdef}[1]{\textsl{#1}}
+
+%%%%%%%%%%%%%%%  TBS  %%%%%%%%%%%%%%
+
+%\newcommand{\todo}{}
+\newcommand{\todo}{\marginpar[$\bullet$]{$\bullet$}}
+\newcommand{\hbml}{\textsc{hbml}\marginpar[$\blacktriangleleft$]
+{$\blacktriangleleft$}}
+%\newcommand{\hbml}{\textsc{hbml}}
+\newenvironment{tbs}{%
+   \small\tt
+   \renewcommand{\labelitemi}{$\blacktriangleright$}%
+   \begin{itemize}}{\end{itemize}}
+\newcommand{\btbs}{\begin{tbs}}                                                                      
+\newcommand{\etbs}{\end{tbs}}                                                                      
+\newcommand{\shtbs}[1]{\begin{tbs} \item #1 \end{tbs}}
+
+\newcommand{\hide}[1]{}
+
+%%%%%%%%%%%%%%%  TBS  %%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%% ENVIRONMENTS %%%%%%%%%%%%%%
+
+%\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{fewtheorem}{Theorem}
+%\newtheorem{fact}[theorem]{Fact}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{defi}[theorem]{Definition}
+%\newtheorem{conjecture}[theorem]{Conjecture}
+%\newtheorem{conv}[theorem]{Convention}
+%\newtheorem{rema}[theorem]{Remark}
+%\newtheorem{exam}[theorem]{Example}
+\newtheorem{observation}[theorem]{Observation} %%niet in LLNCS style
+
+%\newenvironment{definition}{\begin{defi}\rm}{\hfill $\lhd$\end{defi}}
+%\newenvironment{definition}{\begin{defi}\rm}{\end{defi}}
+%\newenvironment{convention}{\begin{conv}\rm}{\end{conv}}
+%\newenvironment{remark}{\begin{rema}\rm}{\hfill $\lhd$\end{rema}}
+%\newenvironment{example}{\begin{exam}\rm}{\hfill $\lhd$\end{exam}}
+
+%% proof
+%\newenvironment{proof}{\begin{trivlist}\item[]{\bf
+%Proof.}}{\hfill {\sc qed}\end{trivlist}}
+\newenvironment{proofsketch}{\begin{trivlist}\item[]{\bf
+Proof sketch.}}{\hfill {\sc qed}\end{trivlist}}
+%\newenvironment{proofof}[1]{\begin{trivlist}\item[\hskip\labelsep{\bf
+%Proof~of~{#1}.\ }]}{\hspace*{\fill} {\sc qed}\end{trivlist}}
+
+%claims
+%Use claim only inside a proof and start always with claimfisrt. 
+%Then the claims are numbered inside the proof.
+
+\newtheorem{claim2}{\sc Claim}
+%\newenvironment{claim}{\begin{claim2}\rm}{\end{claim2}\rm}
+\newenvironment{claimfirst}{\setcounter{claim2}{0}
+               \begin{claim2}\rm}{\end{claim2}\rm}
+
+\newenvironment{pfclaim}{\begin{trivlist}\item[]{\sc Proof of
+Claim.}}{\hfill {\mbox{$\blacktriangleleft$}}\end{trivlist}}
+
+\newtheorem{exer}{Exercise}[section]      
+\newenvironment{exercise}{\begin{exer}\rm}{\end{exer}}
+\newenvironment{exenumerate}{%
+  \renewcommand\theenumi{\alph{\value{enumi}}}
+  \renewcommand\theenumi{\@alph{\c@enumi}}
+  \renewcommand\theenumii{\@roman\c@enumii}
+  \renewcommand\theenumiii{\@Alph\c@enumiii}
+  \renewcommand\theenumiv{\@Roman\c@enumiv}
+  \renewcommand\labelenumi{(\theenumi)}
+  \renewcommand\labelenumii{(\theenumii)}
+  \renewcommand\labelenumiii{(\theenumiii)}
+  \renewcommand\labelenumiv{(\theenumiv)}
+  \begin{enumerate}}{\end{enumerate}}
+\newcommand{\points}[1]{\marginpar{\fbox{\texttt{#1 pt}}}}
+
+\newenvironment{opgenumerate}{%
+  \renewcommand{\theenumi}{\alph{enumi}}%
+  \renewcommand\theenumii{\roman{enumiii}}%
+  \renewcommand{\labelenumi}{(\theenumi)}%
+  \renewcommand{\labelenumii}{(\theenumii)}%
+  \begin{enumerate}}{\end{enumerate}}
+
+
+%%%%%%%%%%%%%%% ENVIRONMENTS %%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%% STRUCTURES %%%%%%%%%%%%%% 
+
+\newcommand{\mathstr}[1]{\mathbb{#1}}
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+\newcommand{\struc}[1]{(#1)}
+
+%objects
+\newcommand{\bbA}{\mathstr{A}}
+\newcommand{\bbB}{\mathstr{B}}
+\newcommand{\bbC}{\mathstr{C}}
+\newcommand{\bbD}{\mathstr{D}}
+\newcommand{\bbE}{\mathstr{E}}
+\newcommand{\bbF}{\mathstr{F}}
+\newcommand{\bbG}{\mathstr{G}}
+\newcommand{\bbK}{\mathstr{K}}
+\newcommand{\bbL}{\mathstr{L}}
+\newcommand{\bbM}{\mathstr{M}}
+\newcommand{\bbN}{\mathstr{N}}
+\newcommand{\bbO}{\mathstr{O}}
+\newcommand{\bbP}{\mathstr{P}}
+\newcommand{\bbQ}{\mathstr{Q}}
+\newcommand{\bbR}{\mathstr{R}}
+\newcommand{\bbS}{\mathstr{S}}
+\newcommand{\bbT}{\mathstr{T}}
+\newcommand{\bbX}{\mathstr{X}}
+\newcommand{\bbZ}{\mathstr{Z}}
+
+
+% relating objects
+\newcommand{\iso}{\cong}
+\newcommand{\inj}{\rightarrowtail}
+\newcommand{\injr}[1]{\stackrel{#1}{\rightarrowtail}}
+\newcommand{\injl}[1]{\stackrel{#1}{\leftarrowtail}}
+\newcommand{\suj}{\twoheadrightarrow}
+\newcommand{\sujr}[1]{\stackrel{#1}{\twoheadrightarrow}}
+\newcommand{\sujl}[1]{\stackrel{#1}{\twoheadleftarrow}}
+\newcommand{\ti}[1]{\widetilde{#1}}
+\newcommand{\wh}[1]{\widehat{#1}}
+\newcommand{\DR}[1]{R_{#1}}
+
+\newcommand{\bis}{\mathrel{\mathchoice%
+{\raisebox{.3ex}{$\,
+  \underline{\makebox[.7em]{$\leftrightarrow$}}\,$}}%
+{\raisebox{.3ex}{$\,
+  \underline{\makebox[.7em]{$\leftrightarrow$}}\,$}}%
+{\raisebox{.2ex}{$\,
+  \underline{\makebox[.5em]{\scriptsize$\leftrightarrow$}}\,$}}%
+{\raisebox{.2ex}{$\,
+  \underline{\makebox[.5em]{\scriptsize$\leftrightarrow$}}\,$}}}}
+\newcommand{\bisg}{\mathrel{\mathchoice%
+{\raisebox{.3ex}{$\,
+  \underline{\makebox[.7em]{$\Leftrightarrow$}}\,$}}%
+{\raisebox{.3ex}{$\,
+  \underline{\makebox[.7em]{$\Leftrightarrow$}}\,$}}%
+{\raisebox{.2ex}{$\,
+  \underline{\makebox[.5em]{\scriptsize$\Leftrightarrow$}}\,$}}%
+{\raisebox{.2ex}{$\,
+  \underline{\makebox[.5em]{\scriptsize$\Leftrightarrow$}}\,$}}}}
+
+
+%other
+\newcommand{\Paths}[1]{\mathit{Paths}_{#1}}
+%\newcommand{\omunr}[1]{\overline{#1}}
+\newcommand{\unrav}[2]{\mathbb{E}_{#1}(#2)}
+\newcommand{\omunr}[1]{\unrav{\om}{#1}}
+\newcommand{\ufr}[1]{#1_{\bullet}}
+
+%%%%%%%%%%%%%% CLASSES %%%%%%%%%%%%%% 
+
+\newcommand{\class}[1]{\mathsf{#1}}
+
+\newcommand{\clC}{\class{C}}
+\newcommand{\clD}{\class{D}}
+\newcommand{\clE}{\class{EG}}
+\newcommand{\clK}{\class{K}}
+\newcommand{\clL}{\class{L}}
+\newcommand{\clV}{\class{V}}
+
+\newcommand{\Lcl}[1]{\class{L}(#1)}
+
+\newcommand{\BA}{\class{BA}}
+\newcommand{\BAO}[1]{\class{BAO}_{#1}}
+\newcommand{\BAOt}{\BAO{\tau}}
+\newcommand{\BAOp}[1]{\class{BAO}^{+}_{#1}}
+\newcommand{\BAOpt}{\BAOp{\tau}}
+\newcommand{\BAE}[1]{\class{BAE}_{#1}}
+\newcommand{\BAEt}{\BAE{\tau}}
+\newcommand{\BAM}[1]{\class{BAM}_{#1}}
+\newcommand{\BAMt}{\BAM{\tau}}
+\newcommand{\MA}{\class{MA}}
+
+\newcommand{\Fram}[1]{\class{Fr}_{#1}}
+\newcommand{\Framt}{\Fram{\tau}}
+\newcommand{\FS}{\class{FS}}
+\newcommand{\DGF}[1]{\class{DGF}_{#1}}
+\newcommand{\DGFt}{\DGF{\tau}}
+
+%class operations
+\newcommand{\Oop}{\class{Op}}
+\newcommand{\Cm}{\class{Cm}}
+\newcommand{\Cst}{\class{Cst}}
+\newcommand{\Hom}{\class{H}}
+\newcommand{\Ob}{\class{Ob}}
+\newcommand{\Prod}{\class{P}}
+\newcommand{\Sir}{\class{Sir}}
+\newcommand{\Str}{\class{Str}}
+\newcommand{\Sub}{\class{S}}
+\newcommand{\Subf}{\class{S}_{\class{f}}}
+\newcommand{\Sum}{\class{\Sigma}}
+\newcommand{\UProd}{\class{Pu}}
+\newcommand{\UPow}{\class{Pw}}
+%\newcommand{\Var}{\class{Var}}
+\newcommand{\Covar}{\class{Covar}}
+
+%%%%%%%%%%%%%%% SYNTAX %%%%%%%%%%%%%%
+
+% Languages
+%\newcommand{\Prop}{\ensuremath{\mathsf{Prop}}}        %PROP
+\newcommand{\Prop}{\ensuremath{\mathsf{P}}}        %PROP
+\newcommand{\Propa}{\ensuremath{\mathsf{Q}}}        %PROP
+%\newcommand{\PropQ}{\ensuremath{\mathsf{Q}}}        %PROP
+\newcommand{\Propb}{\ensuremath{\mathsf{R}}}        %PROP
+\newcommand{\Propq}{\ensuremath{\mathsf{Pq}}}        %PROP
+
+%%\newcommand{\Act}{\ensuremath{\mathsf{Act}}}       %Act
+%\newcommand{\Act}{\ensuremath{\mathsf{D}}}       %Act
+%\newcommand{\var}{\textsc{var}}                    %VAR
+%\newcommand{\ML}{\ensuremath{\mathrm{ML}}}       %BML
+%\newcommand{\BML}{\ensuremath{\mathrm{BML}}}       %BML
+%\newcommand{\CML}{\ensuremath{\mathrm{CML}}}       %CML
+%\newcommand{\PML}{\ensuremath{\mathrm{PML}}}       %PML
+%\newcommand{\MFL}{\ensuremath{\mathrm{MFL}}}       %PML
+%\newcommand{\MSL}{\ensuremath{\mathrm{MSL}}}       %PML
+%\newcommand{\muML}{\ensuremath{\mu\ML}}    %muML
+%\newcommand{\muCML}{\ensuremath{\mu\CML}}  %muPML
+%\newcommand{\muPML}{\ensuremath{\mu\PML}}  %muPML
+%\newcommand{\muMFL}{\ensuremath{\mu\MFL}}  %muMFL
+%\newcommand{\muMSL}{\ensuremath{\mu\MSL}}       %PML
+%\newcommand{\StwoS}{\ensuremath{\mathrm{S2S}}}       %PML
+%\newcommand{\msol}{\mathrm{MSOL}}       
+%\newcommand{\mso}{\mathrm{MSO}}       
+%\newcommand{\sfor}{\unlhd}                                %sfor
+%\newcommand{\psfor}{\lhd}                                 %psfor
+%\newcommand{\Sfor}[1]{\ensuremath{\mathit{Sfor}(#1)}}     %Sfor
+%\newcommand{\MLatt}{\mathit{MLatt}}
+%\newcommand{\SLatt}{\mathit{SLatt}}
+%\newcommand{\TLatt}{\mathit{TLatt}}
+%\newcommand{\Latt}{\mathit{Latt}}
+%\newcommand{\Bool}{\mathit{Bool}}
+%\newcommand{\Boolt}{\mathit{Bool}_{\tau}}
+%\newcommand{\MFO}{\mathit{FO}}
+%\newcommand{\BF}{\mathit{BF}}
+%\newcommand{\SBF}{\mathit{SBF}}
+
+\newcommand{\yvF}{\contAFMC}
+\newcommand{\yvFOE}{\mathit{FOE}}
+\newcommand{\yvFO}{\mathit{FO}}
+\newcommand{\yvAut}{\mathit{Aut}}
+\newcommand{\yvwAut}{\mathit{Aut}_{w}}
+\newcommand{\yvcwAut}{\mathit{Aut}_{cw}}
+
+\newcommand{\yvMSO}{\ensuremath{\mathrm{MSO}}}
+\newcommand{\yvWMSO}{\ensuremath{\mathrm{WMSO}}}
+\newcommand{\yvWFMSO}{\ensuremath{\mathrm{WFMSO}}}
+\newcommand{\yvL}{\mathcal{L}}
+\newcommand{\yvLo}{\yvL_{1}}
+\newcommand{\yvmLo}{\yvL_{1}^{+}}
+\newcommand{\yvdual}[1]{#1^{\delta}}
+
+
+\newcommand{\yvmonot}[1]{{#1}^{+}}
+
+
+\newcommand{\FV}[1]{\mathit{FV}(#1)}
+\newcommand{\BV}[1]{\mathit{BV}(#1)}
+
+\newcommand{\lang}{\mathcal{L_\mu}}              %Mu Language
+
+\newcommand{\Ebis}{\exists}
+\newcommand{\UI}[2]{I_{#1}(#2)}
+
+
+% boolean symbols
+\newcommand{\dto}{\leftrightarrow}
+\newcommand{\muneg}{{\sim}}
+\newcommand{\autneg}[1]{\widetilde{#1}}
+\newcommand{\bv}{\bigvee}
+\newcommand{\bw}{\bigwedge}
+\newcommand{\bwsmall}{\textstyle{\bigwedge}}
+
+%modal symbols
+% use "\Box" for the modal box
+\newcommand{\dia}{\Diamond}
+% use the following for indexed diamonds as in PDL
+\newcommand{\mop}[1]{\dia_{#1}}
+\newcommand{\dmop}[1]{\Box_{#1}}
+%\newcommand{\mop}[1]{\la #1 \ra}
+%\newcommand{\dmop}[1]{[#1]}
+\newcommand{\nxt}[1]{\raisebox{.3ex}{$\scriptstyle \bigcirc$}_{#1}}
+\newcommand{\nb}{\nabla}
+
+\newcommand{\hs}{\heartsuit}
+\newcommand{\cbox}{\blacksquare}
+\newcommand{\cdia}{\blacklozenge}
+% \newcommand{\mopastar}{\langle d^{*} \rangle}
+\newcommand{\mopastar}{\langle * \rangle}
+
+\newcommand{\ssse}{\sqsubseteq}
+%\newcommand{\Rso}{\rl{R}}
+\newcommand{\Rso}{R}
+\newcommand{\act}[1]{{\Downarrow}#1}
+
+
+%various
+\renewcommand{\phi}{\varphi} % nicer \phi
+\newcommand{\isbnf}{\mathrel{::=}}
+\newcommand{\divbnf}{\mathrel{|}}
+\newcommand{\is}{\approx}
+\newcommand{\issm}{\preceq}
+\newcommand{\len}[1]{|#1|}
+\newcommand{\diff}[1]{\mathtt{diff}(#1)}
+\newcommand{\emppred}[1]{\mathtt{empty}(#1)}
+\newcommand{\sing}[1]{\mathtt{sing}(#1)}
+
+%logics
+\newcommand{\logK}{\mathbf{K}}
+%\newcommand{\ext}{.}
+\newcommand{\Kmu}{\mathbf{K\mu}}
+
+%%%%%%%%%%%%%%  SEMANTICS  %%%%%%%%%%%%%% 
+
+\newcommand{\waar}{\Vdash}
+\newcommand{\forces}{\Vdash}
+\newcommand{\gwaar}{\forces_{g}}
+\newcommand{\mng}[1]{[\![ #1 ]\!]}
+\newcommand{\meq}{\leftrightsquigarrow}
+
+\newcommand{\exop}[1]{\langle #1 \rangle}
+\newcommand{\unop}[1]{[#1]}
+
+\newcommand{\Bhv}{\mathit{Bhv}}
+\newcommand{\Cov}{\class{Cov}}
+\newcommand{\Mod}{\class{Mod}}
+\newcommand{\Equ}{\mathit{Equ}}
+\newcommand{\Log}{\mathit{Log}}
+\newcommand{\NExt}[1]{\mathrm{NExt}(#1)}
+\newcommand{\Th}{\mathit{Log}}
+\newcommand{\Fr}{\class{Fr}}
+
+%%%%%%%%%%%%%% COALGEBRA %%%%%%%%%%%%%% 
+
+\newcommand{\Set}{\mathsf{Set}}
+\newcommand{\Rel}{\mathsf{Rel}}
+\newcommand{\SET}{\mathsf{SET}}
+\newcommand{\Stone}{\mathsf{Stone}}
+\newcommand{\Alg}{\mathsf{Alg}}
+\newcommand{\Coalg}{\mathsf{Coalg}}
+
+\newcommand{\dueq}{\rightleftharpoons}
+\newcommand{\pb}{\mathit{pb}}
+%\newcommand{\opp}[1]{#1^{\mathit{op}}}
+\newcommand{\idar}{\mathit{id}}
+\newcommand{\incl}{\hookrightarrow}
+
+%\newcommand{\F}{\mathcal{F}}
+\newcommand{\F}{\Omega}
+%\newcommand{\G}{\Psi}
+\newcommand{\FC}{\F_{C}}
+\newcommand{\FX}{\F_{X}}
+%\newcommand{\funG}{\mathcal{G}}
+\newcommand{\funG}{\Xi}
+\newcommand{\Viet}{\mathcal{V}}
+\newcommand{\funId}{\mathcal{I}}
+%\newcommand{\funC}[1]{\mathcal{C}_{#1}}
+\newcommand{\funC}[1]{#1}
+%\newcommand{\funP}{\mathcal{P}}
+\newcommand{\funP}{\pw}
+\newcommand{\funPom}{\funP_{\omega}}
+\newcommand{\olP}{\breve{\mathcal{P}}}
+\newcommand{\funPP}{\olP \circ \olP}
+\newcommand{\UpP}{\mathcal{U}_{\olP}}
+\newcommand{\FiP}{\mathcal{F}_{\olP}}
+
+\newcommand{\btC}{\mathsf{B}_{C}}
+\newcommand{\btCone}{\mathsf{B}_{C_{1}}}
+\newcommand{\Kr}{\mathsf{K}}
+%\newcommand{\Kr}{\mathcal{\Lambda}}
+\newcommand{\Hr}{\Lambda}
+%\newcommand{\Hr}{\Xi}
+\newcommand{\Ing}{\mathit{Ing}}
+\newcommand{\FmK}{\Fm_{\Kr}}
+%\newcommand{\next}{\odot}
+
+\newcommand{\rl}[1]{\overline{#1}}
+\newcommand{\beh}{{!}}
+\newcommand{\Beh}{\mathit{beh}}
+
+
+%%%%%%%%%%%%%%  AUTOMATA   %%%%%%%%%%%%%% 
+
+
+\newcommand{\q}{a}
+\newcommand{\Q}{A}
+\newcommand{\ai}{\q_{I}}
+\newcommand{\at}{a_{\top}}
+\newcommand{\af}{a_{\bot}}
+\newcommand{\qi}{q_{I}}
+\newcommand{\bi}{b_{I}}
+\newcommand{\zi}{z_{I}}
+\newcommand{\Acc}{\mathit{Acc}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\Lom}{L_{\om}}
+
+%\newcommand{\ttr}[1]{\twoheadrightarrow^{#1}}
+\newcommand{\tr}[1]{\stackrel{#1}{\rightarrow}}
+\newcommand{\ttr}[1]{\stackrel{#1}{\twoheadrightarrow}}
+\newcommand{\ttrF}[1]{\stackrel{#1}{\twoheadrightarrow_{F}}}
+%\newcommand{\bttr}[2]{\stackrel{#1}{\twoheadrightarrow}_{#2}}
+\newcommand{\bttr}[2]{\overset{#1}{\underset{#2}{\twoheadrightarrow}}}
+
+\newcommand{\lar}{\triangledown}
+
+\newcommand{\sh}[1]{{#1}^{\sharp}}
+\newcommand{\rA}{\sh{A}}
+\newcommand{\Ri}{R_{I}}
+\newcommand{\NOT}{\mathrm{NBT}}
+\newcommand{\SCC}{\mathrm{SCC}}
+\newcommand{\ind}{\mathit{ind}}
+
+\newcommand{\bbAun}{\bbA_{\cup}}
+\newcommand{\bbAit}{\bbA_{\cap}}
+\newcommand{\bbAneg}{\autneg{\bbA}}
+\newcommand{\Deun}{\De_{\cup}}
+\newcommand{\Deit}{\De_{\cap}}
+\newcommand{\Deneg}{\De_{\sim}}
+
+\newcommand{\gprod}{\rtimes}
+
+%%%%%%%%%%%%%%  AUTOMATA   %%%%%%%%%%%%%% 
+
+\newcommand{\rstaut}[1]{\!\upharpoonright_{#1}\,}
+\newcommand{\prj}[2]{\pi_{#1}{\bbA}}
+
+%%%%%%%%%%%%%%   GAMES     %%%%%%%%%%%%%% 
+
+\newcommand{\AG}{\mathcal{A}}
+\newcommand{\BG}{\mathcal{B}}
+\newcommand{\EG}{\mathcal{E}}
+\newcommand{\GG}{\mathcal{G}}
+%\newcommand{\EmG}{\mathcal{G}_{\nada}}
+\newcommand{\EmG}{\mathcal{S}}
+\newcommand{\RG}{\mathcal{R}}
+\newcommand{\UG}{\mathcal{U}}
+%\newcommand{\NGm}{\mathcal{N}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\eloi}{\exists}
+\newcommand{\abel}{\forall}
+%\newcommand{\winner}{\mathrm{winner}}
+\newcommand{\winner}{W}
+\newcommand{\Win}{\mathrm{Win}}
+%\newcommand{\plr}{P}
+\newcommand{\plr}{\sigma}
+\newcommand{\Plr}[1]{P_{#1}}
+\newcommand{\opp}[1]{\bar{#1}}
+\newcommand{\Unfinf}[1]{\mathit{Unf}^{\infty}(#1)}
+\newcommand{\OOccinf}[2]{\mathit{Inf}_{#2}(#1)}
+\newcommand{\Occ}[1]{\mathit{Occ}(#1)}
+\newcommand{\Occinf}[1]{\mathit{Inf}(#1)}
+\newcommand{\Occfin}[1]{\mathit{Occ}^{<\om}(#1)}
+\newcommand{\PM}[1]{\mathrm{PM}_{#1}}
+
+\newcommand{\Attr}{\mathit{Attr}}
+\newcommand{\attr}{\mathit{attr}}
+
+%%%%%%%%%%%%%%   GAMES     %%%%%%%%%%%%%% 
+
+%%%%%%%%%%%%%% MATHEMATICS %%%%%%%%%%%%%% 
+
+%various
+\newcommand{\bpr}{{\upharpoonright}}
+\newcommand{\rst}[1]{{\upharpoonright}_{#1}\,}
+%\newcommand{\pw}{\mathit{Sb}}
+\newcommand{\nada}{\varnothing}
+%\newcommand{\cpl}[1]{{-}_{#1}}
+\newcommand{\cpl}{{-}}
+\newcommand{\rcpl}[1]{{\sim}_{#1}}
+\newcommand{\yiff}{\mbox{ iff }}
+\newcommand{\paar}[2]{\langle #1, #2 \rangle}
+\newcommand{\haak}[1]{[\![#1]\!]}
+\newcommand{\Sb}[1]{\mathcal{P}(#1)}
+\newcommand{\sse}{\subseteq}
+\newcommand{\quot}{/\!\!}
+\newcommand{\Diag}{\Delta}
+\newcommand{\Id}[1]{\mathit{Id}_{#1}}
+\newcommand{\Un}{\Upsilon}
+\newcommand{\size}[1]{|#1|}
+\newcommand{\first}{\mathit{first}}
+\newcommand{\last}{\mathit{last}}
+
+\newcommand{\Bdual}[1]{\tilde{#1}}
+
+%\newcommand{\pw}{\mathcal{P}}
+%\newcommand{\pw}{\wp}
+%\newcommand{\apw}{\mathstr{P}}
+\newcommand{\PE}{\pw_{\eloi}}
+\newcommand{\PA}{\pw_{\abel}}
+
+
+%%%%%%%%%%%%%% VARIOUS ABBREVIATIONS %%%%%%%%%%%%%% 
+
+%Greek letters
+\newcommand{\Si}{\Sigma}
+\newcommand{\Ga}{\Gamma}
+\newcommand{\De}{\Delta}
+\newcommand{\Om}{\Omega}
+\newcommand{\al}{\alpha}
+\newcommand{\be}{\beta}
+\newcommand{\de}{\delta}
+\newcommand{\ga}{\gamma}
+\newcommand{\si}{\sigma}
+\newcommand{\om}{\omega}
+
+
+%various
+\newcommand{\isdef}{\mathrel{:=}}
+\newcommand{\isbydef}{\;:\!\iff\;}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\Succ}[1]{\mathit{Succ}_{#1}}
+\newcommand{\Ord}{\mathcal{O}}
+%Fixed points
+\newcommand{\pre}[1]{\ensuremath{\mathrm{PRE}({#1})}}           %POS(phi)
+\newcommand{\pos}[1]{\ensuremath{\mathrm{POS}({#1})}}           %POS(phi)
+\newcommand{\fix}[1]{\ensuremath{\mathrm{FIX}({#1})}}           %FIX(phi)
+\newcommand{\lfp}[1]{\ensuremath{\mathrm{LFP.}#1}}             %LFP.phi
+\newcommand{\gfp}[1]{\ensuremath{\mathrm{GFP.}#1}}             %GFP.phi
+%\newcommand{\alfp}[2]{\ensuremath{\mathrm{LFP}^{#1}.}#2}     %LFP.phi
+%\newcommand{\agfp}[2]{\ensuremath{\mathrm{GFP}^{#1}.}#2}     %LFP.phi
+\newcommand{\alfp}[2]{\ensuremath{{#2}^{#1}_{\mu}}}     %LFP.phi
+\newcommand{\agfp}[2]{\ensuremath{{#2}^{#1}_{\nu}}}    %LFP.phi
+\newcommand{\Dom}{\mathsf{Dom}}
+\newcommand{\Ran}{\mathsf{Ran}}
+\newcommand{\eps}{\epsilon}
+\newcommand{\lts}{LTS}
+
+%\newcommand{\nrpageone}{\setcounter{page}{1}}
+\newcommand{\nrpageone}{}
+\newcommand{\coloneqq}{\mathrel{:=}}
+\newcommand{\ovl}[1]{\overline{#1}}
+\newcommand{\start}{\Rightarrow}

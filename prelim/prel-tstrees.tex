@@ -1,0 +1,56 @@
+Throughout this article we fix a set $\props$ of elements that will be called
+\emph{proposition letters} and denoted with small Latin letters $p, q, \ldots$ .
+We denote with $C$ the set $\wp (\props)$ of \emph{labels} on $\props$; it will be
+convenient to think of $C$ as an \emph{alphabet}.
+Given a binary relation $R \subseteq X \times Y$, for any element $x \in X$,
+we indicate with $R[x]$ the set $\compset{ y \in Y \mid (x,y) \in R}$ while $R^+$
+and $R^{*}$ are defined respectively as the transitive closure of~$R$ and
+the reflexive and transitive closure of~$R$. The set $\Ran(R)$ is defined as $\bigcup_{x\in X}R[x]$.
+
+A \emph{$C$-labeled transition system} (LTS) is a tuple $\model = \tup{T,R,\tscolors,s_I}$ where
+$T$ is the universe or domain of $\model$, $\tscolors:T\to\wp(\props)$ is a marking,
+$R\subseteq T^2$ is the accessibility relation and $s_I \in T$ is a distinguished node.
+We use $|\model|$ to denote the domain of $\model$.
+%
+% We use $\tscolors^\flat$ to denote the map $\tscolors^\flat:T\to\wp(\props)$ defined as
+% $\tscolors^\flat(s) = \{p \in \props \mid s\in \tscolors(p)\}$ and $|\model|$ to denote the domain of $\model$.
+Observe that the marking ${\tscolors:T\to\wp(\props)}$ can be seen as a valuation $\tsval:\props\to\wp (T)$ given by $\tsval(p) = \{s \in T \mid p\in \tscolors(s)\}$.
+
+%A pointed LTS is a tuple $(\model,s)$ where $s\in T$ is a distinguished element.
+%Pointed LTSs may also be written as $(\model,s) = \tup{T,R,\tscolors,s}$.
+%We use $|\model|$ to denote the domain of $\model$.
+%
+A \emph{$C$-tree} is a LTS in which every node can
+be reached from $s_I$, and every node except $s_I$ has a unique predecessor;
+the distinguished node $s_I$ is called the \emph{root} of $\model$.
+Each node $s \in T$ uniquely defines a subtree of $\model$ with carrier
+$R^{*}[s]$ and root $s$. We denote this subtree by ${\model.s}$.
+We use the term \emph{tree language} as a synonym of class of $C$-trees.
+
+The tree unravelling of an LTS $\model$ is given by $\unravel{\model} := \tup{T_P,R_P,\tscolors',s_I}$ where $T_P$ is the set of finite paths in $\model$ stemming from $s_I$, $R_P(t,t')$ iff $t'$ is an extension of $t$ and the color of a path $t\in T_P$ is given by the color of its last node in $T$. The $\omega$-unravelling $\omegaunrav{\model}$ of $\model$ is an unravelling which has $\omega$-many copies of each node different from the root.
+
+A \emph{$p$-variant} of a transition system $\model = \tup{T,R,\tscolors,s_I}$
+is a $\wp (\props\cup\{p\})$-transition system $\tup{T,R,\tscolors',s_I}$
+such that $\tscolors'(s)\setminus\{p\} = \tscolors(s)$ for all $s \in T$.
+Given a set $S \subseteq T$, we let $\model[p\mapsto S]$ denote the $p$-variant
+%$\tup{T,R,\tscolors',s_I}$ of $\model$
+where $p \in \tscolors'(s)$ iff $s \in S$.
+%A \emph{path} through $\model$ is a sequence $\pi = (s_i)_{i< \alpha}$ of
+%elements of $T$, where $\alpha$ is either $\omega$ or a natural number,
+%and $(s_i,s_{i+1}) \in R$ for all $i$ with $i+1 < \alpha$. \fznote{do we need the definition of path?}
+
+Let $\varphi \in \llang$ be a formula of some logic $\llang$,
+we use $\ext{\varphi} = \compset{\model \mid \model \models \varphi}$ to denote the class
+of transition systems that make $\varphi$ true.
+%The subscript $P$ is omitted when the set $P$ of proposition letters is clear from the context.
+A class $\mclass$ of transition systems is said to be \emph{$\llang$-definable} if there
+is a formula $\varphi \in \llang$ such that $\ext{\varphi} = \mclass$.
+We use the notation $\varphi \equiv \psi$ to mean that $\ext{\varphi} = \ext{\psi}$ and given two logics
+$\llang, \llang'$ we use $\llang \equiv \llang'$ when the $\llang$-definable and $\llang'$-definable
+classes of models coincide.
+
+\textit{Convention.}
+Throughout this paper, we will only consider transition systems $\model$
+in which $R[s]$ is non-empty for every node $s \in T$.
+In particular this means that every tree we consider is \emph{leafless}.
+All our results, however, can easily be lifted to the general case.

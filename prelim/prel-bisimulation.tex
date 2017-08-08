@@ -1,0 +1,38 @@
+Bisimulation is a notion of behavioral equivalence between processes.
+For the case of  transition systems, it is formally defined as follows.
+
+\begin{definition}
+Let $\model = \tup{T, R, \tscolors, s_I}$ and
+$\model' = \tup{T', R', \tscolors', s'_I}$ be transition systems.
+A \emph{bisimulation} is a relation $Z \subseteq T \times T'$
+such that for all $(t,t^{\prime}) \in Z$ the following holds:
+\begin{description}
+  \itemsep 0 pt
+  \item[(atom)] $p \in \tscolors(t)$ iff $p \in \tscolors^{\prime}(t')$ for all $p\in\prop$;
+  \item[(forth)] for all $s \in R[t]$ there is $s^{\prime} \in R^{\prime}[t^{\prime}]$ such that $(s,s^{\prime}) \in Z$;
+  \item[(back)] for all $s^{\prime} \in R^{\prime}[t^{\prime}]$ there is $s \in R[t]$ such that $(s,s^{\prime}) \in Z$.
+\end{description}
+%
+Two pointed transition systems $\model$ and $\model^{\prime}$ are
+\emph{bisimilar} (denoted $\model \bis \model^{\prime}$) if there is a
+bisimulation $Z \subseteq T \times T^{\prime}$ containing $(s_I,s'_I)$.
+\end{definition}
+
+The following fact about tree unravellings will allow us to provide a proof of
+Theorem~\ref{t:m1} by just proving it for tree languages.
+
+\begin{fact}\label{prop:tree_unrav}
+$\model$ and $\model^e$ are bisimilar, for every transition system $\model$.
+\end{fact}
+
+A class of transition systems $\mclass$ is \emph{bisimulation closed} if $\model
+\bis \model^{\prime}$ implies that $\model \in \mclass$ iff $\model^{\prime}
+\in \mclass$, for all $\model$ and $\model^{\prime}$.
+A formula $\varphi \in \llang$ is \emph{bisimulation-invariant} if $\model \bis
+\model^{\prime}$ implies that $\model \mmodels \varphi$ iff $\model^{\prime}
+\mmodels \varphi$, for all $\model$ and $\model^{\prime}$.
+%An analogous definition can be given for $\wmso$.
+
+\begin{fact}
+Each $\MC$-definable class of transition systems is bisimulation closed.
+\end{fact}

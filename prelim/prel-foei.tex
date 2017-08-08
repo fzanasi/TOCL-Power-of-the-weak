@@ -1,0 +1,29 @@
+
+
+In this subsection we introduce an extension of first-order logic with so called generalised quantifiers.
+% Our interest in this extension stems from the fact that it will allow us to define a variant of first-order logic that is expressively equivalent to weak monadic second order (see Section~\ref{sec:onestep}) and has nice technical features such as a normal form theorem.
+%
+Mostowski~\cite{Mostowski1957} defined unary generalised quantifiers as follows: a unary generalised quantifier ${\mathcal Q}$ is a collection of pairs $(J, X)$ with $X \subseteq J$, and satisfying the following condition
+%
+\[
+\text{If } \big( (J,X)\in {\mathcal Q}, \ |X|=|Y| \ \land \ | J \setminus X|=|K \setminus Y|\big) \text{ then } (K,Y)\in {\mathcal Q}.
+\]
+
+\noindent The semantics of ${\mathcal Q}$ is then defined by the following condition
+\[
+\npmodel,\ass \models {\mathcal Q}x. \phi(x) \quad\text{iff}\quad (\npmoddom,\{s\in\npmoddom \mid \npmodel,\ass[x\mapsto s] \models \phi(x) \}) \in {\mathcal Q},
+\]
+%
+for every model $\npmodel$ and assignment $\ass$.
+
+In this work we will only focus on the generalised quantifier $\qu$ expressing that there exist infinitely many elements satisfying a certain condition. Formally, it is defined as:
+%
+\[ \qu := \{(J,X) \mid |X| \geq \aleph_0\}.\]
+%
+The dual of $\qu$ is $\dqu =\{(J,X) \mid |J\setminus X| < \aleph_0\}$. It is worth observing what is the intended meaning of this quantifier: $\dqu x.\varphi$ expresses that there are \emph{at most finitely many} elements \emph{falsifying} the formula $\varphi$.
+
+
+\begin{definition}
+The extension of first-order logic with equality ($\foe$) 
+obtained by adding $\qu$ to the corresponding first-order language is denoted $\foei$.
+\end{definition}

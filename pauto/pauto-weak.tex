@@ -1,0 +1,50 @@
+In this section we introduce and briefly discuss the notion of \emph{weak (alternating) parity automata}.
+This class of automata is defined by posing an additional restriction on the parity map, which results in weaker expressive power.
+
+Weak automata were introduced in~\cite{DBLP:journals/tcs/MullerSS92} to study weak definability~\cite{Rabin1970} in \emph{trees with fixed finite branching degree}. That is, to study the classes (also called languages) of k-ary trees which can be defined in \wmso.
+
+\begin{definition}\label{def:weak}
+The class $\AutW(\llang)$ of \emph{weak automata} is given by the automata
+$\aut = \tup{A,\tmap,\pmap,a_I}$ from $\Aut(\llang)$ such that 
+the following condition holds:
+\begin{description}
+\item[(weakness)] if $a \ordeq b$ and $b \ordeq a$ then $\pmap(a) = \pmap(b)$.
+\end{description}
+\end{definition}
+
+The intuition is that every run of a weak automaton $\aut$ stabilizes on (`gets trapped into') some strongly connected component $\mccomp \subseteq A$ after finitely many steps, and therefore the only parity seen infinitely often after that point will be the parity of $\mccomp$. Moreover, as only \emph{one} parity can be repeated infinitely often, the precise number does not matter; only the parity does:
+
+\begin{fact}[\cite{Neumann2002}]\label{fact:parity01}
+Every weak automaton $\aut=\tup{A,\tmap,\pmap,a_I}$ is equivalent to a weak automaton
+$\aut'=\tup{A,\tmap,\pmap',a_I}$ with parity map $\pmap': A \to \{0,1\}$. 
+\end{fact}
+\begin{proof}
+	Just define $\pmap'(a) := \pmap(a) \textup{ mod } 2$.
+\end{proof}
+
+From now on we assume such a map for weak parity automata.
+%
+The special structure of weak alternating automata is reflected in their attractive computational properties~\cite{Kupferman2001,Kupferman2000}. If we think about trees, the leading intuition is that the weakness condition restricts the processing of the `vertical dimension' of input trees. In the context of trees of bounded branching, this restriction is all that is needed to characterize \wmso.
+
+\begin{theorem}[{\cite[Theorem~1]{DBLP:journals/tcs/MullerSS92}}]
+	A k-ary tree language is accepted by a weak automaton iff it is definable in \wmso.
+\end{theorem}
+
+However, if the branching of the tree is not bounded, the story is quite different. This scenario will be studied in Section XXX, where we will show that weak automata capture a different logic.
+
+\begin{theorem}[{\cite[Theorem~2]{Facchini2013}}]
+	An (arbitrarily branching) tree language is accepted by a weak automaton iff it is definable in \wfmso.
+\end{theorem}
+
+In this case, \wfmso stands for \emph{well-founded} MSO, a variant of \mso which quantifies over (subsets of) well-founded trees. Moreover, it is shown that in the class of arbitrary trees, the logics $\wfmso$ and $\wmso$ are incomparable (see~\cite[Corollary~5.16]{Zanasi2012}).
+
+The different behaviour of weak automata depending on the branching degree of the trees can be explained if we look at the runs of such automata. Intuitively, the problem is that weak automata can process well-founded but inifinitely branching trees. On the other hand, a finite subset of a tree (as quantified by \wmso) is always embedded in a well-founded \emph{and finitely branching} subtree. In the following sections we will consider additional constraints to solve this problem.
+
+\myparagraph{No alternation.}
+If we think of parity automata as the automata counterpart of fixpoint logics, it is 
+known that the (Mostowski) index of the automata (i.e., the range of the parity map) is
+tightly connected to the alternation of fixpoints~\cite{Wilke2001}. As weak automata can
+be thought of as having a parity map with range $\{0,1\}$ (\emph{cf.}~Fact~\ref{fact:parity01})
+this means that, on the fixpoint side, the corresponding logic will be \emph{alteration-free}.
+This correspondence was
+proved between concrete weak automata (based on $\fo$) and the alternation-free $\mu$-calculus, for increasingly more general structures in~\cite{Arnold1992,DBLP:journals/tocl/KupfermanV05,DBLP:conf/lics/KupfermanV98,Kupferman2003}.

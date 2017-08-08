@@ -1,0 +1,105 @@
+
+
+% macros
+\newcommand{\nat}{\ensuremath{\mathbb{N}}\xspace}
+\newcommand{\tup}[1]{\langle{#1}\rangle}
+\newcommand{\ext}[1]{\llbracket#1\rrbracket}
+\newcommand{\prop}{\mathsf{P}}
+\newcommand{\qprop}{\mathsf{Q}}
+\newcommand{\acts}{\mathsf{D}}
+\newcommand{\model}{\mathbb{T}}
+\newcommand{\osmodel}{\mathbf{D}}
+\newcommand{\compset}[1]{\{#1\}}
+\newcommand{\mc}{\mathcal}
+\newcommand{\mmodels}{\Vdash}
+\newcommand{\umods}{\mathfrak{M}_1}
+\newcommand{\rest}{|}
+\newcommand{\omegaunrav}[1]{{#1}^\omega}
+\newcommand{\unravel}[1]{{#1}^e}
+
+
+\newcommand{\MC}{\ensuremath{\mu\ML}\xspace}
+\newcommand{\AFMC}{\ensuremath{\mathrm{AFMC}}\xspace}
+\newcommand{\contAFMC}{\ensuremath{\mu_{c}\ML}\xspace}%{\ensuremath{\mathsf{F}}}
+\newcommand{\nmso}{\ensuremath{\mathrm{NMSO}}\xspace}
+\newcommand{\NMSO}{\nmso}
+\newcommand{\WMSO}{\wmso}
+\newcommand{\wmso}{\ensuremath{\mathrm{WMSO}}\xspace}
+\newcommand{\owmso}{\ensuremath{\mathrm{WMSO}_1}\xspace}
+\newcommand{\wmsoe}{\ensuremath{\mathrm{WMSO}^=}\xspace}
+\newcommand{\owmsoe}{\ensuremath{\mathrm{WMSO}^=_1}\xspace}
+\newcommand{\fo}{\ensuremath{\mathrm{FO}}\xspace}
+\newcommand{\gfo}{\ensuremath{\mathrm{gFO}}\xspace}
+\newcommand{\mgfo}{\ensuremath{\mu\mathrm{gFO}}\xspace}
+\newcommand{\ofo}{\ensuremath{\fo_1}\xspace}%\mathrm{FO}_1}\xspace}
+\newcommand{\foe}{\ensuremath{\mathrm{FOE}}\xspace}
+\newcommand{\gfoe}{\ensuremath{\mathrm{gFOE}}\xspace}
+\newcommand{\mgfoe}{\ensuremath{\mu\mathrm{gFOE}}\xspace}
+\newcommand{\ofoe}{\ensuremath{\foe_1}\xspace}%\mathrm{FO}^=_1}\xspace}
+\newcommand{\cont}[2]{#1\mathrm{C}_{#2}}
+\newcommand{\cocont}[2]{#1\overline{\mathrm{C}}_{#2}}
+\newcommand{\monot}[2]{#1\mathrm{M}_{#2}}
+\newcommand{\mclass}{K}%{\ensuremath{\mathsf{C}}\xspace}
+\newcommand{\llang}{\ensuremath{\mathcal{L}}\xspace}
+\newcommand{\trees}{\ensuremath{\mathcal{T}}}
+\newcommand{\autlang}{\ensuremath{L}}
+
+\newcommand{\qu}{\ensuremath{\exists^\infty}\xspace}%{\mathcal Q}_0}\xspace}
+\newcommand{\fqu}{\ensuremath{\exists^{<\omega}}\xspace}%{\mathcal Q}_0}\xspace}
+\newcommand{\dqu}{\ensuremath{\forall^\infty}\xspace}%\overline{{\mathcal Q}_0}}\xspace}
+\newcommand{\wqu}{\ensuremath{\mathbf{W}}\xspace}
+\newcommand{\lqu}{\ensuremath{\fo^\infty}\xspace}%\omega}\xspace}%(\qu)}\xspace}
+%\newcommand{\olqu}{\ensuremath{\lqu_1}\xspace}
+\newcommand{\lque}{\ensuremath{{\foe}^\infty}\xspace}%\omega}\xspace}%(\qu)}\xspace}
+\newcommand{\mlque}{\ensuremath{\mu\lque}\xspace}%\omega}\xspace}%(\qu)}\xspace}
+\newcommand{\clque}{\ensuremath{\mu_{c}\lque}\xspace}%\omega}\xspace}%(\qu)}\xspace}
+\newcommand{\olque}{\ensuremath{\lque_1}\xspace}
+
+\newcommand{\dbnf}{\nabla}										% disjunct of basic normal form
+\newcommand{\dbnfofo}[1]{\dbnf_{\fo}(#1)}						% disjunct of basic normal form FO
+\newcommand{\dgbnfofo}[2]{\dbnf_{\fo}(#1,#2)}					% disjunct of generalized basic normal form FO
+\newcommand{\dbnfofoe}[2]{\dbnf_{\foe}(#1,#2)}					% disjunct of basic normal form FOE
+\newcommand{\dbnfolque}[3]{\dbnf_{\lque}(#1,#2,#3)}				% disjunct of basic normal form LQUE
+\newcommand{\dbnfinf}[1]{\dbnf_\infty(#1)}
+
+\newcommand{\mondbnfofo}[2]{\dbnf^{#2}_\fo(#1)}					% disjunct of basic normal form monotone FO
+\newcommand{\mondgbnfofo}[3]{\dbnf^{#3}_\fo(#1,#2)}				% disjunct of generalized basic normal form monotone FO
+\newcommand{\mondbnfofoe}[3]{\dbnf^{#3}_{\foe}(#1,#2)}			% disjunct of basic normal form monotone FOE
+\newcommand{\mondbnfolque}[4]{\dbnf^{#4}_{\lque}(#1,#2,#3)}		% disjunct of basic normal form monotone LQUE
+\newcommand{\mondbnfinf}[2]{\dbnf^{#2}_\infty(#1)}
+
+\newcommand{\posdbnfofo}[1]{\dbnf^+_{\fo}(#1)}					% disjunct of basic normal form positive FO
+\newcommand{\posdgbnfofo}[2]{\dbnf^+_{\fo}(#1,#2)}				% disjunct of generalized basic normal form positive FO
+\newcommand{\posdbnfofoe}[2]{\dbnf^+_{\foe}(#1,#2)}				% disjunct of basic normal form positive FOE
+\newcommand{\posdbnfolque}[3]{\dbnf^+_{\lque}(#1,#2,#3)}		% disjunct of basic normal form positive LQUE
+\newcommand{\posdbnfinf}[1]{\dbnf^+_\infty(#1)}
+
+\newcommand{\sovar}{\mathsf{Var}}
+\newcommand{\fovar}{\mathsf{iVar}}
+\newcommand{\cov}{\mathsf{cov}}
+\newcommand{\ass}{g}
+\newcommand{\val}{V}
+\newcommand{\tscolors}{\sigma}
+\newcommand{\tsval}{\tscolors^\flat}
+
+\newcommand{\aut}{\ensuremath\mathbb{A}\xspace}
+\newcommand{\tmap}{\Delta}
+\newcommand{\pmap}{\Omega}
+\newcommand{\ord}{\preceq}
+\newcommand{\reach}{\leadsto}
+\newcommand{\lthen}{\to}
+
+\newcommand{\inc}{\sqsubseteq}
+\newcommand{\here}[1]{{\Downarrow}#1}
+\newcommand{\arediff}[1]{\mathrm{diff}(#1)}
+\newcommand{\foeq}{\approx}
+\newcommand{\tcont}{\vartriangle}
+\newcommand{\tmono}{\circ}
+\newcommand{\vlist}[1]{\vv{#1}}
+
+\newcommand{\efgame}{\mathrm{EF}}
+\newcommand{\egame}{\mathcal{E}}
+\newcommand{\eloise}{\ensuremath{\exists}\xspace}
+\newcommand{\abelard}{\ensuremath{\forall}\xspace}
+\newcommand{\pmatches}[2]{\mathsf{PM}^{#1}_{#2}}
+\newcommand{\win}{\text{\sl Win}} 

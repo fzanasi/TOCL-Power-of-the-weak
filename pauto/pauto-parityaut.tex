@@ -1,0 +1,124 @@
+%!TEX root = ../00CFVZ_TOCL.tex
+
+We recall the definition of a parity automaton, adapted to our setting.
+Recall from Section~\ref{sec:onestep} that formulas of an arbitrary one-step language $\llang$ are interpreted over  one-step models, that is, a tuple $\osmodel = (D,\val: A \to \wp D)$. %Whenever we say `one-step model' in this section we will be referring to \emph{single-sorted} one-step models. 
+Recall that the class of all one-step models is denoted by $\umods$ and that we write $\llang^+(A)$ to denote the fragment where every predicate $a\in A$ occurs only positively.
+Without loss of generality, from now on we always assume that every bound variable occurring in a sentence is bound by an unique quantifier (generalised or not).
+
+
+
+
+\begin{definition}[Parity Automata]
+A \emph{parity automaton} based on the one-step language $\llang$ and 
+alphabet $\wp(\props)$ is a tuple $\aut = \tup{A,\tmap,\pmap,a_I}$ such that $A$ is a
+finite set of states, $a_I \in A$ is the initial state,
+$\tmap: A\times \wp(\props) \to \llang^+(A)$
+is the transition map, and $\pmap: A \to \nat$ is the parity map.
+The class of such automata will be denoted by $\Aut(\llang)$.
+
+Acceptance of a $\props$-transition
+system $\model = \tup{\moddom,R,\tscolors,s_I}$ by $\aut$ is determined by the \emph{acceptance game}
+$\agame(\aut,\model)$ of $\aut$ on $\model$. This is the parity game defined
+according to the rules of the following table.
+%
+% \begin{table*}[ht]
+%   \centering
+\begin{center}
+\small
+\begin{tabular}{|l|c|l|c|} \hline
+Position & Pl'r & Admissible moves & Parity \\
+\hline
+    $(a,s) \in A \times \moddom$
+  & $\eloise$
+  & $\{\val : A \to \wp(R[s]) \mid (R[s],\val) \models \tmap (a, \tscolors(s)) \}$
+  & $\pmap(a)$ 
+\\
+%     $(a,s) \in A \times \moddom$
+%   & $\abelard$
+%   & $\{(a,s,\aact) \in A \times \moddom  \mid \aact \in \acts\}$
+%   & $\pmap(a)$ 
+% \\
+%     $(a,s,\aact) \in A \times \moddom $
+%   & $\eloise$
+%   & $\{\val : A \to \wp(R_\aact[s]) \mid (R_\aact[s],\val) \models \tmap (a, \tscolors(s), \aact) \}$
+%   & $\pmap(a)$ 
+% \\
+    $\val : A \rightarrow \wp(\moddom)$
+  & $\abelard$
+  & $\{(b,t) \mid t \in \val(b)\}$
+  & $\max(\pmap[A])$
+\\ \hline
+ \end{tabular}
+\end{center}
+%
+A transition system $\model$ is \emph{accepted} by $\aut$ if $\exists$ has
+a winning strategy in $\agame(\aut,\model)@(a_I,s_I)$, and \emph{rejected}
+if $(a_I,s_I)$ is a winning position for $\abelard$. We write $\trees(\aut)$ for the class of trees (also called the \emph{tree language}) recognised by $\bbA$.
+\end{definition}
+
+The automata-theoretic characterisation of $\wmso$ and $\nmso$ will use classes of parity automata constrained by two additional properties: weakness
+and continuity. 
+
+\begin{definition}[Weakness, Continuity]
+\label{def:weak}
+Let $\llang$ be a one-step language, and let $\bbA = \tup{A,\tmap,\pmap,a_I}$
+be in $\Aut(\llang)$. Write $\ord$ for the reachability relation in $\bbA$, i.e. the reflexive-transitive closure of $\{ (a,b) \mid \exists c. b \text{ occurs in }\tmap(a,c)\}$. A \emph{strongly connected $\ord$-component} ($\ord$-SCC) is a subset $M\subseteq A$ such that, for every $a,b \in M$ we have $a \ord b$ and $b \ord c$. The SCC is called \emph{maximal} (MSCC) when $M\cup\{a\}$ ceases to be a SCC for any choice of $a \in A\setminus M$.
+
+%Given the semantics of the one-step language $\llang$, the (semantic) notion of (co-)continuity applies to one-step formulas (see for instance section~\ref{subsec:one-stepcont}). 
+
+We formulate two requirements on automata from $\Aut(\llang)$:
+\begin{description}
+\item[(weakness)] if $a \ord b$ and $b \ord a$ then $\pmap(a) = \pmap(b)$.
+\item[(continuity)] let $a,b$ be states such that both $a\ord b$ and
+$b \ord a$, and let $c\in C$;
+    if ${\pmap(b)}=1$ then $\tmap(b,c)$ is continuous in $a$.
+    If $\pmap(b)=0$, then $\tmap(b,c)$ is co-continuous in $a$.
+\end{description}
+A \emph{weak parity automaton} is an automaton $\aut \in \Aut(\llang)$ additionally satisfying the \emph{(weakness)}. We call it \emph{continuous-weak} if it additionally satisfies the \emph{(continuity)} condition. We let $\AutW(\llang)$ denote the class of weak and $\AutWC(\llang)$  the class of continuous-weak automata.
+\end{definition}
+
+\begin{remark}
+Any weak parity automaton $\bbA$ is equivalent to a weak parity automaton
+$\bbA'$ with $\pmap: A' \to \{0,1\}$. From now on we such a parity map for weak parity automata.
+\end{remark}
+
+Intuitively, weakness forbids an automaton to register non-trivial properties concerning the vertical `dimension' of input trees, whereas continuity expresses a constraint on how much of the horizontal `dimension' of an input tree the automaton is allowed to process. In terms of second-order logic, they correspond respectively to quantification over `vertically' finite (i.e. included in well-founded subtrees) and `horizontally' finite (i.e. included in finitely branching subtrees) sets. The conjunction of weakness and continuity thus corresponds to quantification over finite sets. 
+
+Henceforth we call \emph{$\nmso$-automata} the members of the class $\AutW(\ofoe)$ and \emph{$\wmso$-automata} those of $\AutWC(\olque)$. The names are justified by the logic characterising these classes, see Theorem \ref{t:wmsoauto} below.
+
+\begin{remark}
+Observe that, contrarily to weakness, continuity is given above as a semantic condition. Thanks to Theorem XXX \fznote{theorem about syntactic char. for continuity}, we can work with a completely syntactic definition of $\wmso$-automata, the continuity condition above being equivalently replaced by the following. 
+\begin{description}
+	\itemsep 0 pt
+	\item[(continuity, syntactically)] if $\pmap(a)$ is odd (resp. even) then, for each $c\in C$ we have
+	   $\tmap(a,c) \in \cont{{\olque}^+}{b}(A)$ (resp. $\tmap(a,c) \in \cocont{{\olque}^+}{b}(A)$).
+\end{description} 
+\end{remark}
+
+We are now able to state the main theorem of this section, which takes care of
+one direction of Theorem~\ref{t:m1}. 
+
+\begin{theorem}
+\label{t:wmsoauto}
+For $\sllang \in \{ \wmso, \nmso\}$, there is an effective construction transforming an $\sllang$-formula $\phi$
+into an $\sllang$-automaton $\bbA_{\phi}$ that is equivalent
+to $\phi$ on the class of trees.
+That is, for any tree $\bbT$, $\bbA_{\phi}$ accepts $\bbT$ if and only if $\bbT \models {\phi}$
+%\begin{enumerate}[(a)]
+%\item There is an effective construction transforming a $\wmso$-formula $\phi$
+%into a $\wmso$-automaton $\bbA_{\phi}$ that is equivalent
+%to $\phi$ on the class of trees.
+%That is, for any tree $\bbT$, $\bbA_{\phi}$ accepts $\bbT$ if and only if $\bbT \models {\phi}$
+%\item There is an effective construction transforming a $\nmso$-formula $\phi$
+%into a $\nmso$-automaton $\bbA_{\phi}$ that is equivalent
+%to $\phi$ on the class of trees.
+%That is, for any tree $\bbT$, $\bbA_{\phi}$ accepts $\bbT$ if and only if $\bbT \models {\phi}$
+%\end{enumerate}
+\end{theorem}
+
+As usual, the proof of this theorem proceeds by induction on the complexity of
+$\phi$. The inductive step requires that the class of automata is closed under the boolean operations and projection (noetherian for $\nmso$-automata, finite for $\wmso$-automata). Clearly, the latter closure property requires most of the work. The next we first
+provide a simulation theorem that put $\wmso$-automata in a suitable shape
+for the projection construction.
+
+%%%
