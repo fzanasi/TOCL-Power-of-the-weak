@@ -1,0 +1,32 @@
+Using the syntactic characterization of (co-)continuity given in the previous section for ${\olque}^+(A)$, we are now able to state a proper definition of the automata for $\wmso$ outlined in the introduction.
+\begin{definition}
+\label{d:wmso-aut}
+A \emph{$\wmso$-automaton} $\tup{A,\Delta,\Omega,a_I}$ is an automaton in
+$\yvAut(\olque)$ such that, for all states $a,b \in A$ with $a \ord b$ and
+$b\ord a$, and for all $c \in C$, the following holds:
+\begin{description}
+\item[(weakness)] $\pmap(a)=\pmap(b)$;
+\item[(continuity)]
+  if $\pmap(a)$ is odd then $\tmap(a,c)$ is in $\cont{{\olque}^+}{b}(A)$;
+  if $\pmap(a)$ is even then $\tmap(a,c)$ is in $\cocont{{\olque}^+}{b}(A)$.
+\end{description}
+We use $\yvcwAut(\olque)$ to denote the class of such automata.
+\end{definition}
+
+
+
+\begin{remark}{\rm
+Albeit similar to the finitary construction, the \emph{two-sorted construction}
+(\emph{cf.}~\cite[Def.~3.7]{Zanasi:Thesis:2012}, \cite{DBLP:conf/lics/FacchiniVZ13}) used for weak $\mso$-automata would have not been suitable for our purposes, as it fails to preserve the \textbf{(continuity)} condition when applied to $\wmso$-automata. Similarly, the powerset construction used in the simulation theorem for $\mso$-automata preserves neither the \textbf{(weakness)} nor the \textbf{(continuity)} condition.
+}\end{remark} 
+
+
+
+\subsubsection{Simulation theorem}
+\input{pauto/wmsosim.tex}
+
+\subsubsection{From formulae to automata}
+\input{pauto/autchar.tex}
+
+\subsubsection{From automata to formulae}
+\input{pauto/autotowmso.tex}
