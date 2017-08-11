@@ -15,15 +15,111 @@ We use $\yvcwAut(\olque)$ to denote the class of such automata.
 
 
 
+
+
+
+\subsubsection{Simulation theorem}
+
+\begin{description}
+  \item[(\textbf{Non-deterministic mode})] for finitely many rounds of $\pi$, each visited basic position has shape $(q,s) \in \shA \times T$. The valuation $\val \colon A \cup \shA \to \pw (R[s])$ picked by player $\exists$ assigns macro-states (from $\shA$) only to a \emph{finite} subset of $\R{s}$ and states (from $A$) to the rest of $\R{s}$. Also, she assigns \emph{at most one macro-state} to each node.
+  \item[(\textbf{Alternating mode})] At a certain round, $\pi$ visits the last position with a macro-state and turns into a match of the game $\mc{A}(\aut,\model)$, i.e. all next positions are from $A \times T$. %of shape $(a,t) \in A \times T$.
+\end{description}
+
+
+\begin{definition}\label{DEF_finitary_lifting}
+Let $\varphi \in {\olque}^+(A \times A)$ be of the shape
+%
+$$
+\varphi = \mondbnfofoe{\vlist{T}}{\Pi \cup \Sigma}{+} \land
+\mondbnfinf{\Sigma} %\bigwedge_{S\in\Sigma} \qu y.{\tau}^{+}_S(y) \land \dqu y.\bigvee_{S\in\Sigma} {\tau}^{+}_S(y)
+$$
+%
+where $\Pi,\Sigma \subseteq \shA$ and each $T_i \subseteq A \times A$
+(provided by Theorem~\ref{cor:olquepositivenf})%
+%, that is, $ \varphi =  \posdbnfolque{\vlist{T}}{\Pi}{\Sigma}$
+. Let $\widetilde{\Sigma}\subseteq \wp A$ be $\widetilde{\Sigma} := \{\Ran(S) \mid S \in \Sigma\}$. Define the translation $\varphi^{\noet} \in {\olque}^+(A \cup \shA )$ as:
+$$
+\varphi^\f := \mondbnfofoe{\lift{\vlist{T}}}{\lift{\Pi} \cup \lift{\Sigma} \cup \widetilde{\Sigma}}{+} \land
+\mondbnfinf{\widetilde{\Sigma}} .
+$$
+%Observe that each ${\tau}^{+}_{P}$ is a (positive) $A$-type, as $P = \Ran(S) \subseteq A$ for some $S \in \Sigma$.
+%Observe that each $P\in \widetilde{\Sigma}$ we have $P = \Ran(S) \subseteq A$ for some $S \in \Sigma$.
+\end{definition}
+
+The idea of translation $(\cdot)^{\noet}$ is to encode at the one-step level the non-deterministic mode of $\aut^{\noet}$. As no macro-state occurs in $\mondbnfinf{\widetilde{\Sigma}}$,
+%$(\bigcup \widetilde{\Sigma}) \cap \shA = \emptyset$,
+by Corollary \ref{cor:olquecontinuousnf} the sentence $\varphi^{\noet}$ is continuous in each $R\in \shA$, i.e. it can be made true in a domain $D$ by assigning macro-states to \emph{finitely many} elements of $D$. Moreover, macro-states occur in $\varphi^{\noet}$ only inside lifted types in $\lift{\vlist{T}},\lift{\Pi}$ or $\lift{\Sigma}$: then, by definition of $\lift{(\cdot)}$, $\varphi^{\noet}$ can be made true in $D$ by assigning \emph{at most one} macro-state to any element.
+
+In words, $\varphi$ is functionally continuous in $B$ if it is continuous in each $b \in B$ and, for each model $(D,\val)$ where $\varphi$ is true, there is a restriction $\val'$ of $\val$ which both witnesses continuity and does not assign any other $a \in A$ to the elements marked with some $b \in B$.
+
+\begin{lemma}\label{LEM_cont}
+Let $\varphi \in {\olque}^+(A \times A)$ and $\varphi^{\f}\in {\olque}^+(A\cup \shA )$ be given as in Definition~\ref{DEF_finitary_lifting}. Then $\varphi^{\f}$ is functionally continuous in $\shA$.
+ \end{lemma}
+
+\begin{proof}
+%\yvwarning{this proof could use some more detail FZ: I expanded the proof and tried to make it clearer}
+We first unfold the definition of $\varphi^{\f}$ as follows:
+\begin{align*}
+\varphi^{\f} =\ &
+\underbrace{
+    \exists \vlist{x}.\big(\arediff{\vlist{x}} \land \bigwedge_{0 \leq i \leq n} \tau^+_{\lift{T}_i}(x_i)
+}_{\psi_1}
+\land \underbrace{
+    \forall z.(\arediff{\vlist{x},z} \lthen \bigvee_{S\in \lift{\Pi} \cup \lift{\Sigma} \cup \widetilde{\Sigma}} \tau^+_S(z))\big)
+}_{\psi_2}
+\land
+\\ & \underbrace{
+    \bigwedge_{P\in\widetilde{\Sigma}} \qu y.{\tau}^{+}_P(y)
+}_{\psi_3} \land
+ \underbrace{
+    \dqu y.\bigvee_{P\in\widetilde{\Sigma}} {\tau}^{+}_P(y)
+}_{\psi_4} .
+\end{align*}
+Observe that $\psi_1 \land \psi_2$ is just $\mondbnfofoe{\lift{\vlist{T}}}{\lift{\Pi} \cup \lift{\Sigma} \cup \widetilde{\Sigma}}{+}$. Now suppose that $(D,\val \: (A \cup \shA ) \to \wp(D))$ is a model where $\varphi^{\f}$ is true. This amounts to the truth of subformulas $\psi_1$, $\psi_2$, $\psi_3$ and $\psi_4$ whose syntactic shape yields information on the types of elements of $D$. In particular, we can define a partition of $D$ into subsets $D_1$, $D_2$, $D'_2$ as follows:
+\begin{itemize}
+  \item As $\psi_1$ is true, we can pick $n$ distinct elements $s_1,\dots,s_n$ of $D$ such that $s_i$ witnesses the positive type $\lift{T}_i$, %\tau^+_{\lift{T}_i}(x_i)$,
+   that is, $s_i \in \val(S)$ for each $S \in \lift{T}_i$. We define $D_1 := \{s_1,\dots,s_n\}$.
+  %
+  \item  As $\psi_2$ is true, we can cover all the elements not in $D_1$ with two disjoint sets $D_2$ and $D'_2$ given as follows. The set $D_2$ is defined to contain all the elements not in $D_1$ witnessing a type ${\tau}^{+}_P(z)$ with $P \in \widetilde{\Sigma}$. The set $D'_2$ is just the complement of $D_1 \cup D_2$: by syntactic shape of $\psi_2$, all elements of $D'_2$ witness a positive type ${\tau}^{+}_S$ with
+  $S \in \lift{\Pi} \cup \lift{\Sigma}$.
+  %
+  \item The truth of the subformula $\psi_4$ yields the information that the set $D_1 \cup D'_2$ is finite. If $\widetilde{\Sigma}$ is non-empty, the truth of $\psi_3$ implies that the set $D_2$ is infinite.
+ \end{itemize}
+This partition uniquely associates with each $s \in D$ a type ${\tau}^{+}_S$ witnessed by $s$ and thus a set of unary predicates $S_s := S \subseteq A \cup \shA$. We can then define a valuation $\val'$ assigning to each element $s$ of $D$ exactly the set $S_s$.
+
+We now check the properties of $\val'$. As the partition inducing $\val'$ follows the syntactic shape of $\varphi^{\f}$, one can observe that $\val'$ is a restriction of $\val$ and $(D,\val')$ makes $\varphi^{\f}$ true. By definition of the partition, $\val'$ assigns unary predicates from $\shA$ only to elements in the finite set $D_1 \cup D'_2$, meaning that $\varphi^{\f}$ is continuous in $\shA$. Furthermore, $\val'$ assigns at most one unary predicate from $\shA$ to each element of $D_1 \cup D'_2$, because $\lift{\vlist{T}} \cup \lift{\Pi} \cup \lift{\Sigma}$ is defined as the lifting of $\vlist{T} \cup \Pi \cup \Sigma$. It follows that $\varphi^{\f}$ is also functional in $\shA$. Since the same restriction $\val'$ yields both properties, $\varphi^{\f}$ is functionally continuous in $\shA$.
+\end{proof}
+
+\begin{remark} As $\varphi^{\f}$ is of shape $\posdbnfofoei{\lift{\vlist{T}}}{\lift{\Pi} \cup \lift{\Sigma}}{\widetilde{\Sigma}}$ with $R \not\in \bigcup\widetilde{\Sigma}$ for each $R \in \shA$, by application of Corollary \ref{cor:olquecontinuousnf} we would immediately get that $\varphi^{\f}$ is continuous in each $R \in \shA$. However, we do not use this observation in proving Lemma \ref{LEM_cont} and propose instead a more direct argument, allowing to show both continuity and functionality at once.
+\end{remark}
+
+
+\begin{definition}\label{def:finitarystrategy}
+We say that a strategy $f$ in an acceptance game $\agame(\aut,\model)$ is \emph{finitary} in $B \subseteq A$ if there are only finitely many nodes $s$ in $\bbT$ for which a position $(b,s)$ with $b \in B$ is reachable in an $f$-guided match. \end{definition}
+Observe that finitary implies noetherian (Definition \ref{def:noetherianstrategy}), but not viceversa: even though every $f$-guided match can only traverse finitely many positions $(b,s)$, at each round there may be infinitely many ones of that shape at reach.
+
+
+\begin{proposition}[\textbf{Simulation Theorem for $\wmso$-automata}]\label{PROP_facts_finConstrwmso} Let $\aut$ be a $\wmso$-automaton and $\aut^{\fin}$ its finitary construct.
+\begin{enumerate}[(i)]
+  \itemsep 0 pt
+  \item $\aut^{\fin}$ is a $\wmso$-automaton.\label{point:finConstrAut}
+  \item For any $\model$, if $\exists$ has a winning strategy in $\agame(\aut^{\fin},\model)$ from position $(a_I^{\fin},s_I)$ then she has one that is functional in $\shA$ and finitary in $\shA$.% (\emph{cf.} Definition \ref{def:StratfunctionalFinitary}).
+  \label{point:finConstrStrategy}
+  \item $\aut \equiv \aut^{\fin}$. \label{point:finConstrEquiv}
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+\begin{enumerate}[(i)]
+\item For weakness of $\aut^{\fin}$, the proof is the same as for the noetherian construction (Proposition \ref{PROP_facts_finConstr}(i)). It remains to check continuity. First observe that any SCC of $\aut^{\fin}$ involves states of exactly one sort, either $A$ or $\shA$. For SCCs on sort $A$, continuity of $\aut^{\fin}$ follow by the ones of $\aut$. For SCCs on sort $\shA$, by definition of $\Delta^{\f}$ any macro-state can only appear inside a formula of the form $\varphi^{\fin}$, which by Lemma \ref{LEM_cont} is continuous in each $Q \in \shA$.
+  \item Given a winning strategy $f$ for $\eloise$ in $\agame(\aut^{\fin},\model)$, define $f'$ precisely as in the proof of Proposition \ref{PROP_facts_finConstr}(ii). By definition, the valuation suggested by $f'$ may only assign nodes to macro-states in $\shA$ from finitely many nodes to predicates in $\shA$ from positions of that shape, and no nodes from other positions. Moreover, It follows that $f'$ is finitary in $\shA$. Functionality in $\shA$ also follows immediately by definition of $f'$.
+
+
+
 \begin{remark}{\rm
 Albeit similar to the finitary construction, the \emph{two-sorted construction}
 (\emph{cf.}~\cite[Def.~3.7]{Zanasi:Thesis:2012}, \cite{DBLP:conf/lics/FacchiniVZ13}) used for weak $\mso$-automata would have not been suitable for our purposes, as it fails to preserve the \textbf{(continuity)} condition when applied to $\wmso$-automata. Similarly, the powerset construction used in the simulation theorem for $\mso$-automata preserves neither the \textbf{(weakness)} nor the \textbf{(continuity)} condition.
 }\end{remark} 
 
-
-
-\subsubsection{Simulation theorem}
-\input{pauto/wmsosim.tex}
 
 \subsubsection{From formulae to automata}
 \input{pauto/autchar.tex}

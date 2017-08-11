@@ -8,7 +8,7 @@ Without loss of generality, from now on we always assume that every bound variab
 
 
 
-\begin{definition}[Parity Automata]
+\begin{definition}[Parity Automata] \label{def:partityaut}
 A \emph{parity automaton} based on the one-step language $\llang$ and 
 alphabet $\wp(\props)$ is a tuple $\aut = \tup{A,\tmap,\pmap,a_I}$ such that $A$ is a
 finite set of states, $a_I \in A$ is the initial state,
@@ -56,6 +56,7 @@ a winning strategy in $\agame(\aut,\model)@(a_I,s_I)$, and \emph{rejected}
 if $(a_I,s_I)$ is a winning position for $\abelard$. We write $\trees(\aut)$ for the class of trees (also called the \emph{tree language}) recognised by $\bbA$.
 \end{definition}
 
+
 The automata-theoretic characterisation of $\wmso$ and $\nmso$ will use classes of parity automata constrained by two additional properties: weakness
 and continuity. 
 
@@ -77,12 +78,14 @@ $b \ord a$, and let $c\in C$;
 A \emph{weak parity automaton} is an automaton $\aut \in \Aut(\llang)$ additionally satisfying the \emph{(weakness)}. We call it \emph{continuous-weak} if it additionally satisfies the \emph{(continuity)} condition. We let $\AutW(\llang)$ denote the class of weak and $\AutWC(\llang)$  the class of continuous-weak automata.
 \end{definition}
 
-\begin{remark}
-Any weak parity automaton $\bbA$ is equivalent to a weak parity automaton
-$\bbA'$ with $\pmap: A' \to \{0,1\}$. From now on we such a parity map for weak parity automata.
-\end{remark}
 
 Intuitively, weakness forbids an automaton to register non-trivial properties concerning the vertical `dimension' of input trees, whereas continuity expresses a constraint on how much of the horizontal `dimension' of an input tree the automaton is allowed to process. In terms of second-order logic, they correspond respectively to quantification over `vertically' finite (i.e. included in well-founded subtrees) and `horizontally' finite (i.e. included in finitely branching subtrees) sets. The conjunction of weakness and continuity thus corresponds to quantification over finite sets. 
+
+
+\begin{remark}
+Any weak parity automaton $\bbA$ is equivalent to a weak parity automaton
+$\bbA'$ with $\pmap: A' \to \{0,1\}$. This is because \emph{(weakness)} prevents states of different parity to occur infinitely often in acceptance games, meaning that we may just assign $0$ to any even-parity and $1$ to any odd-parity state. From now on we assume such a restricted parity map for weak parity automata.
+\end{remark}
 
 Henceforth we call \emph{$\nmso$-automata} the members of the class $\AutW(\ofoe)$ and \emph{$\wmso$-automata} those of $\AutWC(\olque)$. The names are justified by the logic characterising these classes, see Theorem \ref{t:wmsoauto} below.
 
