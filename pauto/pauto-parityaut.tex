@@ -64,9 +64,7 @@ and continuity.
 \label{def:weak}
 Let $\llang$ be a one-step language, and let $\bbA = \tup{A,\tmap,\pmap,a_I}$
 be in $\Aut(\llang)$. Write $\ord$ for the reachability relation in $\bbA$, i.e. the reflexive-transitive closure of $\{ (a,b) \mid \exists c. b \text{ occurs in }\tmap(a,c)\}$. A \emph{strongly connected $\ord$-component} ($\ord$-SCC) is a subset $M\subseteq A$ such that, for every $a,b \in M$ we have $a \ord b$ and $b \ord c$. The SCC is called \emph{maximal} (MSCC) when $M\cup\{a\}$ ceases to be a SCC for any choice of $a \in A\setminus M$.
-
 %Given the semantics of the one-step language $\llang$, the (semantic) notion of (co-)continuity applies to one-step formulas (see for instance section~\ref{subsec:one-stepcont}). 
-
 We formulate two requirements on automata from $\Aut(\llang)$:
 \begin{description}
 \item[(weakness)] if $a \ord b$ and $b \ord a$ then $\pmap(a) = \pmap(b)$.
@@ -75,7 +73,7 @@ $b \ord a$, and let $c\in C$;
     if ${\pmap(b)}=1$ then $\tmap(b,c)$ is continuous in $a$.
     If $\pmap(b)=0$, then $\tmap(b,c)$ is co-continuous in $a$.
 \end{description}
-A \emph{weak parity automaton} is an automaton $\aut \in \Aut(\llang)$ additionally satisfying the \emph{(weakness)}. We call it \emph{continuous-weak} if it additionally satisfies the \emph{(continuity)} condition. We let $\AutW(\llang)$ denote the class of weak and $\AutWC(\llang)$  the class of continuous-weak automata.
+We call \emph{weak} a parity automaton $\aut \in \Aut(\llang)$ satisfying \emph{(weakness)} and $\AutW(\llang)$ the class of weak automata. We call it \emph{continuous-weak} if it additionally satisfies \emph{(continuity)}, and $\AutWC(\llang)$ the class of continuous-weak automata.
 \end{definition}
 
 
@@ -87,41 +85,6 @@ Any weak parity automaton $\bbA$ is equivalent to a weak parity automaton
 $\bbA'$ with $\pmap: A' \to \{0,1\}$. This is because \emph{(weakness)} prevents states of different parity to occur infinitely often in acceptance games, meaning that we may just assign $0$ to any even-parity and $1$ to any odd-parity state. From now on we assume such a restricted parity map for weak parity automata.
 \end{remark}
 
-Henceforth we call \emph{$\nmso$-automata} the members of the class $\AutW(\ofoe)$ and \emph{$\wmso$-automata} those of $\AutWC(\olque)$. The names are justified by the logic characterising these classes, see Theorem \ref{t:wmsoauto} below.
-
-\begin{remark}
-Observe that, contrarily to weakness, continuity is given above as a semantic condition. Thanks to Theorem XXX \fznote{theorem about syntactic char. for continuity}, we can work with a completely syntactic definition of $\wmso$-automata, the continuity condition above being equivalently replaced by the following. 
-\begin{description}
-	\itemsep 0 pt
-	\item[(continuity, syntactically)] if $\pmap(a)$ is odd (resp. even) then, for each $c\in C$ we have
-	   $\tmap(a,c) \in \cont{{\olque}^+}{b}(A)$ (resp. $\tmap(a,c) \in \cocont{{\olque}^+}{b}(A)$).
-\end{description} 
-\end{remark}
-
-We are now able to state the main theorem of this section, which takes care of
-one direction of Theorem~\ref{t:m1}. 
-
-\begin{theorem}
-\label{t:wmsoauto}
-For $\sllang \in \{ \wmso, \nmso\}$, there is an effective construction transforming an $\sllang$-formula $\phi$
-into an $\sllang$-automaton $\bbA_{\phi}$ that is equivalent
-to $\phi$ on the class of trees.
-That is, for any tree $\bbT$, $\bbA_{\phi}$ accepts $\bbT$ if and only if $\bbT \models {\phi}$
-%\begin{enumerate}[(a)]
-%\item There is an effective construction transforming a $\wmso$-formula $\phi$
-%into a $\wmso$-automaton $\bbA_{\phi}$ that is equivalent
-%to $\phi$ on the class of trees.
-%That is, for any tree $\bbT$, $\bbA_{\phi}$ accepts $\bbT$ if and only if $\bbT \models {\phi}$
-%\item There is an effective construction transforming a $\nmso$-formula $\phi$
-%into a $\nmso$-automaton $\bbA_{\phi}$ that is equivalent
-%to $\phi$ on the class of trees.
-%That is, for any tree $\bbT$, $\bbA_{\phi}$ accepts $\bbT$ if and only if $\bbT \models {\phi}$
-%\end{enumerate}
-\end{theorem}
-
-As usual, the proof of this theorem proceeds by induction on the complexity of
-$\phi$. The inductive step requires that the class of automata is closed under the boolean operations and projection (noetherian for $\nmso$-automata, finite for $\wmso$-automata). Clearly, the latter closure property requires most of the work. The next we first
-provide a simulation theorem that put $\wmso$-automata in a suitable shape
-for the projection construction.
+The next two sections will use parity automata to characterise $\wmso$ and $\nmso$. In Section \ref{sec:autwmso} we will show $\wmso$ equivalent to $\AutWC(\olque)$ on trees. in Section \ref{sec:autnmso}, we will relate in the same way $\nmso$ and $\AutW(\ofoe)$.
 
 %%%

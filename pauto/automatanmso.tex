@@ -1,5 +1,14 @@
 %!TEX root = ../00CFVZ_TOCL.tex
+In this section we work with the members of the class $\AutW(\ofoe)$, which we henceforth call \emph{$\nmso$-automata}.
 
+
+\begin{theorem}
+\label{t:nmsoauto}
+There is an effective construction transforming a $\nmso$-formula $\phi$
+into a $\nmso$-automaton $\bbA_{\phi}$ that is equivalent
+to $\phi$ on the class of trees.
+That is, for any tree $\bbT$, $\bbA_{\phi}$ accepts $\bbT$ if and only if $\bbT \models {\phi}$
+\end{theorem}
 
 The rest of this section will be devoted to prove that $\nmso$-automata
 characterise $\nmso$ on tree models, as expressed in Theorem~\ref{t:mt2}.
@@ -268,12 +277,12 @@ inductive cases.
 
 
 In this section we show the other direction of Theorem \ref{t:mt2}, completing
-the automata characterisation of $\yvWMSO$ on tree models.
+the automata characterisation of $\wmso$ on tree models.
 The argument is reminiscent of the one showing that $\MSO$-automata can be
 translated into equivalent formulas of $\MSO$~\cite{Walukiewicz96}.
-%It consists of two steps. First, it is shown that for every $\yvWMSO$-automaton $\bbA$ there is an effectively constructible formula in a suitably defined $\yvF$-fragment of a fixpoint extension of $\lque$. Second, it is verified that for every formula of the aforementioned  $\yvF$-fragment  there is an effectively constructible equivalent  $\yvWMSO$-formula.
+%It consists of two steps. First, it is shown that for every $\wmso$-automaton $\bbA$ there is an effectively constructible formula in a suitably defined $\yvF$-fragment of a fixpoint extension of $\lque$. Second, it is verified that for every formula of the aforementioned  $\yvF$-fragment  there is an effectively constructible equivalent  $\wmso$-formula.
 We start by introducing a fragment of a fixpoint extension
-of $\lque$ and show how it embeds into $\yvWMSO$.
+of $\olque$ and show how it embeds into $\wmso$.
 
 \begin{definition}
 The fixed point logic $\mlque$ on $\prop$ is given by:
@@ -529,7 +538,7 @@ The proof is by induction on $\varphi$. The least fixpoint case is handled by ap
 
 By virtue of Proposition \ref{thm:guard_wmso}, we are able to conclude the proof of Theorem \ref{t:mt2} by showing the following statement.
 \begin{proposition}\label{thm:wmsoauttof}
-Every $\yvWMSO$-automaton can be effectively translated into an equivalent $\clque$-formula.
+Every $\wmso$-automaton can be effectively translated into an equivalent $\clque$-formula.
 \end{proposition}
 %
 %
@@ -540,9 +549,9 @@ Every $\yvWMSO$-automaton can be effectively translated into an equivalent $\clq
 \begin{proof} The argument is
  essentially a refinement of the standard proof showing that any automaton in $\yvAut(\ofo)$ can be translated into an equivalent $\mu$-formula
 $\xi_\aut$ (\emph{cf.} e.g. \cite{Ven08}).
-The idea is the following. We see a $\yvWMSO$-automaton as a system of equations expressed in terms of $\lque$-formulas: each state corresponds to a monadic predicate variable and the odd/even parity of a state corresponds to the least/greatest fixpoint that we seek for the associated variable, etc. One then solves this system of equations via the same inductive procedure used to obtain the formula of the modal $\mu$-calculus from the system associated with an automaton in $\yvAut(\ofo)$ (see e.g. \cite{ArnoldN01} for a description of the solution procedure). Because of the \textbf{(weakness)} and \textbf{(continuity)} conditions on the starting $\nmso$-automaton $\aut$, it is thence possible to verify that the resulting fixpoint formula $\xi_\aut$ belongs to $\clque$.
+The idea is the following. We see a $\wmso$-automaton as a system of equations expressed in terms of $\lque$-formulas: each state corresponds to a monadic predicate variable and the odd/even parity of a state corresponds to the least/greatest fixpoint that we seek for the associated variable, etc. One then solves this system of equations via the same inductive procedure used to obtain the formula of the modal $\mu$-calculus from the system associated with an automaton in $\yvAut(\ofo)$ (see e.g. \cite{ArnoldN01} for a description of the solution procedure). Because of the \textbf{(weakness)} and \textbf{(continuity)} conditions on the starting $\nmso$-automaton $\aut$, it is thence possible to verify that the resulting fixpoint formula $\xi_\aut$ belongs to $\clque$.
 %
-%To complete the proof of the Theorem, we have to provide an effective truth-preserving translation from the  considered fragment of $\mglque$ into $\yvWMSO$. The key observation here is that continuous fixpoint are constructive (see \cite{Fontaine08}), that is a least-fixpoint formula in one free variable $\mu p. \phi(p,x)$ of the $\yvF$-fragment of $\mglque$ is true at $s$ in a model $\model$ if $s$ belongs to some finite approximant of the least fixpoint induced by $\phi(p.x)$. From this fact, it is then possible to verify that a formula $\mu p. \phi(p,x)$ of the $\yvF$-fragment of $\mglque$ is true at $s$ in a model $\model$ iff is $\phi(p,x)$ true at $s$ in $\model[p\mapsto P^\model]$, for some finite $P^\model$, and use this propriety to obtain the truth-preserving  translation into $\yvWMSO$.
+%To complete the proof of the Theorem, we have to provide an effective truth-preserving translation from the  considered fragment of $\mglque$ into $\wmso$. The key observation here is that continuous fixpoint are constructive (see \cite{Fontaine08}), that is a least-fixpoint formula in one free variable $\mu p. \phi(p,x)$ of the $\yvF$-fragment of $\mglque$ is true at $s$ in a model $\model$ if $s$ belongs to some finite approximant of the least fixpoint induced by $\phi(p.x)$. From this fact, it is then possible to verify that a formula $\mu p. \phi(p,x)$ of the $\yvF$-fragment of $\mglque$ is true at $s$ in a model $\model$ iff is $\phi(p,x)$ true at $s$ in $\model[p\mapsto P^\model]$, for some finite $P^\model$, and use this propriety to obtain the truth-preserving  translation into $\wmso$.
 %%by taking formulas without alternation such that fixpoint operators only bound
 %%$\mglque$  is  obtained by adding to $\glque$ the following (semantic) rule for constructing fixed point formulas.
 %%fragment
