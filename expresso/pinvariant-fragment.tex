@@ -1,7 +1,7 @@
 
 In this subsection we will define a construction that transforms an arbitrary automaton
-$\bbA$ in $\yvcwAut(\olque)$ into an automaton $\bbA^{\bullet}$ in 
-$\yvcwAut(\ofo)$, such that $\bbA$ and $\bbA^{\bullet}$ are related as 
+$\bbA$ in $\AutWC(\olque)$ into an automaton $\bbA^{\bullet}$ in 
+$\AutWC(\ofo)$, such that $\bbA$ and $\bbA^{\bullet}$ are related as 
 in~\eqref{eq:crux}.
 This construction is completely determined by the following translation at the
 one-step level.
@@ -14,11 +14,11 @@ $\posdbnfolque{\vlist{T}}{\Pi}{\Sigma}$, we define the translation
 $(-)^{\bullet} : {\olque}^+(A) \to \ofo^+(A)$ as follows.
 We set
 \[
-\Big( \posdbnfolque{\vlist{T}}{\Pi}{\Sigma} \Big)^{\bullet} \isdef
+\Big( \posdbnfolque{\vlist{T}}{\Pi}{\Sigma} \Big)^{\bullet} \df
 \bigwedge_{i} \exists x_i. \tau^+_{T_i}(x_i) \land \forall x. \bigvee_{S\in\Sigma} \tau^+_S(x)
 %\posdbnfofo{\vlist{T}\cup\Sigma},
 \]
-and for $\al = \bigvee_{i} \al_{i}$ we define $\al^{\bullet} \isdef \bigvee 
+and for $\al = \bigvee_{i} \al_{i}$ we define $\al^{\bullet} \df \bigvee 
 \al_{i}^{\bullet}$.
 \end{definition}
 
@@ -33,7 +33,7 @@ For every one-step model $(D,V)$ and every $\al \in {\olque}^+(A)$ we have
 \end{equation}
 where $V_{\pi}$ % =  f^{-1} \circ V$
  is the induced valuation given by 
-$V_{\pi}(a) \isdef \{ (d,k) \mid d \in V(a), k\in\omega\}$.
+$V_{\pi}(a) \df \{ (d,k) \mid d \in V(a), k\in\omega\}$.
 \end{proposition}
 
 \begin{proof}
@@ -95,23 +95,23 @@ Remark.
 (1) On finite trees, any disjunct with $\Sigma\neq\emptyset$ is equivalent to $\bot$, hence we can assume $\Sigma=\emptyset.$
 (2) Instead of taking $D\times\omega$ we have to take $D\times n$ for sufficiently large $n$.
 (3) The $\Rightarrow$ direction fails since $\alpha^\bullet$ is always false for $\Sigma=\emptyset$.
-(4) However, the same translation as for MSO probably works, that is, $\WMSO/bis \equiv \muML$ over finite trees.}
+(4) However, the same translation as for MSO probably works, that is, $\wmso /bis \equiv \muML$ over finite trees.}
 \medskip
 }
 
 As a consequence of Proposition~\ref{p-1P} we obtain the following.
 
 \begin{definition}
-Given an automaton $\bbA = \tup{A,\De,\Om,a_{I}}$ in $\yvAut(\olque)$, define 
-the automaton $\bbA^{\bullet} \isdef \tup{A,\De^{\bullet},\Om,a_{I}}$ in 
-$\yvAut(\ofo)$ by putting, for each $(a,c) \in A \times C$:
+Given an automaton $\bbA = \tup{A,\tmap,\pmap,a_{I}}$ in $\Aut(\olque)$, define 
+the automaton $\bbA^{\bullet} \df \tup{A,\tmap^{\bullet},\pmap,a_{I}}$ in 
+$\Aut(\ofo)$ by putting, for each $(a,c) \in A \times C$:
 \[
-\De^{\bullet}(a,c) \isdef (\De(a,c))^{\bullet}.
+\tmap^{\bullet}(a,c) \df (\tmap(a,c))^{\bullet}.
 \]
 \end{definition}
 
 \begin{proposition}
-For any automaton $\bbA = \tup{A,\De,\Om,a_{I}}$ in $\yvAut(\olque)$, and any
+For any automaton $\bbA = \tup{A,\tmap,\pmap,a_{I}}$ in $\Aut(\olque)$, and any
 model $\bbT$, $\bbA$ and $\bbT$ satisfy \eqref{eq:crux}.
 \end{proposition}
 
@@ -125,12 +125,12 @@ in~\cite{Venxx}.
 \medskip
 
 It remains to be checked that the construction $(-)^{\bullet}$, which has
-been defined for arbitrary automata in $\yvAut(\olque)$, transforms 
-$\yvWMSO$-automata into automata in the right class, viz., $\yvcwAut(\ofo)$.
+been defined for arbitrary automata in $\Aut(\olque)$, transforms 
+$\wmso$-automata into automata in the right class, viz., $\AutWC(\ofo)$.
 
 \begin{proposition}
-Let $\bbA \in \yvAut(\olque)$.
-If $\bbA \in \yvcwAut(\olque)$, then $\bbA^{\bullet} \in \yvcwAut(\ofo)$.
+Let $\bbA \in \Aut(\olque)$.
+If $\bbA \in \AutWC(\olque)$, then $\bbA^{\bullet} \in \AutWC(\ofo)$.
 \end{proposition}
 
 \begin{proof}
@@ -144,17 +144,17 @@ the fragment $\cont{\ofo^+}{a}(A)$.
 As a corollary of the previous two propositions we find that 
 \begin{itemize}
 	\itemsep 0 pt
-	\item $\yvAut(\ofo) \equiv \yvAut(\olque)/{\bis}$, and
-	\item $\yvcwAut(\ofo) \equiv \yvcwAut(\olque)/{\bis}$.
+	\item $\Aut(\ofo) \equiv \Aut(\olque)/{\bis}$, and
+	\item $\AutWC(\ofo) \equiv \AutWC(\olque)/{\bis}$.
 \end{itemize}
 In fact, we are dealing here with an instantiation of a more general phenomenon 
 that is essentially coalgebraic in nature.
-In~\cite{Venxx} it is proved that if $\yvLo$ and $\yvLo'$ are two one-step
-languages that are connected by a translation $(-)^{\bullet}: \yvLo' \to 
-\yvLo$ satisfying a condition similar to \eqref{eq-1cr}, then we find that 
-$\yvAut(\yvLo)$ corresponds to the bisimulation-invariant fragment of 
-$\yvAut(\yvLo')$: $\yvAut(\yvLo) \equiv \yvAut(\yvLo')/{\bis}$.
+In~\cite{Venxx} it is proved that if $\llang$ and $\llang'$ are two one-step
+languages that are connected by a translation $(-)^{\bullet}: \llang' \to 
+\llang$ satisfying a condition similar to \eqref{eq-1cr}, then we find that 
+$\Aut(\llang)$ corresponds to the bisimulation-invariant fragment of 
+$\Aut(\llang')$: $\Aut(\llang) \equiv \Aut(\llang')/{\bis}$.
 This subsection can be generalized to prove similar results relating
-$\yvwAut(\yvLo)$ to $\yvwAut(\yvLo')$, and $\yvcwAut(\yvLo)$ to 
-$\yvcwAut(\yvLo')$.
+$\AutW(\llang)$ to $\AutW(\llang')$, and $\AutWC(\llang)$ to 
+$\AutWC(\llang')$.
 }\end{remark}

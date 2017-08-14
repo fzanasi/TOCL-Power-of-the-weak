@@ -9,21 +9,21 @@
 %For this purpose, we first observe that by Theorem \ref{t:venema} and Corollary \ref{cor:invariant} it immediately follows that:
 %
 %\begin{proposition}\label{prop:invariant}
-%The class $\yvcwAut(\ofo)$ corresponds to the bisimu\-la\-tion-invariant fragment of the class of \wmso-automata.
+%The class $\AutWC(\ofo)$ corresponds to the bisimu\-la\-tion-invariant fragment of the class of \wmso-automata.
 %\end{proposition}
 
 In this subsection we focus on the following theorem.
 
 \begin{theorem}\label{t:autofor}
 There is an effective procedure that, given an automaton $\bbA$ in
-$\yvcwAut(\ofo)$, returns an equivalent formula $\xi_{\bbA}$ of the fragment 
+$\AutWC(\ofo)$, returns an equivalent formula $\xi_{\bbA}$ of the fragment 
 $\contAFMC$ of the modal $\mu$-calculus.
 \end{theorem}
 
 %Together with Theorem \ref{t:wmsoauto}, this means that in order to prove Theorem \ref{t:wmsobis} it is enough to verify the following:
 \begin{proof}
 The argument  is a refinement of the standard proof showing that any automaton 
-$\aut$ from $\yvAut(\ofo)$ can be translated into an equivalent $\mu$-formula 
+$\aut$ from $\Aut(\ofo)$ can be translated into an equivalent $\mu$-formula 
 $\xi_\aut$ (cf. e.g. \cite{Ven08}), and it is essentially a special case of the argument proving Theorem \ref{thm:wmso_autofor}.
 
 %\end{proofsketch}
@@ -34,11 +34,11 @@ $\xi_\aut$ (cf. e.g. \cite{Ven08}), and it is essentially a special case of the 
 %
 %\begin{theorem}\label{t:autofor}
 %
-%There is an effective procedure that given an automaton in $\yvcwAut(\ofo)$, returns an equivalent formula of the fragment $\contAFMC$ of the modal $\mu$-calculus.
+%There is an effective procedure that given an automaton in $\AutWC(\ofo)$, returns an equivalent formula of the fragment $\contAFMC$ of the modal $\mu$-calculus.
 %\end{theorem}
 
 
-%In order to prove Theorem \ref{t:autofor}, we are going to slightly modify define another class of automata, called $\contAFMC$-automata, show that the obtained class is equivalent to the class $\yvcwAut(\ofo)$, and then follow the proof of Theorem 6.12(2) in \cite{Ven08} stating that there is an effective procedure that given a $\contAFMC$-automaton returns an equivalent formula of the modal $\mu$-calculus.
+%In order to prove Theorem \ref{t:autofor}, we are going to slightly modify define another class of automata, called $\contAFMC$-automata, show that the obtained class is equivalent to the class $\AutWC(\ofo)$, and then follow the proof of Theorem 6.12(2) in \cite{Ven08} stating that there is an effective procedure that given a $\contAFMC$-automaton returns an equivalent formula of the modal $\mu$-calculus.
 %%
 %%First some definitions and notations. Given a set $X$, let $Latt(X)$ denote the set of fine disjunctions and finite conjunctions of elements of $X$.
 %Given a set of propositional letters $P$, we let $\pm P$ de note the set of formulas of the form $p$ or $ \lnot p$, with $p \in P$.
@@ -200,7 +200,7 @@ construct the least fixpoint formula $\xi_\aut$ equivalent to $\aut$,
 
 %Now, since every variable bounded by a $\mu$-operator  in the obtained formula  is in the scope only of $\Diamond$ operators too. 
 %The refinement that our setting requires is that if $\bbA$ is an automaton 
-%in $\yvAut(\ofo)$, then the solution of the associated system of equations 
+%in $\Aut(\ofo)$, then the solution of the associated system of equations 
 %can be obtained as a formula in the fragment $\yvF \sse \MC$.
 %
 Here the key observation is that the weakness and continuity conditions on

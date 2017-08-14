@@ -1,8 +1,6 @@
-In this subsection we prove that $\wmso$-automata are closed under the 
-operations corresponding to the connectives of $\mso$, that is: union, 
-complementation and projection with respect to finite sets.
-We start with the latter.
+In this subsection we conclude the proof of Theorem \ref{t:wmsoauto}. %, showing that $\wmso$-automata are closed under the  operations corresponding to the connectives of $\mso$, that is: union, complementation and projection with respect to finite sets.We start with the latter.
 
+We first focus on the case of projection with respect to finite sets, which exploits our simulation result, Theorem \ref{PROP_facts_finConstrwmso}.
 %%%%
 %%%% PROJECTION
 %%%%
@@ -18,7 +16,7 @@ We define the automaton ${{\exists}_F p}.\mb{A} = \langle A^{\f}, a_I^{\f},
 \DeltaProj, \Omega^{\f}\rangle$ on alphabet $\p\prop$ by putting
 \begin{eqnarray*}
 % \nonumber to remove numbering (before each equation)
-  \DeltaProj(a,c) &:=& \Delta^{\f}(a,c)\\
+  \DeltaProj(a,c) &:=& \Delta^{\f}(a,c) \qquad \qquadﬂ
   \DeltaProj(R,c) &:=& \Delta^{\f}(R,c) \vee \Delta^{\f}(R,c\cup\{p\}).
 \end{eqnarray*}
 The automaton ${{\exists}_F p}.\mb{A}$ is called the \emph{finitary projection
@@ -110,20 +108,6 @@ Inductively, suppose that at round $z_i$ we are given a position $(q,s) \in A^{\
 \end{enumerate}
 
 %As explained above, since $\model'$ is a noetherian $p$-variant, then ($\ddag .1$) holds for finitely many stages of construction of $\tilde{\pi}$, whereas ($\ddag .2$) holds for all the remaining stages, by construction of $\tilde{f}$. It follows that this strategy is winning for $\exists$ in $\tilde{G}$.
-
-\begin{comment} OLD (22 October), SHORTER VERSION
-For direction from right to left, let $g$ be a winning strategy for $\exists$ in $\mc{G} = \mathcal{A}(\aut,\model)@(a_I,s_I)$. Our goal is to define a strategy $g'$ for $\exists$ in $\mc{G_{\exists}}$. As usual, it will be constructed in stages, while playing a match $\pi'$ in $\mc{G_{\exists}}$. In parallel to $\pi'$, a \emph{bundle} of shadow matches in $\mc{G}$ is maintained, where in each of them $\exists$ plays according to $g$. The main idea is the same of \cite[Prop. 3.12]{Zanasi:Thesis:2012}: we force ${{\exists}_F p}.\mb{A}$ to stay in macro-states from $\shA$ until a subtree of $\model'$ without nodes labeled with $p$ (which we call \emph{$p$-free}) is reached. From that stage onwards, we can safely allow ${{\exists}_F p}.\mb{A}$ to behave as $\mb{A}$.
-To this aim, it suffices to show that, at each round $z_i$ in $\pi'$ where a basic position of the form $(R,s) \in \shA \times T$ occurs, we can maintain the following condition:
-\begin{enumerate}
-  \item  for each $a \in\Ran(Q)$ there is an $f$-guided (partial) shadow match $\pi_a$ in the bundle with current (i.e. at round $z_i$) basic position $(a,s) \in A\times T$.
-\end{enumerate}
-This holds for round $z_0$, where we initialize $\pi$ at position $(a_I^{\f},s_I)$ and the bundle as consisting of a single shadow match $\pi_{a_I}$ at position $(a_I,s_I)$. Inductively, suppose that we are given with a basic position $(R,s)$ in $\pi'$ at some round $z_i$, and a bundle $\{\pi_a\}_{a \in \Ran(R)}$ as above. As each match in the bundle is $f$-guided, we are provided with markings $\{m_a\}_{a \in \Ran(R)}$ making the corresponding sentences true in $\sigma_R(s)$.
-
-XXXX To be continued XXXX
-\end{comment}
-\begin{comment} OLDER (Summer) version
-%For direction from right to left, by Claim \ref{PROP_facts_finConstr}(1) we can assume that $\mb{A}^{\f}$ accepts a finite $p$-variant of $\model$. The key observation is the following: the winning strategy for $\exists$ in the associated game can be easily shown to be winning also in $\mc{A}({{\exists}_F p}.\mb{A},\model)@(a_I^{\f},s_I)$, provided that $\mb{A}^{\f}$ visits nodes labeled with $p$ only in macro-states from $\shA$. This assumption can be proven by exploiting the fact that the $p$-variant we are considering is finite. Further details on this will be worked out at a later stage of this draft.
-\end{comment}
 
 \end{proof} 
 

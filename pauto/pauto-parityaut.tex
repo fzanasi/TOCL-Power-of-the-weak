@@ -56,11 +56,71 @@ a winning strategy in $\agame(\aut,\model)@(a_I,s_I)$, and \emph{rejected}
 if $(a_I,s_I)$ is a winning position for $\abelard$. We write $\trees(\aut)$ for the class of trees (also called the \emph{tree language}) recognised by $\bbA$.
 \end{definition}
 
+\myparagraphns{Closure under complementation.}
+Many properties of parity automata can already be determined at the one-step level.
+An important example concerns the notion of complementation, which will be used later in this section.
+
+
+\begin{definition}
+\label{d:bdual1}
+Two one-step formulas $\varphi$ and $\psi$ are each other's \emph{Boolean dual}
+if for every structure $(D,\val)$ we have:
+\[
+(D,\val) \models \varphi \quad\text{iff}\quad (D,\val^{c}) \not\models \psi,
+\]
+where $\val^{c}$ is the valuation given by $\val^{c}(a) \mathrel{:=} D
+\setminus \val(a)$, for all $a$.
+%
+A one-step language $\llang$ is \emph{closed under Boolean duals} if for every
+set $A$, each formula $\varphi \in \llang(A)$ has a Boolean dual $\dual{\varphi}
+\in \llang(A)$.
+\end{definition}
+
+Following ideas from~\cite{Muller1987,DBLP:conf/calco/KissigV09}, we can use Boolean duals, together with a
+\emph{role switch} between $\abelard$ and $\eloise$, in order to define a
+negation or complementation operation on automata.
+
+\begin{definition}
+\label{d:caut}
+Assume that, for some one-step language $\llang$, the map $\dual{(-)}$
+provides, for each set $A$, a Boolean dual $\dual{\varphi} \in \llang(A)$ for each
+$\varphi \in \llang(A)$.
+Given $\aut = \tup{A,\tmap,\pmap,a_I}$ in $\Aut(\llang)$ we define its
+\emph{complement} $\dual{\aut}$ as the automaton
+$\tup{A,\dual{\tmap},\dual{\pmap},a_I}$
+where $\dual{\tmap}(a,c) := \dual{(\tmap(a,c))}$, and $\dual{\pmap}(a)
+:= 1 + \pmap(a)$, for all $a \in A$ and $c \in \wp(\props)$.
+\end{definition}
+
+\begin{proposition}
+\label{prop:autcomplementation}
+Let $\llang$ and $\dual{(-)}$ be as in the previous definition.
+For each automaton $\aut \in \Aut(\llang)$ and each transition system
+$\model$ we have that
+\[
+\dual{\aut} \text{ accepts } \model
+\quad\text{iff}\quad
+\aut \text{ rejects } \model.
+\]
+\end{proposition}
+
+The proof of Proposition~\ref{prop:autcomplementation} is based on the fact
+that the power of $\eloise$ in $\agame(\dual{\aut},\model)$ is the same
+as that of $\abelard$ in $\agame(\aut,\model)$, as defined in~\cite{DBLP:conf/calco/KissigV09}.
+
+As an immediate consequence of this proposition, one may show that if the
+one-step language $\llang$ is closed under Boolean duals, then the class
+$\Aut(\llang)$ is closed under taking complementation.
+Further on we will use Proposition~\ref{prop:autcomplementation} to show that
+the same may apply to some subclasses of $\Aut(\llang)$.
+
+
+\myparagraphns{Weakness and Continuity.}
 
 The automata-theoretic characterisation of $\wmso$ and $\nmso$ will use classes of parity automata constrained by two additional properties: weakness
 and continuity. 
 
-\begin{definition}[Weakness, Continuity]
+\begin{definition}%[Weakness, Continuity]
 \label{def:weak}
 Let $\llang$ be a one-step language, and let $\bbA = \tup{A,\tmap,\pmap,a_I}$
 be in $\Aut(\llang)$. Write $\ord$ for the reachability relation in $\bbA$, i.e. the reflexive-transitive closure of $\{ (a,b) \mid \exists c. b \text{ occurs in }\tmap(a,c)\}$. A \emph{strongly connected $\ord$-component} ($\ord$-SCC) is a subset $M\subseteq A$ such that, for every $a,b \in M$ we have $a \ord b$ and $b \ord c$. The SCC is called \emph{maximal} (MSCC) when $M\cup\{a\}$ ceases to be a SCC for any choice of $a \in A\setminus M$.
@@ -84,6 +144,8 @@ Intuitively, weakness forbids an automaton to register non-trivial properties co
 Any weak parity automaton $\bbA$ is equivalent to a weak parity automaton
 $\bbA'$ with $\pmap: A' \to \{0,1\}$. This is because \emph{(weakness)} prevents states of different parity to occur infinitely often in acceptance games, meaning that we may just assign $0$ to any even-parity and $1$ to any odd-parity state. From now on we assume such a restricted parity map for weak parity automata.
 \end{remark}
+
+
 
 The next two sections will use parity automata to characterise $\wmso$ and $\nmso$. In Section \ref{sec:autwmso} we will show $\wmso$ equivalent to $\AutWC(\olque)$ on trees. in Section \ref{sec:autnmso}, we will relate in the same way $\nmso$ and $\AutW(\ofoe)$.
 
