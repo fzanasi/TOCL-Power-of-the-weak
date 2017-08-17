@@ -1,4 +1,4 @@
-% !TEX root = ../main.tex
+%!TEX root = ../00CFVZ_TOCL.tex
 
 \index{formula!one-step!monotone}
 Given a one-step logic $\llang(A)$ and formula $\varphi \in \llang(A)$.
@@ -79,7 +79,7 @@ Before going on we need to introduce a bit of new notation. In Section~\ref{subs
 
 \index{$\mondbnfofo{\Sigma}{A'}$}
 \index{$\mondgbnfofo{\Sigma}{\Pi}{A'}$}
-\begin{definition}
+\begin{definition}\label{def:monbasicformofoe}
 Let $A'\subseteq A$ be a finite set of names. The $A'$-positive variant of $\dbnfofo{\Sigma}$ is given as follows:
 % \begin{align*}
 % 	\mondbnfofo{\Sigma}{A'} &:= \bigwedge_{S\in\Sigma} \exists x. \tau^{A'}_S(x) \land \forall x. \bigvee_{S\in\Sigma} \tau^{A'}_S(x) \\
@@ -260,6 +260,19 @@ Combining the normal form for $\ofoe$ and the above lemma, we obtain the followi
 		for each disjunct we have $\vlist{T} \in \wp(A)^k$ for some $k$ and $\Pi\subseteq\vlist{T}$.
 	\end{enumerate}
 \end{corollary}
+
+We isolate the case when basic forms enforce a semantic property called \emph{functionality}. This will be useful when defining non-deterministic parity automata in later section.
+
+\begin{definition}\label{def:functionalsentenceofoe}
+We say that $\varphi \in \ofoe(A)$ is \emph{functional} in $B\subseteq A$ if whenever $(D,\val \: A \to \wp(D)) \models \varphi$ then there is a restriction $\val'$ of $\val$ such that $(D,\val' \: A \to \wp(D)) \models \varphi$ and $s \in \val'(b)$ for $b \in B$ implies $s \not\in \val'(a)$ for all $a \in A\setminus\{b\}$.
+\end{definition}
+
+The syntactic shape guaranteeing functionality is the following.
+\begin{proposition}\label{lemma:functionalsentenceofoe} Suppose that $\varphi \in \ofoe(A)$ is equivalent to a sentence in the basic form $\bigvee \posdbnfofoe{\vlist{T}}{\Pi}$ where $T_1, \dots, T_k$ and each $S \in \Pi$ are either $\emptyset$ of singletons $\{b\}$ for some $b \in B$. The $\varphi$ is functional in $B$.
+\end{proposition}
+\begin{proof} Let $(D,V)$ be a model where $\varphi$ is true. Thus one disjunct $\posdbnfofoe{\vlist{T}}{\Pi}$ is true, that means, there are elements $s_1, \dots, s_k$ of $D$ witnessing types $T_1, \dots, T_k$ respectively and all the other elements witness some $S \in \Pi$. By pruning from $V$ any other assignment of predicates to elements of $D$ but for the types they witness according to this description, we obtain a restriction $V'$ of $V$ such that $(D,V) \models \varphi$. Because $T_1, \dots, T_k$ are either $\emptyset$ of singletons $\{b\}$ for some $b \in B$, such $V'$ assigns at most one $b \in B$ to each element of $D$. Therefore $\varphi$ is functional in $B$.
+\end{proof}
+
 
 %%
 \subsubsection{Monotone fragment of $\ofoei$}
@@ -481,3 +494,15 @@ Putting together the above lemmas we obtain Theorem~\ref{thm:ofoeimonot}. Moreov
 \begin{proof}
 	We only remark that to obtain $\Sigma\subseteq\Pi$ in the above normal forms it is enough to use Proposition~\ref{prop:bfofoei-sigmapi} before applying the translation.
 \end{proof}
+
+As for $\ofoe$, we record a syntactic criterion for functionality, which is defined as in Definition \ref{def:functionalsentenceofoe} with $\olque$ replacing $\ofoe$. 
+
+\begin{definition}We say that $\varphi \in \ofoe(A)$ is \emph{functionally continuous} in $B\subseteq A$ if whenever $(D,\val \: A \to \wp(D)) \models \varphi$ then there is a restriction $\val'$ of $\val$ such that $(D,\val' \: A \to \wp(D)) \models \varphi$ and for all $b \in B$
+\begin{description}
+\item[functionality] $s \in \val'(b)$ implies $s \not\in \val'(a)$ for all $a \in A\setminus\{b\}$
+\item[continuity] $val'(b)$ is finite.
+\end{description}
+\end{definition}
+
+\begin{proposition}\label{lemma:functionalsentenceofoe} If $\varphi \in \ofoe(A)$ is in the basic form $\bigvee \posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$ with all $T_1, \dots, T_k,\Pi$ either empty or singletons, then it is functional in $A$.
+\end{proposition}

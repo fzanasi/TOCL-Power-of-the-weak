@@ -1,7 +1,6 @@
 %!TEX root = ../00CFVZ_TOCL.tex
 
 We recall the definition of a parity automaton, adapted to our setting.
-Recall from Section~\ref{sec:onestep} that formulas of an arbitrary one-step language $\llang$ are interpreted over  one-step models, that is, a tuple $\osmodel = (D,\val: A \to \wp D)$. %Whenever we say `one-step model' in this section we will be referring to \emph{single-sorted} one-step models. 
 Recall that the class of all one-step models is denoted by $\umods$ and that we write $\llang^+(A)$ to denote the fragment where every predicate $a\in A$ occurs only positively.
 Without loss of generality, from now on we always assume that every bound variable occurring in a sentence is bound by an unique quantifier (generalised or not).
 
@@ -53,7 +52,7 @@ Position & Pl'r & Admissible moves & Parity \\
 %
 A transition system $\model$ is \emph{accepted} by $\aut$ if $\exists$ has
 a winning strategy in $\agame(\aut,\model)@(a_I,s_I)$, and \emph{rejected}
-if $(a_I,s_I)$ is a winning position for $\abelard$. We write $\trees(\aut)$ for the class of trees (also called the \emph{tree language}) recognised by $\bbA$.
+if $(a_I,s_I)$ is a winning position for $\abelard$. We write $\autlang(\aut)$ for the \emph{language} (class of transition systems) recognised by $\aut$ and $\trees(\aut)$ for the \emph{tree language} (class of trees) recognised by $\aut$.
 \end{definition}
 
 \myparagraphns{Closure under complementation.}
@@ -140,7 +139,7 @@ We call \emph{weak} a parity automaton $\aut \in \Aut(\llang)$ satisfying \emph{
 Intuitively, weakness forbids an automaton to register non-trivial properties concerning the vertical `dimension' of input trees, whereas continuity expresses a constraint on how much of the horizontal `dimension' of an input tree the automaton is allowed to process. In terms of second-order logic, they correspond respectively to quantification over `vertically' finite (i.e. included in well-founded subtrees) and `horizontally' finite (i.e. included in finitely branching subtrees) sets. The conjunction of weakness and continuity thus corresponds to quantification over finite sets. 
 
 
-\begin{remark}
+\begin{remark}\label{rmk:weak01}
 Any weak parity automaton $\bbA$ is equivalent to a weak parity automaton
 $\bbA'$ with $\pmap: A' \to \{0,1\}$. This is because \emph{(weakness)} prevents states of different parity to occur infinitely often in acceptance games, meaning that we may just assign $0$ to any even-parity and $1$ to any odd-parity state. From now on we assume such a restricted parity map for weak parity automata.
 \end{remark}

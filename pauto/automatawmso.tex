@@ -35,7 +35,7 @@ ${\finexists} p.\trees$ of $\p (\prop)$-labeled trees
 given as follows:
 %
 $$
-{\finexists} p.\trees = \{\model \mid \text{ $\exists$ a finite $p$-variant } \model' \text{ of } \model \text{ with } \model' \in \trees\}.
+{\finexists} p.\trees = \{\bbT \mid \text{ $\exists$ a finite $p$-variant } \bbT' \text{ of } \bbT \text{ with } \bbT' \in \trees\}.
 $$
 %
 A class $K$ of tree languages is \emph{closed under finitary projection
@@ -49,15 +49,15 @@ over $p$} if, for any language $\trees$ in $K$, also ${{\finexists} p}.\trees$ i
 \noindent Our next goal is a \emph{projection construction} that, given
 a $\wmso$-automaton $\aut$, provides one recognizing ${\finexists p}.\trees(\aut)$. For $\mso$-automata, an analogous construction crucially uses the following \emph{simulation theorem}: every
 $\mso$-automaton $\aut$ is equivalent to a \emph{non-deterministic} one $\aut'$ \cite{Walukiewicz96}.
-Semantically, non-determinism yields the appealing property that every node of the input model $\model$ is associated with at most one state of $\aut'$ during the acceptance game--- that means, $\eloise$'s strategy $f$ in $\agame(\aut',\model)$ is \emph{functional} (\emph{cf.} Definition \ref{def:StratfunctionalFinitary} below). This is particularly helpful because, to define a $p$-variant of $\model$
+Semantically, non-determinism yields the appealing property that every node of the input model $\bbT$ is associated with at most one state of $\aut'$ during the acceptance game--- that means, $\eloise$'s strategy $f$ in $\agame(\aut',\bbT)$ is \emph{functional} (\emph{cf.} Definition \ref{def:StratfunctionalFinitary} below). This is particularly helpful because, to define a $p$-variant of $\bbT$
 that is accepted by the projection construct on $\aut'$, we
 can infer whether a node $s$ should be labeled with $p$ by the value $f(a,s)$, where $a$ is the unique state of $\aut'$ (by functionality) that $f$ associates with $s$. Now, in the case of $\wmso$-automata we are interested in guessing
 \emph{finitary} $p$-variants, which requires $f$ to be functional only on a \emph{finite} set of nodes. Thus the idea of our simulation theorem is to turn a $\wmso$-automaton $\aut$ into an equivalent one $\aut^{\f}$ that behaves non-deterministically on a \emph{finite} portion of any accepted tree.
 
-For $\mso$-automata, the simulation theorem is based on a powerset construction: if the starting automaton has carrier $A$, the resulting non-deterministic automaton is based on ``macro-states'' from the set $\shA := \pw (A \times A)$.\footnote{The use of carrier $\pw (A \times A)$ instead of the more obvious $\pw A$ is needed to correctly associate with a run on macro-states the corresponding bundle of runs of the original automaton $\aut$ (\emph{cf.} \cite{Walukiewicz96}).} Analogously, for $\wmso$-automata we will associate the non-deterministic behavior with macro-states. However, as explained above, the automaton $\aut^{\f}$ that we construct has to be non-deterministic just on finitely many nodes of the input and may behave as $\aut$ (i.e. in ``alternating mode'') on the others. To this aim, $\aut^{\f}$ will be ``two-sorted'', roughly consisting of one copy of $\aut$ (with carrier $A$) and a variant of its powerset construction, based both on $A$ and $\shA$. For any accepted $\model$, the idea is to make any match $\pi$ of $\mc{A}(\aut^{\f},\model)$ consist of two parts:
+For $\mso$-automata, the simulation theorem is based on a powerset construction: if the starting automaton has carrier $A$, the resulting non-deterministic automaton is based on ``macro-states'' from the set $\shA := \pw (A \times A)$.\footnote{The use of carrier $\pw (A \times A)$ instead of the more obvious $\pw A$ is needed to correctly associate with a run on macro-states the corresponding bundle of runs of the original automaton $\aut$ (\emph{cf.} \cite{Walukiewicz96}).} Analogously, for $\wmso$-automata we will associate the non-deterministic behaviour with macro-states. However, as explained above, the automaton $\aut^{\f}$ that we construct has to be non-deterministic just on finitely many nodes of the input and may behave as $\aut$ (i.e. in ``alternating mode'') on the others. To this aim, $\aut^{\f}$ will be ``two-sorted'', roughly consisting of one copy of $\aut$ (with carrier $A$) and a variant of its powerset construction, based both on $A$ and $\shA$. For any accepted $\bbT$, the idea is to make any match $\pi$ of $\mc{A}(\aut^{\f},\bbT)$ consist of two parts:
 \begin{description}
   \item[(\textbf{Non-deterministic mode})] for finitely many rounds $\pi$ is played on macro-states, i.e. positions are of the form $\shA \times T$. In her strategy player $\exists$ assigns macro-states (from $\shA$) only to \emph{finitely many} nodes, and states (from $A$) to the rest. Also, her strategy is functional in $\shA$, i.e. it assigns \emph{at most one macro-state} to each node.
-  \item[(\textbf{Alternating mode})] At a certain round, $\pi$ abandons macro-states and turns into a match of the game $\mc{A}(\aut,\model)$, i.e. all next positions are from $A \times T$ (and are played according to a non-necessarily functional strategy). %of shape $(a,t) \in A \times T$.
+  \item[(\textbf{Alternating mode})] At a certain round, $\pi$ abandons macro-states and turns into a match of the game $\mc{A}(\aut,\bbT)$, i.e. all next positions are from $A \times T$ (and are played according to a non-necessarily functional strategy). %of shape $(a,t) \in A \times T$.
 \end{description}
 Therefore successful runs of $\aut^{\noet}$ will have the property of processing only a \emph{finite} amount of the input with $\aut^{\noet}$ being in a macro-state and all the rest with $\aut^{\noet}$ behaving exactly as $\aut$. We now proceed in steps towards the construction of $\aut^{\noet}$. The following is a notion of lifting for types on states that is instrumental in defining a translation to types on macro-states. The distinction between empty and non-empty subsets of $A$ is to make sure that empty types on $A$ are lifted to empty types on $\pw A$.
 \begin{definition}
@@ -66,102 +66,107 @@ Given a set $A$ and $\Sigma \subseteq \wp A$, we define the \emph{lifting} $\lif
 \end{definition}
 
 Next we define a translation on the sentences associated with the
-transition function of the original $\wmso$-automaton. Following the intuition given above, we want to work with sentences that can be made true by assigning macro-states (from $\shA$) to finitely many nodes in the model, and ordinary states (from $A$) to all the other nodes. 
+transition function of the original $\wmso$-automaton. Following the intuition given above, we want to work with sentences that can be made true by assigning macro-states (from $\shA$) to finitely many nodes in the model, and ordinary states (from $A$) to all the other nodes. Moreover, each node should be associated with \emph{at most one} macro-state, because of functionality. Corollary \ref{def:functionalsentenceofoe}.\ref{pt:ofoeifunctionalcontinuous} expresses these desiderata as \emph{functional continuity in $\shA$} and suggests the following syntactic shape in order to fulfil them.
 
 \begin{definition}\label{DEF_finitary_lifting}
-Let $\varphi \in {\olque}^+(A \times A)$ be a formula of shape $\posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$ for some $\Pi,\Sigma \subseteq \shA$ and $\vlist{T} = \{T_1,\dots,T_k\} \subseteq \shA$. Fix $\widetilde{\Sigma} \df \{\Ran(S) \mid S \in \Sigma\} \subseteq \wp A$. We define $\varphi^{\fin} \in {\olque}^+(A \cup \shA)$ as $\posdbnfofoei{\lift{\vlist{T}}}{\lift{\Pi} \cup \lift{\Sigma}}{\widetilde{\Sigma}}$\end{definition}
-
-We refer to \eqref{eq:unfoldingNablaolque} below for the unfolding of the expression $\varphi^{\fin}$. Observe that each ${\tau}^{+}_{P}$ with $P \in \widetilde{\Sigma}$ appearing in $\varphi^{\fin}$ is a (positive) $A$-type, as $P = \Ran(S) \subseteq A$ for some $S \in \Sigma$. Our desiderata on this translation concern the notions of \emph{continuity} and \emph{functionality}.
-%The idea of translation $(\cdot)^{\noet}$ is to encode at the one-step level the non-deterministic mode of $\aut^{\noet}$: the property to enforce is that $\varphi^{\noet}$ is \emph{functional} in $\shA$, that means, whenever $(D,\val \: A \to \wp(D)) \models \varphi^{\noet}$, then there is $\val'  \: A \to \wp(D)$ such that $(D, \val') \models \varphi^{\noet}$ and  $ \val'(q_1)\cap \val'(q_2) = \emptyset$ for all $q_1,q_2 \in \shA$. 
-
-\begin{definition} Given a set $A$ of unary predicates and $B \subseteq A$, we say that a sentence $\varphi \in {\olque}^+(A)$ is \emph{functionally continuous in $B$} if, for every model $(D,\val \: A \to \wp(D))$,
-\begin{align*}
-\text{if } (D,\val),\ass \models \varphi \text{ then } & \exists\ \val' \: A \to \wp(D) \text{ such that } (D, \val'),\ass \models \varphi, \\
-& \val'(a)\subseteq \val(a) \text{ for all } a \in A, \tag{$\val'$ is a restriction of $\val$}\\
- & \val'(b) \text{ is finite for all }b \in B \text{ and } \tag{continuity in $B$}\\
- & \val'(b)\cap \val'(a) = \emptyset \text{ for all } a \in A\setminus\{b\} \text{ and }b \in B\tag{functionality in $B$}.
-\end{align*}
-%Moreover, $\varphi$ is \emph{functionally continuous in $B \subseteq A$} if it is so for each $b \in B$.
-\end{definition}
-In words, $\varphi$ is functionally continuous in $B$ if it is continuous in each $b \in B$ and, for each model $(D,\val)$ where $\varphi$ is true, there is a restriction $\val'$ of $\val$ which both witnesses continuity and does not assign any other $a \in A$ to elements marked with some $b \in B$.
-\begin{lemma}\label{LEM_cont}
-Let $\varphi \in {\olque}^+(A \times A)$ and $\varphi^{\fin}\in {\olque}^+(A\cup \shA )$ be given as in Definition~\ref{DEF_finitary_lifting}. Then $\varphi^{\fin}$ is functionally continuous in $\shA$.
- \end{lemma}
-
-\begin{proof}
-%\yvwarning{this proof could use some more detail FZ: I expanded the proof and tried to make it clearer}
-We first unfold the definition of $\varphi^{\fin}$ as follows:
+Let $\varphi \in {\olque}^+(A \times A)$ be a formula of shape $\posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$ for some $\Pi,\Sigma \subseteq \shA$ and $\vlist{T} = \{T_1,\dots,T_k\} \subseteq \shA$. Fix $\widetilde{\Sigma} \df \{\Ran(S) \mid S \in \Sigma\} \subseteq \wp A$. We define $\varphi^{\fin} \in {\olque}^+(A \cup \shA)$ as $\posdbnfofoei{\lift{\vlist{T}}}{\lift{\Pi} \cup \lift{\Sigma}}{\widetilde{\Sigma}}$, that means,
 \begin{equation}\label{eq:unfoldingNablaolque}
 \begin{aligned}
 \varphi^{\fin} =\ &
-\underbrace{
     \exists \vlist{x}.\big(\arediff{\vlist{x}} \land \bigwedge_{0 \leq i \leq n} \tau^+_{\lift{T}_i}(x_i)
-}_{\psi_1}
-\land \underbrace{
-    \forall z.(\arediff{\vlist{x},z} \lthen \bigvee_{S\in \lift{\Pi} \cup \lift{\Sigma} \cup \widetilde{\Sigma}} \tau^+_S(z))\big)
-}_{\psi_2}
 \land
-\\ & \underbrace{
+    \forall z.(\arediff{\vlist{x},z} \lthen \bigvee_{S\in \lift{\Pi} \cup \lift{\Sigma} \cup \widetilde{\Sigma}} \tau^+_S(z))\big)
+\land
+\\ & 
     \bigwedge_{P\in\widetilde{\Sigma}} \qu y.{\tau}^{+}_P(y)
-}_{\psi_3} \land
- \underbrace{
+ \land
     \dqu y.\bigvee_{P\in\widetilde{\Sigma}} {\tau}^{+}_P(y)
-}_{\psi_4} .
-\end{aligned}
+    \end{aligned}
 \end{equation}
-Observe that $\psi_1 \land \psi_2$ is just $\mondbnfofoe{\lift{\vlist{T}}}{\lift{\Pi} \cup \lift{\Sigma} \cup \widetilde{\Sigma}}{+}$. Now suppose that $(D,\val \: (A \cup \shA ) \to \wp(D))$ is a model where $\varphi^{\fin}$ is true. This amounts to the truth of subformulas $\psi_1$, $\psi_2$, $\psi_3$ and $\psi_4$ whose syntactic shape yields information on the types of elements of $D$. In particular, we can define a partition of $D$ into subsets $D_1$, $D_2$, $D'_2$ as follows:
-\begin{itemize}
-  \item As $\psi_1$ is true, we can pick $n$ distinct elements $s_1,\dots,s_n$ of $D$ such that $s_i$ witnesses the positive type $\lift{T}_i$, %\tau^+_{\lift{T}_i}(x_i)$,
-   that is, $s_i \in \val(S)$ for each $S \in \lift{T}_i$. We define $D_1 := \{s_1,\dots,s_n\}$.
-  %
-  \item  As $\psi_2$ is true, we can cover all the elements not in $D_1$ with two disjoint sets $D_2$ and $D'_2$ given as follows. The set $D_2$ is defined to contain all the elements not in $D_1$ witnessing a type ${\tau}^{+}_P(z)$ with $P \in \widetilde{\Sigma}$. The set $D'_2$ is just the complement of $D_1 \cup D_2$: by syntactic shape of $\psi_2$, all elements of $D'_2$ witness a positive type ${\tau}^{+}_S$ with
-  $S \in \lift{\Pi} \cup \lift{\Sigma}$.
-  %
-  \item The truth of the subformula $\psi_4$ yields the information that the set $D_1 \cup D'_2$ is finite. If $\widetilde{\Sigma}$ is non-empty, the truth of $\psi_3$ implies that the set $D_2$ is infinite.
- \end{itemize}
-This partition uniquely associates with each $s \in D$ a type ${\tau}^{+}_S$ witnessed by $s$ and thus a set of unary predicates $S_s := S \subseteq A \cup \shA$. We can then define a valuation $\val'$ assigning to each element $s$ of $D$ exactly the set $S_s$.
+\end{definition}
 
-We now check the properties of $\val'$. As the partition inducing $\val'$ follows the syntactic shape of $\varphi^{\fin}$, one can observe that $\val'$ is a restriction of $\val$ and $(D,\val')$ makes $\varphi^{\fin}$ true. By definition of the partition, $\val'$ assigns unary predicates from $\shA$ only to elements in the finite set $D_1 \cup D'_2$, meaning that $\varphi^{\fin}$ is continuous in $\shA$. Furthermore, $\val'$ assigns at most one unary predicate from $\shA$ to each element of $D_1 \cup D'_2$, because $\lift{\vlist{T}} \cup \lift{\Pi} \cup \lift{\Sigma}$ is defined as the lifting of $\vlist{T} \cup \Pi \cup \Sigma$. It follows that $\varphi^{\fin}$ is also functional in $\shA$. Since the same restriction $\val'$ yields both properties, $\varphi^{\fin}$ is functionally continuous in $\shA$.
-\end{proof}
+%We refer to \eqref{eq:unfoldingNablaolque} below for the unfolding of the expression $\varphi^{\fin}$. Observe that each ${\tau}^{+}_{P}$ with $P \in \widetilde{\Sigma}$ appearing in $\varphi^{\fin}$ is a (positive) $A$-type, as $P = \Ran(S) \subseteq A$ for some $S \in \Sigma$. Our desiderata on this translation concern the notions of \emph{continuity} and \emph{functionality}.
 
-\begin{remark} As $\varphi^{\fin}$ is of shape $\posdbnfofoei{\lift{\vlist{T}}}{\lift{\Pi} \cup \lift{\Sigma}}{\widetilde{\Sigma}}$ with $R \not\in \bigcup\widetilde{\Sigma}$ for each $R \in \shA$, by application of Corollary \ref{cor:olquecontinuousnf} we would immediately get that $\varphi^{\fin}$ is continuous in each $R \in \shA$. However, in proving Lemma \ref{LEM_cont} we privileged a direct proof allowing to show both continuity and functionality at once.
-\end{remark}
+% NOT NEEDED ANYMORE AFTER ADDING LEMMA ON CONTINOUS AND FUNCTIONAL SENTENCES IN PREVIOUS SECTION
+%\begin{definition}\label{def:functionalcontinuous_sentence} Given a set $A$ of unary predicates and $B \subseteq A$, we say that a sentence $\varphi \in {\olque}^+(A)$ is \emph{functionally continuous in $B$} if it is functional in $B$ (Definition \ref{def:functionalsentenceolque}) if, whenever $(D,\val \: A \to \wp(D)) \models \varphi$ then there is a restriction $\val'$ of $\val$ such that $(D,\val' \: A \to \wp(D)) \models \varphi$ and $s \in \val'(b)$ for $b \in B$ implies $s \not\in \val'(a)$ for all $a \in A\setminus\{b\}$., for every model $(D,\val \: A \to \wp(D))$,
+%\begin{align*}
+%\text{if } (D,\val),\ass \models \varphi \text{ then } & \exists\ \val' \: A \to \wp(D) \text{ such that } (D, \val'),\ass \models \varphi, \\
+%& \val'(a)\subseteq \val(a) \text{ for all } a \in A, \tag{$\val'$ is a restriction of $\val$}\\
+% & \val'(b) \text{ is finite for all }b \in B \text{ and } \tag{continuity in $B$}\\
+% & \val'(b)\cap \val'(a) = \emptyset \text{ for all } a \in A\setminus\{b\} \text{ and }b \in B\tag{functionality in $B$}.
+%\end{align*}
+%\end{definition}
+%In words, $\varphi$ is functionally continuous in $B$ if it is continuous in each $b \in B$ and, for each model $(D,\val)$ where $\varphi$ is true, there is a restriction $\val'$ of $\val$ which both witnesses continuity and does not assign any other $a \in A$ to elements marked with some $b \in B$.
+%\begin{lemma}\label{LEM_cont}
+%Let $\varphi \in {\olque}^+(A \times A)$ and $\varphi^{\fin}\in {\olque}^+(A\cup \shA )$ be given as in Definition~\ref{DEF_finitary_lifting}. Then $\varphi^{\fin}$ is functionally continuous in $\shA$.
+% \end{lemma}
+%\begin{proof}
+%Because $\varphi^{\fin}$ is in basic form with all $\shA$-types either empty or singletons, it is functional in $\shA$ by Proposition \ref{lemma:functionalsentenceofoe}. Because it
+%\end{proof}
+%\begin{proof}
+%We first unfold the definition of $\varphi^{\fin}$ as follows:
+%\begin{equation}\label{eq:unfoldingNablaolque}
+%\begin{aligned}
+%\varphi^{\fin} =\ &
+%\underbrace{
+%    \exists \vlist{x}.\big(\arediff{\vlist{x}} \land \bigwedge_{0 \leq i \leq n} \tau^+_{\lift{T}_i}(x_i)
+%}_{\psi_1}
+%\land \underbrace{
+%    \forall z.(\arediff{\vlist{x},z} \lthen \bigvee_{S\in \lift{\Pi} \cup \lift{\Sigma} \cup \widetilde{\Sigma}} \tau^+_S(z))\big)
+%}_{\psi_2}
+%\land
+%\\ & \underbrace{
+%    \bigwedge_{P\in\widetilde{\Sigma}} \qu y.{\tau}^{+}_P(y)
+%}_{\psi_3} \land
+% \underbrace{
+%    \dqu y.\bigvee_{P\in\widetilde{\Sigma}} {\tau}^{+}_P(y)
+%}_{\psi_4} .
+%\end{aligned}
+%\end{equation}
+%Observe that $\psi_1 \land \psi_2$ is just $\mondbnfofoe{\lift{\vlist{T}}}{\lift{\Pi} \cup \lift{\Sigma} \cup \widetilde{\Sigma}}{+}$. Now suppose that $(D,\val \: (A \cup \shA ) \to \wp(D))$ is a model where $\varphi^{\fin}$ is true. This amounts to the truth of subformulas $\psi_1$, $\psi_2$, $\psi_3$ and $\psi_4$ whose syntactic shape yields information on the types of elements of $D$. In particular, we can define a partition of $D$ into subsets $D_1$, $D_2$, $D'_2$ as follows:
+%\begin{itemize}
+%  \item As $\psi_1$ is true, we can pick $n$ distinct elements $s_1,\dots,s_n$ of $D$ such that $s_i$ witnesses the positive type $\lift{T}_i$, %\tau^+_{\lift{T}_i}(x_i)$,
+%   that is, $s_i \in \val(S)$ for each $S \in \lift{T}_i$. We define $D_1 := \{s_1,\dots,s_n\}$.
+%  %
+%  \item  As $\psi_2$ is true, we can cover all the elements not in $D_1$ with two disjoint sets $D_2$ and $D'_2$ given as follows. The set $D_2$ is defined to contain all the elements not in $D_1$ witnessing a type ${\tau}^{+}_P(z)$ with $P \in \widetilde{\Sigma}$. The set $D'_2$ is just the complement of $D_1 \cup D_2$: by syntactic shape of $\psi_2$, all elements of $D'_2$ witness a positive type ${\tau}^{+}_S$ with
+%  $S \in \lift{\Pi} \cup \lift{\Sigma}$.
+%  %
+%  \item The truth of the subformula $\psi_4$ yields the information that the set $D_1 \cup D'_2$ is finite. If $\widetilde{\Sigma}$ is non-empty, the truth of $\psi_3$ implies that the set $D_2$ is infinite.
+% \end{itemize}
+%This partition uniquely associates with each $s \in D$ a type ${\tau}^{+}_S$ witnessed by $s$ and thus a set of unary predicates $S_s := S \subseteq A \cup \shA$. We can then define a valuation $\val'$ assigning to each element $s$ of $D$ exactly the set $S_s$.
+%
+%We now check the properties of $\val'$. As the partition inducing $\val'$ follows the syntactic shape of $\varphi^{\fin}$, one can observe that $\val'$ is a restriction of $\val$ and $(D,\val')$ makes $\varphi^{\fin}$ true. By definition of the partition, $\val'$ assigns unary predicates from $\shA$ only to elements in the finite set $D_1 \cup D'_2$, meaning that $\varphi^{\fin}$ is continuous in $\shA$. Furthermore, $\val'$ assigns at most one unary predicate from $\shA$ to each element of $D_1 \cup D'_2$, because $\lift{\vlist{T}} \cup \lift{\Pi} \cup \lift{\Sigma}$ is defined as the lifting of $\vlist{T} \cup \Pi \cup \Sigma$. It follows that $\varphi^{\fin}$ is also functional in $\shA$. Since the same restriction $\val'$ yields both properties, $\varphi^{\fin}$ is functionally continuous in $\shA$.
+%\end{proof}
+%
+%\begin{remark} As $\varphi^{\fin}$ is of shape $\posdbnfofoei{\lift{\vlist{T}}}{\lift{\Pi} \cup \lift{\Sigma}}{\widetilde{\Sigma}}$ with $R \not\in \bigcup\widetilde{\Sigma}$ for each $R \in \shA$, by application of Corollary \ref{cor:olquecontinuousnf} we would immediately get that $\varphi^{\fin}$ is continuous in each $R \in \shA$. However, in proving Lemma \ref{LEM_cont} we privileged a direct proof allowing to show both continuity and functionality at once.
+%\end{remark}
 
 The next definition is standard (see e.g.  \cite{Walukiewicz96,Ven08}) as an intermediate step to define the transition function of the powerset construct for parity automata.
 
-\begin{definition}\label{DEF_delta star} Let $\aut = \tup{A,\tmap,\pmap,a_I}$ be a $\wmso$-automaton. Fix $a \in A$ and $c \in C$. We define $\tmap^{\star}(a,c) \df \tmap(a,c)[b \mapsto (a,b) \mid b \in A]$, that is, the sentence in ${\olque}^+(A\times A)$ obtained by replacing each occurrence of an unary predicate $b \in A$ in $\tmap(a,c)$ with the unary predicate $(a,b) \in A \times A$. \end{definition}
+\begin{definition}\label{DEF_delta star} For a parity automaton $\aut = \tup{A,\tmap,\pmap,a_I}$, $a \in A$ and $c \in C$, we define $\tmap^{\star}(a,c) \df \tmap(a,c)[b \mapsto (a,b) \mid b \in A]$, that is, the sentence in ${\olque}^+(A\times A)$ obtained by replacing each occurrence of an unary predicate $b \in A$ in $\tmap(a,c)$ with the unary predicate $(a,b) \in A \times A$. \end{definition}
 
  Next we combine the previous definitions to characterise the transition function associated with the macro-states.
 
 \begin{definition}\label{PROP_DeltaPowerset}
-Let $\aut = \tup{A,\tmap,\pmap,a_I}$ be a $\wmso$-automaton. Let $c \in C$ be a label and $Q \in \shA$ a binary relation on $A$. By Corollary \ref{cor:olquepositivenf}, for some $\Pi,\Sigma \subseteq \shA$ and $T_i \subseteq A \times A$, there is a sentence $\Psi_{Q,c} \in {\olque}^+(A\times A)$ in the basic form $\bigvee \posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$ such that
-\begin{eqnarray*}
-% \nonumber to remove numbering (before each equation)
-  \bigwedge_{a \in \Ran(Q)} \tmap^{\star}(a,c) &\equiv& \Psi_{Q,c}.
-\end{eqnarray*}
-By definition $\Psi_{Q,c}$ is of the form $\bigvee_{i}\varphi_i$, with each $\phi_{i}$ of shape $\posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$. We put $\shDe(Q,c) := \bigvee_{i}\varphi_i^{\fin}$, where the translation $(-)^{\fin}$ is given as in Definition~\ref{DEF_finitary_lifting}. Observe that $\shDe(Q,c)$ is of type ${\olque}^+(A \cup \shA)$.
+Let $\aut = \tup{A,\tmap,\pmap,a_I}$ be a $\wmso$-automaton. Let $c \in C$ be a label and $Q \in \shA$ a binary relation on $A$. By Corollary \ref{cor:olquepositivenf}, for some $\Pi,\Sigma \subseteq \shA$ and $T_i \subseteq A \times A$, there is a sentence $\Psi_{Q,c} \in {\olque}^+(A\times A)$ in the basic form $\bigvee \posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$ such that $\bigwedge_{a \in \Ran(Q)} \tmap^{\star}(a,c) \equiv \Psi_{Q,c}$. By definition $\Psi_{Q,c}$ is of the form $\bigvee_{i}\varphi_i$, with each $\phi_{i}$ of shape $\posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$. We put $\shDe(Q,c) := \bigvee_{i}\varphi_i^{\fin}$, where the translation $(-)^{\fin}$ is given as in Definition~\ref{DEF_finitary_lifting}. Observe that $\shDe(Q,c)$ is of type ${\olque}^+(A \cup \shA)$.
 \end{definition}
 
 We have now all the ingredients to define our two-sorted automaton.
 
 \begin{definition}\label{def:finitaryconstruct}
 Let $\aut = \tup{A,\tmap,\pmap,a_I}$ be a {\wmso-automaton}. We define the \emph{finitary construct over $\aut$} as the automaton $\aut^{\fin} = \tup{A^{\fin},\tmap^{\fin},\pmap^{\fin},a_I^{\fin}}$ given by
-\begin{eqnarray*}
+\begin{gather*}
       % \nonumber to remove numbering (before each equation)
-        A^{\fin} &:=& A \cup \shA \\
-        %\leq^{2S} &:=& \leq\ \cup\ (\shA \times A)\ \cup\ (\shA \times \shA)\\
-        a_I^{\fin} &:=& \{(a_I,a_I)\}\\
-        \tmap^{\fin}(a,c) &:=& \tmap(a,c)\\
-        \tmap^{\fin}(R,c) &:=& \shDe(R,c) \vee \bigwedge_{a \in \Ran(R)} \tmap(a,c)\\
-        \pmap^{\fin}(a) &:=& \pmap(a)\\
-        \pmap^{\fin}(R) &:=& 1.
-      \end{eqnarray*}
+        A^{\fin} \ \df \  A \cup \shA \quad\quad\quad a_I^{\fin} \ \df \  \{(a_I,a_I)\} \quad\quad\quad \pmap^{\fin}(a) \ \df \  \pmap(a) \quad\quad\quad \pmap^{\fin}(R) \ \df \  1 \\
+        \tmap^{\fin}(a,c) \ \df \  \tmap(a,c) \qquad \qquad \qquad 
+        \tmap^{\fin}(Q,c) \ \ \df \ \  \shDe(Q,c) \vee \! \! \! \! \bigwedge_{a \in \Ran(Q)} \! \! \! \tmap(a,c).
+      \end{gather*}
 \end{definition}
 
 The idea behind this definition is that $\aut^{\fin}$ is enforced to process only a finite portion of any accepted tree while in the non-deterministic mode. This is encoded in game-theoretic terms through the notion of functional and finitary strategy. 
 
 \begin{definition}\label{def:StratfunctionalFinitary}
-Given a $\wmso$-automaton $\bbA = \tup{A,\tmap,\pmap,a_I}$ and transition system $\bbT$, a strategy $f$ for \eloise in $\mathcal{A}(\bbA,\model)$ is \emph{functional in $B \subseteq A$} (or simply functional, if $B=A$) if for each node $s$ in $\bbT$ there is at most one $b \in B$ such that $(b,s)$ is a reachable position in an $f$-guided match. Also $f$ is \emph{finitary} in $B$ if there are only finitely many nodes $s$ in $\bbT$ for which a position $(b,s)$ with $b \in B$ is reachable in an $f$-guided match.
+Given a $\wmso$-automaton $\bbA = \tup{A,\tmap,\pmap,a_I}$ and transition system $\bbT$, a strategy $f$ for \eloise in $\mathcal{A}(\bbA,\bbT)$ is \emph{functional in $B \subseteq A$} (or simply functional, if $B=A$) if for each node $s$ in $\bbT$ there is at most one $b \in B$ such that $(b,s)$ is a reachable position in an $f$-guided match. Also $f$ is \emph{finitary} in $B$ if there are only finitely many nodes $s$ in $\bbT$ for which a position $(b,s)$ with $b \in B$ is reachable in an $f$-guided match.
 \end{definition}
 
 
@@ -169,34 +174,31 @@ Given a $\wmso$-automaton $\bbA = \tup{A,\tmap,\pmap,a_I}$ and transition system
 The next proposition establishes the desired properties of the finitary
 construct.
 
-\begin{proposition}[\textbf{Simulation Theorem for $\wmso$-automata}]\label{PROP_facts_finConstrwmso} Let $\aut$ be a $\wmso$-automaton and $\aut^{\fin}$ its finitary construct.
+\begin{theorem}[\textbf{Simulation Theorem for $\wmso$-automata}]\label{PROP_facts_finConstrwmso} Let $\aut$ be a $\wmso$-automaton and $\aut^{\fin}$ its finitary construct.
 \begin{enumerate}[(i)]
   \itemsep 0 pt
   \item $\aut^{\fin}$ is a $\wmso$-automaton.\label{point:finConstrAut}
-  \item For any $\model$, if $\eloise$ has a winning strategy in $\agame(\aut^{\fin},\model)$ from position $(a_I^{\fin},s_I)$ then she has one that is functional in $\shA$ and finitary in $\shA$.% (\emph{cf.} Definition \ref{def:StratfunctionalFinitary}).
+  \item For any $\bbT$, if $\eloise$ has a winning strategy in $\agame(\aut^{\fin},\bbT)$ from position $(a_I^{\fin},s_I)$ then she has one that is functional in $\shA$ and finitary in $\shA$.% (\emph{cf.} Definition \ref{def:StratfunctionalFinitary}).
   \label{point:finConstrStrategy}
   \item $\aut \equiv \aut^{\fin}$. \label{point:finConstrEquiv}
   \end{enumerate}
-\end{proposition}
+\end{theorem}
 \begin{proof}
 \begin{enumerate}[(i)]
 \item Observe that any SCC
-of $\aut^{\fin}$ involves states of exactly one sort, either $A$ or $\shA$. For SCCs on sort $A$, \textbf{(weakness)} and \textbf{(continuity)} of $\aut^{\fin}$ follow by the ones of $\aut$. For SCCs on sort $\shA$, \textbf{(weakness)} follows by observing that all macro-states in $\aut^{\fin}$ have the same parity value. Concerning \textbf{(continuity)}, by definition of $\tmap^{\fin}$ any macro-state can only appear inside a formula of the form $\varphi^{\fin}$, which is by Lemma \ref{LEM_cont} is continuous in each $Q \in \shA$.
-  \item  Let $f$ be a winning strategy for $\eloise$ in $\mathcal{A}(\aut^{\fin},\model)@(a_I^{\fin},s_I)$. We define a strategy $f'$ for $\eloise$ in the same game as follows:
+of $\aut^{\fin}$ involves states of exactly one sort, either $A$ or $\shA$. For SCCs on sort $A$, \textbf{(weakness)} and \textbf{(continuity)} of $\aut^{\fin}$ follow by the ones of $\aut$. For SCCs on sort $\shA$, \textbf{(weakness)} follows by observing that all macro-states in $\aut^{\fin}$ have the same parity value. Concerning \textbf{(continuity)}, by definition of $\tmap^{\fin}$ any macro-state can only appear inside a formula of the form $\varphi^{\fin} = \posdbnfofoei{\lift{\vlist{T}}}{\lift{\Pi} \cup \lift{\Sigma}}{\widetilde{\Sigma}}$ as in \eqref{eq:unfoldingNablaolque}. Because $\shA \cap \widetilde{\Sigma} = \emptyset$, by Corollary \ref{cor:ofoeicontinuousnf}.\ref{pt:ofoeimonotone} $\varphi^{\fin}$ is continuous in each $Q \in \shA$.
+  \item  Let $f$ be a winning strategy for $\eloise$ in $\mathcal{A}(\aut^{\fin},\bbT)@(a_I^{\fin},s_I)$. We define a strategy $f'$ for $\eloise$ in the same game as follows:
       \begin{enumerate}[label=(\alph*),ref=\alph*]
         \item on basic positions of the form $(a,s) \in A\times T$, let $\val$ be the valuation suggested by $f$. We let the valuation suggested by $f'$ be the restriction $\val'$ of $\val$ to $A$. Observe that, as no predicate from $A^{\fin}\setminus A =\shA$ occurs in $\tmap^{\fin}(a,\V(s)) = \tmap(a,\V(s))$, then $\val'$ also makes that sentence true in $\R{s}$.
-        \begin{comment} With minimality
-        on basic positions of the form $(a,s) \in A\times T$, $f'$ is defined as $f$. Indeed, as no predicate from $\shA$ occurs in $\tmap^{\fin}(a,\V(s))$, we can assume that the valuation suggested by $f$ does not assign any of them to nodes in $\R{s}$.
-        \end{comment}
         \label{point:stat2point1}
         \item for basic positions of the form $(R,s) \in \shA \times T$, let $\val_{R,s}$ be the valuation suggested by $f$. As $f$ is winning, $\tmap^{\fin}(R,\V(s))$ is true in the model $\val_{R,s}$. If this is because the disjunct $\bigwedge_{a \in \Ran(R)} \tmap(a,\V(s))$ is made true, then we can let $f'$ suggest the restriction to $A$ of $\val_{R,s}$, for the same reason as in \eqref{point:stat2point1}. Otherwise, the disjunct $\shDe(R,\V(s)) = \bigvee_{i}\varphi_i^{\fin}$ is made true. This means that, for some $i$, $(R[s], \val_{R,s}) \models \varphi_i^{\fin}$.
-             By Lemma \ref{LEM_cont} $\varphi_i^{\fin}$ is functionally continuous in $\shA$, meaning that we have a restriction $\val_{R,s}'$ of $\val_{R,s}$ that verifies $\varphi_i^{\fin}$, assigns finitely many nodes to predicates from $\shA$ and associates with each node at most one predicate from $\shA$. We let $\val_{R,s}'$ be the suggestion of $f'$ from position $(R,s)$.
+             Now, by construction of $\varphi_i^{\fin}$ as in \eqref{eq:unfoldingNablaolque}, $\lift{T}_1,\dots,\lift{T}_k$ and each $S \in \in \lift{\Pi} \cup \lift{\Sigma}$ are either empty or singleton subsets of $\shA$ and $\widetilde{\Sigma} \cap \shA = \emptyset$. By Corollary \ref{def:functionalsentenceofoe}.\ref{pt:ofoeifunctionalcontinuous}, this implies that $\varphi_i^{\fin}$ is functionally continuous in $\shA$. Thus we have a restriction $\val_{R,s}'$ of $\val_{R,s}$ that verifies $\varphi_i^{\fin}$, assigns finitely many nodes to predicates from $\shA$ and associates with each node at most one predicate from $\shA$. We let $\val_{R,s}'$ be the suggestion of $f'$ from position $(R,s)$.
       \end{enumerate}
       The strategy $f'$ defined as above is immediately seen to be
       surviving for $\eloise$. It is also winning, because the set of
       basic positions on which $f'$ is defined is a subset of the one
       of the winning strategy $f$. By this observation it also follows that any $f'$-conform match visits basic positions of the form $(R,s) \in \shA \times C$ only finitely many times, as those have odd parity. By definition, the valuation suggested by $f'$ only assigns finitely many nodes to predicates in $\shA$ from positions of that shape, and no nodes from other positions. It follows that $f'$ is finitary in $\shA$. Functionality in $\shA$ also follows immediately by definition of $f'$.
-  \item For the direction from left to right, it is immediate by definition of $\aut^{\fin}$ that a winning strategy for $\eloise$ in $\mc{G} = \mathcal{A}(\aut,\model)@(a_I,s_I)$ is also winning for $\eloise$ in $\mc{G}^{\fin} = \mathcal{A}(\aut^{\fin},\model)@(a_I^{\fin},s_I)$.
+  \item For the direction from left to right, it is immediate by definition of $\aut^{\fin}$ that a winning strategy for $\eloise$ in $\mc{G} = \mathcal{A}(\aut,\bbT)@(a_I,s_I)$ is also winning for $\eloise$ in $\mc{G}^{\fin} = \mathcal{A}(\aut^{\fin},\bbT)@(a_I^{\fin},s_I)$.
 
       For the direction from right to left, let $f$ be a winning strategy for $\eloise$ in $\mc{G}^{\fin}$. The idea is to define a strategy $f'$ for $\eloise$ in stages, while playing a match $\pi'$ in $\mc{G}$. In parallel to $\pi'$, a shadow match $\pi$ in $\mc{G}^{\fin}$ is maintained, where $\eloise$ plays according to the strategy $f$. For each round $z_i$, we want to keep the following relation between the two matches:
 \smallskip
@@ -241,10 +243,10 @@ In both cases, the suggestion of strategy $f'$ was a legitimate move for $\elois
 
 
 
-\subsection{From formulae to automata}
+\subsection{From formulas to automata}
 
 In this subsection we conclude the proof of Theorem~\ref{t:wmsoauto}. %, showing that $\wmso$-automata are closed under the  operations corresponding to the connectives of $\mso$, that is: union, complementation and projection with respect to finite sets.We start with the latter.
-We first focus on the case of projection with respect to finite sets, which exploits our simulation result, Theorem \ref{PROP_facts_finConstrwmso}.
+We first focus on the case of projection with respect to finite sets, which exploits our simulation result, Theorem~\ref{PROP_facts_finConstrwmso}. The definition of the projection construction is formulated more generally for parity automata, as it will be later applied to classes other than $\AutWC(\olque)$. It clearly preserves the weakness and continuity conditions.
 %%%%
 %%%% PROJECTION
 %%%%
@@ -253,68 +255,60 @@ We first focus on the case of projection with respect to finite sets, which expl
 %\subsection{Closure under Finitary Projection}
 
 \begin{definition}\label{DEF_fin_projection}
-Let $\aut = \tup{A, \tmap, \Omega, a_I}$ be a $\wmso$-automaton on alphabet $\p(\prop \cup \{p\})$. Let $\aut^{\f}$
-denote its finitary construct.
-We define the automaton ${{\finexists} p}.\aut = \langle A^{\f}, a_I^{\f},
-\tmapProj, \Omega^{\f}\rangle$ on alphabet $\p\prop$ by putting
+Let $\aut = \tup{A, \tmap, \Omega, a_I}$ be a parity automaton on alphabet $\p(\prop \cup \{p\})$. We define the automaton ${{\exists} p}.\aut = \tup{A, \tmapProj, \Omega, a_I}$ on alphabet $\p\prop$ by putting
 \begin{equation*}
 % \nonumber to remove numbering (before each equation)
-  \tmapProj(a,c) \ \df \ \tmap^{\f}(a,c) \qquad \qquadﬂ
-  \tmapProj(R,c) \ \df \ \tmap^{\f}(R,c) \vee \tmap^{\f}(R,c\cup\{p\}).
+  \tmapProj(a,c) \ \df \ \tmap(a,c) \qquad \qquad
+  \tmapProj(Q,c) \ \df \ \tmap(Q,c) \vee \tmap(Q,c\cup\{p\}).
 \end{equation*}
-The automaton ${{\finexists} p}.\aut$ is called the \emph{finitary projection
+The automaton ${{\exists} p}.\aut$ is called the \emph{finitary projection
 construct of $\aut$ over $p$}.
 \end{definition}
 
-Our projection construction corresponds to a suitable closure operation on tree languages, modeling the semantics of $\wmso$ existential quantification.
-
-\begin{definition}\label{def:tree_finproj} Let $p$ be a propositional letter and $L$ a tree language of $\p (\prop\cup\{p\})$-labeled trees. The \emph{finite projection} of $L$ over $p$ is the language ${\finexists} p.L$ of $C$-labeled trees defined as
-\begin{equation*}
-    {\finexists} p.L = \{\model \mid \text{there is a $p$-variant } \model[p\mapsto S] \text{ of } \model \text{ such that } \model[p\mapsto S] \in L \text{ and } S \text{ is finite} \}.
-\end{equation*}\hfill
-\end{definition}
 
 \begin{lemma}\label{PROP_fin_projection}
 For each $\wmso$-automaton $\aut$ on alphabet $\p (\prop \cup \{p\})$,
 we have that
-$$\trees({{\finexists} p}.\aut) \ \equiv\
+$$\trees({{\exists} p}.\aut) \ \equiv\
 {{\finexists} p}.\trees(\aut).
 $$
 \end{lemma}
 
 \begin{proof}
-\fcwarning{Showing this for $\aut^F$ and using Lemma~\ref{PROP_facts_finConstr}(3) leads to a way simpler proof.}What we need to show is that for any tree $\model$:
-\begin{equation*}
-  {{\finexists} p}.\aut \text{ accepts } \mathbb{T}  \text{ iff } \text{there is a finite $p$-variant }\model'\text{of }\mathbb{T}\text{  such that }\aut\text{  accepts }\model'.
-\end{equation*}
-For direction from left to right, we first observe that the properties stated by Lemma~\ref{PROP_facts_finConstr} hold for ${{\finexists} p}.\aut$ as well, since the latter is defined in terms of $\aut^{\f}$. Then we can assume that the given winning strategy $f$ for $\eloise$ in $\mc{G_{\exists}} = \mc{A}({\finexists p}.\aut,\model)@(a_I^{\f},s_I)$ is functional and finitary in $\shA$. Functionality allows us to associate with each node $s$ either none or a unique state $Q_s \in \shA$ (\emph{cf.} \cite[Prop. 3.12]{Zanasi:Thesis:2012}). We now want to isolate  the nodes that $f$ treats ``as if they were labeled with $p$''. For this purpose, let $\val_{s}$ be the valuation suggested by $f$ from a position $(Q_s,s) \in \shA \times T$. As $f$ is winning, $\val_{s}$ makes $\tmapProj(Q,\tscolors(s))$ true in $\R{s}$. We define a $p$-variant $\model'$ of $\model$ by \fcwarning{Why the tilde?}coloring with $p$ all nodes in the following set:
+First of all, by Theorem \ref{PROP_facts_finConstrwmso} we can assume that $\aut$ is two-sorted, i.e. $\aut = (\aut')^{\fin} = \tup{A^{\fin}, \tmap^{\fin},\pmap^{\fin},a_I^{\fin}}$ for some $\wmso$-automaton $\aut' = \tup{A,\tmap,\pmap, a_I}$. What we need to show is that for any tree $\bbT = \tup{T,R,\V \: \prop \to \pw T,s_I}$:
+$${{\exists} p}.\aut \text{ accepts } \bbT \text{ iff } \text{there is a finite }p \text{ -variant }\bbT' \text{of } \bbT \text{  such that } \aut \text{  accepts } \bbT'.$$
+For direction from left to right, we first observe that the properties stated by Lemma~\ref{PROP_facts_finConstr}, which hold for $\aut$ by assumption, by construction hold for ${{\exists} p}.\aut$ as well. Thus we can assume that the given winning strategy $f$ for $\eloise$ in $\mc{G_{\exists}} = \mc{A}({\finexists p}.\aut,\bbT)@(a_I^{\fin},s_I)$ is functional and finitary in $\shA$. Functionality allows us to associate with each node $s$ either none or a unique state $Q_s \in \shA$ such that $(Q_s,s)$ is winning for $\eloise$. We now want to isolate the nodes that $f$ treats ``as if they were labeled with $p$''. For this purpose, let $\val_{s}$ be the valuation suggested by $f$ from a position $(Q_s,s) \in \shA \times T$. As $f$ is winning, $\val_{s}$ makes $\tmapProj(Q,\tscolors(s))$ true in $\R{s}$. We define a $p$-variant $\bbT' = \tup{T,R,\V' \: \prop\cup\{p\} \to \pw T,s_I}$ of $\bbT$ by coloring with $p$ all nodes in the following set:
  \begin{equation}\label{eq:X_p}
 % \nonumber to remove numbering (before each equation)
    X_p\ :=\ \{s \in T\mid (\R{s},\widetilde{\val}_{s}) \models \tmap^{\f}(Q_s,\tscolors(s)\cup\{p\})\}.
 \end{equation}
-The fact that the strategy of $\exists$ is finitary in $\shA$ guarantees that $X_p$ is finite, whence $\model'$ is a finite $p$-variant. The argument showing that $\aut^{\f}$ (and thus also $\aut$, by Lemma~\ref{PROP_facts_finConstr}(1))\fcwarning{isn't this (3)?} accepts $\model'$ is a routine adaptation of the analogous proof for the noetherian projection of weak $\mso$-automata, for which we refer to \cite[Prop. 3.12]{Zanasi:Thesis:2012}.
-\medskip
+The fact that $f$ is finitary in $\shA$ guarantees that $X_p$ is finite, whence $\bbT'$ is a finite $p$-variant. It remains to show that $\aut$ accepts $\bbT'$: we claim that $f$ itself is also winning for $\eloise$ in $\mc{G} = (\aut,\bbT')@(a_I,s_I)$. In order to see that, let us construct in stages an $f$-conform match $\pi^{2S}$ of $\mc{G}$ and an $f$-conform shadow match $\tilde{\pi}$ of $\mc{G_{\exists}}$. The inductive hypothesis we want to bring from one round to the next is that the same basic position occurs in both matches, as this suffices to prove that $f$ is winning for $\eloise$ in $\mc{G}$.
 
-For the direction from right to left, let $\model'$ be a finite $p$-variant of
-$\model$, with labeling function $\tscolors'$, and $g$ a winning strategy for $\exists$ in $\mc{G} = \mathcal{A}(\aut,\model')@(a_I,s_I)$. Our goal is to define a strategy $g'$ for $\exists$ in $\mc{G_{\exists}}$. As usual, $g'$ will be constructed in stages, while playing a match $\pi'$ in $\mc{G_{\exists}}$. In parallel to $\pi'$, a \emph{bundle} $\mc{B}$ of $g$-guided shadow matches in $\mc{G}$ is maintained, with the following condition enforced for each round $z_i$ (\emph{cf.} \cite[Prop.~ 3.12]{Zanasi:Thesis:2012}) :
+First we consider the case of a basic position $(Q,s) \in A^{\fin} \times T$ where $Q \in \shA$. By assumption $f$ provides a marking $\widetilde{m}_s$ that makes $\tmapProj(Q,\V(s))$ true in $\R{s}$. Thus $\widetilde{m}_s$ verifies either $\tmap^{\fin}(Q,\V(s))$ or $\tmap^{\fin}(Q,\V(s)\cup \{p\})$. Now, the match $\pi^{\fin}$ is played on the $p$-variant $\bbT'$, where the labeling $\V'(s)$ is decided by the membership of $s$ to $X_p$. According to \eqref{eq:X_p}, if $\widetilde{m}_s$ verifies $\tmap^{\fin}(Q,\V(s)\cup \{p\})$ then $s$ is in $X_p$, meaning that it is labeled with $p$ in $\bbT'$, i.e. $\V'(s) = \V(s)\cup \{p\}$. Therefore $\widetilde{m}_s$ also verifies $\tmap^{\fin}(Q,\V'(s))$ and it is a legitimate move for $\eloise$ in match $\pi^{\fin}$. In the remaining case, $\widetilde{m}_s$ verifies $\tmap^{\fin}(Q,\V(s))$ but falsifies $\tmap^{\fin}(Q,\V(s)\cup \{p\})$, implying by definition that $s$ is not in $X_p$. This means that $s$ is not labeled with $p$ in $\bbT'$, i.e. $\V'(s) = \V(s)$. Thus again $\widetilde{m}_s$ verifies $\tmap^{\fin}(Q,\V'(s))$ and it is a legitimate move for $\eloise$ in match $\pi^{\fin}$.
+
+It remains to consider the case of a basic position $(a,s) \in A^{\fin} \times T$ with $a \in A$ a state. By definition $\tmapProj(a,\V(s))$ is just $\tmap^{\fin}(a,\V(s))$. As $(a,s)$ is winning, we can assume that no position $(Q,s)$ with $Q$ a macro-state is winning according to the same $f$, as making $\tmapProj$-sentences true never forces $\eloise$ to mark a node both with a state and a macro-state. Therefore, $s$ is not in $X_p$ either, meaning that it it is not labeled with $p$ in the $p$-variant $\bbT'$ and thus $\V'(s) = \V(s)$. This implies that $f$ makes $\tmap^{\fin}(a,\V'(s)) = \tmap^{\fin}(a,\V(s))$ true in $\R{s}$ and its suggestion is a legitimate move for $\eloise$ in match $\pi^{\fin}$. In order to conclude the proof, observe that for all positions that we consider the same marking is suggested to $\eloise$ in both games: this means that any next position that is picked by player $\abelard$ in $\pi^{\fin}$ is also available for $\abelard$ in the shadow match $\tilde{\pi}$.
+
+
+We now show the direction from right to left of the statement. Let $\bbT'$ be a finite $p$-variant of
+$\bbT$, with labeling function $\tscolors'$, and $g$ a winning strategy for $\exists$ in $\mc{G} = \mathcal{A}(\aut,\bbT')@(a_I,s_I)$. Our goal is to define a strategy $g'$ for $\exists$ in $\mc{G_{\exists}}$. As usual, $g'$ will be constructed in stages, while playing a match $\pi'$ in $\mc{G_{\exists}}$. In parallel to $\pi'$, a \emph{bundle} $\mc{B}$ of $g$-guided shadow matches in $\mc{G}$ is maintained, with the following condition enforced for each round $z_i$:
 \smallskip
 \begin{center}
 \fbox{\parbox{13cm}{
 \begin{enumerate}
-  \item If the current (i.e. at round $z_i$) basic position in $\pi'$ is of the form $(Q,s) \in \shA \times T$, then for each $a \in\Ran(Q)$ there is an $g$-guided (partial) shadow match $\pi_a$ at basic position $(a,s) \in A\times T$ in the current bundle $\mc{B}_i$. Also, either $\model'_s$ is not $p$-free (i.e., it does contain a node $s'$ with $p \in \tscolors'(s')$) or $s$ has some sibling $t$ such that $\model'_t$ is not $p$-free.
-  \item Otherwise, the current basic position in $\pi'$ is of the form $(a,s) \in A \times T$ and $\model'_s$ is $p$-free (i.e., it does not contain any node $s'$ with $p \in \tscolors'(s')$). Also, the bundle $\mc{B}_i$ only consists of a single $g$-guided match $\pi_a$ whose current basic position is also $(a,s)$.
+  \item If the current (i.e. at round $z_i$) basic position in $\pi'$ is of the form $(Q,s) \in \shA \times T$, then for each $a \in\Ran(Q)$ there is an $g$-guided (partial) shadow match $\pi_a$ at basic position $(a,s) \in A\times T$ in the current bundle $\mc{B}_i$. Also, either $\bbT'_s$ is not $p$-free (i.e., it does contain a node $s'$ with $p \in \tscolors'(s')$) or $s$ has some sibling $t$ such that $\bbT'_t$ is not $p$-free.
+  \item Otherwise, the current basic position in $\pi'$ is of the form $(a,s) \in A \times T$ and $\bbT'_s$ is $p$-free (i.e., it does not contain any node $s'$ with $p \in \tscolors'(s')$). Also, the bundle $\mc{B}_i$ only consists of a single $g$-guided match $\pi_a$ whose current basic position is also $(a,s)$.
 \end{enumerate}
 }}\hspace*{0.3cm}($\ddag$)
 \end{center}
 \smallskip
-We briefly recall the idea behind condition ($\ddag$). Point ($\ddag.1$) describes the part of match $\pi'$ where it is still possible to encounter nodes which are labeled with $p$ in $\model'$. As $\tmapProj$ only takes the letter $p$ into account when defined on macro-states in $\shA$, we want $\pi'$ to visit only positions of the form $(R,s) \in \shA \times T$ in that situation. Anytime we visit such a position $(R,s)$ in $\pi'$, the role of the bundle is to provide one $g$-guided shadow match at position $(a,s)$ for each $a \in \Ran(R)$.
+We briefly recall the idea behind condition ($\ddag$). Point ($\ddag.1$) describes the part of match $\pi'$ where it is still possible to encounter nodes which are labeled with $p$ in $\bbT'$. As $\tmapProj$ only takes the letter $p$ into account when defined on macro-states in $\shA$, we want $\pi'$ to visit only positions of the form $(Q,s) \in \shA \times T$ in that situation. Anytime we visit such a position $(Q,s)$ in $\pi'$, the role of the bundle is to provide one $g$-guided shadow match at position $(a,s)$ for each $a \in \Ran(Q)$.
 Then $g'$ is defined in terms of what $g$ suggests from those positions.
 
  Point ($\ddag.2$) describes how we want the match $\pi'$ to be
- played on a $p$-free subtree: as any node that one might encounter has the same label in $\model$ and $\model'$,
+ played on a $p$-free subtree: as any node that one might encounter has the same label in $\bbT$ and $\bbT'$,
 it is safe to let ${\finexists p}.\aut$ behave as $\aut$ in such situation. Provided that the two matches visit the same basic positions, of the form $(a,s)\times A \times T$, we can let $g'$ just copy $g$.
 
-The key observation is that, as $\model'$ is a \emph{finite} $p$-variant of $\model$, nodes labeled with $p$ are reachable only for finitely many rounds of $\pi'$. This means that, provided that ($\ddag$) hold at each round, ($\ddag.1$) will describe an initial segment of $\pi'$, whereas ($\ddag.2$) will describe the remaining part. Thus our proof that $g'$ is a winning strategy for $\exists$ in $\mc{G}_{\exists}$ is concluded by showing that ($\ddag$) holds for each stage of construction of $\pi'$ and $\mc{B}$.
+The key observation is that, as $\bbT'$ is a \emph{finite} $p$-variant of $\bbT$, nodes labeled with $p$ are reachable only for finitely many rounds of $\pi'$. This means that, provided that ($\ddag$) hold at each round, ($\ddag.1$) will describe an initial segment of $\pi'$, whereas ($\ddag.2$) will describe the remaining part. Thus our proof that $g'$ is a winning strategy for $\exists$ in $\mc{G}_{\exists}$ is concluded by showing that ($\ddag$) holds for each stage of construction of $\pi'$ and $\mc{B}$.
 
 \medskip
 
@@ -324,31 +318,31 @@ Inductively, suppose that at round $z_i$ we are given a position $(q,s) \in A^{\
 %\yvwarning{Notation `$q$' is confusing, see $\val'(q)$ below FZ: I corrected $q$ into $q'$ below}
   \item If $(q,s)$ is of the form $(Q,s) \in \shA \times T$, by inductive hypothesis we are given with $g$-guided shadow matches $\{\pi_a\}_{a \in \Ran(Q)}$ in $\mc{B}_i$. For each match $\pi_a$ in the bundle, we are provided with a valuation $\val_{a,s}: A \rightarrow \p (\R{s})$ making $\tmap(a,\tscolors'(s))$ true. Then we further distinguish the following two cases.
 \begin{enumerate}[label = (\roman*), ref = \roman*]
-  \item \label{point:TsNotPFree} Suppose first that $\model'_s$ is not $p$-free. We let the suggestion $\val' \: A^{\f} \to \p (\R{s})$ of $g'$ from position $(Q,s)$ be defined as follows:
+  \item \label{point:TsNotPFree} Suppose first that $\bbT'_s$ is not $p$-free. We let the suggestion $\val' \: A^{\f} \to \p (\R{s})$ of $g'$ from position $(Q,s)$ be defined as follows:
        \begin{align*}
        % \nonumber to remove numbering (before each equation)
-       %\widetilde{\val}_{Q,s}(Q') &:=& \bigcup_{a \in \Ran(Q),\ b \in \Ran(Q')}\{t\ \in \R{s}|\ t \in \val_{a,s}(b)\}.
+       %\widetilde{\val}_{Q,s}(Q') \ \df \  \bigcup_{a \in \Ran(Q),\ b \in \Ran(Q')}\{t\ \in \R{s}|\ t \in \val_{a,s}(b)\}.
        \val'(q')\ :=\ \begin{cases}
                \bigcap\limits_{\substack{(a,b) \in q',\\ a \in \Ran(Q)}}\{t\ \in \R{s} \mid t \in \val_{a,s}(b)\}               & q' \in \shA \\[2em]
-               \bigcup\limits_{a \in \Ran(Q)} \{t\ \in \R{s} \mid t \in \val_{a,s}(q') \text{ and }\model'.t\text{ is $p$-free}\}              & q' \in A.
+               \bigcup\limits_{a \in \Ran(Q)} \{t\ \in \R{s} \mid t \in \val_{a,s}(q') \text{ and }\bbT'.t\text{ is $p$-free}\}              & q' \in A.
                %\\[1.5em]               \hspace{.6cm}\emptyset & \text{otherwise.}
            \end{cases}
        \end{align*}
-       The definition of $\val'$ on $q' \in \shA$ is standard (\emph{cf.}~\cite[Prop. 2.21]{Zanasi:Thesis:2012}) and guarantees a correspondence between the states assigned by the markings $\{\val_{a,s}\}_{a \in \Ran(Q)}$ and the macro-states assigned by $\val'$. The definition of $\val'$ on $q' \in A$ aims at fulfilling the conditions, expressed via $\qu$ and $\dqu$, on the number of nodes in $\R{s}$ witnessing (or not) some $A$-types. Those conditions are the ones that $\shDe(Q,\tscolors'(s))$ --and thus also $\tmap^{\f}(Q,\tscolors'(s))$-- ``inherits'' by $\bigwedge_{a \in \Ran(R)} \tmap(a,\tscolors'(s))$, by definition of $\shDe$. Notice that we restrict $\val'(q')$ to the nodes $t \in \val_{a,s}(q')$ such that $\model'.t$ is $p$-free. As $\model'$ is a \emph{finite} $p$-variant, only \emph{finitely many} nodes in $\val_{a,s}(q')$ will not have this property. Therefore their exclusion, which is crucial for maintaining condition ($\ddag$) (\emph{cf.}~case \eqref{point:ddag2CardfromMacro} below), does not influence the fulfilling of the cardinality conditions expressed via $\qu$ and $\dqu$ in $\shDe(Q,\tscolors'(s))$.
+       The definition of $\val'$ on $q' \in \shA$ is standard (\emph{cf.}~\cite[Prop. 2.21]{Zanasi:Thesis:2012}) and guarantees a correspondence between the states assigned by the markings $\{\val_{a,s}\}_{a \in \Ran(Q)}$ and the macro-states assigned by $\val'$. The definition of $\val'$ on $q' \in A$ aims at fulfilling the conditions, expressed via $\qu$ and $\dqu$, on the number of nodes in $\R{s}$ witnessing (or not) some $A$-types. Those conditions are the ones that $\shDe(Q,\tscolors'(s))$ --and thus also $\tmap^{\f}(Q,\tscolors'(s))$-- ``inherits'' by $\bigwedge_{a \in \Ran(R)} \tmap(a,\tscolors'(s))$, by definition of $\shDe$. Notice that we restrict $\val'(q')$ to the nodes $t \in \val_{a,s}(q')$ such that $\bbT'.t$ is $p$-free. As $\bbT'$ is a \emph{finite} $p$-variant, only \emph{finitely many} nodes in $\val_{a,s}(q')$ will not have this property. Therefore their exclusion, which is crucial for maintaining condition ($\ddag$) (\emph{cf.}~case \eqref{point:ddag2CardfromMacro} below), does not influence the fulfilling of the cardinality conditions expressed via $\qu$ and $\dqu$ in $\shDe(Q,\tscolors'(s))$.
 
        On the base of these observations, one can check that $\val'$ makes $\shDe(Q,\tscolors'(s))$--and thus also $\tmap^{\f}(Q,\tscolors'(s))$--true in $\R{s}$. In fact, to be a legitimate move for $\exists$ in $\pi'$, $\val'$ should make $\tmapProj(Q,\tscolors(s))$ true: this is the case, for $\tmap^{\f}(Q,\tscolors'(s))$ is either equal to $\tmap^{\f}(Q,\tscolors(s))$, if $p \not\in \tscolors'(s)$, or to $\tmap^{\f}(Q,\tscolors(s)\cup\{p\})$ otherwise. In order to check that we can maintain $(\ddag)$, let $(q',t) \in A^{\f} \times T$ be any next position picked by $\forall$ in $\pi'$ at round $z_{i+1}$. As before, we distinguish two cases:
        \begin{enumerate}[label = (\alph*), ref = \alph*]
-         \item If $q'$ is in $A$, then, by definition of $\val'$, $\forall$ can choose $(q',t)$ in some shadow match $\pi_a$ in the bundle $\mc{B}_i$. We dismiss the bundle --i.e. make it a singleton-- and bring only $\pi_a$ to the next round in the same position $(q',t)$. Observe that, by definition of $\val'$, $\model'.t$ is $p$-free and thus ($\ddag.2$) holds at round $z_{i+1}$. \label{point:ddag2CardfromMacro}
+         \item If $q'$ is in $A$, then, by definition of $\val'$, $\forall$ can choose $(q',t)$ in some shadow match $\pi_a$ in the bundle $\mc{B}_i$. We dismiss the bundle --i.e. make it a singleton-- and bring only $\pi_a$ to the next round in the same position $(q',t)$. Observe that, by definition of $\val'$, $\bbT'.t$ is $p$-free and thus ($\ddag.2$) holds at round $z_{i+1}$. \label{point:ddag2CardfromMacro}
          \item Otherwise, $q'$ is in $\shA$. The new bundle $\mc{B}_{i+1}$ is given in terms of the bundle $\mc{B}_i$: for each $\pi_a \in \mc{B}_i$ with $a\in \Ran(Q)$, we look if for some $b \in \Ran(q')$ the position $(b,t)$ is a legitimate move for $\forall$ at round $z_{i+1}$; if so, then we bring $\pi_a$ to round $z_{i+1}$ at position $(b,t)$ and put the resulting (partial) shadow match $\pi_b$ in $\mc{B}_{i+1}$. Observe that, if $\forall$ is able to pick such position $(q',t)$ in $\pi'$, then by definition of $\val'$ the new bundle $\mc{B}_{i+1}$ is non-empty and consists of an $g$-guided (partial) shadow match $\pi_b$ for each $b \in \Ran(q')$. In this way we are able to keep condition ($\ddag.1$) at round $z_{i+1}$.
        \end{enumerate}
-    \item Let us now consider the case in which $\model'_s$ is $p$-free. We let $g'$ suggest the valuation $\val'$ that assigns to each node $t \in \R{s}$ all states in $\bigcup_{a \in \Ran(Q)}\{b \in A\ |\ t \in \val_{a,s}(b)\}$. It can be checked that $\val'$ makes $\bigwedge_{a \in \Ran(Q)} \tmap(a,\tscolors'(s))$ -- and then also $\tmap^{\f}(Q,\tscolors'(s))$ -- true in $\R{s}$. As $p \not\in \tscolors(s)=\tscolors'(s)$, it follows that $\val'$ also makes $\tmapProj(Q,\tscolors(s))$ true, whence it is a legitimate choice for $\exists$ in $\pi'$. Any next basic position picked by $\forall$ in $\pi'$ is of the form $(b,t) \in A \times T$, and thus condition ($\ddag.2$) holds at round $z_{i+1}$ as shown in (i.a). %\eqref{point:ddag2CardfromMacro}
+    \item Let us now consider the case in which $\bbT'_s$ is $p$-free. We let $g'$ suggest the valuation $\val'$ that assigns to each node $t \in \R{s}$ all states in $\bigcup_{a \in \Ran(Q)}\{b \in A\ |\ t \in \val_{a,s}(b)\}$. It can be checked that $\val'$ makes $\bigwedge_{a \in \Ran(Q)} \tmap(a,\tscolors'(s))$ -- and then also $\tmap^{\f}(Q,\tscolors'(s))$ -- true in $\R{s}$. As $p \not\in \tscolors(s)=\tscolors'(s)$, it follows that $\val'$ also makes $\tmapProj(Q,\tscolors(s))$ true, whence it is a legitimate choice for $\exists$ in $\pi'$. Any next basic position picked by $\forall$ in $\pi'$ is of the form $(b,t) \in A \times T$, and thus condition ($\ddag.2$) holds at round $z_{i+1}$ as shown in (i.a). %\eqref{point:ddag2CardfromMacro}
   \end{enumerate}
   \item In the remaining case, $(q,s)$ is of the form $(a,s) \in A \times T$ and by inductive hypothesis we are given with a bundle $\mc{B}_i$ consisting of a single $f$-guided (partial) shadow match $\pi_a$ at the same position $(a,s)$. Let $\val_{a,s}$ be the suggestion of $\exists$ from position $(a,s)$ in $\pi_a$. Since by assumption $s$ is $p$-free, we have that $\tscolors'(s) = \tscolors(s)$, meaning that $\tmapProj(a,\tscolors(s))$ is just $\tmap(a,\tscolors(s)) = \tmap(a,\tscolors'(s))$. Thus the restriction $\val'$ of $\val$ to $A$ makes $\tmap(a,\tscolors'(t))$ true and we let it be the choice for $\exists$ in $\tilde{\pi}$. It follows that any next move made by $\forall$ in $\tilde{\pi}$ can be mirrored by $\forall$ in the shadow match $\pi_a$.
       \begin{comment}Version with minimality:
       It follows that $\tmapProj(a,\tscolors(t))$ is just $\tmap(a,\tscolors(t)) = \tmap(a,\tscolors'(t))$ and the same valuation suggested by $f$ in $\pi_a$ is a legitimate choice for $\exists$ in $\tilde{\pi}$. By letting $\exists$ choose such valuation, it follows that any next move made by $\forall$ in $\tilde{\pi}$ can be mirrored by $\forall$ in the shadow match $\pi_a$.
       \end{comment}
 \end{enumerate}
-%As explained above, since $\model'$ is a noetherian $p$-variant, then ($\ddag .1$) holds for finitely many stages of construction of $\tilde{\pi}$, whereas ($\ddag .2$) holds for all the remaining stages, by construction of $\tilde{f}$. It follows that this strategy is winning for $\exists$ in $\tilde{G}$.
+%As explained above, since $\bbT'$ is a noetherian $p$-variant, then ($\ddag .1$) holds for finitely many stages of construction of $\tilde{\pi}$, whereas ($\ddag .2$) holds for all the remaining stages, by construction of $\tilde{f}$. It follows that this strategy is winning for $\exists$ in $\tilde{G}$.
 \end{proof} 
 
 %%%%%%
@@ -446,7 +440,7 @@ Definition~\ref{DEF_fin_projection}:
 
 
 
-\subsection{From automata to formulae}
+\subsection{From automata to formulas}\label{sec:aut_to_form_wmso}
 
 
 In what follows, we conclude the automata characterisation of $\wmso$ with the converse of Theorem~\ref{t:wmsoauto}, i.e. the direction from automata to formulas (see Theorem \ref{thm:wmso_autofor} below). To this aim, we first introduce a fixpoint extension of first-order logic.
@@ -495,7 +489,7 @@ where $q \in \mathsf{Q}$, $\psi \in \mlque(\prop\setminus \mathsf{Q})$, $p \in \
 \end{definition}
 
 \begin{lemma}\label{lem:colqueiscont_mu}
-If $\varphi \in \cont{\mlque}{\mathsf{Q}}(\prop)$ then $\varphi$ is continuous in (each predicate from) $\mathsf{Q}$.
+If $\varphi \in \cont{\mlque}{\mathsf{Q}}(\prop)$ then $\varphi$ is continuous in (each predicate in) $\mathsf{Q}$.
 \end{lemma}
 %
 \begin{proof} First, notice that If $\varphi \in \cont{\mlque}{\mathsf{Q}}(\prop)$ then $\varphi$ is monotone  in (each predicate from) $\mathsf{Q}$. %This is proved as for
@@ -518,7 +512,7 @@ where $p,q\in\prop$, $x,y\in\fovar$; and $\varphi'(p,x) \in \cont{\mlque}{\{p\}}
 
  %%%%%%%%
 We now recall a useful property of fixpoint and continuity. Let $\phi(p,x)$ a formula with only $x$ free.
-Given a LTS $\model$, for every ordinal $\alpha$, we define by induction the following sets, with $\lambda$ a limit ordinal.
+Given a LTS $\model = \tup{T,R,\tscolors,s_I}$, for every ordinal $\alpha$, we define by induction the following sets, with $\lambda$ a limit ordinal.
 \begin{equation*}
 \phi^0(\emptyset):= \emptyset \qquad \phi^{\alpha+1}(\emptyset):= \{ s \in T \mid \model[p \mapsto \phi^\alpha(\emptyset)] \models \phi(p, s)\} \qquad \phi^{\lambda}(\emptyset):= \bigcup_{\alpha < \lambda} \phi^{\alpha}(\emptyset)
 \end{equation*}

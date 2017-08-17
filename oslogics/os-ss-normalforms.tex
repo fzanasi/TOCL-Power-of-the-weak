@@ -35,9 +35,9 @@ When considering a normal form for $\ofoe$, the fact that we can `count types' u
 \begin{definition}%[Basic form for \ofoe]
 We say that a formula $\varphi \in \ofoe(A)$ is in \emph{basic form} if $\varphi = \bigvee \dbnfofoe{\vlist{T}}{\Pi}$ where each disjunct is of the form
 %
-\[
+\begin{equation*}%\label{eq:normalformofoe}
 \dbnfofoe{\vlist{T}}{\Pi} = \exists \vlist{x}.\big(\arediff{\vlist{x}} \land \bigwedge_i \tau_{T_i}(x_i) \land \forall z.(\arediff{\vlist{x},z} \lthen \bigvee_{S\in \Pi} \tau_S(z))\big)
-\]
+\end{equation*}
 %
 such that $\vlist{T} \in \wp(A)^k$ for some $k$ and $\Pi \subseteq \vlist{T}$.  The predicate $\arediff{\vlist{y}}$, stating that the elements $\vlist{y}$ are distinct, is defined as $\arediff{y_1,\dots,y_n} := \bigwedge_{1\leq m < m^{\prime} \leq n} (y_m \not\approx y_{m^{\prime}})$.
 \end{definition}
