@@ -14,8 +14,7 @@ The proof for Theorem \ref{t:nmsoauto} will follow closely the steps for proving
 \begin{definition}\label{def:tree_finproj}
 Fix a set $\prop$ of proposition letters, $p \not\in P$ and a language $\trees$ of $\p (\prop\cup\{p\})$-labeled
 trees.
-The \emph{noetherian projection} of $\trees$ over $p$ is the language
-$\noetexists p.\trees$ of $\p (\prop)$-labeled trees given as $ \{\bbT \mid \text{ $\exists$ a noetherian $p$-variant } \bbT' \text{ of } \bbT \text{ with } \bbT' \in \trees\}$. A class $K$ of tree languages is \emph{closed under noetherian projection over $p$} if, for any language $\trees$ in $K$, also ${\noetexists p}.\trees$ is in $K$.
+The \emph{noetherian projection} of $\trees$ over $p$ is the language of $\p (\prop)$-labeled trees given as $\noetexists p.\trees \df \{\bbT \mid \text{ $\exists$ a noetherian $p$-variant } \bbT' \text{ of } \bbT \text{ with } \bbT' \in \trees\}$. A class $K$ of tree languages is \emph{closed under noetherian projection over $p$} if, for any language $\trees$ in $K$, also ${\noetexists p}.\trees$ is in $K$.
 \end{definition} 
 
 \subsection{Simulation theorem for $\nmso$-automata}\label{sec:simulation_nmso}
@@ -49,7 +48,7 @@ Let $\varphi \in {\ofoe}^+(A \times A)$ and $\varphi^{\noet}\in {\ofoe}^+(\shA )
 \begin{proof}
 Each element of $\lift{\vlist{T}}$ and $\lift{\Pi}$ is by definition either the empty set or a singleton $\{Q\}$ for some $Q \in \shA$. Then the statement follows from Proposition \ref{lemma:functionalsentenceofoe}.\end{proof}
 
- We are now ready to define the transition function associated with macro-states. The following adapts Definition \ref{PROP_DeltaPowerset} to the one step-language $\ofoe$ proper of $\nmso$-automata, and its normal form result, Theorem~\ref{thm:bnfofoe}. Also, we use the translation $(\cdot)^{\star}$ from Definition \ref{DEF_delta star}.
+ We are now ready to define the transition function for macro-states. The following adapts Definition \ref{PROP_DeltaPowerset} to the one step-language $\ofoe$ of $\nmso$-automata, and its normal form result, Theorem~\ref{thm:bnfofoe}. Also, we use the translation $(\cdot)^{\star}$ from Definition \ref{DEF_delta star}.
 \begin{definition}\label{PROP_DeltaPowerset_noet}
 Let $\aut = \tup{A,\tmap,\pmap,a_I}$ be a $\nmso$-automaton. Fix any $c \in C$ and $Q \in \shA$. By Theorem~\ref{thm:bnfofoe} there is a sentence $\Psi_{Q,c} \in {\ofoe}^+(A\times A)$ in the basic form $\bigvee \dbnfofoe{\vlist{T}}{\Pi}$, for some $\Pi \subseteq \shA$ and $T_i \subseteq A \times A$, such that $\bigwedge_{a \in \Ran(Q)} \tmap^{\star}(a,c) \equiv \Psi_{Q,c}$.
 By definition, $\Psi_{Q,c} = \bigvee_{n}\varphi_n$, with each $\phi_{k}$ of shape $\dbnfofoe{\vlist{T}}{\Pi}$.
@@ -95,7 +94,7 @@ As mentioned, the class $\Aut(\ofoe)$ of automata characterising $\MSO$ \cite{Ja
 
 \subsection{From formulas to automata}
 
-We can now conclude the direction from formulas to automata of the automata characterisation of $\nmso$.
+We can now conclude one direction of the automata characterisation of $\nmso$.
 
 \begin{lemma}\label{PROP_noet_projection}
 For each $\nmso$-automaton $\aut$ on alphabet $\p (\prop \cup \{p\})$,
@@ -106,23 +105,23 @@ $$
 \end{lemma}
 \begin{proof} The argument is the same as for $\wmso$-automata (Lemma \ref{PROP_fin_projection}). As in that proof, the inclusion from left to right relies on the simulation result (Theorem \ref{PROP_facts_noetConstr}): because $\aut$ can be assumed to be two-sorted, ${{\exists} p}.\aut$ is two-sorted too: its non-deterministic mode can be used to guess a noetherian $p$-variant of any accepted tree. \end{proof}
 
-\begin{proof}[of Theorem \ref{t:nmsoauto}] As for its $\wmso$-counterpart Theorem \ref{t:wmsoauto}, the proof is by induction on $\varphi \in \nmso$. The boolean inductive cases are handled by the $\nmso$-versions of Proposition \ref{t:cl-dis} and \ref{t:cl-cmp}. The projection case immediately follows from Lemma \ref{PROP_noet_projection}.
+\begin{proof}[of Theorem \ref{t:nmsoauto}] As for its $\wmso$-counterpart Theorem \ref{t:wmsoauto}, the proof is by induction on $\varphi \in \nmso$. The boolean inductive cases are handled by the $\nmso$-versions of Lemma \ref{t:cl-dis} and \ref{t:cl-cmp}. The projection case follows from Lemma~\ref{PROP_noet_projection}.
 \end{proof} 
 
 \subsection{From automata to formulas} \label{sec:aut_to_formulas_nmso}
 
-In this section we discuss the converse statement of Theorem
-\ref{W_VMSO_in_weak_automata}. For $\wmso$, the direction from automata to formulas (Section \ref{sec:aut_to_form_wmso}) passed through a first-order logic with continuous fixpoints. For $\nmso$, it is enlightening to go a different route, which gives another automata characterisation to $\nmso$-expressivity, this time in terms of (non-deterministic) {B\"{u}chi automata} \cite{Rab70}. 
+In this section we show the converse of Theorem
+\ref{t:nmsoauto}, from automata to formulas. The analogous result for $\wmso$ (Section \ref{sec:aut_to_form_wmso}) passed through a first-order fixpoint logic. For $\nmso$, it is enlightening to go a different route, which gives another automata characterisation to $\nmso$-expressivity, in terms of {B\"{u}chi automata} \cite{Rab70}. 
 %, and . One can think of a  $\baut$ as a parity automaton on the one-step language $\ofoe$ for which every winning strategy is functional (thus it is always in the ``non-deterministic mode'', \emph{cf.} Section \ref{sec:simulation_nmso}) and the parity map $\pmap$ can only take values in $\{0,1\}$ --- equivalently, there is a set $F$ of \emph{accepting states} (those with parity $0$) and $\baut$ accepts the input if one state from $F$ occurs infinitely often.
 
-In the sequel we generalise Rabin's characterisation on binary trees \cite{Rab70} by showing that $\nmso$-automata are equivalent to B\"{u}chi automata on arbitrary transition systems (Proposition \ref{PROP_Weak parity automata in buchinondet}). Next we will show how to encode the B\"{u}chi acceptance game as a $\nmso$-formula: the key insight is that winning conditions for this game are inherently simpler than for a generic parity game and require to check only well-founded portions of the model under consideration. Putting together these two results we achieve a translation from $\nmso$-automata to $\nmso$-formulas (Theorem \ref{thm:nmso_autofor}).
+Rabin showed that (what we call) $\nmso$-automata are equivalent to B\"{u}chi automata on binary trees \cite{Rab70}. In the sequel, we generalise the result to arbitrary transition systems (Proposition \ref{PROP_Weak parity automata in buchinondet}). Next we will show how to encode the B\"{u}chi acceptance game as a $\nmso$-formula: the key insight is that winning conditions for this game are inherently simpler than for a generic parity game and require to check only well-founded portions of the model under consideration. Putting together these two results we achieve a translation from $\nmso$-automata to $\nmso$-formulas (Theorem \ref{thm:nmso_autofor}).
 
 \subsubsection{From $\nmso$-automata to B\"{u}chi Automata.}
 
 
-\begin{definition} A (non-deterministic) \emph{B\"{u}chi automaton} is a parity automaton $\baut = \tup{A,\tmap,\tmap,a_I}$ on the one-step language $\ofoe$ such that (i) $\pmap(a) \in \{0,1\}$ for every $a \in A$ and (ii) $\tmap(a,c)$ is in the basic form $\bigvee \posdbnfofoe{\vlist{T}}{\Pi}$ (Definition \ref{def:monbasicformofoe}) with each $T_1,\dots,T_k$ and $S \in \Pi$ either empty or a singleton, for each $a \in A$  and $c \in \pw P$. 
+\begin{definition} A (non-deterministic) \emph{B\"{u}chi automaton} is a parity automaton $\baut = \tup{A,\tmap,\pmap,a_I}$ on the one-step language $\ofoe$ such that (i) for each $a \in A$, $\pmap(a) \in \{0,1\}$, and (ii) for each $a \in A$  and $c \in \pw P$, $\tmap(a,c)$ is in the basic form $\bigvee \posdbnfofoe{\vlist{T}}{\Pi}$ (Definition~\ref{def:monbasicformofoe}) with each $T_1,\dots,T_k$ and $S \in \Pi$ either empty or a singleton. 
 
-In perhaps more familiar terms, the condition on $\pmap$ is equivalent to say that there is a set $F$ of  of \emph{accepting states} (those with parity $0$) and $\baut$ accepts an input $\model$ if one state from $F$ occurs infinitely often. Thus $\baut$ can be also presented as a tuple $\tup{A,\tmap,F,a_I}$
+In perhaps more familiar terms, the condition on $\pmap$ is equivalent to say that there is a set $F$ of  of \emph{accepting states} (those with parity $0$) and $\baut$ accepts an input $\model$ if one state from $F$ occurs infinitely often. Thus $\baut$ can be also presented as a tuple $\tup{A,\tmap,F,a_I}$.
 \end{definition}
 
 To emphasise their diversity, henceforth we shall present the acceptance conditions for B\"{u}chi automata in terms of $F$ rather than $\pmap$. 
@@ -150,18 +149,17 @@ We have that
 \end{proposition}
 \begin{proof} The proof is similar to the ones of Proposition \ref{PROP_facts_finConstrwmso}.\ref{point:finConstrEquiv} and Proposition \ref{PROP_fin_projection} in that we have to maintain a relationship between an $\aut^{\buc}$-match played in macro-states and (possibly more than one) $\aut$-match played in states. Thanks to Remark \ref{rmk:weak01}, we shall assume that the parity map $\pmap$ of $\aut$ ranges over $\{0,1\}$. 
 
-For the inclusion from left to right, given $\bbT = \{ T,R,\V,s_I\}$ and a winning strategy $f$ for $\eloise$ in $\mc{G} = \agame(\aut,\bbT)@(a_I,s_I)$, we construct a winning strategy $f^{\buc}$ for $\eloise$ in $\mc{G}^{\buc} = \agame(\aut^{\buc},\bbT)(a_I^{\noet},s_I)$ in stages, while playing a match $\pi^{\buc}$ in $\mc{G}^{\buc}$. In parallel to $\pi^{\buc}$, we mantain a \emph{bundle} $\mc{B}$ of $f$-guided shadow matches in $\mc{G}$, under the induction hypothesis that, when playing at position $(Q,s)$ in $\pi^{\buc}$, the bundle consists of a match at position $(a,s)$ for each $a \in \Ran(Q)$. Now, this condition verifies when initialising $\pi^{\buc}$ at position $(a_I^{\fin},s_I)$ and the bundle as the single match at position $(a_I,s_I)$. Inductively, given a position $(Q,s)$ in $\pi^{\buc}$, by inductive hypothesis for all $a \in \Ran(Q)$ the position $(a,s)$ is winning, thus the strategy $f$ suggests a valuation $\val_{a,s}: A \rightarrow \p (\R{s})$ making $\tmap(a,\tscolors(s))$ true. We then define the suggestion $\val: \shA \rightarrow \p (\R{s})$ of $f^{\buc}$ from position $(Q,s)$ to be the assignment to a macro-state $R \in \shA$ of the set of nodes $\{\bigcap\limits_{\substack{(a,b) \in R,\\ a \in \Ran(Q)}}\{t\ \in \R{s} \mid t \in \val_{a,s}(b)\}$. By construction, $\val$ makes $\bmDe(Q,c)$ true and thus it is a legitimate move for $\eloise$. Moreover, it guarantees that any next position $(R,t)$ picked by $\abelard$ will maintain the inductive hypothesis with respect to the bundle of shadow matches at positions $(b,t)$ for each $b \in \Ran(R)$.
+For the inclusion from left to right, given $\bbT = \{ T,R,\V,s_I\}$ and a winning strategy $f$ for $\eloise$ in $\mc{G} = \agame(\aut,\bbT)@(a_I,s_I)$, we construct a winning strategy $f^{\buc}$ for $\eloise$ in $\mc{G}^{\buc} = \agame(\aut^{\buc},\bbT)(a_I^{\noet},s_I)$ in stages, while playing a match $\pi^{\buc}$ in $\mc{G}^{\buc}$. In parallel to $\pi^{\buc}$, we mantain a \emph{bundle} $\mc{B}$ of $f$-guided shadow matches in $\mc{G}$, under the induction hypothesis that, when playing at position $(Q,s)$ in $\pi^{\buc}$, the bundle consists of a match at position $(a,s)$ for each $a \in \Ran(Q)$. Now, this condition verifies when initialising $\pi^{\buc}$ at position $(a_I^{\fin},s_I)$ and the bundle as the single match at position $(a_I,s_I)$. Inductively, given a position $(Q,s)$ in $\pi^{\buc}$, by inductive hypothesis for all $a \in \Ran(Q)$ the position $(a,s)$ is winning, thus the strategy $f$ suggests a valuation $\val_{a,s}: A \rightarrow \p (\R{s})$ making $\tmap(a,\tscolors(s))$ true. We then define the suggestion $\val: \shA \rightarrow \p (\R{s})$ of $f^{\buc}$ from position $(Q,s)$ to be the assignment to a macro-state $R \in \shA$ of the set of nodes $\{\bigcap\limits_{\substack{(a,b) \in R,\\ a \in \Ran(Q)}}\{t\ \in \R{s} \mid t \in \val_{a,s}(b)\}$. By construction, $\val$ makes $\bmDe(Q,c)$ true and thus it is a legitimate move for $\eloise$. Moreover, it guarantees that any next position $(R,t)$ picked by $\abelard$ will maintain the inductive hypothesis with respect to the bundle of shadow matches, which can be advanced to positions $(b,t)$ for each $b \in \Ran(R)$.
 
-With this definition $Q$ appears infinitely often in an $f^{\buc}$-guided match if and only if each $a \in \Ran(Q)$ appears in the bundle of shadow matches infinitely often. As shadow matches are winning and $\pmap$ ranges over $\{0,1\}$, it must be that $\pmap(a) = 0$, meaning that $Q$ is in $F_{\pmap}$.
+With this definition $Q$ appears infinitely often in an $f^{\buc}$-guided match if and only if each $a \in \Ran(Q)$ appears in the shadow matches infinitely often. As shadow matches are winning and $\pmap$ ranges over $\{0,1\}$, it must be that $\pmap(a) = 0$, thus $Q$ is in $F_{\pmap}$.
 
 For the direction from right to left, given $\bbT = \{ T,R,\V,s_I\}$ and a winning strategy $f^{\buc}$ for $\eloise$ in $\mc{G}^{\buc} = \agame(\aut^{\buc},\bbT)@(a_I^{\noet},s_I)$, we construct a winning strategy $f$ for $\eloise$ in $\mc{G} = \agame(\aut,\bbT)(a_I,s_I)$ in stages, while playing a match $\pi$ in $\mc{G}$. In parallel to $\pi$ we maintain an $f^{\buc}$-guided shadow match $\pi^{\buc}$ in $\mc{G}^{\buc}$, under the induction hypothesis that, when playing at position $(a,s)$ in $\pi$, the shadow match is in position $(Q,s)$ with $a \in \Ran(Q)$. This is true for initial positions $(a_I^{\fin},s_I)$ in $\pi^{\buc}$ and $(a_I,s_I)$ in $\pi$. Inductively, given a position $(a,s)$ in $\pi$ and $(Q,s)$ in $\pi^{\buc}$ with $a \in \Ran(Q)$, let $\val^{\buc} \: \shA \rightarrow \p (\R{s})$ be the suggestion of $f^{\buc}$ from $(Q,s)$. We let the suggestion $\val \: A \rightarrow \p (\R{s})$ of $f$ be the assignment of $b$ to the set of nodes $\bigcup_{b \in \Ran(R)} \{t \in \R{s} \mid t \in \val_{Q,s}(R)\} \cup  \{t \in \R{s} \mid t \in \val_{Q,s}(b)\}$. This makes $\tmap(a,s)$ true and moreover any next position $(b,t)$ picked by $\abelard$ can be mirrored by a position $(R,t)$ in the shadow match with $b \in \Ran(R)$, thus maintaining the inductive hypothesis. To see that such $f$ is winning, observe that if $b \in A$ is seen infinitely often during an $f$-guided match then, for some $R$ such that $b \in \Ran(R)$, $R$ is seen infinitely often during an $f^{\buc}$-guided match. Thus $R \in F_{\pmap}$, meaning that $\pmap(b) = 0$ and the match is won by $\eloise$.
 \end{proof}
 
 \subsubsection{Properties of B\"{u}chi automata.}\label{sec:propsBuchi}
 
-We now formalize two key intuitions about non-deterministic B\"{u}chi
-automata:
-
+In order to express acceptance for B\"{u}chi
+automata in terms of $\nmso$-formulas, we need to formalise two key intuitions.
 \begin{enumerate}
 \item checking whether a B\"{u}chi automaton $\baut$
   accepts a tree $\bbT$ reduces to verifying a condition on prefixes of
@@ -188,7 +186,7 @@ Intuitively, for $k <\omega$, a $k$-accepting sequence for a surviving strategy
 $f$ witnesses the fact that $f$ `behaves as' a winning strategy for $\exists$
 in the prefix $E_k$ of $\bbT$. For each prefix $E_i$ in the sequence, the
 condition that each $s \in \mathit{Ft}(E_i)$ is associated with a \emph{unique}
-accepting state is motivated by the fact that $f$ can be assumed to be
+accepting state is because $f$ can be assumed to be
 functional (Remark \ref{rmk:Buchifunctional}).
 
 \begin{proposition}\label{PROP_Buchi_finite_segments}
@@ -250,8 +248,8 @@ $\trees(\baut_1) \cap \trees(\baut_2) \neq \emptyset$.
 \end{proposition}
 
 
-\subsubsection{From B\"{u}chi automata to formulas}
-We are now ready to prove the converse of Theorem~\ref{t:nmsoauto}, i.e. the direction from automata to formulas of the automata characterisation of $\nmso$.
+\subsubsection{From B\"{u}chi automata to formulas} \label{sec:fromBuchiToformulas}
+We are now ready to prove the converse of Theorem~\ref{t:nmsoauto}, i.e. the direction from automata to formulas.
 
 \newcommand{\ThWeakAutToWFMSO}{
 There is an effective procedure that given a $\nmso$-automaton returns an equivalent $\nmso$-formula.
