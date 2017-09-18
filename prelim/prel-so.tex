@@ -16,7 +16,23 @@ We  adopt the standard convention that no letter is both free and bound in
 $\varphi$.
 \end{definition}
 
-The three logics are distinguished by their semantics.
+Before giving the semantics of the three logics, we need to define what a noetherian subset of a LTS is. 
+\begin{definition}
+\label{d:bundle1}
+Let $\model = \tup{T,R,\tscolors, s_I}$ be a LTS, and let $B$ be a non-empty set of 
+finite paths that all share the same starting point $s$; we call $B$ an 
+\emph{bundle rooted at} $s$, or simply an $s$-\emph{bundle}, if $B$ does not
+contain an infinite ascending chain $\pi_{0} \sqsubset \pi_{1} \sqsubset 
+\cdots.$
+A \emph{bundle} is simply an $s$-bundle for some $s \in T$.
+
+A subset $X$ of $T$ is called \emph{noetherian} if there is a bundle $B$ such
+that each $t \in X$ lies on some path in $B$.
+\end{definition}
+
+Notice that when a LTS $\model$ is a tree, being noetherian and being included in well-founded subtree are coextensive properties of sets of nodes.
+
+The three logics are thence distinguished by their semantics. 
 Let  $\model = \tup{T,R,\tscolors, s_I}$ be a LTS, the interpretation of the
 atomic formulas and the boolean connectives is fixed and standard, e.g.:
 \begin{align*}
@@ -69,5 +85,6 @@ $$
 $$%
 where $p \in \prop$, $x,y \in \fovar$ (individual variables), %$X \in \sovar$ (second-order variables)
 and $\foeq$ is the symbol for equality.
-Both definitions can be proved to be equivalent, however, we choose to keep Definition~\ref{def:mso} as it will be better suited to work with in the context of automata.
+Both definitions can be proved to be equivalent. Definition~\ref{def:mso} is better suited to work with in the context of automata, whereas it is easier to use the standard two-sorted language for second-order logic when translating modal fixpoint languages into second order languages.
+%, however, we choose to keep Definition~\ref{def:mso} as it will be better suited to work with in the context of automata.
 \end{remark}

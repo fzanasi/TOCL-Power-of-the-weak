@@ -1,0 +1,418 @@
+In this section, we are going to prove the following:
+
+\begin{theorem}\label{theo:ML2SO} Let either $L=\wmso$, $M=\mucML$ or  $L=\nmso$, $M=\AFMC$. Then there is an effective translation  $(-)_{\bullet}:M\to L$ such that
+\[\psi \equiv \psi_{\bullet}, \text{ for every } \psi \in M.\]
+\end{theorem}
+
+\subsubsection{From $\mucML$ to $\wmso$} 
+We first verify that Theorem \ref{theo:ML2SO} holds for $L=\wmso$ and $M=\mucML$.
+For every first-order variable $x$, we define a translation $ST_x$ from
+the $\mu$-calculus into the set of $\mlque$-formulas with only $x$ free extending in the obvious way the standard translation from modal logic into first-order logic:
+
+\begin{itemize}
+\itemsep 0 pt
+\item $ST_x(p)=p(x)$%\fcwarning{maybe $p(x)$, we use small predicates},
+\item $ST_x(\varphi \land \psi)=ST_x(\varphi) \land ST_x(\psi)$,
+\item $ST_x(\varphi \lor \psi)=ST_x(\varphi) \lor ST_x(\psi)$,
+\item $ST_x(\lnot \varphi)= \lnot ST_x(\varphi)$,
+\item $ST_x(\Diamond \varphi)=\exists y (R(x,y) \land ST_y(\varphi))$,
+\item $ST_x(\mu p. \varphi)= \mu p. ST_x(\varphi)$,
+\end{itemize}
+Clearly, every formula of the $\mucML$-fragment of the $\mu$-calculus is mapped to a logically equivalent formula of the $\mucML$-fragment of $\mlque$. Let
+ $(-)_{\bullet}:\mucML\to\wmso$ defined as the composite $\mgFOETr{-} \circ ST_x$. By applying Theorem \ref{thm:guard_wmso} we conclude the proof for this case of the Theorem.
+
+
+
+\subsubsection{From $\AFMC$ to $\nmso$}
+The case of Theorem \ref{theo:ML2SO} with $L=\nmso$ and $M=\AFMC$ is, perhaps surprising, more subtle than the previous one. The key clause of the inductive translation, that is, the clause for the
+least fixpoint operator, will be based on Proposition~\ref{p:afmc-rstGen} below concerning the least fixpoint fragment of the $\mu$-calculus, that is $\MC$-formulas in which only the least fixpoint operator occurs in them.
+For its formulation we need the following definitions.
+
+\begin{definition}
+\label{d:rst}
+Let $F: \wp(T)\to \wp(T)$ be a functional; for a given $S \subseteq T$ we define
+the map $F_{\rst{S}}: \wp(T)\to \wp(T)$ by putting $F_{\rst{S}}(X) :=
+FX \cap S$.
+\end{definition}
+
+\begin{definition} We let the language $\muMC$ on on $\props$ be defined by the following grammar. 
+   \[
+   \varphi ::= q \mid \neg q 
+   \mid \varphi \lor \varphi \mid \varphi \land \varphi 
+   \mid \Diamond\varphi \mid \Box\varphi 
+   \mid \mu p. \varphi
+   \]
+   where $p,q \in \props$ and $p$ is positive in $\varphi$.
+\end{definition}
+
+We therefore can formulate the central proposition as follows.
+\begin{proposition}
+\label{p:afmc-rstGen}
+Let $\phi = \phi(p)$ be a formula of $\muMC$
+in which all occurrences of $p$ are 
+% guarded and 
+positive, and let $\model$ be a LTS.
+Then for every $r \in T$ it holds that 
+\begin{equation}
+\label{eq:afmc-m}
+r \in \mng{\mu p.\phi}^{\model} \text{ iff }
+\text{ there is a noetherian set $X$ such that } r \in \LFP. (\phi^{\model}_{p})_{\rst{X}}.
+\end{equation}
+\end{proposition}
+
+Before proving the above Proposition \ref{p:afmc-rstGen}, we show how, based on it, we can prove that Theorem \ref{theo:ML2SO} holds for $L=\nmso$ and $M=\AFMC$.
+
+Firstly, Proposition \ref{p:afmc-rstGen} naturally suggests the following extension of the standard translation from modal logic into FO.
+Let $\varphi \in \muMC$, and $x$ a first-order variable. We define the $\nmso$-formula $(\varphi)^t_x$ (with one free variable $x$) by induction on the complexity of $\varphi$ as follows:
+
+\begin{itemize}
+\item $(p)^t_x=p(x)$ and $(\lnot p)^t_x=\lnot p(x)$
+%\item $(y)^t_x=x \in Y$
+\item $(\varphi \lor \psi)^t_x=(\varphi)^t_x \lor (\psi)^t_x$ 
+\item $(\varphi \land \psi)^t_x=(\varphi)^t_x \land (\psi)^t_x$ 
+\item $(\square \varphi )^t_x= \forall z ( R(x,z) \to (\varphi)^t_z )$ 
+\item $(\Diamond \varphi )^t_x= \exists z ( R(x,z) \land (\varphi)^t_z )$ 
+\item $ (\mu p. \varphi)^t_x= \exists p'.(\forall  w \subseteq p'. w \in PRE((\varphi^{\model}_{p})_{\rst{p'}}) \to w(x))$,  where $w \in PRE((\varphi^{\model}_{p})_{\rst{p'}})$ expresses that $w$ is a prefixpoint of $(\phi^{\model}_{p})_{\rst{p'}}$, that is
+$$w  \in PRE((\varphi^{\model}_{p})_{\rst{p'}}):= \forall y. (\varphi)^t_y \land p'(y) \to w(y),$$ with $w$ not occuring in $(\varphi)^t_y$.
+\end{itemize}
+
+Correctness of the translation is then an immediate corollary of Proposition \ref{p:afmc-rstGen}. 
+\begin{proposition}\label{prop:trans} $\varphi \equiv (\varphi)^t_x$, for all $\varphi \in \muMC$.
+%, for all LTS $\bbS$ and all states $s \in T$,
+%\[ s \in \mng{\varphi}^{\bbS} \iff \bbS \models (\varphi)^t_x(s).\]
+\end{proposition}
+\begin{proof}
+We verify that the translation is correct by induction on the structure of $\varphi$. The only critical case is the least fixpoint case. But this is justified by the fact that, from Proposition~\ref{p:afmc-rstGen}, the following equations hold:
+
+\begin{align*}
+s \in \mng{\mu p.\phi}^{\bbS} & \text{ iff } &
+\text{ there is a noetherian set $P'$ such that } s \in \LFP. (\varphi^{\model}_{p})_{\rst{P'}} \\
+& \text{ iff } &
+\text{ there is a noetherian set $P'$ s.t. } s \in \bigcap \{ W \subseteq P'\mid W \in PRE((\varphi^{\model}_{p})_{\rst{P'}})\} \\
+& \text{ iff } & \bbS \models \exists p'.(\forall w \subseteq p'. w \in PRE((\varphi^{\model}_{p})_{\rst{p'}}) \to w(s))
+\end{align*}
+This concludes the proof of the result.
+\end{proof}
+
+Secondly, the alternation free fragment enjoys the following substitution property, whose proof is immediate:
+\begin{proposition}\label{p:subexmu}
+Let $\mu p. \varphi \in \AFMC$, and $\nu q. \psi$ be a subformula of  $\mu p. \varphi$. Hence, if $r$ does not occurs in $\mu p. \varphi$ and $\mu p. \delta[r/ \nu q. \psi] = \mu p. \varphi$, then for every $\bbS$ it holds that
+\[ \mng{\mu p.\delta}^{\bbS'} = \mng{\mu p.\varphi}^{\bbS}, \]
+where $\bbS'=\bbS[r \mapsto \mng{\nu q.\psi}^{\bbS}]$.
+\end{proposition}
+
+Hence, finally, we obtain that, if for each first-order variable $x$, we extend  $(-)^t_x$ to $\AFMC$ by adding the clause $(\phi)_x^t= \lnot ( \lnot \phi)_x^t $ for $\phi=\nu q. \psi $, by Proposition \ref{p:subexmu} Proposition \ref{prop:trans} actually holds for for each $\varphi \in \AFMC$, meaning that the translation $(-)_{\bullet}:\AFMC\to\nmso$ defined as $(\phi)_{\bullet} = 
+(\phi)_x^t $ satisfies the statement of  Theorem \ref{theo:ML2SO}  for $L=\nmso$ and $M=\AFMC$.
+
+
+
+\begin{proofof}{Proposition~\ref{p:afmc-rstGen}}
+We first %introduce some terminology and 
+gather an easy observation concerning 
+%paths and 
+bundles.
+
+%\begin{definition}
+%Let $\bbS = (S,R,V)$ be a Kripke model.
+%A \emph{finite path} through $\bbS$ is a non-empty sequence $(s_{i})_{i\leq n} = 
+%s_{0}s_{1}\ldots s_{n}$ such that $Rs_{i}s_{i+1}$ for all $i$ with $0\leq i < n$.
+%Given a path $\pi = (s_{i})_{i\leq n}$, we let $\first(\pi) = s_{0}$ and 
+%$\last(\pi) = s_{n}$ denote the \emph{first} and \emph{last} state of $\pi$, 
+%respectively;
+%we let $\sz{\pi} = n$ denote its \emph{length}, and we let $\Ran(\pi) := 
+%\{ s_{i} \mid i \leq n \}$ denote the set of states $\pi$ traverses. 
+%\end{definition}
+%
+\begin{claimfirst}
+\label{p:bundle}
+Let $\model$ be a LTS. If $\mathcal{B}$ is a collection of $s$-bundles, 
+then $\bigcup \mathcal{B}$ is also an $s$-bundle.
+\end{claimfirst}
+
+We now states some auxiliary results on monotone functionals.
+The first of these takes care of the right-to-left direction of
+\eqref{eq:afmc-m}, and it is proved by a routine transfinite induction argument:
+\begin{claimfirst}
+\label{p:afmc-1}
+Let $F:  \wp(T)\to \wp(T)$ be monotone.
+Then for every subset $S \subseteq T$ it holds that $\LFP. F_{\rst{S}}\subseteq \LFP.F$.
+\end{claimfirst}
+
+%\begin{proof}
+%By a routine transfinite induction argument we may show that 
+%$F_{\rst{T}}^{\al}(\nada) \sse F^{\al}(\nada) \cap T$, for all ordinals $\al$.
+%For instance, in case $\al = \be+1$, we obtain 
+%$F_{\rst{T}}^{\be+1}(\nada) = F_{\rst{T}}(F_{\rst{T}}^{\be}(\nada))
+%= F(F_{\rst{T}}^{\be}(\nada) \cap T) \cap T \sse  F(F^{\be}(\nada))\cap T
+%\sse F(F^{\be}(\nada)) = F^{\be+1}(\nada)$.
+%% where the first inclusion is by the inductive hypothesis (and monotonicity of 
+%% $F$).
+%\end{proof}
+%
+For the other results we use a game-theoretic characterisation of the least 
+fixpoint of such a monotone functional.
+
+\begin{definition}
+\label{d:unfgame}
+Given a monotone functional $F: \wp(T)\to \wp(T)$ we define the 
+\emph{unfolding game} $\UG_{F}$ as follows:
+\begin{itemize}
+\item at any position $s \in T$, $\eloise$ needs to pick a set $X$ such that 
+$s \in FX$;
+\item at any position $X \in \wp(T)$, $\abelard$ needs to pick an element of 
+$X$
+\item all infinite matches are won by $\abelard$.
+\end{itemize}
+
+
+A positional strategy $\ystrat: T \to \wp(T)$ for $\eloise$ in $\UG_{F}$ is 
+\emph{descending} if 
+\begin{equation}
+\label{eq:dec}
+s \in F^{\alpha+1}(\nada) \text{ implies } \ystrat(s) \sse F^{\alpha}(\nada).
+\end{equation}
+for all ordinals $\alpha$.
+%% and all points $s \in F^{\al+1}(\nada)$.
+\end{definition}
+
+%
+It is not the case that \emph{all} positional winning strategies for $\eloise$ in 
+$\UG_{F}$ are descending, but the next result shows that there always is one.
+
+\begin{claimfirst}
+\label{p:unfg}
+Let $F: \wp(T)\to \wp(T)$ be a monotone functional.
+\begin{enumerate}
+\item For all $s \in T$, $s \in \win_{\eloise}(\UG_{D})$ iff $s \in \LFP. F$.
+\item if $s \in \LFP. F$, then \eloise has a descending winning strategy in $\UG_{D}@s$.
+\end{enumerate}
+\end{claimfirst}
+%
+\begin{pfclaim}
+Point (i) corresponds to \cite[Theorem 3.14(2)]{Ven08}.
+For part (ii) one can simply take the following strategy.
+Given $s \in \LFP.F$, let $\alpha$ be the least ordinal such that $s \in 
+F^{\alpha}(\nada)$; it is easy to see that $\alpha$ must be a successor ordinal,
+say $\alpha = \beta + 1$. 
+Now simply put $\ystrat(s) := F^{\beta}(\nada)$.
+\end{pfclaim}
+
+\begin{definition}
+\label{d:str-tree}
+Let $F: \wp(T)\to \wp(T)$ be a monotone functional, let $\ystrat$ be a 
+positional winning strategy for $\eloise$ in $\UG_{F}$, and let $r \in T$. 
+Define $T_{\ystrat,r} \sse T$ to be the set of states in $T$ that are 
+$\ystrat$-reachable in $\UG_{F}@r$.
+This set has a tree structure induced by the map $\ystrat$ itself, where the 
+children of $t \in T_{\ystrat,r}$ are given by the set $\ystrat(t)$; we will
+refer to $T_{\ystrat,r}$ as the \emph{strategy tree} of
+$\ystrat$.
+\end{definition}
+
+
+Note that a strategy tree $T_{\ystrat,r}$ will have no infinite 
+paths, since we define the notion only for a \emph{winning} strategy 
+$\ystrat$.
+
+\begin{claimfirst}
+\label{p:afmc-2}
+Let $F: \wp(T)\to \wp(T)$ be a functional, let $r \in T$, and let $\ystrat$ 
+be a descending winning strategy for $\eloise$ in $\UG_{F}$.
+Then
+\begin{equation}
+\label{eq:afmc3}
+r \in \LFP. F \text{ iff } r \in \LFP. F_{\rst{T_{\ystrat,r}}}.
+\end{equation}
+\end{claimfirst}
+
+\begin{pfclaim}
+Let $F,r$ and $\ystrat$ be as in the formulation of the proposition.
+The direction from right to left in \eqref{eq:afmc3} is immediate by
+Claim~\ref{p:afmc-1}.
+
+For the opposite direction, it clearly suffices to show that for all ordinals 
+$\alpha$ we have
+\begin{equation}
+\label{eq:unf1}
+F^{\al}(\nada) \cap T_{\ystrat,r} \sse F_{\rst{T_{\ystrat,r}}}^{\alpha}(\nada).
+\end{equation}
+We will prove \eqref{eq:unf1} by transfinite induction.
+The base case, where $\alpha = 0$, and the inductive case where $\alpha$ is a limit
+ordinal are straightforward, so we focus on the case where $\alpha$ is a 
+successor ordinal, say $\alpha = \beta +1$.
+Take an arbitrary state $u \in F^{\beta+1}(\nada) \cap T_{\ystrat,r}$, then we find 
+$\ystrat(u) \sse F^{\beta}(\nada)$ by our assumption \eqref{eq:dec}, and 
+$\ystrat(u) \sse T_{\ystrat,r}$ by definition of $T_{\ystrat,r}$.
+Then the induction hypothesis yields that 
+$\ystrat(u) \sse F_{\rst{T_{\ystrat,r}}}^{\beta}(\nada)$, and so we have 
+$\ystrat(u) \sse F_{\rst{T_{\ystrat,r}}}^{\beta}(\nada) \cap T_{\ystrat,r}$.
+But since $\ystrat$ is a positional winning strategy, and $u$ is a winning position
+for $\eloise$ in $\UG_{F}$ by Claim~\ref{p:unfg}(i), $\ystrat(u)$ is a
+legitimate move for $\eloise$, and so we have $u \in F(\ystrat(u))$.
+Thus by monotonicity of $F$ we obtain $u \in 
+F(F_{\rst{T}}^{\beta}(\nada) \cap T_{\ystrat,r})$, and since $u \in T_{\ystrat,r}$ by assumption, this
+means that $u \in F_{\rst{T_{\ystrat,r}}}^{\beta+1}(\nada)$ as required.
+\end{pfclaim}
+
+We now turn to the specific case where $F$ is induced by some least fixpoint formula 
+$\phi(p)$ on some LTS.
+
+
+Let $\psi$ be a formula of $\muMC$, $\model$ a LTS and $\ystrat$ a winning strategy for $\eloise$ in $\egame(\psi,\model)@(\psi,s)$.  The arena of  the evaluation game $\egame(\psi,\model)@(\psi,s)$ can be seen as a tree. Hence, 
+the strategy  $\ystrat$ can is a subtree of $\egame(\psi,\bbS)@(\psi,s)$ rooted in the initial position $(\psi,s)$. Let $B(\ystrat)$ be the projection on $\bbS$ of the set of all finite path of  $\ystrat$, seen as a tree, starting at the root. Finally define $T_{\ystrat,s}:=\bigcup \Ran[B(\ystrat)]$, that is as the union of all nodes traversed by some path in $B(\ystrat)$.
+%
+\begin{claimfirst}\label{p:strategybundledEv}
+Let $\psi$ be a formula of $\muMC$, $\bbS$ a LTS and $\ystrat$ a winning strategy for $\eloise$ in $\egame(\psi,\bbS)@(\psi,s)$. Then: 
+\begin{enumerate}
+\item the strategy $\ystrat$, seen as a tree, is well-founded.
+\item there exists an $s$-bundle $B$ such that $T_{\ystrat,s}$ is contained in $\bigcup \Ran[B]$.
+\end{enumerate}
+\end{claimfirst}
+\begin{pfclaim}
+For the first property, suppose that $\ystrat$ contains an infinite path. This yields a $\ystrat$-guided infinite match won by $\eloise$. But $\eloise$ can only win an infinite match if the maximal fixpoint variable appearing in $\phi$ is a $\nu$-variable, which is impossible because $\phi$ is in $\muMC$. %in which some fixpoint variable $x$ in $\psi$ is unfolded infinitely often. Because $\psi$ does not contain $\nu$-formulas, then $x$ must be guarded by a least fixpoint, implying that $\eloise$ loses the match. But this contradicts the assumption that $\ystrat$ is a winning strategy. 
+%
+For the second statement, observe that the projection $B(\ystrat)$ on $\bbS$ of $\ystrat$ itself is an $s$-bundle: if not, take the limit of the ascending chain of paths, and use K\"{o}nigs Lemma to show that there must be a $\ystrat$-guided infinite match through this path. The existence of such a match leads to a contradiction for the same reason as above.
+\end{pfclaim}
+%
+%
+%
+%
+%\begin{proposition}[Adequacy Theorem]\label{p:unfold=evalgame}
+%Let $\phi = \phi(p)$ be a formula of $\muMC$ in which all occurrences of $x$ are positive, and let $(\bbS,s)$ be a pointed Kripke model. Then:
+%\begin{equation}
+%\label{eq:adeq3}
+%s \in \mng{\mu p.\phi}^{\bbS} %\iff s \in \Win_{\eloi}(\UG(\phi_{x}^{\bbS}))
+%\iff (\mu p.\phi,s) \in \Win_{\eloise}(\egame(\mu p.\phi,\bbS)).
+%\end{equation}
+%\end{proposition}
+%\begin{proof} This holds more generally for any formula of $\muML$, see Yde's notes. \end{proof}
+%
+%
+It actually turns out that:
+\begin{claimfirst}\label{p:unfold=evalgame2}
+Let $\phi = \phi(p)$ be a formula of $\muMC$ in which all occurrences of $x$ are positive, and let $(\bbS,s)$ be a pointed Kripke model. Then
+$\exists$ has a winning strategy $\chi$ in $\UG(\phi_{x}^{\bbS})@(s, \phi(p))$ if and only she has winning strategy $\chi'$ in $\egame(\mu p.\phi,\bbS)@(s, \mu p.\phi)$. Moreover it holds that $T_{\chi,s} \subseteq T_{\chi',s}$.
+\end{claimfirst}
+%
+We are now able to prove the following.
+
+\begin{claimfirst}\label{p:strategybundledUnf},
+Let $\phi = \phi(p)$ be a formula of $\muMC$
+in which all occurrences of $p$ are 
+% guarded and 
+positive, and let $\bbS$ be some LTS, and write $F := 
+\phi_{p}^{\bbS}$. Suppose that $s \in \mng{\mu p.\phi}^{\bbS}$. Then $\eloise$ has a descending winning strategy $\ystrat$ in $\UG(\phi_{p}^{\bbS})$ from $s$ and there exists an $s$-bundle $B$ such 
+that 
+% $\ystrat(s) = \Front(\ol{B}_{s})$ and 
+$T_{\ystrat,s} \sse \bigcup \Ran[B]$.
+\end{claimfirst}
+\begin{pfclaim} 
+If $s \in \mng{\mu p.\phi}^{\bbS}$ then Proposition~\ref{p:unfold=evalgame}  and Claim \ref{p:unfold=evalgame2} yield a winning strategy for $\eloise$ in $\UG(\phi_{p}^{\bbS})$ from $s$. By Claim~\ref{p:unfg}, we can assume this strategy to be descending, call it $\ystrat$. Then, another application of \ref{p:unfold=evalgame2} yields a winning strategy $\ystrat'$ for $\eloise$ in $\egame(\mu p.\phi,\bbS)$ from $(\mu p.\phi,s)$ such that $T_{\chi,s} \subseteq T_{\chi',s}$. By Claim~\ref{p:strategybundledEv}, $\ystrat'$ is such that $T_{\ystrat',s}$ is contained in $\bigcup \Ran[B]$ for some $s$-bundle $B$. Hence 
+$T_{\ystrat,s} \sse \bigcup \Ran[B]$.
+\end{pfclaim}
+
+
+We can therefore conclude the proof of our main proposition.
+Let $\phi(p)$, $\bbS$ and $F$ be as in the formulation of the proposition and suppose $r \in \mng{\mu p.\phi}^{\bbS}$. By Claim~\ref{p:strategybundledUnf}, $\eloise$ has a descending winning strategy $\ystrat$ in $\UG_{F}$ from $r$ and there is an $r$-bundle $B$ such 
+that 
+% $\ystrat(s) = \Front(\ol{B}_{s})$ and 
+$T_{\ystrat,r} \sse \bigcup \Ran[B]$.
+This suffices to show that $T_{\ystrat,r}$ is noetherian, and so the proposition 
+follows by Claim~\ref{p:afmc-2}.
+\end{proofof}
+
+%%%%
+%%%%
+%%%%
+%
+%\section{Translation}
+%An NMSO formula $\psi(x)$, with with one free variable $x$,  is equivalent to a $\mu$-sentence $\varphi$ if for all models $\bbS$ and all states $s \in S$,
+%
+%
+%\[ s \in \mng{\varphi}^{\bbS} \iff \bbS \models \psi(s).\]
+%
+
+% 
+% 
+% 
+%%%%%% OLD
+%
+%%In this section we are going to prove Theorem \ref{t:m1}.
+%%Our proof of the first item of the theorem crucially involves automata.
+%%In the previous section we saw that on trees, $\wmso$ effectively corresponds
+%%to the automata class $\AutWC(\olque)$.
+%% We will now relate this class to the one of
+%%parity automata based on $\ofo$ and satisfying similar weakness and continuity conditions.
+%%
+%%
+%%\begin{definition}
+%%A \emph{$\mucML$-automaton} $\aut = \tup{A,\Delta,\Omega,a_I}$ is an automaton $\aut \in \AutWC(\ofo)$ such that for all states $a,b \in A$ with $a \ord b$ and $b\ord a$ the following conditions hold:
+%%\begin{description}
+%%	\itemsep 0 pt
+%%	\item[(weakness)] $\pmap(a)=\pmap(b)$,
+%%	\item[(continuity)] if $\pmap(a)$ is odd (resp. even) then, for each $c\in C$ we have
+%%	   $\tmap(a,c) \in \cont{\ofo^+}{b}(A)$ (resp. $\tmap(a,c) \in \cocont{\ofo^+}{b}(A)$).
+%%\end{description}
+%%As the class of such automata coincides with $\AutWC(\ofo)$ we use the same name to denote it.
+%%\end{definition}
+%%
+%%As the key technical result of our paper, in subsection~\ref{pinvariant-fragment}
+%%we will provide a construction $(-)^{\bullet}: \AutWC(\olque) \to 
+%%\AutWC(\ofo)$, such that for all $\bbA$ and $\bbT$ we have
+%%\begin{equation}
+%%\label{eq:crux}
+%%\bbA^{\bullet} \text{ accepts } \bbT \text{ iff } \bbA \text{ accepts 
+%%} \bbT^{\om},
+%%\end{equation}
+%%where $\bbT^{\om}$ is the $\om$-unravelling of $\bbT$.
+%%As we shall see, the map $(-)^{\bullet}$ is completely determined at the 
+%%one-step level, that is, by some model-theoretic connection between 
+%%$\olque$ and $\ofo$.
+%%
+%%The second fact, to be discussed in
+%%subsection \ref{aut-to-formula}, is that for each $\mucML$-automaton $\bbA$  we can effectively construct an equivalent $\mucML$-formula $\xi_{\bbA}$.
+%%
+%%On the basis of the above observations we show that those results are enough to prove Theorem~\ref{t:m1}(i) as follows:
+%%
+%%\begin{proofof}{Theorem~\ref{t:m1}}
+%%\textbf{(1)} Given a \wmso-formula $\phi$, let $\phi^{\bullet} \df
+%%\xi_{\aut_{\phi}^{\bullet}}$.
+%%We verify that $\phi$ is bisimulation invariant iff $\phi$ and $\phi^{\bullet}$
+%%are equivalent.
+%%The direction from right to left is immediate by the observation that
+%%$\phi^{\bullet}$ is a formula in $\muMC$.
+%%The opposite direction follows from the following chain of equivalences:
+%%\begin{align*}
+%%\model \models \phi
+%%  & \text{ iff } \bbT^{\om} \models \phi
+%%  & \tag{$\phi$ bisimulation invariant}
+%%\\ & \text{ iff }  \bbA_{\phi} \text{ accepts } \bbT^{\om}
+%%  & \tag{$ \phi \equiv \aut_{\phi}$ on trees}
+%%\\ & \text{ iff } \bbA_{\phi}^{\bullet} \text{ accepts } \bbT
+%%& \tag{\ref{eq:crux}}
+%%\\ & \text{ iff }  \bbT \models \xi_{ \aut_{\phi}^{\bullet}}
+%%& \tag{$\aut_{\phi}^{\bullet}\equiv \xi_{ \aut_{\phi}^{\bullet}}$}
+%%\end{align*}
+%%\textbf{(2)} For the second part of Theorem \ref{t:m1},
+%%We %reason as follows.
+%%%First, let's consider the following translation.
+%%first define, for every first-order variable $x$, a translation $ST_x$ from
+%%the $\mu$-calculus into the set of $\mlque$-formulas with only $x$ free:
+%%
+%%\begin{itemize}
+%%\itemsep 0 pt
+%%\item $ST_x(p)=p(x)$%\fcwarning{maybe $p(x)$, we use small predicates},
+%%\item $ST_x(\varphi \land \psi)=ST_x(\varphi) \land ST_x(\psi)$,
+%%\item $ST_x(\varphi \lor \psi)=ST_x(\varphi) \lor ST_x(\psi)$,
+%%\item $ST_x(\lnot \varphi)= \lnot ST_x(\varphi)$,
+%%\item $ST_x(\Diamond \varphi)=\exists y (R(x,y) \land ST_y(\varphi))$,
+%%\item $ST_x(\mu p. \varphi)= \mu p. ST_x(\varphi)$,
+%%\end{itemize}
+%%Clearly, every formula of the $\mucML$-fragment of the $\mu$-calclus is mapped to a logically equivalent formula of the $\mucML$-fragment of $\mlque$. Let
+%% $(-)_{\bullet}:\mucML\to\wmso$ defined as the composite $\mgFOETr{-} \circ ST_x$. By Theorem \ref{thm:guard_wmso}
+%%we obtain that $\psi \equiv \psi_{\bullet}$, for all $\psi \in
+%%\mucML$.
+%%\end{proofof}
+%%
+%%
+%%

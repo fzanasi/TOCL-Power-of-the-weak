@@ -1,15 +1,15 @@
 %!TEX root = ../00CFVZ_TOCL.tex
 
-Recall from Chapter~\ref{chap:sub} that a formula $\varphi \in \llang(A)$ is continuous in $\{\vlist{a}\} \subseteq A$ if $\varphi$ is monotone in $\vlist{a}$ and additionally, for every $(D,\val)$ and assignment $\ass:\fovar\to D$,
+Given a one step logic $\llang(A)$, we say that a formula $\varphi \in \llang(A)$ is continuous in $\{\vlist{a}\} \subseteq A$ if $\varphi$ is monotone in $\vlist{a}$ and additionally, for every $(D,\val)$ and assignment $\ass:\fovar\to D$,
 \[
 \text{if } (D,\val),\ass \models \varphi \text{ then } \exists \vlist{U} \subseteq_\omega \val(\vlist{a}) \text{ such that } (D, \val[\vlist{a} \mapsto \vlist{U}]),\ass \models \varphi.
 \]
 
 \begin{remark}\label{rem:contprodeach}
-	It was proved in Proposition~\ref{prop:contiffpcont} that continuity in the product coincides with continuity in every variable. Therefore, in the following proofs we will, in general, consider continuity in every single $a_i$ instead of in the full $\vlist{a}$. This is equivalent, and only done to avoid an even more complex notation.
+	As for monotonicity, it is not difficult to verify that continuity in the product coincides with continuity in every variable. Therefore, in the following proofs we will, in general, consider continuity in every single $a_i$ instead of in the full $\vlist{a}$. This is equivalent, and only done to avoid an even more complex notation.
 \end{remark}
 
-In this section we will characterize the continuous fragment of $\ofo$ and $\ofoei$ but we will not characterize that of $\ofoe$, since it is not used in this dissertation.
+In this section we will characterise the continuous fragment of $\ofo$ and $\ofoei$ but we will not characterise that of $\ofoe$, since it is not used in this dissertation.
 % It will be useful to give a syntactic characterization of continuity for several one-step logics.
 
 %%
@@ -88,9 +88,9 @@ Therefore, it is enough to prove that $(D\times\omega,\val'_\pi) \models \varphi
 
 \bigskip
 \noindent \fbox{$\Rightarrow$}
-Let $(D\times\omega,\val'_\pi) \models \mondbnfofo{\Sigma}{a}$, we show that $(D\times\omega,\val'_\pi) \models \mondgbnfofo{\Sigma}{\Sigma^{-}_{a}}{a}$. The existential part of $\mondgbnfofo{\Sigma}{\Sigma^{-}_{a}}{a}$ is trivially true. We have to show that every element of $(D\times\omega,\val'_\pi)$ realizes an $a$-positive type in $\Sigma^{-}_{a}$. Take $(d,k) \in D\times\omega$ and let $T$ be the (full) type of $(d,k)$. If $a\notin T$ then trivially $T\in \Sigma^{-}_{a}$ and we are done. Suppose $a\in T$. Observe that in $D\times\omega$ we have infinitely many copies of $d\in D$. However, as $\val'_\pi(a)$ is finite, there must be some $(d,k')$ with type $T' := T\setminus\{a\}$.
+Let $(D\times\omega,\val'_\pi) \models \mondbnfofo{\Sigma}{a}$, we show that $(D\times\omega,\val'_\pi) \models \mondgbnfofo{\Sigma}{\Sigma^{-}_{a}}{a}$. The existential part of $\mondgbnfofo{\Sigma}{\Sigma^{-}_{a}}{a}$ is trivially true. We have to show that every element of $(D\times\omega,\val'_\pi)$ realises an $a$-positive type in $\Sigma^{-}_{a}$. Take $(d,k) \in D\times\omega$ and let $T$ be the (full) type of $(d,k)$. If $a\notin T$ then trivially $T\in \Sigma^{-}_{a}$ and we are done. Suppose $a\in T$. Observe that in $D\times\omega$ we have infinitely many copies of $d\in D$. However, as $\val'_\pi(a)$ is finite, there must be some $(d,k')$ with type $T' := T\setminus\{a\}$.
 %\fcwarning{Write better}
-For $\mondbnfofo{\Sigma}{a}$ to be true we must have $T'\in \Sigma$ and hence $T'\in \Sigma^{-}_{a}$. It is easy to see that $(d,k)$ realizes the $a$-positive type $T'$.
+For $\mondbnfofo{\Sigma}{a}$ to be true we must have $T'\in \Sigma$ and hence $T'\in \Sigma^{-}_{a}$. It is easy to see that $(d,k)$ realises the $a$-positive type $T'$.
 
 \bigskip
 \noindent \fbox{$\Leftarrow$}

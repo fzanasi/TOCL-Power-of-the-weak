@@ -14,20 +14,22 @@ The language of the modal $\mu$-calculus ($\MC$) on $\props$ is given by the fol
 %
 where $p,q \in \props$ and $p$ is positive in $\varphi$ (i.e., $p$ is not negated).
 We use the standard convention that no variable is both free and bound in a formula and that every bound variable is fresh.
+Sometimes we write $\psi \subf \varphi$ to denote that $\psi$ is a subformula of $\varphi$.
+
 %
 Let $p$ be a bound variable occuring in some formula $\varphi \in \MC$, we use $\delta_p$ to denote the binding definition of $p$, that is, the formula such that either $\mu p.\delta_p$ or $\nu p.\delta_p$ are subformulas of $\varphi$.
 
 The semantics of this language is completely standard. Let $\model = \tup{T,R,\tscolors, s_I}$ be a transition system and $\varphi \in \MC$. We inductively define the \emph{meaning} $\ext{\varphi}^{\model}$ which includes the following clauses for the least $(\mu)$ and greatest ($\nu$) fixpoint operators:
 %
 \begin{align*}
-  \ext{\mu x.\psi}^{\model}  & :=   \bigcap \{S \subseteq T \mid S \supseteq \ext{\psi}^{\model[x\mapsto S]} \}  \\
-  \ext{\nu x.\psi}^{\model}  & :=   \bigcup \{S \subseteq T \mid S \subseteq \ext{\psi}^{\model[x\mapsto S]} \}
+  \ext{\mu p.\psi}^{\model}  & :=   \bigcap \{S \subseteq T \mid S \supseteq \ext{\psi}^{\model[p\mapsto S]} \}  \\
+  \ext{\nu p.\psi}^{\model}  & :=   \bigcup \{S \subseteq T \mid S \subseteq \ext{\psi}^{\model[p\mapsto S]} \}
 \end{align*}
 %
 We say that $\varphi$ is \emph{true} in $\model$ (notation $\model \mmodels \varphi$) iff $s_I \in \ext{\varphi}^{\model}$.% As for the case of $\wmso$, $\ext{\varphi}$ denotes the class of transition systems where $\varphi$ is true.\fcwarning{Pointed or not?}
 
 We will now describe the semantics defined above in game-theoretic terms. That is,
-we will define the evaluation game $\egame(\varphi,\model)$ associated with a formula $\varphi \in \MC$ and a transition system $\model$. This game is played by two players (\eloise and \abelard) moving through positions $(\xi,s)$ where $\xi$ is a subformula of $\varphi$ and $s \in T$.
+we will define the evaluation game $\egame(\varphi,\model)$ associated with a formula $\varphi \in \MC$ and a transition system $\model$. This game is played by two players (\eloise and \abelard) moving through positions $(\xi,s)$ where $\xi \subf \varphi$ and $s \in T$.
 %
 
 \begin{table}
@@ -49,7 +51,7 @@ we will define the evaluation game $\egame(\varphi,\model)$ associated with a fo
   $(q,s) \in \props \times T$, $q$ free in $\varphi$ and $q \notin \tscolors(s)$ & $\exists$ & $\emptyset$\\
   \hline
 \end{tabular}
-\caption{Evaluation game for the modal $\mu$-calculus}
+\caption{}
 \label{egame_mucalc}
 \end{table}
 %
@@ -57,6 +59,15 @@ we will define the evaluation game $\egame(\varphi,\model)$ associated with a fo
 In an arbitrary position $(\xi,s)$ it is useful to think of
 \eloise trying to show that $\xi$ is true at $s$, and of \abelard of trying to convince her that $\xi$ is false at $s$. The rules of the evaluation game are given in Table~\ref{egame_mucalc}.
 Every finite match of this game is lost by the player that got stuck. To give a winning condition for an infinite match let $p$ be, of the bound variables of $\varphi$ that get unravelled infinitely often, the one that is the highest in the syntactic tree of $\varphi$. The winner of the match is \abelard if $p$ is a $\mu$-variable and \eloise if $p$ is a $\nu$-variable. We say that $\varphi$ is true in $\model$ iff \eloise has a winning strategy in $\egame(\varphi,\model)$.
+
+\begin{proposition}[Adequacy Theorem]\label{p:unfold=evalgame}
+Let $\varphi = \varphi(p)$ be a formula of $\MC$ in which all occurrences of $p$ are positive, and let $(\model,s)$ be a pointed Kripke model. Then:
+\begin{equation}
+\label{eq:adeq3}
+s \in \mng{\mu p.\varphi}^{\model} %\iff s \in \Win_{\eloi}(\UG(\varphi_{x}^{\bbS}))
+\iff (\mu p.\varphi,s) \in \win_{\eloise}(\egame(\mu p.\varphi,\model)).
+\end{equation}
+\end{proposition}
 
 \bigskip
 Formulas of the modal $\mu$-calculus are classified according to their
@@ -81,7 +92,7 @@ $$
 $$
 \end{definition}
 
-We can give a syntactic characterization of the fragment of $\MC$ that captures this property. Given a set $\qprops$ of propositional variables, we define the fragment of \MC \emph{continuous} in $\qprops$, denoted by $\cont{\MC}{\qprops}$, by induction in the following way
+We can give a syntactic characterisation of the fragment of $\MC$ that captures this property. Given a set $\qprops$ of propositional variables, we define the fragment of \MC \emph{continuous} in $\qprops$, denoted by $\cont{\MC}{\qprops}$, by induction in the following way
 \begin{equation*}
    \varphi ::= q
    \mid \psi

@@ -444,7 +444,7 @@ $$
 where $p,q\in\prop$, $x,y\in\fovar$; moreover $p$ occurs only positively in $\varphi(p,x)$ and $x$ is the only free variable in $\varphi(p,x)$.
 \end{definition}
 
-The semantics of the fixpoint formula $\mu p. \phi(p, x)$ is the expected one. Given a model $\model$ and $s \in T$,  $\model \models \mu p. \phi(p, s)$ iff $s$ is in the least fixpoint of the  operator $F_\phi:\wp(T)\to \wp(T)$ defined as $F_\phi(S) := \{t \in T \mid \model[p \mapsto S] \models \phi(p, t) \}$.
+The semantics of the fixpoint formula $\mu p. \phi(p, x)$ is the expected one. Given a model $\model$ and $s \in T$,  $\model \models \mu p. \phi(p, s)$ iff $s \in \LFP. F_\phi$, that is $s$ is in the least fixpoint of the  operator $F_\phi:\wp(T)\to \wp(T)$ defined as $F_\phi(S) := \{t \in T \mid \model[p \mapsto S] \models \phi(p, t) \}$.
 
 Formulas of $\mlque$ may be also classified according to their alternation depth as it happens for the modal $\mu$-calculus.
 The alternation-free fragment of $\mlque$ is thence defined as the collection of $\mlque$-formulas $\phi$
