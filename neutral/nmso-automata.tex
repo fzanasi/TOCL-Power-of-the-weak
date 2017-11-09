@@ -1,0 +1,177 @@
+% \section{Automata for $\nmso$}\label{sec:autnmso}
+
+In this section we introduce the automata class that captures $\nmso$. 
+
+\begin{definition}
+A \emph{$\nmso$-automaton} is a weak automaton for the one-step language $\ofoe$.
+\end{definition}
+
+Aanalogous to the previous section, our main goal here is to construct an 
+equivalent $\nmso$-automaton for every $\nmso$-formula.
+
+\begin{theorem}
+\label{t:nmsoauto}
+There is an effective construction transforming a $\nmso$-formula $\phi$
+into a $\nmso$-automaton $\bbA_{\phi}$ that is equivalent
+to $\phi$ on the class of trees.
+% That is, for any tree $\bbT$, $\bbA_{\phi}$ accepts $\bbT$ if and only if $\bbT \models {\phi}$
+\end{theorem}
+
+The proof for Theorem \ref{t:nmsoauto} will closely follow the steps for proving 
+the analogous result for $\wmso$ (Theorem \ref{t:wmsoauto}).
+Again, the crux of the matter is to show that the tree languages recognised by
+$\nmso$-automata are closed under the relevant notion of projection. 
+Where this was finitary projection for $\wmso$ (Def. \ref{def:tree_finproj}), 
+the notion mimicking $\nmso$-quantification is \emph{noetherian} projection.
+
+\begin{definition}\label{def:tree_finproj}
+Fix a set $\prop$ of proposition letters, $p \not\in P$ and a language $\trees$ 
+of $\p (\prop\cup\{p\})$-labeled trees.
+The \emph{noetherian projection} of $\trees$ over $p$ is the language of $\p 
+(\prop)$-labeled trees given as $\noetexists p.\trees \df \{\bbT \mid \text{
+there is a noetherian $p$-variant } \bbT' \text{ of } \bbT \text{ with } \bbT'
+\in \trees\}$. 
+A class $K$ of tree languages is \emph{closed under noetherian projection over 
+$p$} if, for any language $\trees$ in $K$, also ${\noetexists p}.\trees$ is in 
+$K$.
+\end{definition} 
+
+\subsection{Simulation theorem for $\nmso$-automata}\label{sec:simulation_nmso}
+
+Just as for $\wmso$-automata, also for $\nmso$-automata the projection construction will rely on a simulation theorem, constructing a two-sorted automaton $\aut^{\noet}$ consisting of a copy of the original automaton, based on states $A$, and a variation of its powerset construction, based on macro-states $\shA = \pw(A \times A)$. For any accepted $\bbT$, we want any match $\pi$ of $\mc{A}(\aut^{\noet},\bbT)$ to split in two parts:
+\begin{description}
+  \item[(\textit{Non-deterministic mode})] for finitely many rounds $\pi$ is played on macro-states, i.e. positions are of the form $\shA \times T$. The strategy of player $\exists$ is functional in $\shA$, i.e. it assigns \emph{at most one macro-state} to each node.
+  \item[(\textit{Alternating mode})] At a certain round, $\pi$ abandons macro-states and turns into a match of the game $\mc{A}(\aut,\bbT)$, i.e. all next positions are from $A \times T$ (and are played according to a non-necessarily functional strategy). %of shape $(a,t) \in A \times T$.
+\end{description}
+The only difference with the two-sorted construction for $\wmso$-automata is that, in the non-deterministic mode, the cardinality of nodes to which $\exists$'s strategy assigns macro-states is irrelevant. Indeed, $\nmso$'s finiteness is only on the vertical dimension: assigning an odd parity value to macro-states will suffice to guarantee that the non-deterministic mode processes just a well-founded portion of any accepted tree.
+
+We now proceed in steps towards the construction of $\aut^{\noet}$. First, the following lifting from states to macro-states parallels Definition \ref{DEF_finitary_lifting}, but for the one-step language $\ofoe$ proper of $\nmso$-automata.
+
+\begin{definition}\label{DEF_noetherian_lifting}
+Let $\varphi \in {\ofoe}^+(A \times A)$ be of shape $\dbnfofoe{\vlist{T}}{\Pi}$ for some $\Pi \subseteq \shA$ and $\vlist{T} = \{T_1,\dots,T_k\} \subseteq \shA$. We define $\varphi^{\noet}$ as $\dbnfofoe{\lift{\vlist{T}}}{\lift{\Pi}} \in {\ofoe}^+(\shA )$, that means,
+\begin{equation}\label{eq:unfoldingNablaofoe}
+\varphi^{\noet} \ \df \ 
+    \exists \vlist{x}.\big(\arediff{\vlist{x}} \land \bigwedge_{0 \leq i \leq n} \tau^+_{\lift{T}_i}(x_i)
+\land 
+    \forall z.(\arediff{\vlist{x},z} \lthen \bigvee_{S\in \lift{\Pi} } \tau^+_S(z))\big)
+\end{equation}
+\end{definition}
+
+It is instructive to compare \eqref{eq:unfoldingNablaofoe} with its 
+$\wmso$-counterpart \eqref{eq:unfoldingNablaolque}: the difference is that, 
+because the quantifiers $\qu$ and $\dqu$ are missing, the sentence does not 
+impose any cardinality requirement, but only enforces functionality 
+(Definition \ref{def:functionalsentenceofoe}).
+
+%The idea of translation $(\cdot)^{\noet}$ is to encode at the one-step level the non-deterministic mode of $\aut^{\noet}$: the property to enforce is that $\varphi^{\noet}$ is \emph{functional} in $\shA$, that means, whenever $(D,\val \: A \to \wp(D)) \models \varphi^{\noet}$, then there is $\val'  \: A \to \wp(D)$ such that $(D, \val') \models \varphi^{\noet}$ and  $ \val'(q_1)\cap \val'(q_2) = \emptyset$ for all $q_1,q_2 \in \shA$. 
+
+\begin{lemma}\label{lemma:automatafunctionalsentence}
+Let $\varphi \in {\ofoe}^+(A \times A)$ and $\varphi^{\noet}\in {\ofoe}^+(\shA )$ be as in Definition~\ref{DEF_noetherian_lifting}. Then $\varphi^{\noet}$ is functional in $\shA$.
+ \end{lemma}
+\begin{proof}
+Each element of $\lift{\vlist{T}}$ and $\lift{\Pi}$ is by definition either the empty set or a singleton $\{Q\}$ for some $Q \in \shA$. Then the statement follows from Proposition \ref{lemma:functionalsentenceofoe}.\end{proof}
+
+ We are now ready to define the transition function for macro-states. The following adapts Definition \ref{PROP_DeltaPowerset} to the one step-language $\ofoe$ of $\nmso$-automata, and its normal form result, Theorem~\ref{thm:bnfofoe}. Also, we use the translation $(\cdot)^{\star}$ from Definition \ref{DEF_delta star}.
+\begin{definition}\label{PROP_DeltaPowerset_noet}
+Let $\aut = \tup{A,\tmap,\pmap,a_I}$ be a $\nmso$-automaton. Fix any $c \in C$ and $Q \in \shA$. By Theorem~\ref{thm:bnfofoe} there is a sentence $\Psi_{Q,c} \in {\ofoe}^+(A\times A)$ in the basic form $\bigvee \dbnfofoe{\vlist{T}}{\Pi}$, for some $\Pi \subseteq \shA$ and $T_i \subseteq A \times A$, such that $\bigwedge_{a \in \Ran(Q)} \tmap^{\star}(a,c) \equiv \Psi_{Q,c}$.
+By definition, $\Psi_{Q,c} = \bigvee_{n}\varphi_n$, with each $\phi_{k}$ of shape $\dbnfofoe{\vlist{T}}{\Pi}$.
+%
+We put $\bmDe(Q,c) := \bigvee_{n}\varphi_n^{\noet}  \in {\ofoe}^+(\shA)$, where the translation $(\cdot)^{\noet}$ is as in Definition \ref{DEF_noetherian_lifting}.
+\end{definition}
+
+\noindent 
+We now have all the ingredients for the two-sorted construction over 
+$\nmso$-automata.
+
+\begin{definition}\label{def:noetherianconstruct}
+Let $\aut = \tup{A,\tmap,\pmap,a_I}$ be a {\nmso-automaton}. 
+We define the \emph{noetherian construct over $\aut$} as the automaton 
+$\aut^{\noet} = \tup{A^{\noet},\tmap^{\noet},\pmap^{\noet},a_I^{\noet}}$ given
+by 
+% \begin{gather*}
+%       % \nonumber to remove numbering (before each equation)
+%         A^{\noet} \ \df \  A \cup \shA \quad\quad\quad
+% 	a_I^{\noet} \ \df \  \{(a_I,a_I)\} \quad\quad\quad 
+% 	\pmap^{\noet}(a) \ \df \  \pmap(a) \quad\quad\quad 
+% 	\pmap^{\noet}(R) \ \df \  1 \\
+%         \tmap^{\noet}(a,c) \ \df \  \tmap(a,c) \qquad \qquad \qquad 
+%         \tmap^{\noet}(Q,c) \ \ \df \ \  \bmDe(Q,c) \vee \! \! \! \! \bigwedge_{a \in \Ran(Q)} \! \! \! \tmap(a,c).
+%       \end{gather*}
+\[
+\begin{array}{lll}
+   A^{\noet}   &\df&  A \cup \shA
+\\ a_I^{\noet} &\df&  \{(a_I,a_I)\}
+\end{array}
+%
+\hspace*{5mm}
+%
+\begin{array}{lll}
+   \pmap^{\noet}(a) &\df& \pmap(a)
+\\ \pmap^{\noet}(R) &\df& 1
+\end{array}
+%
+\hspace*{5mm}
+%
+\begin{array}{lll}
+   \tmap^{\noet}(a,c) &\df& \tmap(a,c) 
+\\ \tmap^{\noet}(Q,c) &\df&  
+  \bmDe(Q,c) \vee \bigwedge_{a \in \Ran(Q)} \! \! \tmap(a,c).
+\end{array}
+\]
+\end{definition}
+
+The construction is the same as the one for $\wmso$-automata (Definition \ref{def:finitaryconstruct}) but for the definition of the transition function for macro-states, which is now free of any cardinality requirement. %The definition of $\aut^{\noet}$ enforces its behaviour to be split according to the non-deterministic and alternating mode. Indeed, for any accepted $\bbT$, a match $\pi$ of $\agame(\aut^{\noet},\bbT)$ will visit positions involving macro-states only for finitely many initial rounds, because $\pmap^{\noet}[\shA] = \{1\}$. The alternating mode will be entered when, at a certain position $(R,s)\in \shA \times T$, the winning strategy for $\exists$ makes the disjunct $\bigwedge_{a \in \Ran(R)} \tmap(a,c)$ of $\tmap^{\noet}(R,c)$ true and then all successive positions only involve states from $A$. The next proposition fixes our desiderata on $\aut^{\noet}$. 
+
+\begin{definition}\label{def:noetherianstrategy}
+We say that a strategy $f$ in an acceptance game $\agame(\aut,\bbT)$ is \emph{noetherian} in $B \subseteq A$ when in any $f$-guided match there can be only finitely many rounds played at a position of shape $(q,s)$ with $q \in B$.
+\end{definition}
+
+%: in particular, \ref{point:finConstrStrategy} certifies the description that we did of the non-deterministic mode of $\aut^{f}$.
+
+\begin{theorem}[Simulation Theorem for $\nmso$-automata]
+\label{PROP_facts_noetConstr} 
+Let $\aut$ be an $\nmso$-automaton and $\aut^{\noet}$ its noetherian construct.
+\begin{enumerate}[(i)]
+  \itemsep 0 pt
+  \item $\aut^{\noet}$ is an $\nmso$-automaton.\label{point:finConstrAut}
+  \item For any $\bbT$, if $\eloise$ has a winning strategy in $\mathcal{A}(\aut^{\noet},\bbT)$ from position $(a_I^{\noet},s_I)$ then she has one that is functional in $\shA$ and noetherian in $\shA$.% (\emph{cf.} Definition \ref{def:StratfunctionalFinitary}).
+  \label{point:finConstrStrategy}
+  \item $\aut \equiv \aut^{\noet}$. \label{point:finConstrEquiv}
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+The proof follows the same steps as the one of Proposition \ref{PROP_facts_finConstrwmso}, minus all the concerns about continuity of the constructed automaton and any associated winning strategy $f$ being finitary. One still has to show that $f$ is noetherian in $\shA$ (``vertically finitary''), but this is enforced by macro-states having an odd parity: visiting one of them infinitely often would mean $\exists$'s loss.
+\end{proof}
+
+\begin{remark}
+As mentioned, the class $\Aut(\ofoe)$ of automata characterising $\MSO$ 
+\cite{Jan96} also enjoys a simulation theorem \cite{Walukiewicz96}, turning any 
+automaton into an equivalent non-deterministic one. 
+Given that the class $\AutW(\ofoe)$ only differs for the weakness constraint, 
+one may wonder if the simulation result for $\Aut(\ofoe)$ could not actually be
+restricted to $\AutW(\ofoe)$, making our two-sorted construction redundant. 
+This is actually not the case: not only does Walukiewicz's simulation theorem
+\cite{Walukiewicz96} fail to preserve the weakness constraint, but even without
+this failure our purposes would not be served: 
+A fully non-deterministic automaton is instrumental in guessing a $p$-variant 
+of any accepted tree, but it does not guarantee that the $p$-variant is also 
+noetherian, as the two-sorted construct does.
+\end{remark}
+
+\subsection{From formulas to automata}
+
+We can now conclude one direction of the automata characterisation of $\nmso$.
+
+\begin{lemma}\label{PROP_noet_projection}
+For each $\nmso$-automaton $\aut$ on alphabet $\p (\prop \cup \{p\})$,
+\marginpar{YV: problem?}
+we have that
+$$\trees({{\exists} p}.\aut) \ \equiv\
+{{\noetexists} p}.\trees(\aut).
+$$
+\end{lemma}
+\begin{proof} The argument is the same as for $\wmso$-automata (Lemma \ref{PROP_fin_projection}). As in that proof, the inclusion from left to right relies on the simulation result (Theorem \ref{PROP_facts_noetConstr}): because $\aut$ can be assumed to be two-sorted, ${{\exists} p}.\aut$ is two-sorted too: its non-deterministic mode can be used to guess a noetherian $p$-variant of any accepted tree. \end{proof}
+
+\begin{proof}[of Theorem \ref{t:nmsoauto}] As for its $\wmso$-counterpart Theorem \ref{t:wmsoauto}, the proof is by induction on $\varphi \in \nmso$. The boolean inductive cases are handled by the $\nmso$-versions of Lemma \ref{t:cl-dis} and \ref{t:cl-cmp}. The projection case follows from Lemma~\ref{PROP_noet_projection}.
+\end{proof} 
+

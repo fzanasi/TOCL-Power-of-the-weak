@@ -1,5 +1,8 @@
 %various from commands YV
 
+\newcommand{\nxt}[1]{\raisebox{.3ex}{$\scriptstyle \bigcirc$}_{#1}}
+\renewcommand{\phi}{\varphi}
+\newcommand{\ol}[1]{\overline{#1}}
 
 %various
 \newcommand{\bpr}{{\upharpoonright}}
@@ -150,14 +153,14 @@
 \newcommand{\ofoei}{\ensuremath{\foei_1}\xspace}%\mathrm{FO}^=_1}\xspace}
 \newcommand{\olque}{\ofoei}
 
-\newcommand{\mucaML}{\ensuremath{\mu_{a}\textup{ML}}\xspace}
-\newcommand{\nmucaML}{\ensuremath{\mu_{na}\textup{ML}}\xspace}
-\newcommand{\rmucaML}{\ensuremath{\mu_{a}^{-}\textup{ML}}\xspace}
-\newcommand{\rnmucaML}{\ensuremath{\mu_{na}^{-}\textup{ML}}\xspace}
-\newcommand{\mucML}{\ensuremath{\mu_{c}\textup{ML}}\xspace}
+\newcommand{\mucaML}{\ensuremath{\mu_{a}\ML}\xspace}
+\newcommand{\nmucaML}{\ensuremath{\mu_{na}\ML}\xspace}
+\newcommand{\rmucaML}{\ensuremath{\mu_{a}^{-}\ML}\xspace}
+\newcommand{\rnmucaML}{\ensuremath{\mu_{na}^{-}\ML}\xspace}
+\newcommand{\mucML}{\ensuremath{\mu_{C}\ML}\xspace}
 \newcommand{\lmuML}{\ensuremath{\mu\ML^{\lor}}\xspace}
-\newcommand{\lmucML}{\ensuremath{\mu_{c}\textup{ML}^{\lor}}\xspace}
-\newcommand{\lnmucML}{\ensuremath{\mu_{nc}\textup{ML}^{\lor}}\xspace}
+\newcommand{\lmucML}{\ensuremath{\mu_{C}\ML^{\lor}}\xspace}
+\newcommand{\lnmucML}{\ensuremath{\mu_{nc}\ML^{\lor}}\xspace}
 \newcommand{\mufoe}{\ensuremath{\mu\foe}\xspace}
 \newcommand{\mufoei}{\ensuremath{\mufoe^\infty}\xspace}
 \newcommand{\mucfoe}{\ensuremath{\mu_{c}\foe}\xspace}
@@ -165,7 +168,8 @@
 \newcommand{\mucafoe}{\ensuremath{\mu_{a}\foe}\xspace}
 \newcommand{\so}[1]{\mathrm{SO}(#1)}
 \newcommand{\afmc}{\ensuremath{\mathrm{AFMC}}\xspace}
-\newcommand{\AFMC}{\ensuremath{\mathrm{AFMC}}\xspace}
+% \newcommand{\AFMC}{\ensuremath{\mathrm{AFMC}}\xspace}
+\newcommand{\AFMC}{\ensuremath{\mu_{D}\ML}\xspace}
 \newcommand{\muMC}{\ensuremath{\Sigma\mu\ML}}    %least fixpoint-fragment of Mu-calculus
 \newcommand{\muffoe}{\ensuremath{\mufoe^\ff}\xspace}
 \newcommand{\muffoei}{\ensuremath{{\mufoei}^\ff}\xspace}
@@ -182,10 +186,13 @@
 \newcommand{\mult}[2]{#1\mathsf{MUL}_{#2}}
 \newcommand{\rmult}[2]{#1\mathsf{MUL}^{-}_{#2}}
 \newcommand{\cont}[2]{#1\mathsf{CON}_{#2}}
-\newcommand{\lcont}[2]{#1\mathsf{CON}_{#2}^{\lor}}
-\newcommand{\lncont}[2]{#1\mathsf{nCON}_{#2}^{\lor}}
+%\newcommand{\lcont}[2]{#1\mathsf{CON}_{#2}^{\lor}}
+%\newcommand{\lncont}[2]{#1\mathsf{nCON}_{#2}^{\lor}}
 \newcommand{\cocont}[2]{#1\overline{\mathsf{CON}}_{#2}}
 \newcommand{\ff}{\textup{\guillemotright}}
+
+\newcommand{\noe}[2]{#1\mathsf{NOE}_{#2}}
+
 
 \newcommand{\bq}{{\tilde\exists}}
 \newcommand{\wcbq}{\bq_\textup{wc}}
@@ -338,7 +345,7 @@
 \newcommand{\fwc}[2]{{#1}^{\!\div}_{#2}} %{\mathsf{\fconst}^{#2}_{wa}(#1)}
 \newcommand{\matches}{\mathcal{B}}
 \newcommand{\match}{\pi}
-\newcommand{\shA}{A^{\wp}}
+\newcommand{\shA}{A^{\sharp}}
 % \newcommand{\good}{\circ}
 % \newcommand{\bad}{\bullet}
 % \newcommand{\goodA}{A^{\good}}
@@ -361,25 +368,27 @@
 %\newcommand{\qed}{$\square$}
 %\newenvironment{proof}{\begin{trivlist}\item[]{\bf
 %Proof.}}{\hfill {\qed}\end{trivlist}}
-\newenvironment{proofof}[1]{\begin{trivlist}\item[\hskip\labelsep{\bf
-Proof~of~{#1}.\ }]}{\hspace*{\fill} {\qed}\end{trivlist}}
+\newenvironment{proofof}[1]{\begin{trivlist}\item[\hskip\labelsep{\textsc{Proof
+  of {#1}.\ }}]}{\hspace*{\fill} {\qed}\end{trivlist}}
 \newenvironment{pfclaim}{\begin{trivlist}\item[]{\sc Proof of Claim.~}}
 {\hfill {\mbox{$\blacktriangleleft$}}\end{trivlist}}
 
 % claims
 \makeatletter
-\newcounter{claimcounter}
-%\newenvironment{claim}{%
-%	\stepcounter{claimcounter}%
-%	\def\@currentlabel{\theclaimcounter}%
-%	\begin{trivlist}\item[]{\sc Claim~\arabic{claimcounter}.~}}
-%	{\end{trivlist}}
+\newcounter{ourclaimcounter}
+\newenvironment{ourclaim}{%
+ 	\stepcounter{ourclaimcounter}%
+	\def\@currentlabel{\theourclaimcounter}%
+	\begin{trivlist}\item[]{\sc Claim~\arabic{ourclaimcounter}.~}
+	}
+	{\end{trivlist}
+        }
 \newenvironment{claimfirst}{%
-	\setcounter{claimcounter}{0}%
-	\begin{claim}}{\end{claim}}
+	\setcounter{ourclaimcounter}{0}%
+	\begin{ourclaim}}{\end{ourclaim}}
 \makeatother
 
-% to be solved
+% to be supplied
 \newenvironment{tbs}{%
    \small\tt
    \begin{enumerate}[$\blacktriangleright$]}{\end{enumerate}}
@@ -387,13 +396,6 @@ Proof~of~{#1}.\ }]}{\hspace*{\fill} {\qed}\end{trivlist}}
 \newcommand{\etbs}{\end{tbs}}                                                                      
 \newcommand{\shtbs}[1]{\begin{tbs} \item #1 \end{tbs}}
 
-%% bibtex back references
-%\renewcommand*{\backref}[1]{}
-%\renewcommand*{\backrefalt}[4]{%
-%    \ifcase #1 Not cited.%
-%    \or        Cited on page~#2.%
-%    \else      Cited on pages~#2.%
-%    \fi}
 
 % paragraph
 \newcommand{\myparagraphns}[1]{\noindent\textbf{#1}}
@@ -408,22 +410,6 @@ Proof~of~{#1}.\ }]}{\hspace*{\fill} {\qed}\end{trivlist}}
 	\begin{trivlist}\item[]{{\sc Contribution}~(#1).~}\it}
 	{\end{trivlist}}
 
-% separation
-% \newcommand*\sepsection{%
-%   \begin{center}\small
-%     $\star\quad\star\quad\star$
-%   \end{center}}
 
 \newcommand*\sepsection{\bigskip}
 
-% \newcommand*\sepsection{%
-%   \begin{center}
-%   	\small\vspace{-5pt} % ugly, sorry :(
-%     $\star\quad\star\quad\star$
-%     \vspace{-5pt} % ugly, sorry :(
-%   \end{center}}
-
-% \newcommand*\sepsection{%
-% \medskip
-% \S~
-% }

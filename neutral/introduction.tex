@@ -1,0 +1,457 @@
+% \section{Introduction}\label{sec:intro}
+
+\subsection{Expressiveness modulo bisimilarity.}
+%
+This paper concerns the relative expressive power of some languages used for
+describing properties of pointed labelled transitions systems, or Kripke
+models.
+The interest in such expressiveness questions stems from applications where
+these structures model computational processes, and bisimilar pointed
+structures represent the \emph{same} process.
+Seen from this perspective, properties of transition structures are relevant
+only if they are invariant under bisimilarity.
+This explains the importance of bisimulation invariance results of the form
+\begin{equation*}
+%\label{eq:1}
+%\eqno{(*)}
+M \equiv L / {\bis} \text{ (over $K$)}
+\end{equation*}
+stating that,  if one restricts attention to a certain class $K$ of transition
+structures, one language $M$ is expressively complete with respect to the
+relevant (i.e., bisimulation-invariant) properties that can be formulated in
+another language $L$.
+In this setting, generally $L$ is some rich yardstick formalism such as
+first-order or monadic second-order logic, and $M$ is some modal-style
+fragment of $L$, usually displaying much better computational behavior
+than the full language $L$.
+
+A seminal result in the theory of modal logic is van Benthem's Characterisation
+Theorem~\cite{vanBenthemPhD}, stating that every bisimulation-invariant
+first-order formula $\alpha(x)$ is actually equivalent to (the standard
+translation of) a modal formula:
+\begin{equation*}
+%\label{eq-vB}
+\ML \equiv \fo/{\bis} \text{ (over the class of all LTSs)}.
+\end{equation*}
+Over the years, a wealth of variants of the Characterisation Theorem have been
+obtained.
+For instance, Rosen proved that van Benthem's theorem is one of the few
+preservation results that transfers to the setting of finite
+models~\cite{rose:moda97}; for a recent, rich source of van Benthem-style
+characterisation results, see Dawar \& Otto~\cite{DawarO09}.
+In this paper we are mainly interested is the work of Janin \&
+Walukiewicz~\cite{Jan96}, who extended van Benthem's result to the setting
+of fixpoint logics, by proving that the modal $\mu$-calculus ($\MC$) is the
+bisimulation-invariant fragment of monadic second-order
+logic ($\mso$):
+\begin{equation*}
+%\label{eq-JW}
+\MC \equiv \mso/{\bis} \text{ (over the class of all LTSs)}.
+\end{equation*}
+
+\subsection{Bisimulation invariance for $\wmso$.}
+The yardstick logic that we consider in this paper is \emph{weak} monadic
+second-order logic ($\wmso$), a variant of monadic second-order logic where
+the second-order quantifiers range over \emph{finite} subsets of the
+transition structure rather than over arbitrary ones.
+Our target will be to identify the bisimulation-invariant fragment of this
+logic $\wmso$.
+
+Before moving on, we should stress the role of the ambient class $K$ in
+bisimulation-invariance results.
+Of particular importance in the setting of weak monadic second-order logic is
+the difference between structures of finite versus arbitrary branching degree.
+In the case of finitely branching models, it is not very hard to show that
+$\wmso$ is a (proper) fragment of $\mso$, and it seems to be folklore that
+$\wmso/{\bis}$ corresponds to $\afmc$, the alternation-free fragment of the
+modal $\mu$-calculus.
+For binary trees, this result was proved by Arnold \& Niwi{\'n}ski in
+\cite{ArnoldN01}.
+In the case of structures of arbitrary branching degree, however, $\wmso$
+and $\mso$ have \emph{incomparable} expressive power.
+The fact that, in particular, $\wmso$ does not correspond to a fragment of
+$\mso$, is witnessed by the class of infinitely branching structures, which
+is clearly $\wmso$-definable, cannot be defined in $\mso$, since every
+$\mso$-definable class of trees contains a finitely branching
+tree.\footnote{As remarked in \cite{CateF11}, this follows from the automata characterisation of MSO given in \cite{Walukiewicz96}.} %\afnote{This follows implicitly from Igor's automata characterization of MSO, cf. props. 2 in my paper with Balder.}
+For this reason, the relative expressive power of $\wmso/{\bis}$ and
+$\mso/{\bis}$ is not a priori clear.
+However, it is reasonable to think that $\wmso/{\bis}$ is strictly \emph{weaker} than \afmc: the class of well-founded trees, which is definable in $\afmc$ by
+the simple formula $\mu p. \Box p$, is not definable in \wmso.\footnote{This follows from the fact that $\wmso$ can only define properties of trees that, from a topological point of view, are Borel, which is not the case of the class of trees defined by $\mu p. \Box p$--- see e.g. \cite{CateF11}.}
+% \begin{comment}
+% What is clear, however, is that $\wmso/{\bis}$ is strictly \emph{weaker}
+% \fzwarning{How do we know even that the bis. inv. fragment of WMSO is weaker than $\MC$?}
+% than \afmc: the class of well-founded trees, which is definable in \afmc by
+% the simple formula $\mu p. \Box p$, is not definable in \wmso.
+% (CITATION NEEDED)\fznote{Alessandro, was the (CITATION NEEDED) first stated in your thesis \cite{FacchiniPhD}?}.
+% \end{comment}
+Incidentally, the question whether, conversely, there is a natural logic of
+which the
+bisimulation-invariant fragment corresponds to $\afmc$ was answered positively
+by three of the present authors in~\cite{DBLP:conf/lics/FacchiniVZ13}, where they introduced
+another variant of $\mso$, called well-founded $\mso$ (\nmso), and proved
+that $\nmso/{\bis} \equiv \afmc$ (over the class of all LTSs).
+
+The main result that we shall prove in this paper states that the
+bisimulation-invariant fragment of $\wmso$ is equivalent to a certain,
+fragment $\mucML$ of the modal $\mu$-calculus.
+\begin{equation}
+\label{eq-main}
+\mucML \equiv \wmso/{\bis}  \text{ (over the class of all LTSs)}.
+\end{equation}
+This fragment $\mucML$, which is strictly weaker than the alternation-free fragment
+of $\muML$, is characterised by a certain restriction on the application of
+fixpoint operators, which involves the notion of \emph{(Scott) continuity}.
+
+Continuity, an interesting property that features naturally in the semantics
+of many (fixpoint) logics, in fact plays a key role throughout this paper.
+For its definition, we consider how the meaning $\haak{\phi}^{\model} \sse T$
+of a formula $\phi$ in some structure $\model$ (with domain $T$) depends on the meaning of a fixed
+proposition letter or monadic predicate symbol $p$.
+This dependence can be formalised as a map $\phi^{\model}_{p}: \wp(T) \to
+\wp (T)$, and if this map satisfies the condition
+\begin{equation}
+\label{eq-Sc}
+\phi^{\model}_{p}(X) = \bigcup \Big\{ \phi^{\model}_{a}(X') \mid X'
+\text{ is a finite subset of } X \Big\},
+\end{equation}
+we say that $\phi$ is \emph{continuous in $p$}.
+The topological terminology stems from the observation that \eqref{eq-Sc}
+expresses the continuity of the map $\phi^{\model}_{p}$ with respect to the Scott
+topology on $\pw(T)$. % and $\pw(T)$.
+If we look at concrete cases, this definition can be given a different reading:
+if $\phi$ is a formula of the
+modal $\mu$-calculus, \eqref{eq-Sc} means that $\phi$ holds at some state $s$
+of $\model$ iff we can shrink the interpretation of the proposition letter $p$
+to some finite subset of the original interpretation, in such a way that
+$\phi$ holds at $s$ in the modified version of $\model$.
+
+%\btbs
+%\item
+%mention nice properties?
+%\etbs
+
+A syntactic \emph{characterization} of this property for the modal $\mu$-calculus
+was obtained by Fontaine~\cite{Fontaine08,FV12}, and the definition of our fragment $\mucML$
+uses this characterization as follows:
+whereas in the full language of $\muML$ the only syntactic condition on the
+formation of a formula $\mu p. \phi$ is that $\phi$ is \emph{positive} in $p$,
+for the fragment $\mucML$ this condition is strengthened to the requirement that
+$\phi$ is (syntactically) \emph{continuous} in $p$.
+More precisely, the fragment $\mucML$ is defined as follows:
+
+\begin{definition}
+For each set $\qprops$ of
+proposition letters, the fragment $\cont{\MC}{\qprops}$ of $\MC$ which is \emph{continuous in $\qprops$}
+is given by the simultaneous induction
+\begin{equation*}
+   \varphi ::= q
+   \mid \psi
+   \mid \varphi \lor \varphi
+   \mid \varphi \land \varphi
+   \mid \Diamond \varphi
+   \mid \mu p.\alpha
+\end{equation*}
+where $p\in\props$, $q \in \qprops$, $\psi$ is a $\qprops$-free $\MC$-formula, and
+$\alpha \in \cont{\MC}{\qprops\cup\{p\}}$.
+%
+The formulas of the fragment $\mucML$ are then given by the following induction:
+\begin{equation*}
+   \varphi ::= p \mid \lnot \varphi
+    \mid \varphi \lor \varphi
+    \mid  \Diamond \varphi
+    \mid \mu p.\alpha
+\end{equation*}
+where $p \in \props$, and $\alpha \in \cont{\MC}{p}$.
+\end{definition}
+
+In fact we will prove, analogous to the result by Janin \& Walukiewicz,
+the following strong version of the characterization result~\eqref{eq-main},
+which provides an explicit translation, mapping any
+bisimulation-invariant formula $\phi$ in $\wmso$ to an equivalent formula
+$\phi^{\bullet}$ in $\mucML$.
+
+%\afnote{Enumerate in the theorem to be more readable?}
+\begin{theorem}
+\label{t:m1}
+There are effective translations $(-)^{\bullet}: \wmso \to \mucML$ and
+$(-)_{\bullet}: \mucML \to \wmso$ such that 
+\begin{enumerate}
+\item A formula $\phi$ of $\wmso$ is
+bisimulation invariant if and only if $\phi \equiv \phi^{\bullet}$, and
+\item $\psi \equiv \psi_{\bullet}$ for every formula $\psi \in \mucML$.
+\end{enumerate}
+\end{theorem}
+
+To see how this theorem implies \eqref{eq-main}, observe that part (i)
+shows that $\wmso/{\bis} \leq \mucML$.
+Part (ii) states that $\mucML \leq \wmso$, so combined with the fact that
+every formula in $\mucML \sse \MC$ is bisimulation invariant, this gives the
+converse, $\mucML \leq \wmso/{\bis}$.
+
+
+
+\subsection{Automata for $\wmso$.}
+%
+As usual in this research area, our proof will be automata-theoretic in
+nature.
+More specifically, as the second main contribution of this paper, we
+introduce a new class of parity automata that exactly captures the expressive
+power of $\wmso$ over the class of tree models of arbitrary branching degree.
+
+Before we turn to a description of these automata, we first have a look at the
+automata, introduced by Walukiewicz~\cite{Walukiewicz96}, corresponding to $\mso$
+(over tree models).
+Fixing the set of proposition letters of our models as $\props$, we think of
+$\wp(\props)$ as an \emph{alphabet} or set of \emph{colors}.
+We can then define an $\mso$-automaton as a tuple $\aut = \tup{A,\tmap,\pmap,a_I}$, where $A$ is a finite set of states, $a_I$ an initial state, and $\pmap:
+A \to \bbN$ is a parity function.
+%
+The transition function $\tmap$ maps a pair $(a,c) \in A \times \pw(\props)$ to a
+sentence in the first-order language (with equality) $\ofoe(A)$, of which the
+state space $A$ provides the set of (monadic) predicates.
+%
+For a more precise definition, let $\ofoe^+(A)$ denote the set of
+those sentences in $\ofoe(A)$ where all predicates in $A$ occur only positively;
+% the formulas of this language can be given by the following syntax:
+% \[
+% \varphi \mathrel{::=}
+% a(x)
+% %\mid \neg a(y)
+% \mid x \foeq y
+% \mid \neg (x \foeq y)
+% %\mid \neg \varphi
+% \mid \varphi \lor \varphi
+% \mid \varphi \land \varphi
+% \mid \exists x.\varphi
+% \mid \forall x.\varphi
+% \]
+% where $a \in A$ and $x,y$ represent individual first-order variables.
+we require that $\tmap: A \times \wp(\props) \to \ofoe^+(A)$.
+
+We shall refer to $\ofoe$ as the \emph{one-step language} of $\mso$-automata,
+and denote the class of $\mso$-automata with $\Aut(\ofoe)$.
+%, because of the key role of $\ofoe(A)$ in
+The automata that we consider in this article run on labelled transition systems
+and decide wether to accept or reject them. To take such decision we associate
+an acceptance game for an
+$\mso$-automaton $\bbA$ and a transition system $\model$.
+A match of this game consists of two players, $\eloise$ and $\abelard$, moving a
+token from one position to another.
+When such a match arrives at a so-called \emph{basic} position, i.e., a
+position of the form $(a,t) \in A \times T$, the players consider the
+sentence $\tmap(a,c_{t}) \in \ofoe^+(A)$, where $c_{t} \in \wp(\props)$ is the color
+of $t$ (that is, the set of proposition letters true at $t$).
+At this position $\eloise$ has to turn the set $R[t]$ of successors of
+$s$ into a \emph{model} for the formula $\tmap(a,c_{t})$ by coming up with an
+interpretation $I$ of the monadic predicates $a \in A$ as subsets of $R[s]$,
+so that the resulting first-order structure $(R[s],I)$ makes the
+formula $\tmap(a,c_{t})$ true.
+
+% \btbs
+% \item
+% explain role of $\abelard$?
+% \etbs
+
+Walukiewicz's key result linking $\mso$ to $\Aut(\ofoe)$ states that
+\begin{equation}
+\mso \equiv \Aut(\ofoe)
+ \text{ (over tree models)},
+\end{equation}
+and the proof of this result proceeds by inductively showing that every formula
+$\phi$ in $\mso$ can be effectively transformed into an equivalent
+automaton $\bbA_{\phi} \in \Aut(\ofoe)$.
+For the details of this construction, a fairly intricate analysis of the
+one-step logic $\ofoe$ is required, crucially involving various normal
+forms of the sentences of $\ofoe(A)$.
+
+In order to adapt this approach to the setting of \wmso, observe that by
+K\"onig's lemma, a subset of a tree $\model$ is finite iff it is both a subset of
+a finitely branching subtree of $\model$ and \emph{noetherian}, that is, a subset
+of a subtree of $\model$ that has no infinite branches.
+This suggests that we may change the definition of $\mso$-automata into one
+of $\wmso$-automata via two kinds of modifications, roughly speaking
+corresponding to a horizontal and a vertical `dimension' of trees.
+
+For the `vertical modification' we may turn to the literature on weak automata~\cite{MullerSaoudiSchupp92}.
+The acceptance condition $\pmap$ of a parity automaton $\bbA =
+\tup{A, \tmap, \pmap, a_I}$ is \emph{weak} if $\pmap(a) = \pmap(a')$ whenever
+the states $a$ and $a'$ belong to the same strongly connected component
+(SCC) of the automaton. To see that the notion of connected component is well-defined
+observe that for $\bbA$ we can associate a directed graph on $A$
+such that $a,b \in A$ are connected iff $b$ occurs in $\tmap(a,c)$ for some $c \in \wp(\props)$.
+%
+Let $\AutW(\ofoe)$ denote the set of $\mso$-automata with a weak parity
+condition.
+It was proved in \cite{Zanasi:Thesis:2012} (see also \cite{DBLP:conf/lics/FacchiniVZ13}) that
+\begin{equation*}
+%\label{eq-wfmso}
+\nmso \equiv \AutW(\ofoe) \text{ (over the class of all trees)},
+\end{equation*}
+with $\nmso$ denoting the earlier mentioned variant of $\mso$ %/$\wmso$
+where second-order quantification is restricted to noetherian subsets of trees.
+From this it easily follows that
+\begin{equation*}
+%\label{eq-wfmso2}
+\wmso \equiv \AutW(\ofoe) \text{ (over the class of finitely
+branching trees)},
+\end{equation*}
+since the noetherian subsets of a finitely branching trees correspond to the
+finite ones.
+Over the class of all tree models, however, $\wmso$ is \emph{not} equivalent
+to $\AutW(\ofoe)$, %$ \equiv \nmso$
+as is witnessesed by the earlier mentioned
+class of well-founded trees, which can be defined in $\afmc \leq \nmso$,
+but not in $\wmso$.
+
+The hurdle to take, in order to find automata for WMSO on trees of
+\emph{arbitrary} branching degree, concerns the horizontal dimension; the
+main problem lies in finding the right one-step language for
+$\wmso$-automata.
+An obvious candidate for this language would be weak monadic second-order logic
+itself, or more precisely, its variant $\owmso$ over the signature of monadic
+predicates (corresponding to the automata states).
+A very helpful observation, made by V\"a\"an\"anen~\cite{vaananen77}, states that
+\[
+\owmso \equiv \ofoei,
+\]
+where $\ofoei$ is the extension of $\ofoe$ with the generalized quantifier
+$\qu$, where $\qu x. \phi$ meaning that there are \emph{infinitely} many
+objects satisfying $\phi$.
+Taking the \emph{full} language of $\owmso$ or $\ofoei$ as our one-step language
+would give too much expressive power: since $\ofoei$ extends $\ofoe$,
+we would find that, over tree models, $\AutW(\ofoei)$ extends
+$\AutW(\ofoe)$, whereas we already saw that $\AutW(\ofoe) \equiv
+\nmso$ is incomparable to $\wmso$.
+%
+It is here that we will crucially involve the notion of \emph{continuity}.
+The automata corresponding to $\wmso$ will be of the form $\bbA = \tup{A, \tmap, \pmap, a_I}$,
+where the transition map $\tmap: A \times \wp(\props) \to
+{\ofoei}^+(A)$ is subject to the following two constraints, for all $a,a' \in A$
+belonging to the same strongly connected component of $A$:
+\begin{description}
+\itemsep 0 pt
+\item[(weakness)] $\pmap(a) = \pmap(a')$, and
+\item[(continuity)]
+if $\pmap(a)$ is odd (resp. even), then for each colour $c\in \wp(\props)$,
+   $\tmap(a,c)$ is continuous (resp. co-continuous) in $a'$,
+\end{description}
+where co-continuity is a dual notion to continuity.
+The class of these automata is denoted by $\AutWC(\ofoei)$.
+%
+Consequently, for a proper definition of these automata we need a
+\emph{syntactic} characterization of the $\ofoei(A)$-sentences that are
+(co-)continuous in one (or more) monadic predicates of $A$.
+
+For this purpose, we conduct a fairly detailed model-theoretic study of the
+logic $\ofoei$ which we consider to be the third main
+contribution of our work.
+Similar to the results for $\ofoe$, we provide normal forms for the
+sentences of $\ofoei(A)$, and syntactic characterizations of the fragments
+whose sentences are monotone (respectively continuous) in some monadic predicate $a \in A$.
+
+% \begin{theorem}
+% \label{t:m2}
+% A sentence of $\ofoei(A)$ is monotone in ${a\in A}$ iff it is equivalent to
+% a sentence in the language given by the following syntax:
+% \begin{equation}
+% \label{eq-pofoei}
+% \varphi ::= \psi \mid a(x) \mid \exists x.\varphi(x) \mid \forall x.\varphi(x)
+% \mid \varphi \land \varphi \mid \varphi \lor \varphi
+% \mid \qu x.\varphi(x) \mid \dqu x.\varphi(x)
+% \end{equation}
+% where $\psi \in \ofoei(A\setminus \{a\})$.
+
+% A sentence of $\ofoei(A)$ is continuous in ${a\in A}$ iff it is equivalent to
+% a sentence in the language given by the following syntax:
+% \begin{equation}
+% \label{eq-cofoei}
+% \varphi ::=
+% \psi \mid a(x) \mid \exists x.\varphi(x) \mid \varphi \land \varphi
+%    \mid \varphi \lor \varphi \mid \wqu x.(\varphi,\psi)
+% \end{equation}
+% where $\psi \in \ofoei(A\setminus \{a\})$ and
+% $\wqu x.(\varphi,\psi) :=
+%    \forall x.(\varphi(x) \lor \psi(x)) \land \dqu x.\psi(x)$.
+% \end{theorem}
+
+% Using these characterizations, we can now provide the definition of a
+% \wmso-automaton.
+
+% \begin{definition}
+% We denote by $\yvmonot{\ofoei}(A)$ the set of sentences that are positive
+% in each $a \in A$ (i.e., belong to \eqref{eq-pofoei} for all $a \in A$), and
+% we let $\AutW{\ofoei}$ denote the class of structures of the form
+% $\bbA = \struc{A, a_I, \tmap, \pmap}$ such that $A$ is a finite set of states,
+% $a_I \in A$ is the initial state of $\bbA$, $\tmap: A \times C \to
+% \yvmonot{\ofoei}{a}(A)$ is the transition map, and $\pmap: A\to \bbN$ is the
+% parity map of $\bbA$.
+
+% Such a structure is a \emph{\wmso-automaton} if $\tmap$ and $\pmap$ satisfy,
+% for all states $a,a'$ belonging
+% to the same strongly connected component, the following two
+% conditions:
+% \begin{itemize}
+% \item
+% (weakness) $\pmap(a) = \pmap(a')$, and
+% \item
+% (continuity)
+% if $\pmap(a')$ is even, then $\tmap(a',c)$
+% belongs to the fragment \eqref{eq-cofoei}, for each $c \in \wp(\props)$
+% \\ (and a dual condition applies in case $\pmap(a')$ is odd).
+% \end{itemize}
+% The class of these automata is denoted by $AutWC(\ofoei)$.
+% \end{definition}
+
+To finish, we give constructions transforming \wmso-formulas to
+\wmso-automata and vice-versa, witnessing that
+%
+\begin{equation}
+\label{eq:m3}
+\wmso \equiv \AutWC(\ofoei) \text{ (over tree models)}.
+\end{equation}
+
+\subsection{Proof of main result.}
+
+To conclude our introduction we briefly sketch the proof of our main result, 
+Theorem~\ref{t:m1}(1).
+Roughly speaking, we follow the bisimulation-invariance proof by Janin \& 
+Walukiewicz, which revolves around relating two distinct types of automata, 
+which correspond, respectively, to the logics $\mso$ and $\MC$.
+More precisely, these two automaton types are given as $\AutWC(\ofoe)$ and
+$\AutWC(\ofo)$, where the one-step languages are first-order 
+logic respectively with and without equality.
+What we will add to their proof is the insight from~\cite{Venxx} that the
+required relation between $\AutWC(\ofoe)$ and $\AutWC(\ofo)$ already follows
+from results relating the respective one-step languages.
+
+In our setting, we need to identify automata corresponding to the fragment
+$\mucML$.
+For this purpose we introduce the class $\AutWC(\ofo)$ consisting of those
+automata in $\AutWC(\ofo)$ that satisfy similar weakness and continuity 
+conditions as the ones in $\AutWC(\ofoei)$:
+\begin{equation}
+\label{eq:autF}
+\mucML \equiv \AutWC(\ofo) \text{ (over the class of all LTSs)}.
+\end{equation}
+
+As the key step in our proof then, we will provide a translation 
+$(-)^{\bullet}: \ofoei \to \ofo$ which naturally induces a transformation 
+$(-)^{\bullet}: \AutWC(\ofoei) \to \AutWC(\ofo)$.
+As a consequence of the nice model-theoretic properties of the translation at 
+the one-step level, the automaton transformation satisfies, for all 
+transition systems $\bbT$:
+\begin{equation}
+\label{eq:crux-i}
+\bbA^{\bullet} \text{ accepts } \bbT \text{ iff } \bbA \text{ accepts 
+} \omegaunrav{\bbT}
+\end{equation}
+where $\omegaunrav{\bbT}$ is the $\omega$-unravelling of $\bbT$.
+It easily follows from \eqref{eq:crux-i} that a \wmso-automaton $\bbA$
+is bisimulation invariant iff $\bbA\equiv \bbA^{\bullet}$, and so 
+Theorem~\ref{t:m1}(1) follows by \eqref{eq:m3} and \eqref{eq:autF}.
+
+\subsection{Overview of paper.}
+In the next section we give a precise definition of the preliminaries required to understand this article. In Section~\ref{sec:onestep} we define the one-step logics that will be used through the paper and give normal forms and syntactic characterizations of their monotone and (co-)continuous fragments. In Section~\ref{sec:aut} we formally define \wmso-automata and show that from every \wmso-formula we can construct an equivalent \wmso-automaton. In Section~\ref{sec:aut-to-formula_wmso} we prove the converse, that is, for every \wmso-automaton we can construct an equivalent \wmso-formula, this finishes the automata characterization of \wmso over tree models. Finally, in Section~\ref{sec:char} we prove the main result of the paper, namely that the fragment $\mucML$ is the bisimulation-invariant fragment of \wmso.
+
+

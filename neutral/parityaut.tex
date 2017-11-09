@@ -1,0 +1,250 @@
+%\section{Parity automata and modal $\mu$-calculi}\label{sec:parityaut}
+
+The purpose of this section is to introduce the parity automata that we will use
+in our proofs, together with the fixpoint languages that are the $\mu$-calculi 
+corresponding to these automata.
+It will be convenient to give a presentation of this framework that is parametric
+in a one-step language $\llang$.
+
+That is, throughout this section we fix a one-step language $\llang$, as defined
+in the previous section.
+We recall that we write $\llang^+(A)$ to denote the fragment of $\llang(A)$ 
+where every predicate $a\in A$ occurs only positively, and we assume that 
+we have isolated fragments $\cont{\llang}{A'}(A)$ and $\cocont{\llang}{A'}(A)$
+consisting of one-step formulas in $\llang(A)$ that are respectively continuous
+and co-continuous in $A' \subseteq A$.
+
+\subsection{Parity automata}
+
+We first recall the definition of a general parity automaton, adapted to this
+setting. 
+
+\begin{definition}[Parity Automata] \label{def:partityaut}
+A \emph{parity automaton} based on the one-step language $\llang$ and alphabet
+$\wp(\props)$, or briefly: an \emph{$\llang$-automaton}, is a tuple $\aut = 
+\tup{A,\tmap,\pmap,a_I}$ such that $A$ is a finite set of states, $a_I \in A$ is
+the initial state, $\tmap: A\times \wp(\props) \to \llang^+(A)$
+is the transition map, and $\pmap: A \to \nat$ is the parity map.
+The class of such automata will be denoted by $\Aut(\llang)$.
+
+Acceptance of a $\props$-transition system $\model = 
+\tup{\moddom,R,\tscolors,s_I}$ by $\aut$ is determined by the \emph{acceptance 
+game} $\agame(\aut,\model)$ of $\aut$ on $\model$. 
+This is the parity game defined according to the rules of the following table.
+\begin{center}
+\small
+\begin{tabular}{|l|c|l|c|} \hline
+Position & Player & Admissible moves & Parity \\
+\hline
+    $(a,s) \in A \times \moddom$
+  & $\eloise$
+  & $\{\val : A \to \wp(R[s]) \mid (R[s],\val) \models \tmap (a, \tscolors(s)) \}$
+  & $\pmap(a)$ 
+\\
+    $\val : A \rightarrow \wp(\moddom)$
+  & $\abelard$
+  & $\{(b,t) \mid t \in \val(b)\}$
+  & $\max(\pmap[A])$
+\\ \hline
+ \end{tabular}
+\end{center}
+%
+$\aut$ \emph{accepts} $\model$ if $\eloise$ has a winning strategy in 
+$\agame(\aut,\model)@(a_I,s_I)$, and \emph{rejects} $\model$ if $(a_I,s_I)$ is 
+a winning position for $\abelard$. 
+We write $\autlang(\aut)$ for the \emph{language} (class of transition systems) 
+recognised by $\aut$ and $\trees(\aut)$ for the \emph{tree language} (class of 
+trees) recognised by $\aut$.
+\end{definition}
+
+% \myparagraphns{Closure under complementation.}
+Many properties of parity automata can already be determined at the one-step
+level.
+An important example concerns the notion of complementation, which will be used
+later in this section.
+
+\begin{definition}
+\label{d:bdual1}
+Two one-step formulas $\varphi$ and $\psi$ are each other's \emph{Boolean dual}
+if for every structure $(D,\val)$ we have $(D,\val) \models \varphi\quad
+\text{iff}\quad (D,\val^{c}) \not\models \psi$, where $\val^{c}$ is the 
+valuation given by $\val^{c}(a) \mathrel{:=} D \setminus \val(a)$, for all $a$.
+%
+A one-step language $\llang$ is \emph{closed under Boolean duals} if for every
+set $A$, each formula $\varphi \in \llang(A)$ has a Boolean dual $\dual{\varphi}
+\in \llang(A)$.
+\end{definition}
+
+Following ideas from~\cite{Muller1987,DBLP:conf/calco/KissigV09}, we can use
+Boolean duals, together with a \emph{role switch} between $\abelard$ and
+$\eloise$, in order to define a negation or complementation operation on 
+automata.
+
+\begin{definition}
+\label{d:caut}
+Assume that, for some one-step language $\llang$, the map $\dual{(-)}$
+provides, for each set $A$, a Boolean dual $\dual{\varphi} \in \llang(A)$ for each
+$\varphi \in \llang(A)$.
+Given $\aut = \tup{A,\tmap,\pmap,a_I}$ in $\Aut(\llang)$ we define its
+\emph{complement} $\dual{\aut}$ as the automaton
+$\tup{A,\dual{\tmap},\dual{\pmap},a_I}$
+where $\dual{\tmap}(a,c) := \dual{(\tmap(a,c))}$, and $\dual{\pmap}(a)
+:= 1 + \pmap(a)$, for all $a \in A$ and $c \in \wp(\props)$.
+\end{definition}
+
+\begin{proposition}
+\label{prop:autcomplementation}
+Let $\llang$ and $\dual{(-)}$ be as in the previous definition.
+For each $\aut \in \Aut(\llang)$ and $\model$ we have that $\dual{\aut}$ accepts
+$\model$ if and only if $\aut$ rejects $\model$.
+\end{proposition}
+
+The proof of Proposition~\ref{prop:autcomplementation} is based on the fact
+that the power of $\eloise$ in $\agame(\dual{\aut},\model)$ is the same
+as that of $\abelard$ in $\agame(\aut,\model)$, as defined in~\cite{DBLP:conf/calco/KissigV09}. As an immediate consequence, one may show that if the
+one-step language $\llang$ is closed under Boolean duals, then the class
+$\Aut(\llang)$ is closed under taking complementation.
+Further on we will use Proposition~\ref{prop:autcomplementation} to show that
+the same may apply to some subclasses of $\Aut(\llang)$.
+
+The automata-theoretic characterisation of $\wmso$ and $\nmso$ will use classes 
+of parity automata constrained by two additional properties: weakness
+and continuity. 
+
+\begin{definition}
+\label{d:wk}
+\label{d:ctwk}
+Let $\llang$ be a one-step language, and let $\bbA = \tup{A,\tmap,\pmap,a_I}$
+be in $\Aut(\llang)$. Write $\ord$ for the reachability relation in $\bbA$, i.e.
+the reflexive-transitive closure of $\{ (a,b) \mid \exists c. b \text{ occurs 
+in }\tmap(a,c)\}$. 
+A \emph{strongly connected $\ord$-component} ($\ord$-SCC) is a subset $M
+\subseteq A$ such that, for every $a,b \in M$ we have $a \ord b$ and $b \ord c$.
+The SCC is called \emph{maximal} (MSCC) when $M\cup\{a\}$ ceases to be a SCC for
+any choice of $a \in A\setminus M$.
+We formulate two requirements on automata from $\Aut(\llang)$:
+\begin{description}
+\item[(weakness)] if $a \ord b$ and $b \ord a$ then $\pmap(a) = \pmap(b)$.
+\item[(continuity)] if $a \ord b$ and $b \ord a$, then for any $c\in C$:
+  \\ if ${\pmap(a)}=1$ then $\tmap(a,c)$ is syntactically continuous in $b$,
+     i.e., $\tmap(a,c) \in \cont{\llang}{b}(A)$;
+  \\ if ${\pmap(a)}=0$ then $\tmap(a,c)$ is syntactically co-continuous in $b$,
+     i.e., $\tmap(a,c) \in \cocont{\llang}{b}(A)$.
+\end{description}
+We call a parity automaton $\aut \in \Aut(\llang)$ \emph{weak} if it satisfies
+\emph{(weakness)}, and \emph{continuous-weak} if it additionally satisfies 
+\emph{(continuity)}.
+The classes of weak and continuous-weak automata are denoted as $\AutW(\llang)$
+and $\AutWC(\llang)$, respectively.
+\end{definition}
+
+Intuitively, weakness forbids an automaton to register non-trivial properties 
+concerning the vertical `dimension' of input trees, whereas continuity expresses
+a constraint on how much of the horizontal `dimension' of an input tree the 
+automaton is allowed to process. 
+In terms of second-order logic, they correspond respectively to quantification 
+over `vertically' finite (i.e. included in well-founded subtrees) and 
+`horizontally' finite (i.e. included in finitely branching subtrees) sets. 
+The conjunction of weakness and continuity thus corresponds to quantification 
+over finite sets. 
+
+\begin{remark}\label{rmk:weak01}
+Any weak parity automaton $\bbA$ is equivalent to a special weak automaton
+$\bbA'$ with $\pmap: A' \to \{0,1\}$. 
+This is because \emph{(weakness)} prevents states of different parity to occur
+infinitely often in acceptance games; so we may just replace any even parity 
+with $0$, and any odd parity with $1$.
+We shall assume such a restricted parity map for weak parity automata.
+\end{remark}
+
+\subsection{$\mu$-Calculi}
+
+\begin{definition}
+Given a one-step language $\llang$, we define the language $\mu\llang$ of the 
+\emph{$\mu$-calculus over $\llang$}  by the following grammar:
+\[
+\varphi ::= q \mid \neg\varphi \mid \varphi\lor\varphi 
+   \mid \nxt{\al}(\varphi_{1},\ldots,\varphi_{n})
+   \mid \mu p. \varphi',
+\]
+where $p,q \in\props$, $\al(a_{1},\ldots,a_{n}) \in \llang$ and $\varphi'$ is 
+monotone in $p$.
+\end{definition}
+
+
+\noindent
+The semantics of this language is given as follows.
+
+\begin{definition}
+Let $\model$ be a transition system.
+The satisfaction relation $\mmodels$ is defined in the standard way, with the 
+following clause for the modality $\nxt{\alpha}$:
+$$
+\model \mmodels \nxt{\al}(\varphi_{1},\ldots,\varphi_{n})
+\quad\text{iff}\quad 
+(R[s_{I}],V_{\overline{\varphi}}) \models \al(a_{1},\ldots,a_{n}),
+$$
+where $V_{\overline{\varphi}}$ is the one-step valuation given by 
+\[
+V_{\overline{\varphi}}(a_{i}) := 
+  \{ t \in R[s_{I}] \mid \model.t \mmodels \varphi_{i}\}.
+\]
+\end{definition}
+
+\btbs
+\item
+give some examples?
+\etbs
+
+We will be specifically interested in two fragments of $\mu\llang$, where the
+use of the fixpoint operator $\mu$ is restricted in certain ways.
+
+\begin{definition}
+Let $\qprops$ be a set  of proposition letters.
+We first define the fragment $\noe{\mu\llang}{\qprops}$ of $\mu\llang$ of 
+formulas that are syntactically \emph{noetherian} in $\qprops$ by the following 
+grammar:
+\begin{equation*}
+   \varphi ::= q
+   \mid \psi
+   \mid \varphi \lor \varphi
+   \mid \varphi \land \varphi
+   \mid \nxt{\al}(\varphi_{1},\ldots,\varphi_{n})
+   \mid \mu p.\phi'
+\end{equation*}
+where $p\in\props$, $q \in \qprops$, $\psi$ is a $\qprops$-free $\MC$-formula,
+and $\phi' \in \noe{\mu\llang}{\qprops\cup\{p\}}$. 
+
+Similarly, we define the fragment $\cont{\mu\llang}{\qprops}$ of 
+$\mu\llang$-formulas that are syntactically \emph{continuous} in $\qprops$ as
+follows:
+\begin{equation*}
+   \varphi ::= q
+   \mid \psi
+   \mid \varphi \lor \varphi
+   \mid \varphi \land \varphi
+   \mid 
+   \nxt{\al}(\varphi_{1},\ldots,\varphi_{k},\psi_{1},\ldots,\psi_{m})
+   \mid \mu p.\phi'
+\end{equation*}
+where $p\in\props$, $q \in \qprops$, $\psi$, $\psi_{i}$ are $\qprops$-free 
+$\MC$-formula, $\al(a_{1},\ldots,a_{k},b_{1},\ldots,b_{m}) \in 
+\cont{\llang}{\ol{a}}(\ol{a},\ol{b})$,
+and $\phi' \in \cont{\mu\llang}{\qprops\cup\{p\}}$. 
+
+The formulas of the fragments $\mu_{D}\llang$ and $\mu_{C}\llang$ are then given
+by the following induction:
+\begin{equation*}
+   \varphi ::= p \mid \lnot \varphi
+    \mid \varphi \lor \varphi
+    \mid  \Diamond \varphi
+    \mid \mu p.\phi'
+\end{equation*}
+where $p \in \props$, and $\phi' \in \noe{\mu\llang}{p}$ for $\mu_{D}\llang$,
+$\phi' \in \cont{\mu\llang}{p}$ for $\mu_{C}\llang$.
+We will refer to $\mu_{D}\llang$ and $\mu_{C}\llang$ as the 
+\emph{alternation-free} and the \emph{continuous} $\mu$-calculus over $\llang$,
+respectively.
+\end{definition}
+
+%%%

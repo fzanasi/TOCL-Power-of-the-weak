@@ -1,0 +1,177 @@
+\subsection{Fixpoints of noetherian maps}
+
+We will now see how to prove Proposition~\ref{p:keyfix}(1), which is the key 
+result that we need to embed alternation-free $\mu$-calculi such as 
+$\mu_{D}\ofoe$ and $\mu_{D}\ML$ into noetherian second-order logic.
+Perhaps suprisingly, this case is slightly more subtle than the characterisation of
+fixpoints of continuous maps.
+
+%We start with an easy observation concerning bundles.
+%
+%\begin{proposition}
+%\label{p:bundle}
+%Let $\model$ be an LTS. If $\mathcal{B}$ is a collection of $s$-bundles, 
+%then $\bigcup \mathcal{B}$ is also an $s$-bundle.
+%\end{proposition}
+
+We start with stating some auxiliary results on monotone functionals.
+The first 
+of these takes care of the right-to-left direction of \eqref{eq:foe-d}; it 
+is proved by a routine transfinite induction argument.
+
+\begin{proposition}
+\label{p:afmc-1}
+Let $F:  \wp(S)\to \wp(S)$ be monotone.
+Then for every subset $X \subseteq S$ it holds that $\LFP. F\rst{X}\subseteq \LFP.F$.
+\end{proposition}
+
+For the other results we use a game-theoretic characterisation of the least 
+fixpoint of such a monotone functional~\cite{Ven08}.
+
+\begin{definition}
+\label{d:unfgame}
+Given a monotone functional $F: \wp(S)\to \wp(S)$ we define the 
+\emph{unfolding game} $\UG_{F}$ as follows:
+\begin{itemize}
+\item at any position $s \in S$, $\eloise$ needs to pick a set $X$ such that 
+$s \in FX$;
+\item at any position $X \in \wp(S)$, $\abelard$ needs to pick an element of 
+$X$
+\item all infinite matches are won by $\abelard$.
+\end{itemize}
+A positional strategy $\ystrat: S \to \wp(S)$ for $\eloise$ in $\UG_{F}$ is 
+\emph{descending} if, for all ordinals $\alpha$,
+\begin{equation}
+\label{eq:dec}
+s \in F^{\alpha+1}(\nada) \text{ implies } \ystrat(s) \sse F^{\alpha}(\nada).
+\end{equation}
+\end{definition}
+
+It is not the case that \emph{all} positional winning strategies for $\eloise$ 
+in $\UG_{F}$ are descending, but the next result shows that there always is one.
+
+\begin{proposition}
+\label{p:unfg}
+Let $F: \wp(S)\to \wp(S)$ be a monotone functional.
+Then
+\\(1) for all $s \in S$, $s \in \win_{\eloise}(\UG_{F})$ iff $s \in \LFP. F$;
+\\(2) if $s \in \LFP. F$, then \eloise has a descending winning strategy in 
+$\UG_{F}@s$.
+\end{proposition}
+
+\begin{proof}
+Point (1) corresponds to \cite[Theorem 3.14(2)]{Ven08}.
+For part (2) one can simply take the following strategy.
+Given $s \in \LFP.F$, let $\alpha$ be the least ordinal such that $s \in 
+F^{\alpha}(\nada)$; it is easy to see that $\alpha$ must be a successor ordinal,
+say $\alpha = \beta + 1$. 
+Now simply put $\ystrat(s) := F^{\beta}(\nada)$.
+\end{proof}
+
+\begin{definition}
+\label{d:str-tree}
+Let $F: \wp(S)\to \wp(S)$ be a monotone functional, let $\ystrat$ be a 
+positional winning strategy for $\eloise$ in $\UG_{F}$, and let $r \in S$. 
+Define $T_{\ystrat,r} \sse S$ to be the set of states in $S$ that are 
+$\ystrat$-reachable in $\UG_{F}@r$.
+This set has a tree structure induced by the map $\ystrat$ itself, where the 
+children of $s \in T_{\ystrat,r}$ are given by the set $\ystrat(s)$; we will
+refer to $T_{\ystrat,r}$ as the \emph{strategy tree} of
+$\ystrat$.
+\end{definition}
+Note that a strategy tree $T_{\ystrat,r}$ will have no infinite paths, since we
+define the notion only for a \emph{winning} strategy $\ystrat$.
+
+
+
+
+
+\begin{proposition}
+\label{p:afmc-2}
+Let $F: \wp(S)\to \wp(S)$ be a monotone functional, let $r \in S$, and let $\ystrat$ 
+be a descending winning strategy for $\eloise$ in $\UG_{F}$.
+Then
+\begin{equation}
+\label{eq:afmc3}
+r \in \LFP. F \text{ iff } r \in \LFP. F\rst{T_{\ystrat,r}}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Let $F,r$ and $\ystrat$ be as in the formulation of the proposition.
+The direction from right to left in \eqref{eq:afmc3} is immediate by
+Proposition~\ref{p:afmc-1}.
+
+For the opposite direction, it clearly suffices to show that for all ordinals 
+$\alpha$ we have
+\begin{equation}
+\label{eq:unf1}
+F^{\al}(\nada) \cap T_{\ystrat,r} \sse F\rst{T_{\ystrat,r}}^{\alpha}(\nada).
+\end{equation}
+We will prove \eqref{eq:unf1} by transfinite induction.
+The base case, where $\alpha = 0$, and the inductive case where $\alpha$ is a 
+limit ordinal are straightforward, so we focus on the case where $\alpha$ is a 
+successor ordinal, say $\alpha = \beta +1$.
+Take an arbitrary state $u \in F^{\beta+1}(\nada) \cap T_{\ystrat,r}$, then we 
+find $\ystrat(u) \sse F^{\beta}(\nada)$ by our assumption \eqref{eq:dec}, and 
+$\ystrat(u) \sse T_{\ystrat,r}$ by definition of $T_{\ystrat,r}$.
+Then the induction hypothesis yields that 
+$\ystrat(u) \sse F\rst{T_{\ystrat,r}}^{\beta}(\nada)$, and so we have 
+$\ystrat(u) \sse F\rst{T_{\ystrat,r}}^{\beta}(\nada) \cap T_{\ystrat,r}$.
+But since $\ystrat$ is a positional winning strategy, and $u$ is a winning 
+position for $\eloise$ in $\UG_{F}$ by Claim~\ref{p:unfg}(i), $\ystrat(u)$ is a
+legitimate move for $\eloise$, and so we have $u \in F(\ystrat(u))$.
+Thus by monotonicity of $F$ we obtain $u \in 
+F(F\rst{T}^{\beta}(\nada) \cap T_{\ystrat,r})$, and since $u \in T_{\ystrat,r}$ 
+by assumption, this means that $u \in F\rst{T_{\ystrat,r}}^{\beta+1}(\nada)$ as 
+required.
+\end{proof}
+
+
+
+
+
+
+
+We now turn to the specific case where $F$ is induced by some least fixpoint 
+formula $\phi(p) \in \mu_{D}\foe{p}$ on some LTS. Notice that the evaluation game for the modal $\mu$ calculus can be easily adapted to $\mu_{D}\foe$ and provide a corresponding Adequacy Theorem (Proposition \ref{p:unfold=evalgame}). In particular, we would have that 
+$\eloise$ has a winning strategy in  $\egame(\mu p.\phi(p),\model)@(\mu p.\phi(p),s)$ if and only if $s \in \mng{\mu p.\phi(p)}^{\model}$, with $\phi(p) \in \mu_{D}\foe{p}$.
+
+\begin{proofof}{Proposition~\ref{p:keyfix}(1)}
+%    
+%\btbs
+%\item
+%the argument below needs to be thoroughly checked.
+%\etbs
+Let $\model$ be an LTS and $\phi(p) \in \mu_{D}\ofoe{p}$. 
+
+The right-to-left direction of \eqref{eq:foe-d} being proved by Proposition \ref{p:afmc-1}, we check the left-to-right direction.
+
+Given  a winning strategy   $\ystrat$ for $\eloise$ in $\egame(\mu p. \phi,\model)@(\mu p. \phi,s)$, 
+let $B(\ystrat)$ be the set of all finite $\ystrat$-guided, possibly partial, matches in  $\egame(\psi,\model)@(\psi,s)$ in which a position of the form $(\nu q. \psi, r)$ is not visited.
+
+\begin{claim}\label{p:strategybundledEv}
+Let $B^\model(\ystrat)$ be the projection of $B(\ystrat)$ on $S$, that is the set of all paths in $\model$ that are a projection on $S$ of a $\ystrat$-guided (partial) match in $B(\ystrat)$. Then $B^\model(\ystrat)$ is a bundle.
+\end{claim}
+\begin{pfclaim}
+Assume towards a contradiction that $B^\model(\ystrat)$ contains an  infinite ascending chain $\pi_{0} \sqsubset \pi_{1} \sqsubset 
+\cdots.$. Let $\pi$ its limit and consider the set of elements in $B(\ystrat)$ whose projection on $S$ is a prefix of $\pi$. 
+By  K\"{o}nig's Lemma, this set contains an infinite ascending chain whose limit $\pi$ is an infinite $\ystrat$-guided match  in $\egame(\mu p. \phi,\model)$ starting at $(\mu p. \phi,s)$. By definition of $B(\ystrat)$,  the highest bound variables of $\mu p. \phi$ that get unravelled infinitely often
+in $\pi$ is a $\mu$-variable, meaning that the match is winning for $\abelard$, a contradiction.
+\end{pfclaim}
+%
+\noindent
+
+Now, let $F := \phi_{p}^{\bbS}$ be the monotone functional defined by $\phi(p)$. It turns out that
+
+\begin{claim}\label{p:unfold=evalgame2}
+%Player $\exists$ has a winning strategy $\chi$ in $\UG_F@(s,\phi(p))$ if and only she has winning strategy $\chi'$ in 
+%$\egame(\mu p.\phi,\bbS)@(s, \mu p.\phi)$. 
+%Moreover it holds that each $r \in  T_{\chi,s}$ lies in some path in $B^\model(\chi')$.
+Assume $\exists$ has a winning strategy $\chi$ in $\UG_F@(s,\phi(p))$. Then she has winning strategy $\chi'$ in 
+$\egame(\mu p.\phi,\bbS)@(s, \mu p.\phi)$ such that each point in $T_{\chi,s}$ lies in some path belonging to $B^\model(\chi')$.
+\end{claim}
+
+Hence, assume $s \in \mng{\mu p.\phi}^{\model}$. This means that $s \in  LFP. F$. By Proposition~\ref{p:unfg},  $\eloise$ has a descending winning strategy $\chi$ in 
+$\UG_{F}@s$. By Claims \ref{p:unfold=evalgame2} and \ref{p:strategybundledEv}, the set $T_{\chi, s}$ is noetherian.   We therefore conclude by applying  Proposition~\ref{p:afmc-2}.
+\end{proofof}

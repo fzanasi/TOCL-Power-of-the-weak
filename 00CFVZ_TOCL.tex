@@ -22,31 +22,24 @@
 %ISSN
 \issn{1234-56789}
 
-\usepackage{amsfonts}
-\usepackage{xspace}
-\usepackage{amssymb}
-\usepackage{amsmath}
+%%% packages
+\usepackage{amsfonts,amssymb,amsmath,stmaryrd}
+\usepackage{enumerate,multicol,array,eqparbox}
+\usepackage{xspace,xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\usepackage[shortlabels]{enumitem}
+\usepackage[e]{esvect}
 \usepackage[T1]{fontenc}
 
 \newtheorem{fact}{Fact}
 \newtheorem{claim}{Claim}
 
-\usepackage[hidelinks]{hyperref}
 
-\usepackage{enumerate}
-\usepackage{multicol}
-\usepackage{array}
-\usepackage{eqparbox}
-\usepackage{tkz-graph}
-
-
-\usepackage{enumerate,xspace,stmaryrd,xcolor}
-\usepackage[shortlabels]{enumitem}
-\usepackage[e]{esvect}
-
-\usepackage{tikz}
-\usetikzlibrary{arrows,positioning}
-\usetikzlibrary{automata,backgrounds,petri}
+% \usepackage{tkz-graph}
+% \usepackage{tikz}
+% \usetikzlibrary{arrows,positioning}
+% \usetikzlibrary{automata,backgrounds,petri}
 
 \usepackage{fixme}
 %\usepackage[author=anonymous]{fixme}
@@ -56,11 +49,20 @@
 \FXRegisterAuthor{yv}{ayv}{YV}
 
 \input{commands.tex}
-
-%\input{commands-yv.tex}
 \input{commands-fz.tex}
-%\input{commands-fc.tex}
-% Document starts
+
+%\inputonly{%
+%section4/pauto-parityaut,
+%section4/aut-to-formula,
+%wmso-automata/automatawmso.tex,
+%nmso-automata/automatanmso.tex,
+%expresso/expr,
+%}
+
+%%%%
+%%%% BEGIN DOCUMENT
+%%%%
+
 \begin{document}
 
 % Page heads
@@ -103,20 +105,6 @@ BLABLA
  <concept_significance>500</concept_significance>
 </ccs2012>
 \end{CCSXML}
-% \begin{CCSXML}
-% <ccs2012>
-% <concept>
-% <concept_id>10003752.10003766</concept_id>
-% <concept_desc>Theory of computation~Formal languages and automata theory</concept_desc>
-% <concept_significance>500</concept_significance>
-% </concept>
-% <concept>
-% <concept_id>10003752.10003790</concept_id>
-% <concept_desc>Theory of computation~Logic</concept_desc>
-% <concept_significance>500</concept_significance>
-% </concept>
-% </ccs2012>
-% \end{CCSXML}
 
 \ccsdesc[500]{Theory of computation~Logic}
 \ccsdesc[500]{Theory of computation~Formal languages and automata theory}
@@ -133,21 +121,14 @@ BLABLA
 \maketitle
 
 
-%%%%
-
-\clearpage
-
-\tableofcontents
-
-\clearpage
-
+%%%% \tableofcontents
 
 %%%%
 %%%% INTRODUCTION
 %%%%
 
 \section{Introduction}\label{sec:intro}
-\input{intro/introduction}
+\input{neutral/introduction}
 
 \clearpage
 
@@ -182,80 +163,44 @@ BLABLA
 
 \clearpage
 
-
-
-
-
-%%%%
-%%%% ONE STEP LOGICS
-%%%%
-\section{One-step logics, normal forms and continuity}\label{sec:onestep}
-\input{oslogics/os-ss-intro}
-\subsection{Normal forms}\label{subsec:normalforms}
-\input{oslogics/os-ss-normalforms}
-\subsection{One-step monotonicity}\label{subsec:one-stepmonot}
-\input{oslogics/os-ss-monotonicity}
-\subsection{One-step continuity}\label{subsec:one-stepcont}
-\input{oslogics/os-ss-continuity}
-\subsection{Dual fragments}\label{subsec:one-stepduals}
-\input{oslogics/os-ss-duals}
-
+%%%% SECTION 3: ONE STEP LOGIC
+\section{One-step logic and some of its model theory}\label{sec:onestep}
+\input{oslogics/os}
 \clearpage
 
-%%%%
-%%%% AUTOMATA
-%%%%
-
-\section{Parity automata}\label{sec:parityaut}
-\input{pauto/pauto-parityaut}
-
-
-\section{Automata Characterisation of $\wmso$}\label{sec:autwmso}
-
-\input{pauto/automatawmso.tex}
-
-\section{Automata Characterisation of $\nmso$}\label{sec:autnmso}
-
-\input{pauto/automatanmso.tex}
-
-
-
+%%%% SECTION 4: AUTOMATA AND MODAL mu-CALCULI
+\section{Parity automata and modal $\mu$-calculi}\label{sec:parityaut}
+\input{neutral/parityaut}
+\input{neutral/aut-to-formula}
 \clearpage
 
-%%%%
-%%%% EXPRESSIVENESS
-%%%%
+%%%% SECTION 5: AUTOMATA FOR WMSO
+\section{Automata for $\wmso$}\label{sec:autwmso}
+\input{neutral/wmso-automata.tex}
+\clearpage
+
+%%%% SECTION 6: AUTOMATA FOR NMSO
+\section{Automata for $\nmso$}\label{sec:autnmso}
+\input{neutral/nmso-automata.tex}
+\clearpage
+
+%%%% SECTION 7: FROM MFL TO MSO
+\section{Fixpoint operators and second-order quantifiers}
+\input{neutral/mu2so.tex}
+\input{neutral/fixcont}
+\clearpage
+\input{neutral/fixnoet}
+\clearpage
+
+%%%% SECTION 8: EXPRESSIVENESS
 \section{Expressiveness modulo bisimilarity}\label{sec:expresso}
-\input{expresso/intro}
-\subsection{From modal languages to second order languages}\label{subsec:mltwoso}
-\input{expresso/ML2SO}
-\subsection{From second order languages to modal languages}
-
-
-
-\subsubsection{One-step translations}\label{pinvariant-fragment}
-\input{expresso/pinvariant-fragment}
-
-\subsubsection{From automata to formulae}\label{aut-to-formula}
-\input{expresso/aut-to-formula}
+\input{neutral/expr}
 
 
 %\clearpage
 % Bibliography
 \bibliographystyle{ACM-Reference-Format-Journals}
 \bibliography{logic}
-
-
-\clearpage
-
-
-\appendix
-
-\section{Proofs of Section \ref{sec:aut_to_formulas_nmso}}\label{app:nmso-aut-to-formulas}
-\input{appendix/Appendix-nmso-aut-to-formulas}
-
-\section{Proofs of Section \ref{subsec:mltwoso}}\label{app:ML2SO}
-\input{appendix/Appendix-ML2SO}
 
 % History dates
 \received{February 2017}{XXX}{XXX}

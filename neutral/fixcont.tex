@@ -1,0 +1,80 @@
+% \newpage
+
+\subsection{Fixpoints of continuous maps}
+
+It is well-known that continuous functionals are \emph{constructive}.
+That is, if we construct the least fixpoint of a continuous functional $F: 
+\wp(S) \to \wp(S)$ using the ordinal approximation $\nada, F\nada, F^2\nada, 
+\ldots, F^{\al}\nada, \ldots$, then we reach convergence after at most $\omega$
+many steps, implying that $\LFP. F = F^{\omega}\nada$.
+We will see now that this fact can be strengthened to the following observation,
+which is the crucial result needed in the proof of Proposition~\ref{p:keyfix}.
+
+\begin{theorem}
+\label{t:fixcont}
+Let $F: \wp(S)\to \wp(S)$ be a continuous functional.
+Then for any $s \in S$:
+\begin{equation}
+\label{eq:fixcont}
+s \in \LFP. F \text{ iff }
+s \in \LFP.F\rst{X}, \text{ for some finite } X \subseteq S.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The direction from right to left of \eqref{eq:fixcont} can be proved by a 
+straightforward argument.
+Clearly, by definition of $F\rst{X}$ it holds that $F\rst{X}(U) \subseteq F(U)$, 
+for all subsets $U \subseteq X$.
+Then a routine proof by transfinite induction shows that 
+$(F\rst{X})^{\alpha}(\nada) \subseteq F^{\alpha}(\nada)$, for all ordinals 
+$\alpha$.
+But from this it is immediate that $\LFP.F\rst{X} \subseteq \LFP. F$.
+
+For the opposite direction of \eqref{eq:fixcont} a bit more work is needed.
+Assume that $s \in \LFP. F$; we claim that there are sets $U_{1},\ldots,U_{n}$,
+for some $n \in \omega$, such that $s \in U_{n}$, $U_{1} \sse_{\omega} F(\nada)$,
+and $U_{i+1} \sse_{\omega} F(U_{i})$, for all $i$ with $1 \leq i < n$.
+
+To see this, first observe that since $F$ is continuous, we have $\LFP. F = 
+F^{\omega}(\nada) = \bigcup_{n\in\omega}F^{n}(\nada)$, and so we may take $n$ to
+be the least natural number such that $s \in F^{n}(\nada)$.
+By a downward induction we now define sets $U_{n},\ldots,U_{1}$, with $U_{i} 
+\sse F^{i}(\nada)$ for each $i$. 
+We set up the induction by putting $U_{n} \mathrel{:=} \{ s \}$, then $U_{n}
+\sse F^{n}(\nada)$ by our assumption on $n$.
+For $i<n$, we define $U_{i}$ as follows.
+Using the inductive fact that $U_{i+1} \sse_{\omega} F^{i+1}(\nada) = 
+F(F^{i}(\nada))$, it follows by continuity of $F$ that for each $u \in U_{i+1}$
+there is a set $V_{u} \sse_{\omega} F^{i}(\nada)$ such that $u \in F(V_{u})$.
+We then define $U_{i} \mathrel{:=} \bigcup \{ V_{u} \mid u \in U_{i+1} \}$,
+so that clearly $U_{i+1} \sse_{\omega} F(U_{i})$ and $U_{i} \sse_{\omega}
+F^{i}(\nada)$.
+Continuing like this, ultimately we arrive at stage $i=1$ where we find
+$U_{1} \sse F(\nada)$ as required.
+
+Finally, given the sequence $U_{n},\ldots,U_{1}$, we define 
+\[
+X \mathrel{:=} \bigcup_{0<i\leq n} U_{i}.
+\]
+It is then straightforward to prove that $U_{i} \sse \LFP. F\rst{X}$, for each 
+$i$ with $0<i\leq n$, and so in particular we find that $s \in U_{n} \sse \LFP.
+F\rst{X}$.
+This finishes the proof of the implication from left to right in 
+\eqref{eq:fixcont}.
+\end{proof}
+
+\noindent
+As an almost immediate corollary of this result we obtain the second part of 
+Proposition~\ref{p:keyfix}.
+
+\begin{proofof}{Proposition~\ref{p:keyfix}(2)}
+Take an arbitrary formula $\mu p. \phi \in \mu_{C}\ofoei$, then by definition 
+we have $\phi \in \cont{\mu_{C}\ofoei}{p}$.
+But it follows from a routine inductive proof that every formula $\psi \in 
+\cont{\mu_{C}\ofoei}{\qprops}$ is continuous in each variable in $\qprops$.
+Thus $\phi$ is continuous in $p$, and so the result is immediate by 
+Theorem~\ref{t:fixcont}.
+\end{proofof}
+
+% \newpage
