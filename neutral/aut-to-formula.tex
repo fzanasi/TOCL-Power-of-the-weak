@@ -1,4 +1,4 @@
-% !TEX root = main-wmso.tex
+% !TEX root = ../00CFVZ_TOCL.tex
 \subsection{Automata and formulas}
 
 \btbs
@@ -30,17 +30,15 @@ BELOW IS AN EARLIER PROOF OF A SPECIAL CASE.
 
 \begin{proof}
 The argument  is a refinement of the standard proof showing that any automaton 
-$\aut$ from $\Aut(\ofo)$ can be translated into an equivalent $\mu$-formula 
-$\xi_\aut$ (cf. e.g. \cite[Section 6]{Ven08}), and it is essentially a special case of the argument proving Theorem \ref{thm:wmso_autofor}.
-
-
-From now on, we always assume that a formula $\tmap(a,c)$ is in normal form. 
+$\aut$ from $\Aut(\llang)$ can be translated into an equivalent $\mu$-formula 
+$\xi_\aut$ (cf. e.g. \cite[Section 6]{Ven08}). 
+%From now on, we always assume that a formula $\tmap(a,c)$ is in normal form. 
 Following~\cite{Ven08}, we introduce another type of automata, called $(\prop,X)$-automata, which operate on $\p{(\prop \cup X)}$-trees.
-They differ from automata whose one-step language is defined over predicates in $(A \cup X)$ in that\footnote{Parity automata based on $\ofo$ are thus simply $(\prop,\emptyset)$-automata.}
+They are defined as parity automata on the one-step language $\llang(A \cup X)$ (so formulas may have predicates in $A \cup X$) and alphabet $\wp{\prop}$, additionally satisfying the following two conditons.
 \begin{itemize}
 \item Monadic predicate letters from $X$ can occur in the scope of a %existential
 quantifier and only there, meaning that $(\prop,X)$-automata have transition 
-$\tmap(a,c) \in \ofo^+(A\cup X)$
+$\tmap(a,c) \in \llang^+(A\cup X)$
 %
 \item 
 The transition function is uniquely determined by the restriction of the 
@@ -48,13 +46,14 @@ colouring to $\prop$, that is, for every $a \in A$, and $c_1, c_2 \in C$, if $c_
 \end{itemize}
 We also assume that
 for every $x \in X$ there is a unique $a \in A$ and an unique $c \in C$ such that $x$ occurs in $\tmap(a,c)$.
-The notion of acceptance is defined as expected, the only difference with being that during the acceptance game \'Eloise has to provide a valuation only for predicates in $A$ making formula given by the transition function true. It is then enough to prove the following claim.
+The notion of acceptance is defined as expected, the only difference with being that during the acceptance game player $\exists$ has to provide a valuation only for predicates in $A$ making formula given by the transition function true. Observe that when $X = \emptyset$ we recover the standard notion of $\llang$-automata given according to Definition \ref{def:partityaut}. %According to this definition, observe that standard parity automata, i.e. those defined on  a one-step language $\llang$ with predicates in $A$ and on alphabet $\wp{\prop}$, are simply $(\prop,\emptyset)$-automata. 
+In order to complete our proof, it is then enough to show the following claim.
 \begin{claimfirst}\label{c:1}
-Let $\aut$ be a $(\prop,X)$-automaton. Then, there is an effective procedure that associates to $\aut$ a formula $\xi_\aut \in \MC$ such that:
+Let $\aut$ be a $(\prop,X)$-automaton. Then, there is an effective procedure that associates to $\aut$ an equivalent formula $\xi_\aut \in \mu\llang$ such that:
 \begin{equation}\label{eq:c1}
 \xi_\aut \in 
-\begin{cases}\AFMC &\text{ if }\aut \in \AutW(\ofo) \\
-\contAFMC &\text{ if }\aut \in \AutWC(\ofo) 
+\begin{cases}\mu_{D}\llang &\text{ if }\aut \in \AutW(\llang) \\
+\mu_{C}\llang &\text{ if }\aut \in \AutWC(\llang) 
 .
 \end{cases}\end{equation}
 Moreover all occurrences in $\xi_\aut$ of variables in $X$ are positive.
@@ -71,9 +70,9 @@ Without loss of generality, we can assume that:
 $\{c \in A \mid a \leadsto c, c \prec a\}  \cap \{c \in A \mid b \leadsto c, c \prec b\}  = \emptyset$ whenever $a,b$ are in the same SCC, with $a\neq b$.
 \end{itemize}
 
-Given a $(\prop,X)$-automaton $\aut$, we are now going to define a function $\delta_\aut: A \to \ML (A \cup X \cup \prop)$
+Given a $(\prop,X)$-automaton $\aut$, we are now going to define a function $\delta_\aut: A \to \llang (A \cup X \cup \prop)$
 %\fcwarning{one-step ML undefined} 
-that assigns to each state $a$ of $\aut$ a modal formula $\delta_\aut(a)$ over  $A \cup X \cup \prop$ representing all possible transitions from $a$ in the modal language.  
+that assigns to each state $a$ of $\aut$ a formula $\delta_\aut(a)$ over $\llang(A \cup X \cup \prop)$ representing all possible transitions from $a$ in the one-step language.  
 
 Let $c \in C$, and assume $\Delta(a,c)$ is in positive basic form $\bigvee \posdbnfofo{\Sigma}$. We define a first translation $TR_1$ taking as argument $\Delta(a,c)$ and giving as result a formula from the (guarded fragment of) first-order logic over $A \cup X \cup \prop$ as follows. %Assume $c \cap P= \{q_{c_1}, \dots, q_{c_\ell}\}$.
 With every disjunct
@@ -93,7 +92,7 @@ $$
 \fcwarning{Maybe better to define this directly}
 Let $TR_3(\Delta(a,c))= \bigwedge (c \cap \prop) \land \bigwedge_{p \in \prop \setminus c} \lnot p \land \bigvee TR_2(\posdbnfofo{\Sigma})$.
  The modal formula $\delta_\aut(a)$ is then defined as
-
+\marginpar{FZ: how we define $\delta_\aut(a)$ without a normal form for $\Delta(a,c)$?}
  \[
  \bigvee_{c \in C} TR_3(\Delta(a,c)).
  \]
@@ -106,7 +105,7 @@ Moreover, if $\aut$ satisfies continuity, it holds that $\delta_\aut(a)$ is cont
 
 A modal automaton over $\prop$ is an automaton $ \tup{A, \delta, \pmap, a_I}$ such that $\delta : A \to \ML^+ (A)$, where $\ML^+ (A)$ is the set of all modal formulas over propositions $A \cup \prop$ such that elements from $A$ appear only positively.
 The acceptance game associated with such an automaton and a tree $\model$ is determined by the (symmetric) acceptance game defined according to the rules of Table~\ref{symmetric_modal_game}.
-This means that we can equivalently see the automaton $\aut$ as a modal automaton $\tup{A, \delta_\aut, \pmap, a_I}$ whose transition function satisfies the weakness condition, and also continuity when $\aut$ is weak-continuous. Thus, from now on we see $\aut$ as the equivalent modal automaton we have just described.%\fcwarning{Define $n_A$}
+This means that we can equivalently see the automaton $\aut$ as a modal automaton $\tup{A, \delta_\aut, \pmap, a_I}$ whose transition function satisfies the weakness condition, and also continuity when $\aut$ is weak-continuous. Thus, from now on we see $\aut$ as the equivalent modal automaton we have just described.
 
 \begin{table}[h]
   \centering
@@ -143,7 +142,7 @@ In the first case, $A=\{a_I\}$ and $\aut$ is equivalent to $\xi_\aut:=\delta_\au
 
 For the second case, let us assume that $\pmap(a_I)=1$, the case when it is $0$ being, mutatis mutandis, the same.
 Let $A=\{a_0, \dots, a_\ell\}$, and $a_I=a_\ell$.
-Notice that when $\aut$ is a weak modal automaton satisfying the continuity condition, given $a,b \in A$, if $b$ occurs in $\delta_\aut(a)$, then $b$ is only in the scope of $\Diamond$ operator. 
+Notice that when $\aut$ is a weak modal automaton {\color{red} satisfying the continuity condition, given $a,b \in A$, if $b$ occurs in $\delta_\aut(a)$, then $b$ is only in the scope of $\Diamond$ operator.\marginpar{FZ: How to generalise this?}} 
 We can now see the automaton $\bbA$
 as a system of modal equations, and by applying the standard inductive procedure \emph{solves} this system of equations and
 construct the least fixpoint formula $\xi_\aut$ equivalent to $\aut$, 
@@ -171,7 +170,7 @@ Notice that:
 \end{itemize}
  We can therefore deduce that
  $\xi_\aut= \xi_{M}[a_1\mapsto\xi_{1}, \dots, a_\ell\mapsto\xi_{\ell}]$
-  %\in \contAFMC$
+  %\in \mu_{C}\llang$
 also satisfies Equation \ref{eq:c1}, and that each variable from $X$ occurs positively in $\xi_\aut$.
 
  We verify that $\model \mmodels \xi_{M}[a_1\mapsto\xi_{1}, \dots, a_\ell\mapsto\xi_{\ell}]$ iff $\model \in \trees(\aut)$, for every model $\model$.
