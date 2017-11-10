@@ -163,14 +163,13 @@ noetherian, as the two-sorted construct does.
 We can now conclude one direction of the automata characterisation of $\nmso$.
 
 \begin{lemma}\label{PROP_noet_projection}
-For each $\nmso$-automaton $\aut$ on alphabet $\p (\prop \cup \{p\})$,
-\marginpar{YV: problem?}
-we have that
+For each $\nmso$-automaton $\aut$ on alphabet $\p (\prop \cup \{p\})$, let $\aut^{\noet}$ be its noetherian construct.
+We have that
 $$\trees({{\exists} p}.\aut) \ \equiv\
-{{\noetexists} p}.\trees(\aut).
+{{\noetexists} p}.\trees(\aut^{\noet}).
 $$
 \end{lemma}
-\begin{proof} The argument is the same as for $\wmso$-automata (Lemma \ref{PROP_fin_projection}). As in that proof, the inclusion from left to right relies on the simulation result (Theorem \ref{PROP_facts_noetConstr}): because $\aut$ can be assumed to be two-sorted, ${{\exists} p}.\aut$ is two-sorted too: its non-deterministic mode can be used to guess a noetherian $p$-variant of any accepted tree. \end{proof}
+\begin{proof} The argument is the same as for $\wmso$-automata (Lemma \ref{PROP_fin_projection}). As in that proof, the inclusion from left to right relies on the simulation result (Theorem \ref{PROP_facts_noetConstr}): ${{\exists} p}.\aut^{\noet}$ is two-sorted and its non-deterministic mode can be used to guess a noetherian $p$-variant of any accepted tree. \end{proof}
 
 \begin{proof}[of Theorem \ref{t:nmsoauto}] As for its $\wmso$-counterpart Theorem \ref{t:wmsoauto}, the proof is by induction on $\varphi \in \nmso$. The boolean inductive cases are handled by the $\nmso$-versions of Lemma \ref{t:cl-dis} and \ref{t:cl-cmp}. The projection case follows from Lemma~\ref{PROP_noet_projection}.
 \end{proof} 

@@ -343,21 +343,20 @@ construct of $\aut$ over $p$}.
 
 
 \begin{lemma}\label{PROP_fin_projection} 
-For each $\wmso$-automaton $\aut$ on alphabet $\p (\prop \cup \{p\})$, 
-\marginpar{YV: problem?}
+For each $\wmso$-automaton $\aut$ on alphabet $\p (\prop \cup \{p\})$, let $\aut^{\fin}$ be its finitary construct. We have that
 $$\trees({{\exists} p}.\aut) \equiv
-{{\finexists} p}.\trees(\aut).$$
+{{\finexists} p}.\trees(\aut^{\fin}).$$
 \end{lemma}
 
 \begin{proof}
-First of all, by Theorem \ref{PROP_facts_finConstrwmso} we can assume that $\aut$ is two-sorted, i.e. $\aut = (\aut')^{\fin} = \tup{A^{\fin}, \tmap^{\fin},\pmap^{\fin},a_I^{\fin}}$ for some $\wmso$-automaton $\aut' = \tup{A,\tmap,\pmap, a_I}$. What we need to show is that for any tree $\bbT = \tup{T,R,\V \: \prop \to \pw T,s_I}$:
-$${{\exists} p}.\aut \text{ accepts } \bbT \text{ iff } \text{there is a finite }p \text{ -variant }\bbT' \text{of } \bbT \text{  such that } \aut \text{  accepts } \bbT'.$$
-For direction from left to right, we first observe that the properties stated by Theorem~\ref{PROP_facts_finConstrwmso}, which hold for $\aut$ by assumption, by construction hold for ${{\exists} p}.\aut$ as well. Thus we can assume that the given winning strategy $f$ for $\eloise$ in $\mc{G_{\exists}} = \mc{A}({\finexists p}.\aut,\bbT)@(a_I^{\fin},s_I)$ is functional and finitary in $\shA$. Functionality allows us to associate with each node $s$ either none or a unique state $Q_s \in \shA$ such that $(Q_s,s)$ is winning for $\eloise$. We now want to isolate the nodes that $f$ treats ``as if they were labeled with $p$''. For this purpose, let $\val_{s}$ be the valuation suggested by $f$ from a position $(Q_s,s) \in \shA \times T$. As $f$ is winning, $\val_{s}$ makes $\tmapProj(Q,\tscolors(s))$ true in $\R{s}$. We define a $p$-variant $\bbT' = \tup{T,R,\V' \: \prop\cup\{p\} \to \pw T,s_I}$ of $\bbT$ by coloring with $p$ all nodes in the following set:
+Unraveling definitions, we need to show that for any tree $\bbT = \tup{T,R,\V \: \prop \to \pw T,s_I}$:
+$${{\exists} p}.\aut^{\fin} \text{ accepts } \bbT \text{ iff } \text{there is a finite }p \text{ -variant }\bbT' \text{of } \bbT \text{  such that } \aut \text{  accepts } \bbT'.$$
+For direction from left to right, by the equivalence between $\aut$ and $\aut^{\fin}$ it suffices to show that if ${{\exists} p}.\aut^{\fin}$ accepts $\bbT$ then there is a finite $p$-variant $\bbT'$ of $\bbT$ such that $\aut^{\fin}$ accepts $\bbT'$. First, we first observe that the properties stated by Theorem~\ref{PROP_facts_finConstrwmso}, which hold for $\aut^{\fin}$ by assumption, by construction hold for ${{\exists} p}.\aut^{\fin}$ as well. Thus we can assume that the given winning strategy $f$ for $\eloise$ in $\mc{G_{\exists}} = \mc{A}({\finexists p}.\aut^{\fin},\bbT)@(a_I^{\fin},s_I)$ is functional and finitary in $\shA$. Functionality allows us to associate with each node $s$ either none or a unique state $Q_s \in \shA$ such that $(Q_s,s)$ is winning for $\eloise$. We now want to isolate the nodes that $f$ treats ``as if they were labeled with $p$''. For this purpose, let $\val_{s}$ be the valuation suggested by $f$ from a position $(Q_s,s) \in \shA \times T$. As $f$ is winning, $\val_{s}$ makes $\tmapProj(Q,\tscolors(s))$ true in $\R{s}$. We define a $p$-variant $\bbT' = \tup{T,R,\V' \: \prop\cup\{p\} \to \pw T,s_I}$ of $\bbT$ by coloring with $p$ all nodes in the following set:
  \begin{equation}\label{eq:X_p}
 % \nonumber to remove numbering (before each equation)
    X_p\ :=\ \{s \in T\mid (\R{s},\widetilde{\val}_{s}) \models \tmap^{\f}(Q_s,\tscolors(s)\cup\{p\})\}.
 \end{equation}
-The fact that $f$ is finitary in $\shA$ guarantees that $X_p$ is finite, whence $\bbT'$ is a finite $p$-variant. It remains to show that $\aut$ accepts $\bbT'$: we claim that $f$ itself is also winning for $\eloise$ in $\mc{G} = (\aut,\bbT')@(a_I,s_I)$. In order to see that, let us construct in stages an $f$-guided match $\pi^{2S}$ of $\mc{G}$ and an $f$-guided shadow match $\tilde{\pi}$ of $\mc{G_{\exists}}$. The inductive hypothesis we want to bring from one round to the next is that the same basic position occurs in both matches, as this suffices to prove that $f$ is winning for $\eloise$ in $\mc{G}$.
+The fact that $f$ is finitary in $\shA$ guarantees that $X_p$ is finite, whence $\bbT'$ is a finite $p$-variant. It remains to show that $\aut^{\fin}$ accepts $\bbT'$: we claim that $f$ itself is also winning for $\eloise$ in $\mc{G} = (\aut^{\fin},\bbT')@(a_I,s_I)$. In order to see that, let us construct in stages an $f$-guided match $\pi^{2S}$ of $\mc{G}$ and an $f$-guided shadow match $\tilde{\pi}$ of $\mc{G_{\exists}}$. The inductive hypothesis we want to bring from one round to the next is that the same basic position occurs in both matches, as this suffices to prove that $f$ is winning for $\eloise$ in $\mc{G}$.
 
 First we consider the case of a basic position $(Q,s) \in A^{\fin} \times T$ where $Q \in \shA$. By assumption $f$ provides a marking $\widetilde{m}_s$ that makes $\tmapProj(Q,\V(s))$ true in $\R{s}$. Thus $\widetilde{m}_s$ verifies either $\tmap^{\fin}(Q,\V(s))$ or $\tmap^{\fin}(Q,\V(s)\cup \{p\})$. Now, the match $\pi^{\fin}$ is played on the $p$-variant $\bbT'$, where the labeling $\V'(s)$ is decided by the membership of $s$ to $X_p$. According to \eqref{eq:X_p}, if $\widetilde{m}_s$ verifies $\tmap^{\fin}(Q,\V(s)\cup \{p\})$ then $s$ is in $X_p$, meaning that it is labeled with $p$ in $\bbT'$, i.e. $\V'(s) = \V(s)\cup \{p\}$. Therefore $\widetilde{m}_s$ also verifies $\tmap^{\fin}(Q,\V'(s))$ and it is a legitimate move for $\eloise$ in match $\pi^{\fin}$. In the remaining case, $\widetilde{m}_s$ verifies $\tmap^{\fin}(Q,\V(s))$ but falsifies $\tmap^{\fin}(Q,\V(s)\cup \{p\})$, implying by definition that $s$ is not in $X_p$. This means that $s$ is not labeled with $p$ in $\bbT'$, i.e. $\V'(s) = \V(s)$. Thus again $\widetilde{m}_s$ verifies $\tmap^{\fin}(Q,\V'(s))$ and it is a legitimate move for $\eloise$ in match $\pi^{\fin}$.
 
@@ -381,7 +380,7 @@ Then $g'$ is defined in terms of what $g$ suggests from those positions.
 
  Point ($\ddag.2$) describes how we want the match $\pi'$ to be
  played on a $p$-free subtree: as any node that one might encounter has the same label in $\bbT$ and $\bbT'$,
-it is safe to let ${\finexists p}.\aut$ behave as $\aut$ in such situation. Provided that the two matches visit the same basic positions, of the form $(a,s)\times A \times T$, we can let $g'$ just copy $g$.
+it is safe to let ${\finexists p}.\aut^{\fin}$ behave as $\aut$ in such situation. Provided that the two matches visit the same basic positions, of the form $(a,s)\in A \times T$, we can let $g'$ just copy $g$.
 
 The key observation is that, as $\bbT'$ is a \emph{finite} $p$-variant of $\bbT$, nodes labeled with $p$ are reachable only for finitely many rounds of $\pi'$. This means that, provided that ($\ddag$) hold at each round, ($\ddag.1$) will describe an initial segment of $\pi'$, whereas ($\ddag.2$) will describe the remaining part. Thus our proof that $g'$ is a winning strategy for $\exists$ in $\mc{G}_{\exists}$ is concluded by showing that ($\ddag$) holds for each stage of construction of $\pi'$ and $\mc{B}$.
 
