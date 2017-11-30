@@ -134,8 +134,39 @@ required.
 
 
 We now turn to the specific case where $F$ is induced by some least fixpoint 
-formula $\phi(p) \in \mu_{D}\foe{p}$ on some LTS. Notice that the evaluation game for the modal $\mu$ calculus can be easily adapted to $\mu_{D}\foe$ and provide a corresponding Adequacy Theorem (Proposition \ref{p:unfold=evalgame}). In particular, we would have that 
-$\eloise$ has a winning strategy in  $\egame(\mu p.\phi(p),\model)@(\mu p.\phi(p),s)$ if and only if $s \in \mng{\mu p.\phi(p)}^{\model}$, with $\phi(p) \in \mu_{D}\foe{p}$.
+formula $\phi(p) \in \mu\mathcal{L}_1{p}$ on some LTS $\model$.   By Proposition \ref{p:unfg} and Fact  \ref{f:adeqmu}, we have that $\eloise$ has a winning strategy in  $\egame(\mu p.\phi(p),\model)@(\mu p.\phi(p),s)$ if and only if she has one in $\UG_{F}@s$ too, where $F := \phi_{p}^{\bbS}$ is the monotone functional defined by $\phi(p)$. The next Proposition  makes this correspondence explicit when $\mathcal{L}_1=\foe$. 
+
+First, we need to introduce some auxiliary concepts and notations.
+Given  a winning strategy   $\ystrat$ for $\eloise$ in $\egame(\mu p. \phi,\model)@(\mu p. \phi,s)$, 
+let $B(\ystrat)$ be the set of all finite $\ystrat$-guided, possibly partial, matches in  $\egame(\psi,\model)@(\psi,s)$ in which a position of the form $(\nu q. \psi, r)$ is not visited. 
+Hence, $\eloise$ is said to have \emph{compatible} positional winning strategies $\chi$ in $\UG_F@s$ and  $\chi'$  in $\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$ if each point in $T_{\chi,s}$ lies in some path belonging to $B^\model(\chi')$. 
+
+\begin{proposition}\label{p:unfold=evalgame2}
+%Player $\exists$ has a winning strategy $\chi$ in $\UG_F@(s,\phi(p))$ if and only she has winning strategy $\chi'$ in 
+%$\egame(\mu p.\phi,\bbS)@(s, \mu p.\phi)$. 
+%Moreover it holds that each $r \in  T_{\chi,s}$ lies in some path in $B^\model(\chi')$.
+Let %$s \in \mng{\mu p.\phi(p)}^{\model}$, with 
+$\phi(p) \in \mu_{D}\foe{p}$. Then 
+\begin{enumerate}
+\item  for every positional winning strategy $\chi$ for $\eloise$ in $\UG_F@s$, there is a compatible positional winning strategy $\chi'$ for her in 
+$\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$;% such that each point in $T_{\chi,s}$ lies in some path belonging to $B^\model(\chi')$,
+\item  for every positional winning strategy $\chi'$ for $\eloise$ in $\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$, there is a compatible  positional winning strategy $\chi'$ for her in 
+$\UG_F@s$.% such that each point in $T_{\chi,s}$ lies in some path belonging to $B^\model(\chi')$,
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+For point (1) we reason as follows. Let $\chi$  be a positional winning strategy for $\eloise$ in $\UG_F@s$. We may represent $\chi$ as a map $T: S \to \wp{(S)}$. Hence, for every $t \in \win_{\eloise}(\UG_{F})$, it holds that $t \in F(T(t))$ and therefore that there is a positional winning strategy $\chi_t$ for $\eloise$ in the game $\egame(\phi,\bbS[p \mapsto \chi(s)])$ starting at $(\phi,t)$. The following  strategy is thence a compatible winning strategy for $\eloise$ in $\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$:
+\begin{itemize}
+\item after the initial automatic move, the position of the match is $(\phi,s)$; $\eloise$ first plays her strategy $\chi_s$;
+\item each time a position $(p,t)$ is reached, necessarily $t \in \win_{\eloise}(\UG_{F})$, and thus $\eloise$ continues with $\chi_t$.
+\end{itemize}
+For point (2), let $\chi'$ be a winning strategy for $\eloise$ in  $\egame(\mu p.\phi(p),\model)@(\mu p.\phi(p),s)$. Then the appropriate compatible winning strategy $\ystrat$ in   $\UG_{F}@s$ is defined as follows: while playing the unfolding game $\UG$, $\eloise$ builds an $\chi'$-guided ``shadow'' match $\egame(\mu p.\phi(p),\model)@(\mu p.\phi(p),s)$ such that the position in the $\UG$-match of the form $t$ exactly correspond to the positions of the form $(\phi(p),t)$ in the evaluation game $\egame$. 
+\end{proof}
+
+
+
+%Notice that the evaluation game for the modal $\mu$ calculus can be easily adapted to $\mu_{D}\foe$ and provide a corresponding Adequacy Theorem (Proposition \ref{p:unfold=evalgame}). In particular, we would have that 
+%$\eloise$ has a winning strategy in  $\egame(\mu p.\phi(p),\model)@(\mu p.\phi(p),s)$ if and only if $s \in \mng{\mu p.\phi(p)}^{\model}$, with $\phi(p) \in \mu_{D}\foe{p}$.
 
 \begin{proofof}{Proposition~\ref{p:keyfix}(1)}
 %    
@@ -145,10 +176,9 @@ $\eloise$ has a winning strategy in  $\egame(\mu p.\phi(p),\model)@(\mu p.\phi(p
 %\etbs
 Let $\model$ be an LTS and $\phi(p) \in \mu_{D}\ofoe{p}$. 
 
-The right-to-left direction of \eqref{eq:foe-d} being proved by Proposition \ref{p:afmc-1}, we check the left-to-right direction.
+The right-to-left direction of \eqref{eq:foe-d} being proved by Proposition \ref{p:afmc-1}, we check the left-to-right direction. We first verify that winning strategies in evaluation games for noetherian fixpoint formulas naturally induce bundles. More precisely:
 
-Given  a winning strategy   $\ystrat$ for $\eloise$ in $\egame(\mu p. \phi,\model)@(\mu p. \phi,s)$, 
-let $B(\ystrat)$ be the set of all finite $\ystrat$-guided, possibly partial, matches in  $\egame(\psi,\model)@(\psi,s)$ in which a position of the form $(\nu q. \psi, r)$ is not visited.
+%Given  a winning strategy   $\ystrat$ for $\eloise$ in $\egame(\mu p. \phi,\model)@(\mu p. \phi,s)$,  let $B(\ystrat)$ be the set of all finite $\ystrat$-guided, possibly partial, matches in  $\egame(\psi,\model)@(\psi,s)$ in which a position of the form $(\nu q. \psi, r)$ is not visited.
 
 \begin{claim}\label{p:strategybundledEv}
 Let $B^\model(\ystrat)$ be the projection of $B(\ystrat)$ on $S$, that is the set of all paths in $\model$ that are a projection on $S$ of a $\ystrat$-guided (partial) match in $B(\ystrat)$. Then $B^\model(\ystrat)$ is a bundle.
@@ -162,16 +192,6 @@ in $\pi$ is a $\mu$-variable, meaning that the match is winning for $\abelard$, 
 %
 \noindent
 
-Now, let $F := \phi_{p}^{\bbS}$ be the monotone functional defined by $\phi(p)$. It turns out that
-
-\begin{claim}\label{p:unfold=evalgame2}
-%Player $\exists$ has a winning strategy $\chi$ in $\UG_F@(s,\phi(p))$ if and only she has winning strategy $\chi'$ in 
-%$\egame(\mu p.\phi,\bbS)@(s, \mu p.\phi)$. 
-%Moreover it holds that each $r \in  T_{\chi,s}$ lies in some path in $B^\model(\chi')$.
-Assume $\exists$ has a winning strategy $\chi$ in $\UG_F@(s,\phi(p))$. Then she has winning strategy $\chi'$ in 
-$\egame(\mu p.\phi,\bbS)@(s, \mu p.\phi)$ such that each point in $T_{\chi,s}$ lies in some path belonging to $B^\model(\chi')$.
-\end{claim}
-
-Hence, assume $s \in \mng{\mu p.\phi}^{\model}$. This means that $s \in  LFP. F$. By Proposition~\ref{p:unfg},  $\eloise$ has a descending winning strategy $\chi$ in 
-$\UG_{F}@s$. By Claims \ref{p:unfold=evalgame2} and \ref{p:strategybundledEv}, the set $T_{\chi, s}$ is noetherian.   We therefore conclude by applying  Proposition~\ref{p:afmc-2}.
+Then, let $F := \phi_{p}^{\bbS}$ be the monotone functional defined by $\phi(p)$. Assume $s \in \mng{\mu p.\phi}^{\model}$. This means that $s \in  LFP. F$. By Proposition~\ref{p:unfg},  $\eloise$ has a descending winning strategy $\chi$ in 
+$\UG_{F}@s$. By Proposition \ref{p:unfold=evalgame2} and Claim \ref{p:strategybundledEv}, the set $T_{\chi, s}$ is noetherian.   We therefore conclude by applying  Proposition~\ref{p:afmc-2}.
 \end{proofof}

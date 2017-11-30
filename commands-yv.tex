@@ -5,37 +5,37 @@
 \usepackage{amsmath}
 \usepackage{latexsym}
 
-%%%%%%%%%%%%%%% SIZES %%%%%%%%%%%%%%
-
-\setlength{\textwidth}{6.125in}
-\setlength{\textheight}{210mm}
-\setlength{\topmargin}{5mm}
-\setlength{\headsep}{7mm}
-\setlength{\marginparsep}{2mm}
-\setlength{\marginparwidth}{0.75in}
-\setlength{\oddsidemargin}{0.125in}
-\setlength{\evensidemargin}{0.125in}
+% %%%%%%%%%%%%%%% SIZES %%%%%%%%%%%%%%
+% 
+% \setlength{\textwidth}{6.125in}
+% \setlength{\textheight}{210mm}
+% \setlength{\topmargin}{5mm}
+% \setlength{\headsep}{7mm}
+% \setlength{\marginparsep}{2mm}
+% \setlength{\marginparwidth}{0.75in}
+% \setlength{\oddsidemargin}{0.125in}
+% \setlength{\evensidemargin}{0.125in}
 
 %%%%%%%%%%%%%%% SIZES %%%%%%%%%%%%%%
 
 \newcommand{\emdef}[1]{\textsl{#1}}
 
-%%%%%%%%%%%%%%%  TBS  %%%%%%%%%%%%%%
-
-%\newcommand{\todo}{}
-\newcommand{\todo}{\marginpar[$\bullet$]{$\bullet$}}
-\newcommand{\hbml}{\textsc{hbml}\marginpar[$\blacktriangleleft$]
-{$\blacktriangleleft$}}
-%\newcommand{\hbml}{\textsc{hbml}}
-\newenvironment{tbs}{%
-   \small\tt
-   \renewcommand{\labelitemi}{$\blacktriangleright$}%
-   \begin{itemize}}{\end{itemize}}
-\newcommand{\btbs}{\begin{tbs}}                                                                      
-\newcommand{\etbs}{\end{tbs}}                                                                      
-\newcommand{\shtbs}[1]{\begin{tbs} \item #1 \end{tbs}}
-
-\newcommand{\hide}[1]{}
+% %%%%%%%%%%%%%%%  TBS  %%%%%%%%%%%%%%
+% 
+% %\newcommand{\todo}{}
+% \newcommand{\todo}{\marginpar[$\bullet$]{$\bullet$}}
+% \newcommand{\hbml}{\textsc{hbml}\marginpar[$\blacktriangleleft$]
+% {$\blacktriangleleft$}}
+% %\newcommand{\hbml}{\textsc{hbml}}
+% \newenvironment{tbs}{%
+%    \small\tt
+%    \renewcommand{\labelitemi}{$\blacktriangleright$}%
+%    \begin{itemize}}{\end{itemize}}
+% \newcommand{\btbs}{\begin{tbs}}                                                                      
+% \newcommand{\etbs}{\end{tbs}}                                                                      
+% \newcommand{\shtbs}[1]{\begin{tbs} \item #1 \end{tbs}}
+% 
+% \newcommand{\hide}[1]{}
 
 %%%%%%%%%%%%%%%  TBS  %%%%%%%%%%%%%%
 
@@ -67,40 +67,6 @@
 Proof sketch.}}{\hfill {\sc qed}\end{trivlist}}
 %\newenvironment{proofof}[1]{\begin{trivlist}\item[\hskip\labelsep{\bf
 %Proof~of~{#1}.\ }]}{\hspace*{\fill} {\sc qed}\end{trivlist}}
-
-%claims
-%Use claim only inside a proof and start always with claimfisrt. 
-%Then the claims are numbered inside the proof.
-
-\newtheorem{claim2}{\sc Claim}
-%\newenvironment{claim}{\begin{claim2}\rm}{\end{claim2}\rm}
-\newenvironment{claimfirst}{\setcounter{claim2}{0}
-               \begin{claim2}\rm}{\end{claim2}\rm}
-
-\newenvironment{pfclaim}{\begin{trivlist}\item[]{\sc Proof of
-Claim.}}{\hfill {\mbox{$\blacktriangleleft$}}\end{trivlist}}
-
-\newtheorem{exer}{Exercise}[section]      
-\newenvironment{exercise}{\begin{exer}\rm}{\end{exer}}
-\newenvironment{exenumerate}{%
-  \renewcommand\theenumi{\alph{\value{enumi}}}
-  \renewcommand\theenumi{\@alph{\c@enumi}}
-  \renewcommand\theenumii{\@roman\c@enumii}
-  \renewcommand\theenumiii{\@Alph\c@enumiii}
-  \renewcommand\theenumiv{\@Roman\c@enumiv}
-  \renewcommand\labelenumi{(\theenumi)}
-  \renewcommand\labelenumii{(\theenumii)}
-  \renewcommand\labelenumiii{(\theenumiii)}
-  \renewcommand\labelenumiv{(\theenumiv)}
-  \begin{enumerate}}{\end{enumerate}}
-\newcommand{\points}[1]{\marginpar{\fbox{\texttt{#1 pt}}}}
-
-\newenvironment{opgenumerate}{%
-  \renewcommand{\theenumi}{\alph{enumi}}%
-  \renewcommand\theenumii{\roman{enumiii}}%
-  \renewcommand{\labelenumi}{(\theenumi)}%
-  \renewcommand{\labelenumii}{(\theenumii)}%
-  \begin{enumerate}}{\end{enumerate}}
 
 
 %%%%%%%%%%%%%%% ENVIRONMENTS %%%%%%%%%%%%%%
@@ -279,8 +245,6 @@ Claim.}}{\hfill {\mbox{$\blacktriangleleft$}}\end{trivlist}}
 \newcommand{\yvmonot}[1]{{#1}^{+}}
 
 
-\newcommand{\FV}[1]{\mathit{FV}(#1)}
-\newcommand{\BV}[1]{\mathit{BV}(#1)}
 
 \newcommand{\lang}{\mathcal{L_\mu}}              %Mu Language
 
@@ -530,7 +494,6 @@ Claim.}}{\hfill {\mbox{$\blacktriangleleft$}}\end{trivlist}}
 
 
 %various
-\newcommand{\isdef}{\mathrel{:=}}
 \newcommand{\isbydef}{\;:\!\iff\;}
 \newcommand{\ol}[1]{\overline{#1}}
 \newcommand{\Succ}[1]{\mathit{Succ}_{#1}}

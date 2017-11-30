@@ -1,187 +1,344 @@
 % !TEX root = ../00CFVZ_TOCL.tex
 \subsection{Automata and formulas}
 
-\btbs
-\item
-Generally it is well-known that there are effective translations from automata
-to formulas and vice versa.
-\item
-In this subsection we focus on the following theorem.
-\etbs
+\newcommand{\ytr}{\mathtt{tr}}
 
+It is well-known that there are effective translations from automata to formulas
+and vice versa~\cite{xxxx}.
+The result on $\llang$-automata that we need in this paper is the following.
 
 \begin{theorem}\label{t:autofor}
 There is an effective procedure that, given an automaton $\bbA$ in 
-$\AutW(\llang)$, returns an equivalent formula $\xi_{\bbA} \in \mu\llang$. 
-Moreover, 
+$\AutW(\llang)$, returns a formula $\xi_{\bbA} \in \mu\llang$ which satisfies
+the following properties:
 
-(1) $\xi_{\bbA} \in \mu_{D}\llang$ if $\bbA \in \AutW(\llang)$;
+(1) $\xi_{\bbA}$ is equivalent to $\bbA$;
 
-(2) $\xi_{\bbA} \in \mu_{C}\llang$ if $\bbA \in \AutWC(\llang)$.
+(2) $\xi_{\bbA} \in \mu_{D}\llang$ if $\bbA \in \AutW(\llang)$;
+
+(3) $\xi_{\bbA} \in \mu_{C}\llang$ if $\bbA \in \AutWC(\llang)$.
 \end{theorem}
+
+In the remainder of this subsection
+% (which is not used in other parts of the paper) 
+we focus on the proof of this theorem, which is (a refinement of)
+a variation of the standard proof showing that any modal automaton can be 
+translated into an equivalent formula in the modal $\mu$-calculus (see for
+instance~\cite[Section 6]{Ven08}). 
+For this reason we will not go into the details of showing that $\bbA$ and 
+$\xi_{\bbA}$ are equivalent, but we will provide a detailed definition of the 
+translation, and pay special attention to showing that the translations of weak
+and of weak-continuous $\llang$-automata land in the right fragments of 
+$\mu\llang$. 
+
+The definition of $\xi_{\bbA}$ is by induction on the number of clusters of
+$\bbA$, with a subinduction based on the number of states in the top cluster 
+of $\bbA$.
+For this inner induction we need to widen the class of $\llang$-automata, and
+it will also convenient to introduced the notion of a preautomaton (which is  
+basically an automaton without initital state).
+
+\begin{definition}
+A \emph{preautomaton} based on $\llang$ and $\props$, or briefly: a
+\emph{preautomaton}, is a triple $\bbA = \tup{A,\tmap,\pmap}$ such that $A$ is
+a (possibly empty) finite set of states, $\tmap: A\times \wp(\props) \to 
+\llang^+(A)$ and $\pmap: A \to \nat$.
+
+Given a set $X$ of propositional variables, a \emph{generalized preautomaton} 
+over $\props$ and $X$ is a triple $\bbA = \tup{A,\tmap,\pmap}$ such that $\pmap:
+A \to \nat$ is a priority map on the finite state set $A$, while the transition 
+map is of the form $\tmap: A\times \wp(\props) \to \llang^+(A\cup X)$.
+\end{definition}
 
 \btbs
 \item
-THIS THEOREM NEEDS TO BE PROVED BUT PROBABLY IN THE FINAL VERSION WE 
-WILL BE VERY BRIEF ABOUT IT TO SAVE SPACE.
+define \& explain acceptance game
 \item
-BELOW IS AN EARLIER PROOF OF A SPECIAL CASE.
+Note that the difference with an ordinary preautomaton is that at a position of 
+the form $(a,s) \in A \times S$, where $\eloise$ has to come up with a valuation 
+to satisfy the formula $\tmap(a,\tscolors(s))$ in a model based on the set $R[s]$ of
+successors of $s$, the interpretation of all propositional variables $x \in X$ 
+is fixed (viz., as XXXX), so that $\eloise$ is only free to interpret the 
+variables from the set $A$.
 \etbs
 
-\begin{proof}
-The argument  is a refinement of the standard proof showing that any automaton 
-$\aut$ from $\Aut(\llang)$ can be translated into an equivalent $\mu$-formula 
-$\xi_\aut$ (cf. e.g. \cite[Section 6]{Ven08}). 
-%From now on, we always assume that a formula $\tmap(a,c)$ is in normal form. 
-Following~\cite{Ven08}, we introduce another type of automata, called $(\prop,X)$-automata, which operate on $\p{(\prop \cup X)}$-trees.
-They are defined as parity automata on the one-step language $\llang(A \cup X)$ (so formulas may have predicates in $A \cup X$) and alphabet $\wp{\prop}$, additionally satisfying the following two conditons.
-\begin{itemize}
-\item Monadic predicate letters from $X$ can occur in the scope of a %existential
-quantifier and only there, meaning that $(\prop,X)$-automata have transition 
-$\tmap(a,c) \in \llang^+(A\cup X)$
-%
-\item 
-The transition function is uniquely determined by the restriction of the 
-colouring to $\prop$, that is, for every $a \in A$, and $c_1, c_2 \in C$, if $c_1 \cap \prop = c_2 \cap \prop$ then $\tmap(a, c_1)= \tmap(a, c_2)$.
-\end{itemize}
-We also assume that
-for every $x \in X$ there is a unique $a \in A$ and an unique $c \in C$ such that $x$ occurs in $\tmap(a,c)$.
-The notion of acceptance is defined as expected, the only difference with being that during the acceptance game player $\exists$ has to provide a valuation only for predicates in $A$ making formula given by the transition function true. Observe that when $X = \emptyset$ we recover the standard notion of $\llang$-automata given according to Definition \ref{def:partityaut}. %According to this definition, observe that standard parity automata, i.e. those defined on  a one-step language $\llang$ with predicates in $A$ and on alphabet $\wp{\prop}$, are simply $(\prop,\emptyset)$-automata. 
-In order to complete our proof, it is then enough to show the following claim.
-\begin{claimfirst}\label{c:1}
-Let $\aut$ be a $(\prop,X)$-automaton. Then, there is an effective procedure that associates to $\aut$ an equivalent formula $\xi_\aut \in \mu\llang$ such that:
-\begin{equation}\label{eq:c1}
-\xi_\aut \in 
-\begin{cases}\mu_{D}\llang &\text{ if }\aut \in \AutW(\llang) \\
-\mu_{C}\llang &\text{ if }\aut \in \AutWC(\llang) 
-.
-\end{cases}\end{equation}
-Moreover all occurrences in $\xi_\aut$ of variables in $X$ are positive.
-\end{claimfirst}
-\begin{pfclaim} %\ref{c:1}
+Before giving the full translation we focus on the following somewhat technical
+aspect.
 
-
-Without loss of generality, we can assume that:
-\begin{itemize}
-\itemsep 0 pt
-\item Every (maximal) strongly connected component (SCC) in the graph of $\ord$ has an unique entrance point,
-\item The directed acyclic graph (DAG) of the SCCs of $\ord$ is a tree, and more specifically,
-\item 
-$\{c \in A \mid a \leadsto c, c \prec a\}  \cap \{c \in A \mid b \leadsto c, c \prec b\}  = \emptyset$ whenever $a,b$ are in the same SCC, with $a\neq b$.
-\end{itemize}
-
-Given a $(\prop,X)$-automaton $\aut$, we are now going to define a function $\delta_\aut: A \to \llang (A \cup X \cup \prop)$
-%\fcwarning{one-step ML undefined} 
-that assigns to each state $a$ of $\aut$ a formula $\delta_\aut(a)$ over $\llang(A \cup X \cup \prop)$ representing all possible transitions from $a$ in the one-step language.  
-
-Let $c \in C$, and assume $\Delta(a,c)$ is in positive basic form $\bigvee \posdbnfofo{\Sigma}$. We define a first translation $TR_1$ taking as argument $\Delta(a,c)$ and giving as result a formula from the (guarded fragment of) first-order logic over $A \cup X \cup \prop$ as follows. %Assume $c \cap P= \{q_{c_1}, \dots, q_{c_\ell}\}$.
-With every disjunct
-$$
-\posdbnfofo{\Sigma} = \bigwedge_{S\in\Sigma} \exists x. \tau^+_{S}(x) \land \forall z.( \bigvee_{S\in \Sigma} \tau^+_S(z)),
-$$
-we associate the formula
-
-$$
-TR_1(\posdbnfofo{\Sigma}) := \bigwedge_{S\in\Sigma} \exists y. (R(x,y) \land \tau^+_{S}(y)) \land \forall z.( R(x,z) \to \bigvee_{S\in \Sigma} \tau^+_S(z)).
-$$
-\fcwarning{Why do we need to go through this?}The formula $TR_1(\posdbnfofo{\Sigma})$ is bisimulation invariant, and it is equivalent to the modal formula
-
-$$
-TR_2(\posdbnfofo{\Sigma}) := \bigwedge_{S\in\Sigma}  \Diamond(\bigwedge S) \land \Box \bigvee_{S\in \Sigma} (\bigwedge S).
-$$
-\fcwarning{Maybe better to define this directly}
-Let $TR_3(\Delta(a,c))= \bigwedge (c \cap \prop) \land \bigwedge_{p \in \prop \setminus c} \lnot p \land \bigvee TR_2(\posdbnfofo{\Sigma})$.
- The modal formula $\delta_\aut(a)$ is then defined as
-\marginpar{FZ: how we define $\delta_\aut(a)$ without a normal form for $\Delta(a,c)$?}
- \[
- \bigvee_{c \in C} TR_3(\Delta(a,c)).
- \]
-By construction we have, for every $\model$,
-    \begin{eqnarray*}
-    \model[x\mapsto s_I] \models \bigvee_{c \in C} \big (\tau_{(c \cap \prop)}(y) \land \bigvee TR_1(\posdbnfofo{\Sigma})\big) & \text{iff} &\model \mmodels \delta_\aut(a).
-    \end{eqnarray*}
-Moreover, if $\aut$ satisfies continuity, it holds that $\delta_\aut(a)$ is continuous in $b$ whenever $b \in A$ is in the same $\ord$-cycle of $a$. Dually for $\pmap(a)=0$.
-
-
-A modal automaton over $\prop$ is an automaton $ \tup{A, \delta, \pmap, a_I}$ such that $\delta : A \to \ML^+ (A)$, where $\ML^+ (A)$ is the set of all modal formulas over propositions $A \cup \prop$ such that elements from $A$ appear only positively.
-The acceptance game associated with such an automaton and a tree $\model$ is determined by the (symmetric) acceptance game defined according to the rules of Table~\ref{symmetric_modal_game}.
-This means that we can equivalently see the automaton $\aut$ as a modal automaton $\tup{A, \delta_\aut, \pmap, a_I}$ whose transition function satisfies the weakness condition, and also continuity when $\aut$ is weak-continuous. Thus, from now on we see $\aut$ as the equivalent modal automaton we have just described.
-
-\begin{table}[h]
-  \centering
-\begin{tabular}{|l|c|l|c|}
- \hline
-  % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
-  Position & Player & Admissible moves & Parity\\
-   \hline
-  $(a,s) \in A \times S$ & $\exists$ & $\{(\delta_\aut(a),s)\}$ & $\pmap(a)$\\
-  $(\psi_1 \vee \psi_2,s)$ & $\exists$ & $\{(\psi_1,s),(\psi_2,s) \}$ & $-$ \\
-  $(\psi_1 \wedge \psi_2,s)$ & $\forall$ & $\{(\psi_1,s),(\psi_2,s) \}$ & $-$ \\
-  $(\Diamond\varphi,s)$ & $\exists$ & $\{(\varphi,t)\ |\ t \in R[s] \}$ & $-$ \\
-  $(\Box\varphi,s)$ & $\forall$ & $\{(\varphi,t)\ |\ t \in R[s] \}$ & $-$ \\
-  % $(\bot,s)$ & $\exists$ & $\emptyset$ & $n_A$ \\
-  % $(\top,s)$ & $\forall$ & $\emptyset$ & $n_A$ \\
-  $(\lnot p,s) \in \prop \times S$ and $p \notin \tscolors(s)$ & $\forall$ & $\emptyset$ & $-$\\
-  $(\lnot p,s) \in \prop \times S$ and $p \in \tscolors(s)$ & $\exists$ & $\emptyset$ & $-$\\
-  $(p,s) \in \prop \times S$ and $p \in \tscolors(s)$ & $\forall$ & $\emptyset$ & $-$\\
-  $(p,s) \in \prop \times S$ and $p \notin \tscolors(s)$ & $\exists$ & $\emptyset$ & $-$\\
-
-  \hline
-\end{tabular}
- \caption{(Symmetric) acceptance game for modal automata}
- \label{symmetric_modal_game}
-\end{table}
-
-
-
-
-
-For the construction of $\xi_\aut$, we proceed by induction on the tree height of the DAG $t$ of SCC. If the height is 1, that is the DAG is a single point graph, we reason as follows.
- We have two cases to consider: either the SCC is trivial (i.e. it consists of a single non looping node), or not.
-In the first case, $A=\{a_I\}$ and $\aut$ is equivalent to $\xi_\aut:=\delta_\aut(a_I)$.
-
-For the second case, let us assume that $\pmap(a_I)=1$, the case when it is $0$ being, mutatis mutandis, the same.
-Let $A=\{a_0, \dots, a_\ell\}$, and $a_I=a_\ell$.
-Notice that when $\aut$ is a weak modal automaton {\color{red} satisfying the continuity condition, given $a,b \in A$, if $b$ occurs in $\delta_\aut(a)$, then $b$ is only in the scope of $\Diamond$ operator.\marginpar{FZ: How to generalise this?}} 
-We can now see the automaton $\bbA$
-as a system of modal equations, and by applying the standard inductive procedure \emph{solves} this system of equations and
-construct the least fixpoint formula $\xi_\aut$ equivalent to $\aut$, 
-
-Here the key observation is that the starting conditions on
-strongly connected components of the automaton ensure that when we execute
-a single step in solving the system of equations, we 
-may work within either the alternation-free fragment or the
-(syntactically) continuous fragment of the modal $\mu$-calculus.
-From this, we can deduce that $\xi_\aut$ satisfies Equation \ref{eq:c1}
- Clearly the procedure preserves the polarity of each $x \in X$, meaning that all variables in $X$ are positive in $\xi_\aut$.
-
-
-For the induction step, assume the successors of the root of $t$ are $(n_1, \dots, n_\ell)$. For each $i \in \{1,\dots,\ell\}$, let $a_i$ be the entrance point of the SCC of $n_i$, and let $\aut_{i}$ be the automaton $\aut$ but having as an initial state $a_i$. If we do not consider the states that are not reachable by $a_i$, the DAG of the SCC of $\aut_{i}$ is $t.{n_i}$ (the subtree of $t$ starting at $n_i$).
-Let $Y=\{a_1, \dots, a_\ell\}$, and $M$ be the set of states of $\aut$ that belong to the root of $t$. We assume $X \cap Y = \emptyset$. The structure
+\begin{definition}
+Consider, for some preautomaton $\bbA = \tup{A,\tmap,\pmap}$, some state $a \in
+A$, and some colour $c \in \wp(\props)$, the one-step formula $\tmap(a,c)\in 
+\llang(A)$.
+Suppose that for some subset $B \sse A$ we have a collection of 
+$\mu\llang$-formulas $\{ \phi_{b} \mid b \in B \}$.
+Without loss of generality we may write $\tmap(a,b) = 
+\al(a_{1},\ldots,a_{m},b_{1},\ldots,b_{n})$, where the $a_{i}$ and $b_{j}$ 
+belong to $A\setminus B$ and $B$ respectively.
+Then we will denote the $\mu\llang$-formula 
+$\nxt{\al}(a_{1},\ldots,a_{m},\phi_{1},\ldots,\phi_{n})$ as follows:
 \[
-\aut_M := \tup{M, \delta_\aut|_{M}, \pmap|_{M}, a_I}
-\] is a $(\prop, X \cup Y)$-automaton.
+\nxt{\tmap(a,c)}(\phi_{b}/b \mid b \in B)
+\isdef \nxt{\al}(a_{1},\ldots,a_{m},\phi_{1},\ldots,\phi_{n}).
+\]
+\end{definition}
 
-The inductive hypothesis applies to automata $\aut_M, \aut_{1}, \dots, \aut_{\ell}$. Thus we obtain fixpoint formulas $\xi_M, \xi_1, \dots, \xi_\ell$, the former taking free variables in $\prop \cup X \cup Y$, all the remaining in $\prop \cup X$, equivalent to $\aut_M, \aut_1, \dots, \aut_\ell$ respectively.
-Notice that:
-\begin{itemize}
-\item by induction hypothesis, $\xi_M, \xi_1, \dots, \xi_\ell$ all satisfy Equation \ref{eq:c1}, every variable $x \in X \cup Y$ is positive in each of those formulas (if $x$ occurs in it),
-\item by construction, if $x$ is free in $\xi_i$, then $x$ is not bounded in $\xi_{M}$.
-\end{itemize}
- We can therefore deduce that
- $\xi_\aut= \xi_{M}[a_1\mapsto\xi_{1}, \dots, a_\ell\mapsto\xi_{\ell}]$
-  %\in \mu_{C}\llang$
-also satisfies Equation \ref{eq:c1}, and that each variable from $X$ occurs positively in $\xi_\aut$.
+\noindent
+We can now define the desired translation from $\llang$-automata to 
+$\mu\llang$-formulas.
 
- We verify that $\model \mmodels \xi_{M}[a_1\mapsto\xi_{1}, \dots, a_\ell\mapsto\xi_{\ell}]$ iff $\model \in \trees(\aut)$, for every model $\model$.
- %\fcwarning{I think the $(\model,s)$ thould be $\model$ or rather a variant of $\model$ with a changed point}
-But this follows by the following two facts:
-\begin{enumerate}
-\item $\model\mmodels \xi_{M}[a_1\mapsto\xi_{1}, \dots, a_\ell\mapsto\xi_{\ell}]$ iff $\model[a_1\mapsto \ext{\xi_1}^{\model}, \dots, a_\ell\mapsto \ext{\xi_\ell}^{\model}  ] \mmodels \xi_M$,
-\item $\model \in \trees(\aut)$  iff $\model[a_1\mapsto \ext{\aut_1}^{\model}, \dots, a_\ell\mapsto \ext{\aut_\ell}^{\model}  ] \in \trees(\aut_M)$
-\end{enumerate}
-where %$\ext{\xi_i\ext{_{\model}=\{ s \in \model \mid s \in \ext{\xi_i\ext{^\model \}$, and 
-$\ext{\aut_i}^{\model} := \{ s \in \model \mid \model.s \in \trees(\aut_i) \}$. 
-\end{pfclaim}
-This finishes the proof of Theorem~\ref{t:autofor}. 
-\end{proof}
+\btbs
+\item
+assume that we have properly defined the notion of substitution --- 
+in preliminaries?
+\etbs
+
+\begin{definition}
+\label{d:tr}
+By induction on the number of clusters of a preautomaton $\bbA = \tup{A,\tmap,
+\pmap}$ we define a map 
+\[
+\ytr_{\bbA}: A \to \mu\llang(P).
+\]
+Based on this definition, for an automaton $\bbA = \tup{A,\tmap,\pmap, a_{I}}$ 
+we put
+\[
+\xi_{\bbA} \isdef \ytr_{\tup{A,\tmap,\pmap}}(a_{I}).
+\]
+
+In the base case of the definition of $\ytr$ the preautomaton $\bbA$ has no 
+clusters at all, which means in particular that $A = \nada$.
+In this case we let $\ytr_{\bbA}$ be the empty map.
+
+In the inductive case we assume that $\bbA = \tup{A,\tmap,\pmap, a_{I}}$ does 
+have clusters. 
+Let $B \neq \nada$ be the highest cluster, and let $\bbA^{-}$ denote the 
+preautomaton with carrier $A \setminus B$, obtained by restricting the maps 
+$\tmap$ and $\pmap$ to the set $A \setminus B$.
+Then inductively we may assume a translation $\ytr_{\bbA^{-}}: (A \setminus B)
+\to \mu\llang(P)$, and we will define
+\[
+\ytr_{\bbA}(a) \isdef \ytr_{\bbA^{-}}(a), \quad\text{ if } a \in A \setminus B.
+\]
+
+To extend this definition to the states in $B$, we make a case 
+distinction.
+If $B$ is a degenerate cluster, that is, $B = \{ b \}$ for some state $b$ 
+which is not active in itself, then we define
+\[
+\ytr_{\bbA}(b) \isdef
+   \bigvee_{c \in \wp{\props}}
+   \nxt{\tmap(b,c)}(\ytr_{\bbA^{-}}(a)/a \mid a \in A \setminus B)
+%    \mid c \in \wp\props \}.
+\]
+The main case of the definition is where $B$ is not degenerate.
+Fix an enumeration $b_{1},\ldots,b_{n}$ of $B$ such that $i \leq j$ implies 
+$\pmap(b_{i}) \leq \pmap(b_{j})$.
+Let $\bbA_{k}$ be the generalized preautomaton obtained from $\bbA$ by 
+restricting\footnote{Note that XXXX.
+   }
+the transition and parity map to the set
+\[
+A_{k} \isdef (A\setminus B) \cup \{ b_{1},\ldots,b_{k} \},
+\]
+so that $\bbA^{0} = \bbA^{-}$ and $\bbA^{n} = \bbA$.
+Where $B_{k} \isdef \{ b_{1},\ldots,b_{k} \}$, we now define, by induction on 
+$k$, a map 
+\[
+\ytr^{k}: B \to \mu\llang(P \cup (B \setminus B_{k})).
+\]
+In the base case of this definition we set
+\[
+\ytr^{0}(b) \isdef 
+   \bigvee_{c \in \wp{\props}} 
+   \nxt{\tmap(b,c)}(\ytr_{\bbA^{-}}(a)/a \mid a \in A \setminus B),
+\]
+and in the inductive case we first define $\eta_{k+1} \isdef \mu$ if
+$\pmap(b_{k+1})$ is odd, and $\eta_{k+1} \isdef \nu$ if $\pmap(b_{k+1})$ is 
+even, and then set
+\[\begin{array}{llll}
+     \ytr^{k+1}(b_{k+1}) &\isdef &
+   \eta_{k+1} b_{k+1}. \ytr^{0}(b_{k+1})[\ytr^{k}(b_{i})/b_{i} \mid 1 \leq i\leq k]
+\\ \ytr^{k+1}(b_{i}) &\isdef &
+   \ytr^{k}(b_{i})[\ytr^{k+1}(b_{k+1})/b_{k+1}]
+   & \text{ for } i < k+1.
+\end{array}\]
+Finally, we complete the definition of $\ytr_{\bbA}$ by putting
+\[
+\ytr_{\bbA}(b) \isdef \ytr^{n}(b),
+\]
+for any $b \in B$.
+\end{definition}
+
+In the proof of Theorem~\ref{t:autofor} we will need the following closure 
+property of the fragments $\noe{\mu\llang}{\qprops}$ and 
+$\cocont{\mu\llang}{\qprops}$.
+
+\begin{proposition}
+\label{p:comp}
+Let $\rprops \subseteq \qprops$ be sets of proposition letters, and let $\phi$ 
+and $\phi_{q}$, for each $q \in \qprop$, be formulas in $\mu\llang$.
+
+(1) If $\phi$ and each $\phi_{q}$ belongs to 
+    $\noe{\mu\llang}{\qprops\setminus\rprops}$ 
+    ($\conoe{\mu\llang}{\qprops\setminus\rprops}$), 
+   then so does $\phi[\phi_{q}/q \mid q \in \qprops]$.
+
+(2) If $\phi$ and each $\phi_{q}$ belongs to
+   $\cont{\mu\llang}{\qprops\setminus\rprops}$
+   ($\cocont{\mu\llang}{\qprops\setminus\rprops}$), 
+   then so does $\phi[\phi_{q}/q \mid q \in \qprops]$.
+\end{proposition}
+
+All items of this proposition can be proved by a straightforward formula 
+induction --- we omit the details.
+
+
+\begin{proofof}{Theorem~\ref{t:autofor}}
+As mentioned, the verification of the equivalence of $\xi_{\bbA}$ and $\bbA$
+% for any $\llang$-automaton $\bbA$, 
+is a standard exercise in the theory of parity automata and mu-calculi, and so
+we omit the details.
+In fact we completely focus on the third item of the theorem, also skipping the 
+(simpler) proof of item (2).
+
+To prove item (3) of the theorem, it suffices to take an arbitrary
+continuous-weak $\llang$-preautomaton $\bbA = \tup{A,\tmap,\pmap}$, and to show
+that 
+\begin{equation}
+\label{eq:tr1}
+\ytr_{\bbA}(a) \in \mu_{C}\llang(\props)
+\end{equation}
+for all $a \in A$.
+We will prove this by induction on the number of clusters of $\bbA$.
+
+Since there is nothing to prove in the base case of the proof, we immediately
+move to the inductive case.
+Let $B$ be the highest cluster of $\bbA$.
+By the induction hypothesis we have $\ytr_{\bbA}(a) = \ytr_{\bbA^{-}}(a) \in 
+\mu_{C}\llang(\props)$ for all $a \in A \setminus B$, where 
+$\bbA^{-}$ is as in Definition~\ref{d:tr}.
+To show that \eqref{eq:tr1} also holds for all $b \in B$, we distinguish cases.
+
+If $B$ is a degenerate cluster, say, $B = \{ b \}$, then for all $c \in 
+\wp(\props)$, the variables occurring in the formula $\tmap(b,c) \in \llang(A)$
+are all from $A \setminus \{ b \}$.
+Given the definition of $\ytr_{\bbA}(b)$, it suffices to show that all formulas 
+of the form $\nxt{\tmap(b,c)}(\ytr_{\bbA}(a)/a \mid a \in A \setminus \{ b \})$
+belong to the set $\mu_{C}\llang(\props)$, but this is immediate by the 
+induction hypothesis and the definition of the language.
+
+If, on the other hand, $B$ is nondegenerate, let $b_{1},\ldots,b_{n}$, and let,
+for $0\leq k \leq n$, the map $\ytr^{k}: B \to \mu\llang$ be as in
+% $A_{k}$ and $\bbA_{k}$ be as in 
+Definition~\ref{d:tr}.
+We only consider the case where $B$ is an odd cluster, i.e., $\pmap(b)$ is odd
+for all $b \in B$.
+Our key claim here is that 
+\begin{equation}
+\label{eq:tr2}
+\ytr^{k}(b_{i}) \in \mu_{C}\llang(\props \cup \{ b_{k+1},\ldots,b_{n}\}) \cap 
+\cont{\mu\llang}{\{ b_{k+1},\ldots,b_{n}\}},
+\end{equation}
+for all $k$ and $i$ with $0 \leq k \leq n$ and $0 < i \leq n$.
+We will prove this statement by induction on $k$ --- this is the `inner' 
+induction that we announced earlier on.
+
+In the base case of this inner induction we need to show that $\ytr^{0}(b_{i})$ 
+belongs to both $\mu_{C}\llang(\props \cup B)$ and $\cont{\mu\llang}{B}$.
+Showing the first membership relation is straightforward; for the second, the 
+key observation is that by our assumption on $\bbA$, every one-step formula of
+the form $\tmap(b_{i},c)$ is syntactically continuous in every variable $b \in 
+B$.
+Furthermore, by the outer inductive hypothesis we have $\ytr_{\bbA^{-}}(a) \in
+\mu_{C}\llang(\props) \subseteq \cont{\mu\llang}{B}$,
+for every $a \in A \setminus B$, and we trivially have that every variable $b 
+\in B$ belongs to the set $\cont{\mu\llang}{B}$.
+But then it is immediate by the definition of the fragment $\cont{\mu\llang}{B}$
+that  the formula $\nxt{\tmap(b_{i},c)}(\ytr_{\bbA^{-}}(b)\mid b \in B)$ belongs
+to it, and since this fragment is closed under taking disjunctions, we find that 
+$\ytr^{0}(b_{i}) \in \cont{\mu\llang}{B}$ indeed.
+This finishes the proof of the base case of the inner induction.
+
+For the induction step we fix a $k$ and assume that
+% $\ytr^{k}(b_{i}) \in \mu_{C}\llang(\props  \cup \{ b_{k+1},\ldots,b_{n}\}) 
+% \cap \cont{\mu\llang}{\{ b_{k+1},\ldots,b_{n}\}}$,
+\eqref{eq:tr2} holds for this $k$ and for all $i$ with $0 < i \leq n$.
+We will prove that
+\begin{equation}
+\label{eq:tr3}
+\ytr^{k+1}(b_{i}) \in \mu_{C}\llang(\props) \cap 
+    \cont{\mu\llang}{\{ b_{k+2},\ldots,b_{n}\}}.
+\end{equation}
+first for $i = k+1$, and then for an arbitrary $i \neq k+1$.
+To prove \eqref{eq:tr3} for the case $i = k+1$, first note that
+% \begin{equation}
+% \label{eq:tr3}
+% \ytr^{k+1}(b_{k+1}) \in \mu_{C}\llang(\props) \cap 
+%     \cont{\mu\llang}{\{ b_{k+2},\ldots,b_{n}\}}.
+% \end{equation}
+% To see this, 
+% \[\begin{array}{lcl}
+% \ytr^{0}(b_{k+1}) &\in& \mu_{C}\llang(\props\cup \{ b_{k+1},\ldots,b_{n}\}) 
+%    \cap \cont{\mu\llang}{\{ b_{k+1},\ldots,b_{n}\}},
+% \end{array}\]
+\[\begin{array}{lcl}
+\ytr^{0}(b_{k+1}) &\in& \mu_{C}\llang(\props\cup B) 
+   \cap \cont{\mu\llang}{B},
+\end{array}\]
+as we just saw in the base case of the inner induction.
+But then it is immediate by Proposition~\ref{p:comp} and the induction 
+hypothesis on the formulas $\ytr^{k}(b_{i})$ that 
+\[
+\ytr^{0}(b_{k+1})[\ytr^{k}(b_{i})/b_{i} \mid 1 \leq i\leq k]
+\in \cont{\mu\llang}{\{ b_{k+1},\ldots,b_{n}\}},
+\]
+and from this it easily follows by the definition of 
+$\cont{\mu\llang}{\{ b_{k+1},\ldots,b_{n}\}}$ that 
+\[
+\mu b_{k+1} b_{k+1}. \ytr^{0}(b_{k+1})[\ytr^{k}(b_{i})/b_{i} \mid 1 \leq i\leq k]
+\in \cont{\mu\llang}{\{ b_{k+2},\ldots,b_{n}\}},
+\]
+that is, 
+\[
+\ytr^{k+1}(b_{k+1}) \in \cont{\mu\llang}{\{ b_{k+2},\ldots,b_{n}\}}.
+\]
+This is the crucial step in proving \eqref{eq:tr3} for the case $i=k+1$,
+the proof that $\ytr^{k+1}(b_{k+1}) \in \mu_{C}\llang(\props)$ is easy.
+
+Second, to prove \eqref{eq:tr3} for the case $i \neq k+1$, we first 
+% claim that
+% \begin{equation}
+% \label{eq:tr4}
+% \ytr^{k+1}(b_{i}) \in \mu_{C}\llang(\props) \cap 
+%     \cont{\mu\llang}{\{ b_{k+2},\ldots,b_{n}\}}.
+% \end{equation}
+% To see this,
+recall that by the induction hypothesis we have
+\[
+\ytr^{k}(b_{i}) \in \mu_{C}\llang(\props) \cap 
+    \cont{\mu\llang}{\{ b_{k+1},\ldots,b_{n}\}},
+\]
+while we just saw that 
+\[
+\ytr^{k+1}(b_{k+1}) \in \cont{\mu\llang}{\{ b_{k+2},\ldots,b_{n}\}}.
+\]
+But from the latter two statements it is immediate by Proposition~\ref{p:comp} 
+that 
+\[
+\ytr^{k+1}(b_{i}) = \ytr^{k}(b_{i})[\ytr^{k+1}(b_{k+1})/b_{k+1}] 
+\in \cont{\mu\llang}{\{ b_{k+2},\ldots,b_{n}\}}
+\]
+so that we have indeed proved \eqref{eq:tr2} for the case $i \neq 
+k+1$.
+This finished the proof of the inner induction.
+
+Finally, it follows from \eqref{eq:tr2}, instantiated with $k = n$, 
+that for all $b \in B$ we have
+\[
+\ytr_{\bbA}(b) = \ytr^{n}(b) \in \mu_{C}\llang(\props),
+\]
+as required for proving the outer induction step.
+In other words, we are finished with the proof of \eqref{eq:tr1}.
+\end{proofof}
+
+
