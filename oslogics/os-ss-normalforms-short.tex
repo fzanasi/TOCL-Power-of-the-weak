@@ -1,0 +1,106 @@
+% !TEX root = ../00CFVZ_TOCL.tex
+
+\fznote{Missing defs: type, restriction of a valuation}
+
+\begin{definition}
+Given a finite set $A$, a \emph{one-step model} is a tuple $\osmodel = (D,\val)$
+consisting of a \emph{domain} set $D$ and a valuation $\val: A \to \wp D$.
+
+Depending on context, elements of $A$ will be called \emph{monadic predicates}, \emph{names}
+or \emph{propositional variables}.
+
+A \emph{one-step language} is a set $\llang(A)$ of objects called \emph{one-step sentences} over $A$. 
+\fznote{We don't need formulas, and sentences simplify the picture}
+We require that $\llang(\bigcap_{i} A_{i}) = \bigcap_{i} \llang(A_{i})$,
+so that for each $\varphi \in \llang(A)$ there is a smallest $A_{\varphi} \subseteq A$ such
+that $\varphi \in \llang(A_{\varphi})$; this $A_{\varphi}$ is the set of names that \emph{occur} in $\varphi$.
+
+We assume that one-step languages come with a \emph{truth}
+relation between formulas and models, written $\osmodel \models \varphi$.
+\end{definition}
+
+The following semantic properties will be useful when studying parity automata.
+
+\begin{definition}\label{def:functionalsentenceofoe} Given a one-step logic $\llang(A)$ and sentence $\varphi \in \llang(A)$,
+\begin{itemize}
+\item $\varphi$ is \emph{monotone} in $B \subseteq A$ if for every one step model $(D,\val)$ and $V' \: A \to \wp(D)$ such that $V(b) \subseteq V'(b)$ for all $b \in B$, $(D,\val) \models \varphi$ implies $(D,\val') \models \varphi$.
+\item $\varphi$ is \emph{functional} in $B\subseteq A$ if, whenever $(D,\val) \models \varphi$, then there exists a restriction $\val' \: A \to \wp(D)$ of $\val$ such that $(D,\val') \models \varphi$ and $s \in \val'(b)$ for some $b \in B$ implies $s \not\in \val'(a)$ for all $a \in A\setminus\{b\}$.
+\item $\varphi$ is \emph{continuous} in $B \subseteq A$ if $\varphi$ is monotone in $B$ and, whenever $(D,\val) \models \varphi$, then there exists a restriction $V' \: A \to \wp(D)$ of $V$ such that $(D,\val') \models \varphi$ and $V'(b)$ is finite for all $b \in B$.
+\item $\varphi$ is \emph{functionally continuous} in $B \subseteq A$ if, whenever $(D,\val) \models \varphi$, then there exists a restriction $\val' \: A \to \wp(D)$ of $\val$ witnessing both functionality and continuity in $B$.
+\end{itemize}
+\end{definition}
+
+
+Our two chief examples of one-step languages will be $\ofoe(A)$ and $\ofoei(A)$. \fznote{DEFINE}
+
+%Observe that every valuation $\val: A \to \wp (D)$ can equivalently be seen as a marking (or coloring) $\val^\natural:D \to \wp(A)$ given by $\val^\natural(d) := \{a \in A \mid d \in \val(a)\}$ and as a relation $Z_\val := \{ (a,d) \mid d\in \val(a)\}$. We will use these perspectives interchangeably.
+
+In the rest of the subsection we recall normal forms for $\ofoe$ and $\ofoei$ providing a syntactic characterisation for the aforementioned semantic properties. We start with $\ofoe$: a sentence in \emph{basic form} gives a complete description of the types that are satisfied in a one-step model.
+
+\index{form, basic!$\ofoe$}
+\index{$\dbnfofoe{\vlist{T}}{\Pi}$}
+\begin{definition}%[Basic form for \ofoe]
+We say that a formula $\varphi \in \ofoe(A)$ is in \emph{basic form} if $\varphi = \bigvee \dbnfofoe{\vlist{T}}{\Pi}$ where each disjunct is of the form
+%
+\begin{equation*}%\label{eq:normalformofoe}
+\dbnfofoe{\vlist{T}}{\Pi} = \exists \vlist{x}.\big(\arediff{\vlist{x}} \land \bigwedge_i \tau_{T_i}(x_i) \land \forall z.(\arediff{\vlist{x},z} \lthen \bigvee_{S\in \Pi} \tau_S(z))\big)
+\end{equation*}
+%
+such that $\vlist{T} \in \wp(A)^k$ for some $k$ and $\Pi \subseteq \vlist{T}$.  The predicate $\arediff{\vlist{y}}$, stating that the elements $\vlist{y}$ are distinct, is defined as $\arediff{y_1,\dots,y_n} := \bigwedge_{1\leq m < m^{\prime} \leq n} (y_m \not\approx y_{m^{\prime}})$.
+\end{definition}
+
+The following result characterises the monotone fragment of $\ofoe(A)$ and gives sufficient conditions for functionality.
+\fznote{Worth making them necessary?}
+
+\begin{theorem}\label{cor:ofoeicontinuousnf} For a sentence $\varphi \in \ofoe(A)$, the following are equivalent.
+\begin{enumerate}
+\item $\varphi$ is monotone in $A$.
+\item $\varphi$ is equivalent to a sentence given in the fragment $\monot{\ofo}{}(A)$ defined as follows, with $a$ ranging over $A$.
+\[
+\varphi ::= a(x) \mid \exists x.\varphi \mid \forall x.\varphi \mid \varphi \land \varphi \mid \varphi \lor \varphi.
+\]
+\item $\varphi$ is equivalent to a sentence in basic form $\varphi^{\bullet} = \bigvee \dbnfofoe{\vlist{T}}{\Pi}$.
+\end{enumerate}
+Furthermore, for $B \subseteq A$, if each $T_1, \dots, T_k$ and each $S \in \Pi$ in $\varphi^{\bullet}$ are either $\emptyset$ of singletons $\{b\}$ for some $b \in B$, then $\varphi$ is functional in $B$.
+\end{theorem}
+
+%%%%
+
+We now move to $\ofoei(A)$. It extends $\ofoe(A)$ with the capacity to tear apart finite and infinite sets of elements. This is reflected in the normal form for $\ofoei$ by adding extra constraints to the normal form of $\ofoe$.
+
+\index{$\mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{A'}$}
+\index{$\mondbnfinf{\Sigma}{A'}$}
+\index{$\posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$}
+\begin{definition}
+Let $A$ be a finite set of names. We say that a formula $\varphi \in \ofoei(A)$ is in \emph{basic form} if $\varphi = \bigvee \dbnfofoei{\vlist{T}}{\Pi}{\Sigma}$ where each disjunct is of the form
+\begin{align*}
+	\posdbnfofoei{\vlist{T}}{\Pi}{\Sigma} &:= \posdbnfofoe{\vlist{T}}{\Pi \cup \Sigma} \land \posdbnfinf{\Sigma}\\
+	%
+	\posdbnfofoe{\vlist{T}}{\Lambda} &:= \exists \vlist{x}.\big(\arediff{\vlist{x}} \land \bigwedge_i \tau^{+}_{T_i}(x_i) \land \forall z.(\arediff{\vlist{x},z} \lthen \bigvee_{S\in \Lambda} \tau^{+}_S(z))\big) \\
+	%
+	\posdbnfinf{\Sigma} &:= \bigwedge_{S\in\Sigma} \qu y.\tau^{+}_S(y) \land \dqu y.\bigvee_{S\in\Sigma} \tau^{+}_S(y) .
+\end{align*}
+for some set of types $\Pi,\Sigma \subseteq \wp A$ and $T_1, \dots, T_k \subseteq A$.
+\end{definition}
+
+Intuitively, the formula $\dbnfinf{\Sigma}$ says that (1) for every type $S\in\Sigma$, there are infinitely many elements satisfying $S$ and (2) only finitely many elements do not satisfy any type in $\Sigma$. A short argument reveals that, intuitively, every disjunct expresses that each one-step model satisfying it admits a partition of its domain in three parts:
+\begin{enumerate}[(i)]
+\itemsep 0 pt
+\item distinct elements $t_1,\dots,t_n$ with type $T_1,\dots,T_n$,
+\item finitely many elements whose types belong to $\Pi$, and
+\item for each $S\in \Sigma$, infinitely many elements with type $S$.
+\end{enumerate}
+
+
+\begin{theorem}\label{cor:ofoeicontinuousnf} For a sentence $\varphi \in \ofoe(A)$, the following are equivalent.
+\begin{enumerate}
+\item $\varphi$ is continuous in $B \subseteq A$.
+\item $\varphi$ is equivalent to a sentence given in the fragment $\cont{\ofoei}{B}(A)$ defined as follows, with $a$ ranging over $B$.
+\[
+\varphi ::= \psi \mid a(x) \mid \exists x.\varphi \mid \varphi \land \varphi \mid \varphi \lor \varphi \mid \wqu x.(\varphi,\psi)
+\]
+where $a\in B$, $\psi \in \ofoei(A\setminus B)$ and $\wqu x.(\varphi,\psi) \df \forall x.(\varphi(x) \lor \psi(x)) \land \dqu x.\psi(x)$.
+\item $\varphi$ is equivalent to a sentence in basic form $\varphi^{\bullet} = \bigvee \mondbnfofoei{\vlist{T}}{\Psi \cup \Sigma}{\Sigma}{+}$ such that, for all $b \in B$, $b\notin \bigcup\Sigma$.
+\end{enumerate}
+Furthermore if each $T_1, \dots, T_k$ and each $S \in \Pi$ in $\varphi^{\bullet}$ are either $\emptyset$ of singletons $\{b\}$ for some $b \in B$, then $\varphi$ is functionally continuous in $B$.
+\end{theorem}
