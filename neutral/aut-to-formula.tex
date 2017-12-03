@@ -9,7 +9,7 @@ The result on $\llang$-automata that we need in this paper is the following.
 
 \begin{theorem}\label{t:autofor}
 There is an effective procedure that, given an automaton $\bbA$ in 
-$\AutW(\llang)$, returns a formula $\xi_{\bbA} \in \mu\llang$ which satisfies
+$\Aut(\llang)$, returns a formula $\xi_{\bbA} \in \mu\llang$ which satisfies
 the following properties:
 
 (1) $\xi_{\bbA}$ is equivalent to $\bbA$;
@@ -35,7 +35,7 @@ The definition of $\xi_{\bbA}$ is by induction on the number of clusters of
 $\bbA$, with a subinduction based on the number of states in the top cluster 
 of $\bbA$.
 For this inner induction we need to widen the class of $\llang$-automata, and
-it will also convenient to introduced the notion of a preautomaton (which is  
+it will also convenient to introduce the notion of a preautomaton (which is  
 basically an automaton without initital state).
 
 \begin{definition}
@@ -127,8 +127,7 @@ which is not active in itself, then we define
 \[
 \ytr_{\bbA}(b) \isdef
    \bigvee_{c \in \wp{\props}}
-   \nxt{\tmap(b,c)}(\ytr_{\bbA^{-}}(a)/a \mid a \in A \setminus B)
-%    \mid c \in \wp\props \}.
+   \nxt{\tmap(b,c)}(\ytr_{\bbA^{-}}(a)/a \mid a \in A \setminus B).
 \]
 The main case of the definition is where $B$ is not degenerate.
 Fix an enumeration $b_{1},\ldots,b_{n}$ of $B$ such that $i \leq j$ implies 
@@ -160,7 +159,7 @@ even, and then set
    \eta_{k+1} b_{k+1}. \ytr^{0}(b_{k+1})[\ytr^{k}(b_{i})/b_{i} \mid 1 \leq i\leq k]
 \\ \ytr^{k+1}(b_{i}) &\isdef &
    \ytr^{k}(b_{i})[\ytr^{k+1}(b_{k+1})/b_{k+1}]
-   & \text{ for } i < k+1.
+   & \text{ for } i \neq k+1.
 \end{array}\]
 Finally, we complete the definition of $\ytr_{\bbA}$ by putting
 \[
@@ -189,7 +188,7 @@ and $\phi_{q}$, for each $q \in \qprop$, be formulas in $\mu\llang$.
    then so does $\phi[\phi_{q}/q \mid q \in \qprops]$.
 \end{proposition}
 
-All items of this proposition can be proved by a straightforward formula 
+Both items of this proposition can be proved by a straightforward formula 
 induction --- we omit the details.
 
 
@@ -198,12 +197,10 @@ As mentioned, the verification of the equivalence of $\xi_{\bbA}$ and $\bbA$
 % for any $\llang$-automaton $\bbA$, 
 is a standard exercise in the theory of parity automata and mu-calculi, and so
 we omit the details.
-In fact we completely focus on the third item of the theorem, also skipping the 
-(simpler) proof of item (2).
+We also skip the proof of item (2), completely focussing on item (3).
 
-To prove item (3) of the theorem, it suffices to take an arbitrary
-continuous-weak $\llang$-preautomaton $\bbA = \tup{A,\tmap,\pmap}$, and to show
-that 
+To prove this item, it suffices to take an arbitrary continuous-weak 
+$\llang$-preautomaton $\bbA = \tup{A,\tmap,\pmap}$, and to show that 
 \begin{equation}
 \label{eq:tr1}
 \ytr_{\bbA}(a) \in \mu_{C}\llang(\props)
@@ -227,9 +224,8 @@ of the form $\nxt{\tmap(b,c)}(\ytr_{\bbA}(a)/a \mid a \in A \setminus \{ b \})$
 belong to the set $\mu_{C}\llang(\props)$, but this is immediate by the 
 induction hypothesis and the definition of the language.
 
-If, on the other hand, $B$ is nondegenerate, let $b_{1},\ldots,b_{n}$, and let,
-for $0\leq k \leq n$, the map $\ytr^{k}: B \to \mu\llang$ be as in
-% $A_{k}$ and $\bbA_{k}$ be as in 
+If, on the other hand, $B$ is nondegenerate, let $b_{1},\ldots,b_{n}$ enumerate
+$B$, and let, for $0\leq k \leq n$, the map $\ytr^{k}: B \to \mu\llang$ be as in
 Definition~\ref{d:tr}.
 We only consider the case where $B$ is an odd cluster, i.e., $\pmap(b)$ is odd
 for all $b \in B$.
@@ -319,9 +315,7 @@ recall that by the induction hypothesis we have
     \cont{\mu\llang}{\{ b_{k+1},\ldots,b_{n}\}},
 \]
 while we just saw that 
-\[
-\ytr^{k+1}(b_{k+1}) \in \cont{\mu\llang}{\{ b_{k+2},\ldots,b_{n}\}}.
-\]
+$\ytr^{k+1}(b_{k+1}) \in \cont{\mu\llang}{\{ b_{k+2},\ldots,b_{n}\}}$.
 But from the latter two statements it is immediate by Proposition~\ref{p:comp} 
 that 
 \[
@@ -330,7 +324,7 @@ that
 \]
 so that we have indeed proved \eqref{eq:tr2} for the case $i \neq 
 k+1$.
-This finished the proof of the inner induction.
+This finishes the proof of the inner induction.
 
 Finally, it follows from \eqref{eq:tr2}, instantiated with $k = n$, 
 that for all $b \in B$ we have
@@ -338,7 +332,8 @@ that for all $b \in B$ we have
 \ytr_{\bbA}(b) = \ytr^{n}(b) \in \mu_{C}\llang(\props),
 \]
 as required for proving the outer induction step.
-In other words, we are finished with the proof of \eqref{eq:tr1}.
+In other words, we are finished with the proof of \eqref{eq:tr1}, and 
+hence, finished with the proof of the theorem.
 \end{proofof}
 
 
