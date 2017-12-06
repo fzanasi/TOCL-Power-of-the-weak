@@ -26,7 +26,7 @@ cf.~Theorem \ref{t:mfl2mso}.
 The translation in the other direction essentially passes through automata.
 As the key technical result of this part, in subsection~\ref{ss:mso2mfl} below
 we will provide a construction 
-\[(\cdot)^{\bullet}: \begin{cases} \AutW(\ofoe) \to
+\[(\cdot)^{\circ}: \begin{cases} \AutW(\ofoe) \to
 \AutW(\ofo), \\
 \AutWC(\olque) \to
 \AutWC(\ofo), \\
@@ -34,7 +34,7 @@ we will provide a construction
 such that for all $\bbA$ and $\model$: % we have
 \begin{equation}
 \label{eq:crux}
-\bbA^{\bullet} \text{ accepts } \model \text{ iff } \bbA \text{ accepts
+\bbA^{\circ} \text{ accepts } \model \text{ iff } \bbA \text{ accepts
 } \model^{\om},
 \end{equation}
 where $\model^{\om}$ is the $\om$-unravelling of $\model$.
@@ -44,22 +44,22 @@ in the case of $\wmso$ and $\mucML$ (the case of $\nmso$ and $\AFMC$ is
 completely similar).
 Given a \wmso-formula $\phi$, define 
 \[
-\phi^{\bullet} \df \xi_{\aut_{\phi}^{\bullet}},
+\phi^{\circ} \df \xi_{\aut_{\phi}^{\circ}},
 \]
 \btbs
 \item
-where $\aut_{\phi}$ is \ldots\ and $\xi_{\aut_{\phi}^{\bullet}}$ is \ldots
+where $\aut_{\phi}$ is \ldots\ and $\xi_{\aut_{\phi}^{\circ}}$ is \ldots
 \etbs
 
 To prove the right-to-left direction of \eqref{eq:z2}, clearly it suffices to
 show that
 \begin{equation}
 \label{eq:qq1}
-\phi\in\wmso \text{ is bisimulation invariant iff } \phi \equiv \phi^{\bullet}.
+\phi\in\wmso \text{ is bisimulation invariant iff } \phi \equiv \phi^{\circ}.
 \end{equation}
 
 The direction from right to left of \eqref{eq:qq1} is immediate by the 
-observation that $\phi^{\bullet}$ is a formula in $\MC$.
+observation that $\phi^{\circ}$ is a formula in $\MC$.
 The opposite direction follows from the following chain of equivalences:
 \begin{align*}
 \model \models \phi
@@ -67,10 +67,10 @@ The opposite direction follows from the following chain of equivalences:
   & \tag{$\phi$ bisimulation invariant}
 \\ & \text{ iff }  \bbA_{\phi} \text{ accepts } \model^{\om}
   & \tag{$ \phi \equiv \aut_{\phi}$ on trees}
-\\ & \text{ iff } \bbA_{\phi}^{\bullet} \text{ accepts } \model
+\\ & \text{ iff } \bbA_{\phi}^{\circ} \text{ accepts } \model
 & \tag{\ref{eq:crux}}
-\\ & \text{ iff }  \model \models \xi_{ \aut_{\phi}^{\bullet}}
-& \tag{$\aut_{\phi}^{\bullet}\equiv \xi_{ \aut_{\phi}^{\bullet}}$}
+\\ & \text{ iff }  \model \models \xi_{ \aut_{\phi}^{\circ}}
+& \tag{$\aut_{\phi}^{\circ}\equiv \xi_{ \aut_{\phi}^{\circ}}$}
 \end{align*}
 This finishes the proof of \eqref{eq:z2}, and as mentioned, the proof of
 \eqref{eq:z1} is similar.
@@ -81,10 +81,10 @@ This finishes the proof of \eqref{eq:z2}, and as mentioned, the proof of
 
 In this subsection we will define a construction that, for $\llang \in
 \{{\ofoe},{\olque}\}$, transforms an arbitrary $\llang$-automaton $\bbA$ into
-an $\ofo$-automaton $\bbA^{\bullet}$ such that $\bbA$ and $\bbA^{\bullet}$ 
+an $\ofo$-automaton $\bbA^{\circ}$ such that $\bbA$ and $\bbA^{\circ}$ 
 are related as in~\eqref{eq:crux}; in addition, we will make sure that 
 this transformation preserves both the weakness and the continuity condition.
-This operation $(\cdot)^{\bullet}$ is completely determined by the following 
+This operation $(\cdot)^{\circ}$ is completely determined by the following 
 translation at the one-step level.
 
 \begin{definition}
@@ -96,24 +96,24 @@ equivalent to a disjunction of formulas of the form
 $\posdbnfolque{\vlist{T}}{\Pi}{\Sigma}$. 
 Based on those results, for both one step languages $\llang={\ofoe}$ and 
 $\llang={\olque}$, we define the translation 
-$(-)^{\bullet} : {\llang}^+(A) \to \ofo^+(A)$ by setting
+$(-)^{\circ} : {\llang}^+(A) \to \ofo^+(A)$ by setting
 % \[
-% \Big( \posdbnfofoe{\vlist{T}}{\Sigma} \Big)^{\bullet} = 
-% \Big( \posdbnfolque{\vlist{T}}{\Pi}{\Sigma} \Big)^{\bullet} 
+% \Big( \posdbnfofoe{\vlist{T}}{\Sigma} \Big)^{\circ} = 
+% \Big( \posdbnfolque{\vlist{T}}{\Pi}{\Sigma} \Big)^{\circ} 
 % \df
 % \bigwedge_{i} \exists x_i. \tau^+_{T_i}(x_i) \land 
 % \forall x. \bigvee_{S\in\Sigma} \tau^+_S(x),
 % \]
 \[
 \left.\begin{array}{l}
-   \Big( \posdbnfofoe{\vlist{T}}{\Sigma} \Big)^{\bullet} 
-\\ \Big( \posdbnfolque{\vlist{T}}{\Pi}{\Sigma} \Big)^{\bullet} 
+   \Big( \posdbnfofoe{\vlist{T}}{\Sigma} \Big)^{\circ} 
+\\ \Big( \posdbnfolque{\vlist{T}}{\Pi}{\Sigma} \Big)^{\circ} 
 \end{array}\right\}
 \df \bigwedge_{i} \exists x_i. \tau^+_{T_i}(x_i) \land 
 \forall x. \bigvee_{S\in\Sigma} \tau^+_S(x),
 \]
-and for $\al = \bigvee_{i} \al_{i}$ we define $\al^{\bullet} \df \bigvee 
-\al_{i}^{\bullet}$.
+and for $\al = \bigvee_{i} \al_{i}$ we define $\al^{\circ} \df \bigvee 
+\al_{i}^{\circ}$.
 \end{definition}
 
 The key property of this translation is the following.
@@ -124,7 +124,7 @@ Let $\llang\in \{{\ofoe},{\olque}\}$.
 For every one-step model $(D,V)$ and every $\al \in \llang^+(A)$ we have
 \begin{equation}
 \label{eq-1cr}
-(D,V) \models \alpha^{\bullet} \text{ iff } (D\times \om,V_\pi) \models \alpha,
+(D,V) \models \alpha^{\circ} \text{ iff } (D\times \om,V_\pi) \models \alpha,
 \end{equation}
 where $V_{\pi}$ % =  f^{-1} \circ V$
  is the induced valuation given by 
@@ -138,7 +138,7 @@ $\al = \posdbnfolque{\vlist{T}}{\Pi}{\Sigma}$.
 \smallskip
 
 \noindent\fbox{$\Rightarrow$} 
-Assume $(D,\val) \models \alpha^{\bullet}$, we will show that 
+Assume $(D,\val) \models \alpha^{\circ}$, we will show that 
 $(D\times \omega,\val_\pi) \models \posdbnfolque{\vlist{T}}{\Pi}{\Sigma}$.
 Let $d_i$ be such that $\tau_{T_i}^+(d_i)$ in $(D,\val)$. 
 It is clear that the $(d_i,i)$ provide \emph{distinct} elements satisfying 
@@ -147,7 +147,7 @@ first-order existential part of $\alpha$ is satisfied.
 With a similar but easier argument it is straightforward that the existential 
 generalized quantifier part of $\alpha$ is also satisfied.
 For the universal parts of $\posdbnfolque{\vlist{T}}{\Pi}{\Sigma}$ it is enough
-to observe that, because of the universal part of $\alpha^\bullet$, \emph{every}
+to observe that, because of the universal part of $\alpha^\circ$, \emph{every}
 $d\in D$ realizes a positive type in $\Sigma$. 
 By construction, the same applies to $(D\times\omega,\val_{\pi})$, 
 therefore this takes care of both universal quantifiers.
@@ -156,8 +156,8 @@ therefore this takes care of both universal quantifiers.
 \noindent\fbox{$\Leftarrow$} 
 Assuming that $(D\times \omega,\val_\pi) \models 
 \posdbnfolque{\vlist{T}}{\Pi}{\Sigma}$,
-we will show that $(D,\val) \models \alpha^\bullet$. 
-The existential part of $\alpha^{\bullet}$ is trivial. 
+we will show that $(D,\val) \models \alpha^\circ$. 
+The existential part of $\alpha^{\circ}$ is trivial. 
 For the universal part we have to show that every element of $D$ realizes the 
 positive part of a type in $\Sigma$. 
 Suppose not, and let $d\in D$ be such that $\lnot\tau_S^+(d)$ for all $S\in 
@@ -175,10 +175,10 @@ As a consequence of Proposition~\ref{p-1P} we obtain the following.
 \begin{definition}
 Let $\llang\in \{{\ofoe},{\olque}\}$.
 Given an automaton $\bbA = \tup{A,\tmap,\pmap,a_{I}}$ in $\Aut(\llang)$, define 
-the automaton $\bbA^{\bullet} \df \tup{A,\tmap^{\bullet},\pmap,a_{I}}$ in 
+the automaton $\bbA^{\circ} \df \tup{A,\tmap^{\circ},\pmap,a_{I}}$ in 
 $\Aut(\ofo)$ by putting, for each $(a,c) \in A \times C$:
 \[
-\tmap^{\bullet}(a,c) \df (\tmap(a,c))^{\bullet}.
+\tmap^{\circ}(a,c) \df (\tmap(a,c))^{\circ}.
 \]
 \end{definition}
 
@@ -189,14 +189,14 @@ model $\model$, $\bbA$ and $\model$ satisfy \eqref{eq:crux}.
 
 \begin{proof} Let $\llang\in \{{\ofoe},{\olque}\}$.
 The proof of this proposition is based on a fairly routine comparison of the 
-acceptance games $\mathcal{A}(\bbA^{\bullet},\model)$ and 
+acceptance games $\mathcal{A}(\bbA^{\circ},\model)$ and 
 $\mathcal{A}(\bbA,\model^{\om})$.
 In a slightly more general setting, the details of this proof can be found 
 in~\cite{Venxx}.
 \end{proof}
 \medskip
 
-It remains to be checked that the construction $(-)^{\bullet}$, which has
+It remains to be checked that the construction $(-)^{\circ}$, which has
 been defined for arbitrary automata in $\Aut(\llang)$, transforms 
 both $\wmso$-automata and $\nmso$-automata into automata in the right class.
 This is the content of the next proposition, which can be verified by a 
@@ -204,15 +204,15 @@ straightforward inspection at the one-step level.
 \begin{proposition}
 Let $\bbA \in \Aut(\ofoe)\cup\Aut(\olque)$. 
 \begin{itemize}
-\item If $\bbA \in \AutW(\ofoe)$, then $\bbA^{\bullet} \in \AutW(\ofo)$, and
-\item if $\bbA \in \AutWC(\olque)$, then $\bbA^{\bullet} \in \AutWC(\ofo)$.
+\item If $\bbA \in \AutW(\ofoe)$, then $\bbA^{\circ} \in \AutW(\ofo)$, and
+\item if $\bbA \in \AutWC(\olque)$, then $\bbA^{\circ} \in \AutWC(\ofo)$.
 \end{itemize}
 \end{proposition}
 
 %\begin{proof}
 %This proposition can be verified by a straightforward inspection, at the 
 %one-step level, that if a formula $\al \in {\olque}^+(A)$ belongs to the fragment 
-%$\cont{{\olque}^+}{a}(A)$, then its translation $\al^{\bullet}$ lands in 
+%$\cont{{\olque}^+}{a}(A)$, then its translation $\al^{\circ}$ lands in 
 %the fragment $\cont{\ofo^+}{a}(A)$.
 %\end{proof}
 
@@ -226,7 +226,7 @@ As a corollary of the previous two propositions we find that
 In fact, we are dealing here with an instantiation of a more general phenomenon 
 that is essentially coalgebraic in nature.
 In~\cite{Venxx} it is proved that if $\llang$ and $\llang'$ are two one-step
-languages that are connected by a translation $(-)^{\bullet}: \llang' \to 
+languages that are connected by a translation $(-)^{\circ}: \llang' \to 
 \llang$ satisfying a condition similar to \eqref{eq-1cr}, then we find that 
 $\Aut(\llang)$ corresponds to the bisimulation-invariant fragment of 
 $\Aut(\llang')$: $\Aut(\llang) \equiv \Aut(\llang')/{\bis}$.
