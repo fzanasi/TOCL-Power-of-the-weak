@@ -126,10 +126,7 @@ Following the intuition given above, we want to work with sentences that can be
 made true by assigning macro-states (from $\shA$) to finitely many nodes in the
 model, and ordinary states (from $A$) to all the other nodes. 
 Moreover, each node should be associated with \emph{at most one} macro-state, 
-because of functionality. 
-Corollary \ref{def:functionalsentenceofoe}.\ref{pt:ofoeifunctionalcontinuous} 
-expresses these desiderata as \emph{functional continuity in $\shA$} and 
-suggests the following syntactic shape in order to fulfil them.
+because of functionality. These desiderata are expressed for one-step formulas as \emph{continuity} and {functionality in $\shA$}, see Definition \ref{def:semnotions}. For the language $\ofoei$, Theorem \ref{th:ofoei-normalforms} tells that they are guaranteed when formulas are in a certain syntactic shape, established by Definition \ref{def:basicform-ofoei}. We use this shape as a basis for the next definition.
 
 \begin{definition}\label{DEF_finitary_lifting}
 Let $\varphi \in {\olque}^+(A \times A)$ be a formula of shape $\posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$ for some $\Pi,\Sigma \subseteq \shA$ and $\vlist{T} = \{T_1,\dots,T_k\} \subseteq \shA$. Fix $\widetilde{\Sigma} \df \{\Ran(S) \mid S \in \Sigma\} \subseteq \wp A$. We define $\varphi^{\fin} \in {\olque}^+(A \cup \shA)$ as $\posdbnfofoei{\lift{\vlist{T}}}{\lift{\Pi} \cup \lift{\Sigma}}{\widetilde{\Sigma}}$, that means,
@@ -158,7 +155,7 @@ intermediate step to define the transition function of the powerset automaton.
 We combine the previous definitions to form the transition function for macro-states.
 
 \begin{definition}\label{PROP_DeltaPowerset}
-Let $\aut = \tup{A,\tmap,\pmap,a_I}$ be a $\wmso$-automaton. Fix $c \in C$ and $Q \in \shA$. By Corollary \ref{cor:ofoeipositivenf}, for some $\Pi,\Sigma \subseteq \shA$ and $T_i \subseteq A \times A$, there is a sentence $\Psi_{Q,c} \in {\olque}^+(A\times A)$ in the basic form $\bigvee \posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$ such that $\bigwedge_{a \in \Ran(Q)} \tmap^{\star}(a,c) \equiv \Psi_{Q,c}$. By definition $\Psi_{Q,c}$ is of the form $\bigvee_{i}\varphi_i$, with each $\phi_{i}$ of shape $\posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$. We put $\shDe(Q,c) := \bigvee_{i}\varphi_i^{\fin}$, where the translation $(-)^{\fin}$ is given as in Definition~\ref{DEF_finitary_lifting}. Observe that $\shDe(Q,c)$ is of type ${\olque}^+(A \cup \shA)$.
+Let $\aut = \tup{A,\tmap,\pmap,a_I}$ be a $\wmso$-automaton. Fix $c \in C$ and $Q \in \shA$. By Theorem \ref{th:ofoei-normalforms}, for some $\Pi,\Sigma \subseteq \shA$ and $T_i \subseteq A \times A$, there is a sentence $\Psi_{Q,c} \in {\olque}^+(A\times A)$ in the basic form $\bigvee \posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$ such that $\bigwedge_{a \in \Ran(Q)} \tmap^{\star}(a,c) \equiv \Psi_{Q,c}$. By definition $\Psi_{Q,c}$ is of the form $\bigvee_{i}\varphi_i$, with each $\phi_{i}$ of shape $\posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$. We put $\shDe(Q,c) := \bigvee_{i}\varphi_i^{\fin}$, where the translation $(-)^{\fin}$ is given as in Definition~\ref{DEF_finitary_lifting}. Observe that $\shDe(Q,c)$ is of type ${\olque}^+(A \cup \shA)$.
 \end{definition}
 
 We have now all the ingredients to define our two-sorted automaton.
@@ -231,7 +228,7 @@ For SCCs on sort $\shA$, wekaness follows by observing that all macro-states in
 $\aut^{\fin}$ have the same parity value. 
 Concerning continuity, by definition of $\tmap^{\fin}$ any macro-state can only 
 appear inside a formula of the form $\varphi^{\fin} = 
-\posdbnfofoei{\lift{\vlist{T}}}{\lift{\Pi} \cup \lift{\Sigma}}{\widetilde{\Sigma}}$ as in \eqref{eq:unfoldingNablaolque}. Because $\shA \cap \widetilde{\Sigma} = \emptyset$, by Corollary \ref{cor:ofoeicontinuousnf}.\ref{pt:ofoeimonotone} $\varphi^{\fin}$ is continuous in each $Q \in \shA$.
+\posdbnfofoei{\lift{\vlist{T}}}{\lift{\Pi} \cup \lift{\Sigma}}{\widetilde{\Sigma}}$ as in \eqref{eq:unfoldingNablaolque}. Because $\shA \cap \widetilde{\Sigma} = \emptyset$, by Theorem \ref{th:ofoei-normalforms} $\varphi^{\fin}$ is continuous in each $Q \in \shA$.
  
 \item  
 Let $f$ be a (positional) winning strategy for $\eloise$ in $\mathcal{A}
@@ -255,16 +252,14 @@ We define a strategy $f'$ for $\eloise$ in the same game as follows:
   Otherwise, the disjunct $\shDe(R,\V(s)) = \bigvee_{i}\varphi_i^{\fin}$ is made 
   true. 
   This means that, for some $i$, $(R[s], \val_{R,s}) \models \varphi_i^{\fin}$.
-  Now, by construction of $\varphi_i^{\fin}$ as in \eqref{eq:unfoldingNablaolque},
-  $\lift{T}_1,\dots,\lift{T}_k$ and each $S \in \lift{\Pi} \cup \lift{\Sigma}$ 
-  are either empty or singleton subsets of $\shA$ and $\widetilde{\Sigma} \cap 
-  \shA = \emptyset$. 
-  By Corollary \ref{def:functionalsentenceofoe}.\ref{pt:ofoeifunctionalcontinuous}, 
-  this implies that $\varphi_i^{\fin}$ is functionally continuous in $\shA$. 
+  Now, by construction of $\varphi_i^{\fin}$ as in \eqref{eq:unfoldingNablaolque}, we have $\widetilde{\Sigma} \cap 
+  \shA = \emptyset$. By Theorem \ref{th:ofoei-normalforms}, 
+  this implies that $\varphi_i^{\fin}$ is continuous in $\shA$. 
   Thus we have a restriction $\val_{R,s}'$ of $\val_{R,s}$ that verifies 
-  $\varphi_i^{\fin}$, assigns only finitely many nodes to predicates from $\shA$
-  and associates with each node at most one predicate from $\shA$. 
-  We define $f'$ so that $\val_{R,s}'$ is its suggestion at position $(R,s)$.
+  $\varphi_i^{\fin}$ and assigns only finitely many nodes to predicates from $\shA$. Moreover, by construction of $\varphi_i^{\fin}$, $\lift{T}_1,\dots,\lift{T}_k$ and each $S \in \lift{\Pi} \cup \lift{\Sigma}$ 
+  are either empty or singleton subsets of $\shA$: by Theorem \ref{th:ofoei-normalforms}, 
+  this implies that $\varphi_i^{\fin}$ is also functional in $\shA$. Thus there exists a restriction $\val_{R,s}''$ of $\val_{R,s}'$ that verifies 
+  $\varphi_i^{\fin}$, still ensures continuity in $\shA$ but moreover associates with each node at most one predicate from $\shA$. We let $f'$ suggest $\val_{R,s}''$ at position $(R,s)$.
 \end{enumerate}
 The strategy $f'$ defined as above is immediately seen to be surviving for 
 $\eloise$. It is also winning, because the set of basic positions on which $f'$ 

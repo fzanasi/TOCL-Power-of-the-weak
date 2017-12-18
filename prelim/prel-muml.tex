@@ -102,7 +102,9 @@ We can give a syntactic characterisation of the fragment of $\MC$ that captures 
    \mid \mu p.\alpha
 \end{equation*}
 %
-where $q \in \qprops$, $p \in \props \setminus \qprops$, $\alpha \in \cont{\MC}{\qprops\cup\{p\}}$, and $\psi$ is a $\qprops$-free $\MC$-formula.
+where $q \in \qprops$, $p \in \props \setminus \qprops$, $\alpha \in \cont{\MC}{\qprops\cup\{p\}}$, and $\psi$ is a $\qprops$-free $\MC$-formula. 
+
+The  \emph{co-continuous} fragment $\cocont{\mu\ML}{Q}$ is defined dually. 
 
 \begin{proposition}[\cite{Fontaine08,FV12}]\label{prop:FVcont}
 A $\MC$-formula is continuous in $q$ iff it is equivalent to a formula in the fragment $\cont{\MC}{q}$.
@@ -113,13 +115,16 @@ Finally, we define $\mucML$ to be the fragment of $\MC$ where the use of the lea
 \begin{definition}
 Formulas of the fragment $\mucML$ are given by:% the following induction:
 \begin{equation*}
-   \varphi ::= q \mid \lnot \varphi
+   \varphi ::= q \mid \lnot q
     \mid \varphi \lor \varphi
+        \mid \varphi \land \varphi
     \mid \Diamond \varphi
-    \mid \mu p.\alpha
-\end{equation*}
+     \mid \Box \varphi \mid
+    \mu p.\varphi' 
+    \mid \nu p.\varphi''
+    \end{equation*}
 %
-where $p,q \in \props$, and $\alpha \in \cont{\MC}{p} \cap \mucML$.
+where $p,q \in \props$,  $\varphi' \in \cont{\MC}{p} \cap \mucML$, and dually $\varphi'' \in \cocont{\MC}{p} \cap \mucML$.
 \end{definition}
 
 \begin{proposition}

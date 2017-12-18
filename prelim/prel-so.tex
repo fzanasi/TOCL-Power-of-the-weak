@@ -70,8 +70,9 @@ We define the analogous notions for $\wmso$ and $\nmso$ in the same way.
 
 
 
-\begin{remark}
-The reader may have expected a more standard two-sorted language for second-order logic, for example given by
+%\begin{remark}
+\subsubsection*{A digression on second-order languages.}
+The reader may have expected a more standard two-sorted language for second-order logic, namely
 %
 $$
 \varphi ::= p(x)
@@ -84,7 +85,31 @@ $$
 \mid \exists p.\varphi
 $$%
 where $p \in \prop$, $x,y \in \fovar$ (individual variables), %$X \in \sovar$ (second-order variables)
-and $\foeq$ is the symbol for equality.
-Both definitions can be proved to be equivalent. Definition~\ref{def:mso} is better suited to work with in the context of automata, whereas it is easier to use the standard two-sorted language for second-order logic when translating modal fixpoint languages into second order languages.
+and $\foeq$ is the symbol for equality.   Formulas  are interpreted over LTS $\model = \tup{T,R,\tscolors, s_I}$ with a a variable assignment $\ass: \fovar \to T$, and the semantics of the language is completely standard. Depending on whether second order quantification is over all subsets, over finite subsets or over noetherian subsets, we obtain the three two-sorted variants  denoted respectively $2\mso(\prop)$, $2\wmso(\prop)$ and $2\nmso(\prop)$.
+
+In each variant, both the one sorted and the two-sorted definitions can be proved to be equivalent, the key point of the equivalence being that a single sorted language can interpret the corresponding two-sorted language by encoding every individual variable $x \in \fovar$ as a set variable $p_x$ denoting a singleton.
+
+\begin{fact}\label{fact:msovs2mso}
+Let $\mathcal{L} \in \{\mso, \wmso, \nmso\}$ and $\prop_X:=\{p_x\mid x \in \fovar\}$.
+The translation $(\cdot)^{m} : 2\mathcal{L}(\prop) \to \mathcal{L}(\prop \uplus \prop_X)$ defined as
+\begin{itemize}
+\item $(p(x))^m:= p_x \sqsubset p$,
+\item $(R(x,y))^m:=R(p_x, p_y)$,
+\item $ (x \foeq y)^m:=  p_x \sqsubset p_y \land p_y \sqsubset p_x$,
+\item $(\exists p. \varphi)^m := \exists p. \varphi^m$,
+\item $(\exists x. \varphi)^m:= \exists p_x. \texttt{singleton}(p_x) \land \varphi^m$,
+\end{itemize}
+where  
+\begin{align*}
+  \texttt{empty}(p) & := \forall q. (p \inc q) \\
+  \texttt{singleton}(p) & := \forall q. (q \inc p \to (\texttt{empty}(q) \lor p\inc q))
+\end{align*}
+is such that
+  \[
+  \model,\ass \models \varphi \quad\text{iff}\quad \model[p_{x} \mapsto \{\ass(x)\}] \models \varphi^m.
+  \]
+\end{fact}
+
+Definition~\ref{def:mso} is better suited to work with in the context of automata, whereas it is easier to use the standard two-sorted language for second-order logic when translating $\mu$-calculi into second order languages.
 %, however, we choose to keep Definition~\ref{def:mso} as it will be better suited to work with in the context of automata.
-\end{remark}
+%\end{remark}

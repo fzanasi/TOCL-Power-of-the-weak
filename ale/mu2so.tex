@@ -37,8 +37,8 @@ to their common domain.
 Consequently, in the remainder we will speak of a single translation 
 $(\cdot)^{*}$.
 Second, as the target language of the translation $(\cdot)^{*}$ we will take 
-the \emph{two-sorted} version of second-order logic, as discussed in 
-\ref{xx:xxxx}.
+the \emph{two-sorted} version of second-order logic $"\mso$, as discussed in 
+\ref{sec:prel-so}, and thus we will be implicitly using Fact \ref{fact:msovs2mso}.
 % although in the Preliminaries we state that in this paper we will work with 
 % one-sorted variants of second-order logics.
 We reserve the fixed individual variable $v$ for this target language, i.e., 
@@ -123,10 +123,10 @@ Then for every subset $X \subseteq S$ it holds that $\LFP. F\rst{X}\subseteq
 \LFP.F$.
 \end{proposition}
 
-The left-to-right direction of \eqref{eq:foe-c} and \eqref{eq:foe-d} 
+The left-to-right direction of \eqref{eq:foe-d} and \eqref{eq:foei-c} 
 will be proved in the next two sections.
-Since we can prove a slightly stronger result in the continuous case, we discuss
-this case separately.
+Since in the continuous case we can prove a slightly stronger result, applying
+to \emph{arbitrary} continuous functionals, we discuss this case separately.
 
 \newcommand{\PRE}{\mathit{PRE}}
 The point of Proposition~\ref{p:keyfix} is that it naturally suggests the
@@ -136,7 +136,7 @@ variation of \eqref{eq:st}:
 \begin{equation}
 \label{eq:trlmu}
 (\mu p. \varphi)^{*} \df 
-   \exists q\,\Big(\forall  p \subseteq q.\,
+   \exists q\,\Big(\forall  p \sse q.\,
       \big(p \in \PRE((\varphi^{\model}_{p})_{\rst{q}}) \to p(v)\big)\Big),
 \end{equation}
 where $p \in \PRE((\varphi^{\model}_{p})_{\rst{q}})$ expresses that $p \sse q$ 
@@ -154,10 +154,14 @@ Here we need to understand the role of the \emph{one-step formulas} in the
 translation.
 First an auxiliary definition.
 
-\begin{definition}
-Given a model $\model$, a set $A$ of variables, and an $A$-valuation $V: A \to
-\wp(X)$ on a subset $X$ of the carrier of the model, we let $\model^{V}$ denote
-the obviously defined expansion of $\model$.
+\begin{definition}\label{def:exp}
+Let $\model = \tup{T,R,\tscolors, s_I}$ be a $\wp{(\prop)}$-LTS, $A$ be a set of new variables, and $V: A \to
+\wp(X)$ be a valuation on a subset $X\subseteq T$. The $\wp{(\prop\cup A)}$-LTS $\model^{V}:=\tup{T,R,\tscolors^V, s_I}$ given by defining the marking $\tscolors^V: T \to \wp{(\prop \cup A)}$ where
+\[\tscolors^V(s):= 
+\begin{cases} \tscolors(s) & \text{ if } s \notin X \\
+\tscolors(s) \cup \{ a \in A \mid s \in V(a)\}& \text{ else,}
+\end{cases}\]
+is called the $V$-expansion of $\model$.
 \end{definition}
 
 The following proposition states that at the one-step level, the formulas that 
@@ -169,7 +173,7 @@ be translated into, respectively $\nmso$ and $\wmso$.
 There is a translation $(\cdot)^{\dag}: \ofoei(A) \to \wmso$ such that for every 
 model $\bbS$ and every valuation $V: A \to \wp(R[s_{I}])$:
 \[
-(R[s_{I}],V) \models \al \text{ iff } \model^{V} \models \al^{\dag}(s_{I}).
+(R[s_{I}],V) \models \al \text{ iff } \model^{V} \models \al^{\dag}[s_{I}].
 \]
 Moreover, $(\cdot)^{\dag}$ restricts to first-order logic, i.e., $\al^{\dag}$ is
 a first-order formula if $\al \in \ofoe$.
@@ -210,7 +214,7 @@ second-order logic:
    p^{*} &\df& p(v)
 \\ (\neg\phi)^{*}        &\df& \neg \phi^{*}
 \\ (\phi\lor\psi)^{*}    &\df& \phi^{*} \lor \psi^{*}
-\\ (\nxt{\al}(\ol{\phi})^{*} &\df& \al^{\dag}[\phi_{i}^{*}/a_{i} \mid i \in I],
+\\ (\nxt{\al}(\ol{\phi}))^{*} &\df& \al^{\dag}[\phi_{i}^{*}/a_{i} \mid i \in I],
 \end{array}\]
 where $\al^{\dag}$ is as in Proposition~\ref{p:1trl}, and $[\phi_{i}^{*}/a_{i}
 \mid i \in I]$ is the substitution that replaces every occurrence of an atomic
@@ -222,16 +226,16 @@ as in \eqref{eq:trlmu}.
 \end{definition}
 
 \begin{proofof}{Theorem~\ref{t:mfl2mso}}
-\btbs
-\item
-For both parts of the theorem we need to verify that 
-\\ (i) the translation $(\cdot)^{*}$ lands in the correct language, 
-\\ (ii) the translation $(\cdot)^{*}$ is truth preserving and
-\\ (iii) the statement about the modal language indeed follows from the 
-   main statement.
-\etbs
-
-For both parts of the theorem, we prove that $(\cdot)^{*}$ is truth preserving 
+%\btbs
+%\item
+%For both parts of the theorem we need to verify that 
+%\\ (i) the translation $(\cdot)^{*}$ lands in the correct language, 
+%\\ (ii) the translation $(\cdot)^{*}$ is truth preserving and
+%\\ (iii) the statement about the modal language indeed follows from the 
+%   main statement.
+%\etbs
+First of all, it is clear that the translation $(\cdot)^{*}$ lands in both cases in the correct language.
+For both parts of the theorem, we thence prove that $(\cdot)^{*}$ is truth preserving 
 by a straightforward formula induction.
 E.g., for part (2) we need to show that, for an arbitrary formula $\phi\in
 \mu_{C}\ofoei$ and an arbitrary model $\model$:
@@ -241,24 +245,27 @@ E.g., for part (2) we need to show that, for an arbitrary formula $\phi\in
 \end{equation}
 
 As discussed in the main text, the two critical cases concern the inductive 
-steps for the modalities and the least fixpoint operators.
-
-\btbs
-\item
-for the modalities, \ldots
-\etbs
+steps for the modalities and the least fixpoint operators. Let $ \llang^{+} \in \{\ofoe,\ofoei\}$.
+We start verifying the case of modalities. Hence, consider the formula $\nxt{\al}(\varphi_{1},\ldots,\varphi_{n})$ with $\al(a_{1},\ldots,a_{n}) \in \llang^{+}$. By induction hypothesis, $\phi_\ell \equiv \phi^{*}_\ell$, for $\ell=1, \dots, n$. Now, let $\model$ be a transition system. We have that
+\begin{align*}
+\model \mmodels \nxt{\al}(\varphi_{1},\ldots,\varphi_{n}) \text{ iff } & (R[s_{I}],V_{\overline{\varphi}}) \models \al(a_{1},\ldots,a_{n})  & \text{( by \eqref{eq:mumod})}
+\\
+\text{ iff } & \model^{V_{\overline{\varphi}}} \models \al^{\dag}[s_{I}] & \text{( by Prop. \ref{p:1trl})}
+\\
+\text{ iff } & \model \models \al^{\dag}[\phi_{i}^{*}/a_{i} \mid i \in I][s_{I}] & \text{( by \eqref{eq:valmod}, Def. \ref{def:exp} and IH)}
+\end{align*}
 
 The inductive step for the least fixpoint operator will be justified by 
 Proposition~\ref{p:keyfix}.
-In more detail, given a formula of the form $\mu x. \psi \in\mu_{C}\ofoei$,
+In more detail, given a formula of the form $\mu x. \psi \in\mu_{Y} \llang^{+}$, with $Y=D$ for $\llang^{+} =\ofoe$, and $Y=C$ for $\llang^{+} =\ofoei$, 
 consider the following chain of equivalences:
 \begin{align*}
 s_{I} \in \mng{\mu p.\psi}^{\bbS} \text{ iff } &
-   \text{there is a finite set $Q$ s.t. } 
+   \text{there is a }\begin{cases} \text{ finite} & \\ \text{ noetherian} & \end{cases} \text{ set $Q$ s.t. } 
    s_{I} \in \LFP. (\psi^{\model}_{p})_{\rst{Q}} 
-   & \text{( by \eqref{eq:foei-c})}
+   & \text{( by \eqref{eq:foe-d} and \eqref{eq:foei-c})}
 \\ \text{ iff } &
-\text{there is a finite set $Q$ s.t. } 
+\text{there is a }\begin{cases} \text{ finite} & \\ \text{ noetherian} & \end{cases} \text{ set $Q$ s.t. } 
    s_{I} \in \bigcap \Big\{ P \subseteq Q \mid P \in 
    \PRE((\psi^{\model}_{p})_{\rst{Q}})\Big\} 
 \\ \text{ iff } & 
@@ -270,6 +277,38 @@ s_{I} \in \mng{\mu p.\psi}^{\bbS} \text{ iff } &
     \bbS \models (\mu p. \psi)^{*}[s_{I}].
 \end{align*}
 This concludes the proof of \eqref{eq:xxxx1}.
+
+We now verify that the statement about the modal languages follows from the main statements of the Theorem.
+In order to do this, it is enough to verify that the language $\mu_{D}
+\ML(\prop)$ is a fragment of $\mu_{D}\ofoe(\prop)$, whereas  the language $\mu_{C}\ML(\prop)$ is a fragment of $\mu_{C}\ofoei(\prop)$
+
+We start with the alternation free fragment.
+The language $\mu_{D}\ML(\prop)$ can be stratified in the so called \emph{syntactic weak alternation hierarchy}.  More precisely, let $\Phi \subseteq \mu_{D}\ML(\prop)$.
+Then $\mu(\Phi)$ is the smallest class of formulae such that:
+
+\begin{itemize}
+\item $\Phi, \Phi^\delta \subset \mu(\Phi)$;
+\item If $\psi(p) \in \mu(\Phi)$,  $p$ is positive and free in $\psi$ and does not occurs in any subformula of $\psi$ of the form $\nu q. \varphi$, then $\mu p. \psi \in \mu(\Phi)$;
+\item If $\psi, \varphi \in \mu(\Phi)$, then $\psi \land \varphi, \psi \lor \varphi, \Diamond \psi, \Box \psi \in \mu(\Phi)$;
+%\item If $\psi, \varphi \in \eta(\Phi)$ and $x$ is bound in $\psi$, then $\varphi [ x / \psi] \in \eta(\Phi)$
+\end{itemize}
+The set $\nu(\Phi)$ is defined analogously. Hence, the classes $\Sigma^w_{n}$ and $\Pi^w_{n}$ are inductively defined by setting $\Sigma^w_{0}:=\Pi^w_{0}:=\ML$ and stating $\Sigma^w_{n+1}=\mu(\Pi^w_{n})$
+and $\Pi^w_{n+1}= \nu(\Sigma^w_{n})$, for $n\geq 0$.
+%$$\Delta^w_{n}:= \Sigma^w_{n} \cap \Pi^w_{n}$$
+%
+%The fixpoint alternation depth, $\ad$, of a formula is the number of non-trivial nestings of alternating least and greatest fixpoints. Formally,
+%the alternation depth of $\varphi \in \mathcal{L}_\mu$ is given by
+%\[
+%\ad(\varphi):=\inf\{k: \varphi \in \Delta^\mu_{k+1}\}.
+%\]
+It holds that $\mu_{D}\ML=\bigcup_{n \in \mathbb{N}}\Sigma^w_{n}=\bigcup_{n \in \mathbb{N}}\Pi^w_{n}$. 
+
+We therefore have to verify that $\Sigma^w_{n}, \Pi^w_{n}\subseteq \mu_{D}\ofoe(\prop)$ for every $n \in \mathbb{N}$. Assume the claim true for $n \in \mathbb{N}$. We verify $\Sigma^w_{n+1},\Pi^w_{n+1}\subseteq \mu_{D}\ofoe$. By definition $\Sigma^w_{n+1}=\mu(\Pi^w_{n})$. By induction hypothesis $\Pi^w_{n}\subseteq \mu_{D}\ofoe$. Let $\psi, \varphi \in \Sigma^w_{n+1} \cap \mu_{D}\ofoe$. Clearly $\psi^\delta, \psi \land \varphi, \psi \lor \varphi \in \Sigma^w_{n+1} \cap \mu_{D}\ofoe$. That $\Diamond \psi, \Box \psi \in \Sigma^w_{n+1} \cap \mu_{D}\ofoe $ holds is because $\Diamond \varphi = \nxt{\al}(\varphi)$ for $\al(a):=\exists x.a(x) \in \ofoe$ and $\Box \varphi = \nxt{\al'}(\varphi)$ for $\al'(a):=\forall x.a(x) \in \ofoe$.
+Now, assume $p$ is positive and free in $\psi$ and does not occurs in any subformula of $\psi$ of the form $\nu q. \delta$. This means that $\psi(p) \in \conoe{\mu\ofoe}{p}$, and therefore we conclude that $\mu p.\psi(p) \in \mu_{D}\ofoe$. The case of $\Pi^w_{n+1}$ is treated analogously.
+
+For the continuous case, it is enough to verify that $\cont{\mu\ML}{Q}\subseteq\cont{\mu\ofoei}{Q}$ and $\cocont{\mu\ML}{Q}\subseteq\cocont{\mu\ofoei}{Q}$, for any set $Q$ of propositional variables. But this follows by a straightforward induction on the structure of a formula by noticing as before that $\Diamond \varphi = \nxt{\al}(\varphi)$ for $\al(a):=\exists x.a(x) \in \ofoei$ and $\Box \varphi = \nxt{\al'}(\varphi)$ for $\al'(a):=\forall x.a(x) \in \ofoei$.
+
+This conclude the proof of the Theorem.
 \end{proofof}
 
 % \newpage

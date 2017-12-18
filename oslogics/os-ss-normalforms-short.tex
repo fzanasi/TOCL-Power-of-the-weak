@@ -1,11 +1,11 @@
 % !TEX root = ../00CFVZ_TOCL.tex
-\begin{definition}
+\begin{definition}\label{def:one-step}
 Given a finite set $A$ of \emph{monadic predicates}, a \emph{one-step model} is a tuple $(D, \val) = (D,\val)$
 consisting of a \emph{domain} set $D$ and a \emph{valuation} $\val : A \to \wp D$. We say that $\val' \: A \to \wp D$ is a \emph{restriction} of $\val$ if $\val'(a) \subseteq \val(a)$ for all $a\in A$.
 
 %Depending on context, elements of $A$ will be called \emph{monadic predicates}, \emph{names} or \emph{propositional variables}.
 
-A \emph{one-step language} is a set $\llang(A)$ of objects called \emph{one-step formulas} over $A$. We assume that one-step languages come with a \emph{truth} relation between one-step formulas and models, written $(D, \val) \models \varphi$, and a \emph{dual} $\varphi^{\delta} \in \llang(A)$ for each one-step formula $\varphi$.
+A \emph{one-step language} is a set $\llang(A)$ of objects called \emph{one-step formulas} over $A$. We assume that one-step languages come with a \emph{truth} relation between one-step formulas and models, written $(D, \val) \models \varphi$, and a \emph{dual} $\varphi^{\delta} \in \llang(A)$ for each one-step formula $\varphi$, with the property that $(D,\val) \models \varphi\quad \text{iff}\quad (D,\val^{c}) \not\models \varphi^{\delta}$, where $\val^{c}$ is given by $\val^{c}(a) \mathrel{:=} D \setminus \val(a)$, for all $a$.
 %We require that $\llang(\bigcap_{i} A_{i}) = \bigcap_{i} \llang(A_{i})$, so that for each $\varphi \in \llang(A)$ there is a smallest $A_{\varphi} \subseteq A$ such that $\varphi \in \llang(A_{\varphi})$; this $A_{\varphi}$ is the set of names that \emph{occur} in $\varphi$.
 \end{definition}
 
@@ -100,7 +100,8 @@ In the rest of the subsection we recall from \cite{CFVZ-ModelTheoryPaper} syntac
 
 \index{form, basic!$\ofoe$}
 \index{$\posdbnfofoe{\vlist{T}}{\Pi}$}
-\begin{definition}%[Basic form for \ofoe]
+\begin{definition}%[Basic form for \ofoe] 
+\label{def:basicform-ofoe}
 \begin{enumerate}[(i)]
 \item A \emph{type} $T$ is just a subset of $A$. It defines a $\ofoe$-formula $\tau^{+}_T(x) \df \bigwedge_{a \in T} a(x)$. Given a one-step model $(D,V)$, $s \in D$ \emph{witnesses} a type $T$ if $(D,V), \ass[x\mapsto s] \models \tau^{+}_T(x)$ for any~$\ass$.
 \item We say that $\varphi \in \ofoe(A)$ is in \emph{basic form} if $\varphi = \bigvee \posdbnfofoe{\vlist{T}}{\Pi}$ where each disjunct is of the form
@@ -157,7 +158,7 @@ We now provide analogous characterisations for $\ofoei(A)$. The capacity of $\of
 \index{$\mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{A'}$}
 \index{$\mondbnfinf{\Sigma}{A'}$}
 \index{$\posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$}
-\begin{definition}
+\begin{definition}\label{def:basicform-ofoei}
 We say that $\varphi \in \ofoei(A)$ is in \emph{basic form} if $\varphi = \bigvee \posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$ where each disjunct is of the form
 \begin{align*}
 	\posdbnfofoei{\vlist{T}}{\Pi}{\Sigma} &:= \posdbnfofoe{\vlist{T}}{\Pi \cup \Sigma} \land \posdbnfinf{\Sigma}\\

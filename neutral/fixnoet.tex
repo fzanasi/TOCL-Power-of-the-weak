@@ -143,15 +143,14 @@ winning strategy $\chi'$ for her in $\UG_F@s$.
 
 \begin{proof}
 For point (1) we reason as follows. 
-Let $\chi$  be a positional winning strategy for $\eloise$ in $\UG_F@s$. 
-We may represent $\chi$ as a map $T: S \to \wp{(S)}$. 
-Hence, for every $t \in \win_{\eloise}(\UG_{F})$, it holds that $t \in F(T(t))$ 
+Let $\chi: S \to \wp{(S)}$  be a positional winning strategy for $\eloise$ in $\UG_F@s$. 
+Hence, for every $t \in \win_{\eloise}(\UG_{F})$, it holds that $t \in F(\chi(t))$ 
 and therefore that there is a positional winning strategy $\chi_t$ for $\eloise$ 
 in the game $\egame(\phi,\bbS[p \mapsto \chi(s)])$ starting at $(\phi,t)$. 
-\btbs
-\item
-YV: I get confused with the T,t and $\chi, s$.
-\etbs
+%\btbs
+%\item
+%YV: I get confused with the T,t and $\chi, s$.
+%\etbs
 The following  strategy is thence a compatible winning strategy for $\eloise$ in
 $\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$:
 \begin{itemize}
@@ -206,14 +205,12 @@ the match is winning for $\abelard$, a contradiction.
 \end{pfclaim}
 
 Then, let $F := \phi_{p}^{\bbS}$ be the monotone functional defined by $\phi(p)$.
-Assume that $s \in \mng{\mu p.\phi}^{\model}$, which means that $s \in \LFP. F$. 
-By Proposition~\ref{p:unfg}, $\eloise$ has a descending winning strategy $\chi$
+Assume that $s \in \mng{\mu p.\phi}^{\model}$. This means that $s \in \LFP. F$, and by Proposition~\ref{p:afmc-2}, we obtain that $s \in \LFP. F\rst{T_{\ystrat,r}}$. We verify that $T_{\chi, s}$ is noetherian.
+Applying Proposition~\ref{p:unfg} to the fact that $s \in \LFP. F$ yields that $\eloise$ has a descending winning strategy $\chi$
 in $\UG_{F}@s$. 
-By Proposition \ref{p:unfold=evalgame2} and Claim \ref{p:strategybundledEv}, the
-set $T_{\chi, s}$ is noetherian.   
-We therefore conclude by applying  Proposition~\ref{p:afmc-2}.
-\btbs
-\item
-YV: some more detail here?
-\etbs
+By Proposition \ref{p:unfold=evalgame2}, $\eloise$ has a winning strategy $\chi'$ in $\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$ compatible with $\chi$. Because of compatibility, every node in $T_{\chi, s}$ lies on some path of $B^\model(\ystrat)$. From Claim \ref{p:strategybundledEv}, we known that $B^\model(\ystrat)$ is a bundle, meaning that  $T_{\chi, s}$ is noetherian as required.   
+%\btbs
+%\item
+%YV: some more detail here?
+%\etbs
 \end{proofof}

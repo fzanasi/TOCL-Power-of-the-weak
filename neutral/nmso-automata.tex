@@ -46,10 +46,10 @@ Just as for $\wmso$-automata, also for $\nmso$-automata the projection construct
 \end{description}
 The only difference with the two-sorted construction for $\wmso$-automata is that, in the non-deterministic mode, the cardinality of nodes to which $\exists$'s strategy assigns macro-states is irrelevant. Indeed, $\nmso$'s finiteness is only on the vertical dimension: assigning an odd parity value to macro-states will suffice to guarantee that the non-deterministic mode processes just a well-founded portion of any accepted tree.
 
-We now proceed in steps towards the construction of $\aut^{\noet}$. First, the following lifting from states to macro-states parallels Definition \ref{DEF_finitary_lifting}, but for the one-step language $\ofoe$ proper of $\nmso$-automata.
+We now proceed in steps towards the construction of $\aut^{\noet}$. First, the following lifting from states to macro-states parallels Definition \ref{DEF_finitary_lifting}, but for the one-step language $\ofoe$ proper of $\nmso$-automata. It is based on the basic form for $\ofoe$-formulas, see Definition \ref{def:basicform-ofoe}.
 
 \begin{definition}\label{DEF_noetherian_lifting}
-Let $\varphi \in {\ofoe}^+(A \times A)$ be of shape $\dbnfofoe{\vlist{T}}{\Pi}$ for some $\Pi \subseteq \shA$ and $\vlist{T} = \{T_1,\dots,T_k\} \subseteq \shA$. We define $\varphi^{\noet}$ as $\dbnfofoe{\lift{\vlist{T}}}{\lift{\Pi}} \in {\ofoe}^+(\shA )$, that means,
+Let $\varphi \in {\ofoe}^+(A \times A)$ be of shape $\posdbnfofoe{\vlist{T}}{\Pi}$ for some $\Pi \subseteq \shA$ and $\vlist{T} = \{T_1,\dots,T_k\} \subseteq \shA$. We define $\varphi^{\noet}$ as $\posdbnfofoe{\lift{\vlist{T}}}{\lift{\Pi}} \in {\ofoe}^+(\shA )$, that means,
 \begin{equation}\label{eq:unfoldingNablaofoe}
 \varphi^{\noet} \ \df \ 
     \exists \vlist{x}.\big(\arediff{\vlist{x}} \land \bigwedge_{0 \leq i \leq n} \tau^+_{\lift{T}_i}(x_i)
@@ -61,20 +61,18 @@ Let $\varphi \in {\ofoe}^+(A \times A)$ be of shape $\dbnfofoe{\vlist{T}}{\Pi}$ 
 It is instructive to compare \eqref{eq:unfoldingNablaofoe} with its 
 $\wmso$-counterpart \eqref{eq:unfoldingNablaolque}: the difference is that, 
 because the quantifiers $\qu$ and $\dqu$ are missing, the sentence does not 
-impose any cardinality requirement, but only enforces functionality 
-(Definition \ref{def:functionalsentenceofoe}).
-
+impose any cardinality requirement, but only enforces functionality --- \emph{cf.} Section \ref{sec:onestep-short}. 
 %The idea of translation $(\cdot)^{\noet}$ is to encode at the one-step level the non-deterministic mode of $\aut^{\noet}$: the property to enforce is that $\varphi^{\noet}$ is \emph{functional} in $\shA$, that means, whenever $(D,\val \: A \to \wp(D)) \models \varphi^{\noet}$, then there is $\val'  \: A \to \wp(D)$ such that $(D, \val') \models \varphi^{\noet}$ and  $ \val'(q_1)\cap \val'(q_2) = \emptyset$ for all $q_1,q_2 \in \shA$. 
 
 \begin{lemma}\label{lemma:automatafunctionalsentence}
 Let $\varphi \in {\ofoe}^+(A \times A)$ and $\varphi^{\noet}\in {\ofoe}^+(\shA )$ be as in Definition~\ref{DEF_noetherian_lifting}. Then $\varphi^{\noet}$ is functional in $\shA$.
  \end{lemma}
 \begin{proof}
-Each element of $\lift{\vlist{T}}$ and $\lift{\Pi}$ is by definition either the empty set or a singleton $\{Q\}$ for some $Q \in \shA$. Then the statement follows from Proposition \ref{lemma:functionalsentenceofoe}.\end{proof}
+Each element of $\lift{\vlist{T}}$ and $\lift{\Pi}$ is by definition either the empty set or a singleton $\{Q\}$ for some $Q \in \shA$. Then the statement follows from Theorem \ref{th:ofoe-normalforms} .\end{proof}
 
- We are now ready to define the transition function for macro-states. The following adapts Definition \ref{PROP_DeltaPowerset} to the one step-language $\ofoe$ of $\nmso$-automata, and its normal form result, Theorem~\ref{thm:bnfofoe}. Also, we use the translation $(\cdot)^{\star}$ from Definition \ref{DEF_delta star}.
+ We are now ready to define the transition function for macro-states. The following adapts Definition \ref{PROP_DeltaPowerset} to the one step-language $\ofoe$ of $\nmso$-automata, and its normal form result, Theorem~\ref{th:ofoe-normalforms}. Also, we use the translation $(\cdot)^{\star}$ from Definition \ref{DEF_delta star}.
 \begin{definition}\label{PROP_DeltaPowerset_noet}
-Let $\aut = \tup{A,\tmap,\pmap,a_I}$ be a $\nmso$-automaton. Fix any $c \in C$ and $Q \in \shA$. By Theorem~\ref{thm:bnfofoe} there is a sentence $\Psi_{Q,c} \in {\ofoe}^+(A\times A)$ in the basic form $\bigvee \dbnfofoe{\vlist{T}}{\Pi}$, for some $\Pi \subseteq \shA$ and $T_i \subseteq A \times A$, such that $\bigwedge_{a \in \Ran(Q)} \tmap^{\star}(a,c) \equiv \Psi_{Q,c}$.
+Let $\aut = \tup{A,\tmap,\pmap,a_I}$ be a $\nmso$-automaton. Fix any $c \in C$ and $Q \in \shA$. By Theorem~\ref{th:ofoe-normalforms} there is a sentence $\Psi_{Q,c} \in {\ofoe}^+(A\times A)$ in the basic form $\bigvee \dbnfofoe{\vlist{T}}{\Pi}$, for some $\Pi \subseteq \shA$ and $T_i \subseteq A \times A$, such that $\bigwedge_{a \in \Ran(Q)} \tmap^{\star}(a,c) \equiv \Psi_{Q,c}$.
 By definition, $\Psi_{Q,c} = \bigvee_{n}\varphi_n$, with each $\phi_{k}$ of shape $\dbnfofoe{\vlist{T}}{\Pi}$.
 %
 We put $\bmDe(Q,c) := \bigvee_{n}\varphi_n^{\noet}  \in {\ofoe}^+(\shA)$, where the translation $(\cdot)^{\noet}$ is as in Definition \ref{DEF_noetherian_lifting}.

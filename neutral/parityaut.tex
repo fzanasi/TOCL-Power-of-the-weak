@@ -57,29 +57,28 @@ Explain acceptance game in words
 Many properties of parity automata can already be determined at the one-step
 level.
 An important example concerns the notion of complementation, which will be used
-later in this section.
-
-\begin{definition}
-\label{d:bdual1}
-Two one-step formulas $\varphi$ and $\psi$ are each other's \emph{Boolean dual}
-if for every structure $(D,\val)$ we have $(D,\val) \models \varphi\quad
-\text{iff}\quad (D,\val^{c}) \not\models \psi$, where $\val^{c}$ is the 
-valuation given by $\val^{c}(a) \mathrel{:=} D \setminus \val(a)$, for all $a$.
-%
-A one-step language $\llang$ is \emph{closed under Boolean duals} if for every
-set $A$, each formula $\varphi \in \llang(A)$ has a Boolean dual $\dual{\varphi}
-\in \llang(A)$.
-\end{definition}
-
-Following ideas from~\cite{Muller1987,DBLP:conf/calco/KissigV09}, we can use
-Boolean duals, together with a \emph{role switch} between $\abelard$ and
+later in this section. Recall the notion of \emph{dual} of a one-step formula (Definition \ref{def:one-step}). Following ideas from~\cite{Muller1987,DBLP:conf/calco/KissigV09}, we can use duals, together with a \emph{role switch} between $\abelard$ and
 $\eloise$, in order to define a negation or complementation operation on 
 automata.
+
+%\begin{definition}
+%\label{d:bdual1}
+%Two one-step formulas $\varphi$ and $\psi$ are each other's \emph{Boolean dual}
+%if for every structure $(D,\val)$ we have $(D,\val) \models \varphi\quad
+%\text{iff}\quad (D,\val^{c}) \not\models \psi$, where $\val^{c}$ is the 
+%valuation given by $\val^{c}(a) \mathrel{:=} D \setminus \val(a)$, for all $a$.
+%%
+%A one-step language $\llang$ is \emph{closed under Boolean duals} if for every
+%set $A$, each formula $\varphi \in \llang(A)$ has a Boolean dual $\dual{\varphi}
+%\in \llang(A)$.
+%\end{definition}
+
+
 
 \begin{definition}
 \label{d:caut}
 Assume that, for some one-step language $\llang$, the map $\dual{(-)}$
-provides, for each set $A$, a Boolean dual $\dual{\varphi} \in \llang(A)$ for each
+provides, for each set $A$, a dual $\dual{\varphi} \in \llang(A)$ for each
 $\varphi \in \llang(A)$.
 We define the \emph{complement} of a given $\llang$-automaton 
 $\bbA = \tup{A,\tmap,\pmap,a_I}$ as the automaton $\dual{\bbA} \isdef 
@@ -100,7 +99,7 @@ that the power of $\eloise$ in $\agame(\dual{\bbA},\model)$ is the same
 as that of $\abelard$ in $\agame(\bbA,\model)$, as defined 
 in~\cite{DBLP:conf/calco/KissigV09}. 
 As an immediate consequence, one may show that if the one-step language $\llang$
-is closed under Boolean duals, then the class $\Aut(\llang)$ is closed under 
+is closed under duals, then the class $\Aut(\llang)$ is closed under 
 taking complementation.
 Further on we will use Proposition~\ref{prop:autcomplementation} to show that
 the same may apply to some subclasses of $\Aut(\llang)$.

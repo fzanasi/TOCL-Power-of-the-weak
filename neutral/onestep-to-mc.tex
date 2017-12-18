@@ -34,16 +34,16 @@ The semantics of this language is given as follows.
 Let $\model$ be a transition system.
 The satisfaction relation $\mmodels$ is defined in the standard way, with the 
 following clause for the modality $\nxt{\alpha}$:
-$$
+\begin{equation}\label{eq:mumod}
 \model \mmodels \nxt{\al}(\varphi_{1},\ldots,\varphi_{n})
 \quad\text{iff}\quad 
 (R[s_{I}],V_{\overline{\varphi}}) \models \al(a_{1},\ldots,a_{n}),
-$$
+\end{equation}
 where $V_{\overline{\varphi}}$ is the one-step valuation given by 
-\[
+\begin{equation}\label{eq:valmod}
 V_{\overline{\varphi}}(a_{i}) \isdef 
   \{ t \in R[s_{I}] \mid \model.t \mmodels \varphi_{i}\}.
-\]
+\end{equation}
 \end{definition}
 
 % \begin{example}
@@ -173,7 +173,7 @@ follows:
    \mid \mu p.\phi'
 \end{equation*}
 where $p\in\props$, $q \in \qprops$, $\psi$, $\psi_{i}$ are $\qprops$-free 
-$\MC$-formula, $\al(a_{1},\ldots,a_{k},b_{1},\ldots,b_{m}) \in 
+$\mu\llang$-formula, $\al(a_{1},\ldots,a_{k},b_{1},\ldots,b_{m}) \in 
 \cont{\llang}{\ol{a}}(\ol{a},\ol{b})$,
 and $\phi' \in \cont{\mu\llang}{\qprops\cup\{p\}}$. 
 The \emph{co-continuous} fragment $\cocont{\mu\llang}{Q}$ is defined dually.
@@ -215,6 +215,7 @@ where $\al(a_{1},\ldots,a_{n}) \in \llang^{+}$,
 $\phi' \in \mu_{C}\llang \cap \cont{\mu\llang}{p}$
 and dually $\phi'' \in \mu_{C}\llang \cap \cocont{\mu\llang}{p}$.
 \end{definition}
+
 
 
 %%%
