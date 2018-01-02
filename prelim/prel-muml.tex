@@ -73,12 +73,69 @@ s \in \mng{\mu p.\varphi}^{\model} %\iff s \in \Win_{\eloi}(\UG(\varphi_{x}^{\bb
 Formulas of the modal $\mu$-calculus are classified according to their
 \emph{alternation depth}, which roughly is given as the maximal length of
 a chain of nested alternating least and greatest fixpoint operators~\cite{Niwinski86}.
-The \emph{alternation-free fragment} of the modal $\mu$-calculus~($\AFMC$) is the collection of
-$\MC$-formulas without nesting of least and greatest fixpoint operators.
+The \emph{alternation-free fragment} of the modal $\mu$-calculus~($\AFMC$) is usually defined as the collection of
+$\MC$-formulas without nesting of least and greatest fixpoint operators. It can also be also given a more standard grammatical definition as follows.
+
+Given a set $\qprops$ of propositional variables, we define the fragment of \MC \emph{noetherian} in $\qprops$, denoted by $\noe{\mu\ML}{\qprops}$,
+by the following 
+grammar:
+\begin{equation*}
+   \varphi ::= q
+   \mid \psi
+   \mid \varphi \lor \varphi
+   \mid \varphi \land \varphi
+     \mid \Diamond \varphi
+       \mid \Box \varphi
+   \mid \mu p.\phi'
+\end{equation*}
+where $q \in \qprops$, $\psi$ is a $\qprops$-free $\MC$-formula, and 
+$\phi' \in \noe{\mu\ML}{\qprops\cup\{p\}}$. 
+The \emph{co-noetherian} fragment $\conoe{\mu\ML}{Q}$ is defined dually.
 
 \begin{definition}
-  Let $\varphi$ be a formula of the modal $\mu$-calculus. We say that $\varphi\in\AFMC$ iff for all subformulas $\mu p.\psi_1$ and $\nu q.\psi_2$ we have that $p$ is not free in $\psi_2$ and $q$ is not free in $\psi_1$.
+The formulas of the \emph{alternation-free} $\mu$-calculus $\AFMC$ 
+are defined by the following grammar:
+\begin{equation*}
+   \varphi ::= 
+      q \mid \neg q 
+   \mid \varphi\lor\varphi \mid \varphi\land\varphi 
+      \mid \Diamond \varphi
+       \mid \Box \varphi
+   \mid \mu p. \varphi'    
+   \mid \nu p. \varphi'',
+\end{equation*} 
+where 
+$\phi' \in \AFMC \cap \noe{\mu\ML}{p}$
+and dually $\phi'' \in \AFMC \cap \conoe{\mu\ML}{p}$.
 \end{definition}
+
+It is then immediate to verify that the above definition indeed captures exactly all formulas without alternation of least and greatest fixpoints.
+\begin{fact}
+  Let $\varphi$ be a formula of the modal $\mu$-calculus. $\varphi\in\AFMC$ iff for all subformulas $\mu p.\psi_1$ and $\nu q.\psi_2$ we have that $p$ is not free in $\psi_2$ and $q$ is not free in $\psi_1$.
+\end{fact}
+%The language $\mu_{D}\ML(\prop)$ can be stratified in the so called \emph{syntactic weak alternation hierarchy}.  More precisely, let $\Phi \subseteq \mu_{D}\ML(\prop)$.
+%Then $\mu(\Phi)$ is the smallest class of formulae such that:
+%
+%\begin{itemize}
+%\item $\Phi, \Phi^\delta \subset \mu(\Phi)$;
+%\item If $\psi(p) \in \mu(\Phi)$,  $p$ is positive and free in $\psi$ and does not occurs in any subformula of $\psi$ of the form $\nu q. \varphi$, then $\mu p. \psi \in \mu(\Phi)$;
+%\item If $\psi, \varphi \in \mu(\Phi)$, then $\psi \land \varphi, \psi \lor \varphi, \Diamond \psi, \Box \psi \in \mu(\Phi)$;
+%%\item If $\psi, \varphi \in \eta(\Phi)$ and $x$ is bound in $\psi$, then $\varphi [ x / \psi] \in \eta(\Phi)$
+%\end{itemize}
+%The set $\nu(\Phi)$ is defined analogously. Hence, the classes $\Sigma^w_{n}$ and $\Pi^w_{n}$ are inductively defined by setting $\Sigma^w_{0}:=\Pi^w_{0}:=\ML$ and stating $\Sigma^w_{n+1}=\mu(\Pi^w_{n})$
+%and $\Pi^w_{n+1}= \nu(\Sigma^w_{n})$, for $n\geq 0$.
+%%$$\Delta^w_{n}:= \Sigma^w_{n} \cap \Pi^w_{n}$$
+%%
+%%The fixpoint alternation depth, $\ad$, of a formula is the number of non-trivial nestings of alternating least and greatest fixpoints. Formally,
+%%the alternation depth of $\varphi \in \mathcal{L}_\mu$ is given by
+%%\[
+%%\ad(\varphi):=\inf\{k: \varphi \in \Delta^\mu_{k+1}\}.
+%%\]
+%It holds that $\mu_{D}\ML=\bigcup_{n \in \mathbb{N}}\Sigma^w_{n}=\bigcup_{n \in \mathbb{N}}\Pi^w_{n}$. 
+%
+%We therefore have to verify that $\Sigma^w_{n}, \Pi^w_{n}\subseteq \mu_{D}\ML(\prop)$ for every $n \in \mathbb{N}$. Assume the claim true for $n \in \mathbb{N}$. We verify $\Sigma^w_{n+1},\Pi^w_{n+1}\subseteq \mu_{D}\ML$. By definition $\Sigma^w_{n+1}=\mu(\Pi^w_{n})$. By induction hypothesis $\Pi^w_{n}\subseteq \mu_{D}\ML$. Let $\psi, \varphi \in \Sigma^w_{n+1} \cap \mu_{D}\ML$. Clearly $\psi^\delta, \psi \land \varphi, \psi \lor \varphi,\Diamond \psi, \Box \psi  \in \Sigma^w_{n+1} \cap \mu_{D}\ofoe$.
+%Now, assume $p$ is positive and free in $\psi$ and does not occurs in any subformula of $\psi$ of the form $\nu q. \delta$. This means that $\psi(p) \in \conoe{\mu\ML}{p}$, and therefore we conclude that $\mu p.\psi(p) \in \mu_{D}\ML$. The case of $\Pi^w_{n+1}$ is treated analogously.
+
 
 Over arbitrary transition systems, this fragment is
 less expressive than the whole $\MC$~\cite{Park79}. %That is, there is a $\MC$-formula $\varphi$ such that $\ext{\varphi}$ is not $\AFMC$-definable~\cite{Park79}.

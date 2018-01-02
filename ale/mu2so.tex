@@ -278,37 +278,9 @@ s_{I} \in \mng{\mu p.\psi}^{\bbS} \text{ iff } &
 \end{align*}
 This concludes the proof of \eqref{eq:xxxx1}.
 
-We now verify that the statement about the modal languages follows from the main statements of the Theorem.
-In order to do this, it is enough to verify that the language $\mu_{D}
-\ML(\prop)$ is a fragment of $\mu_{D}\ofoe(\prop)$, whereas  the language $\mu_{C}\ML(\prop)$ is a fragment of $\mu_{C}\ofoei(\prop)$
-
-We start with the alternation free fragment.
-The language $\mu_{D}\ML(\prop)$ can be stratified in the so called \emph{syntactic weak alternation hierarchy}.  More precisely, let $\Phi \subseteq \mu_{D}\ML(\prop)$.
-Then $\mu(\Phi)$ is the smallest class of formulae such that:
-
-\begin{itemize}
-\item $\Phi, \Phi^\delta \subset \mu(\Phi)$;
-\item If $\psi(p) \in \mu(\Phi)$,  $p$ is positive and free in $\psi$ and does not occurs in any subformula of $\psi$ of the form $\nu q. \varphi$, then $\mu p. \psi \in \mu(\Phi)$;
-\item If $\psi, \varphi \in \mu(\Phi)$, then $\psi \land \varphi, \psi \lor \varphi, \Diamond \psi, \Box \psi \in \mu(\Phi)$;
-%\item If $\psi, \varphi \in \eta(\Phi)$ and $x$ is bound in $\psi$, then $\varphi [ x / \psi] \in \eta(\Phi)$
-\end{itemize}
-The set $\nu(\Phi)$ is defined analogously. Hence, the classes $\Sigma^w_{n}$ and $\Pi^w_{n}$ are inductively defined by setting $\Sigma^w_{0}:=\Pi^w_{0}:=\ML$ and stating $\Sigma^w_{n+1}=\mu(\Pi^w_{n})$
-and $\Pi^w_{n+1}= \nu(\Sigma^w_{n})$, for $n\geq 0$.
-%$$\Delta^w_{n}:= \Sigma^w_{n} \cap \Pi^w_{n}$$
-%
-%The fixpoint alternation depth, $\ad$, of a formula is the number of non-trivial nestings of alternating least and greatest fixpoints. Formally,
-%the alternation depth of $\varphi \in \mathcal{L}_\mu$ is given by
-%\[
-%\ad(\varphi):=\inf\{k: \varphi \in \Delta^\mu_{k+1}\}.
-%\]
-It holds that $\mu_{D}\ML=\bigcup_{n \in \mathbb{N}}\Sigma^w_{n}=\bigcup_{n \in \mathbb{N}}\Pi^w_{n}$. 
-
-We therefore have to verify that $\Sigma^w_{n}, \Pi^w_{n}\subseteq \mu_{D}\ofoe(\prop)$ for every $n \in \mathbb{N}$. Assume the claim true for $n \in \mathbb{N}$. We verify $\Sigma^w_{n+1},\Pi^w_{n+1}\subseteq \mu_{D}\ofoe$. By definition $\Sigma^w_{n+1}=\mu(\Pi^w_{n})$. By induction hypothesis $\Pi^w_{n}\subseteq \mu_{D}\ofoe$. Let $\psi, \varphi \in \Sigma^w_{n+1} \cap \mu_{D}\ofoe$. Clearly $\psi^\delta, \psi \land \varphi, \psi \lor \varphi \in \Sigma^w_{n+1} \cap \mu_{D}\ofoe$. That $\Diamond \psi, \Box \psi \in \Sigma^w_{n+1} \cap \mu_{D}\ofoe $ holds is because $\Diamond \varphi = \nxt{\al}(\varphi)$ for $\al(a):=\exists x.a(x) \in \ofoe$ and $\Box \varphi = \nxt{\al'}(\varphi)$ for $\al'(a):=\forall x.a(x) \in \ofoe$.
-Now, assume $p$ is positive and free in $\psi$ and does not occurs in any subformula of $\psi$ of the form $\nu q. \delta$. This means that $\psi(p) \in \conoe{\mu\ofoe}{p}$, and therefore we conclude that $\mu p.\psi(p) \in \mu_{D}\ofoe$. The case of $\Pi^w_{n+1}$ is treated analogously.
-
-For the continuous case, it is enough to verify that $\cont{\mu\ML}{Q}\subseteq\cont{\mu\ofoei}{Q}$ and $\cocont{\mu\ML}{Q}\subseteq\cocont{\mu\ofoei}{Q}$, for any set $Q$ of propositional variables. But this follows by a straightforward induction on the structure of a formula by noticing as before that $\Diamond \varphi = \nxt{\al}(\varphi)$ for $\al(a):=\exists x.a(x) \in \ofoei$ and $\Box \varphi = \nxt{\al'}(\varphi)$ for $\al'(a):=\forall x.a(x) \in \ofoei$.
-
-This conclude the proof of the Theorem.
+We finally verify that the statement about the modal languages follows from the main statement of the Theorem.
+In order to do this, it is enough to check that for any set $Q$ of propositional variables, both $\noe{\mu\ML}{Q}\subseteq\noe{\mu\ofoei}{Q}$ and $\conoe{\mu\ML}{Q}\subseteq\conoe{\mu\ofoei}{Q}$, and $\cont{\mu\ML}{Q}\subseteq\cont{\mu\ofoei}{Q}$ and $\cocont{\mu\ML}{Q}\subseteq\cocont{\mu\ofoei}{Q}$ hold. But this follows by a straightforward induction on the structure of a formula by noticing that $\Diamond \varphi = \nxt{\al}(\varphi)$ for $\al(a):=\exists x.a(x) \in \ofoei \cap \ofoe$ and $\Box \varphi = \nxt{\al'}(\varphi)$ for $\al'(a):=\forall x.a(x) \in \ofoei \cap \ofoe$.
+%This conclude the proof of the Theorem.
 \end{proofof}
 
 % \newpage

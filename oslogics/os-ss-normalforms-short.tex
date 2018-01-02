@@ -14,7 +14,7 @@ The following semantic properties will be useful when studying parity automata.
 \begin{definition}\label{def:semnotions} Given a one-step language $\llang(A)$ and $\varphi \in \llang(A)$,
 \begin{itemize}
 \item $\varphi$ is \emph{monotone} in $B \subseteq A$ if for every one step model $(D,\val)$ and $V' \: A \to \wp(D)$ such that $V(b) \subseteq V'(b)$ for all $b \in B$, $(D,\val) \models \varphi$ implies $(D,\val') \models \varphi$.
-\item $\varphi$ is \emph{functional} in $B\subseteq A$ if it is monotone in $B \subseteq A$ and, whenever $(D,\val) \models \varphi$, then there exists a restriction $\val' \: A \to \wp(D)$ of $\val$ such that $(D,\val') \models \varphi$ and $s \in \val'(b)$ for some $b \in B$ implies $s \not\in \val'(a)$ for all $a \in A\setminus\{b\}$.
+\item $\varphi$ is \emph{functional} in $B\subseteq A$ if it is monotone in $B \subseteq A$ and, whenever $(D,\val) \models \varphi$, then there exists a restriction $\val' \: A \to \wp(D)$ of $\val$ such that $(D,\val') \models \varphi$ and $s \in \val'(b)$ for some $b \in B$ implies $s \not\in \val'(a)$ for all $a \in B\setminus\{b\}$.
 \item $\varphi$ is \emph{continuous} in $B \subseteq A$ if $\varphi$ is monotone in $B$ and, whenever $(D,\val) \models \varphi$, then there exists a restriction $V' \: A \to \wp(D)$ of $V$ such that $(D,\val') \models \varphi$ and $V'(b)$ is finite for all $b \in B$.
 %\item $\varphi$ is \emph{functionally continuous} in $B \subseteq A$ if, whenever $(D,\val) \models \varphi$, then there exists a restriction $\val' \: A \to \wp(D)$ of $\val$ witnessing both functionality and continuity in $B$.
 \item $\varphi$ is \emph{co-continuous} in $B \subseteq A$ if its dual $\varphi^{\delta}$ is continuous in $B$.
