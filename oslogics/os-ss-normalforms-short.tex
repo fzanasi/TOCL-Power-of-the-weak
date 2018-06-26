@@ -1,7 +1,13 @@
 % !TEX root = ../00CFVZ_TOCL.tex
 \begin{definition}\label{def:one-step}
 Given a finite set $A$ of \emph{monadic predicates}, a \emph{one-step model} is a tuple $(D, \val) = (D,\val)$
-consisting of a \emph{domain} set $D$ and a \emph{valuation} $\val : A \to \wp D$. We say that $\val' \: A \to \wp D$ is a \emph{restriction} of $\val$ if $\val'(a) \subseteq \val(a)$ for all $a\in A$.
+consisting of a \emph{domain} set $D$ and a \emph{valuation} $\val : A \to \wp D$. We say that $\val' : A \to \wp D$
+is a \emph{$B$-extension of} $\val : A \to \wp D$, notation $\val \leq_{B} \val'$, if $\val(b) \subseteq \val'(b)$ for every $b \in B$,
+and $\val(a) = \val'(a)$ for every $a \in A \setminus B$. We say that $V: A \to \wp D$ \emph{separates} $B
+\subseteq 
+A$ if $(\val^{-1}(d) \cap B) \leq 1$, for every $d \in D$.
+%
+%We say that $\val' \: A \to \wp D$ is a \emph{restriction} of $\val$ if $\val'(a) \subseteq \val(a)$ for all $a\in A$.
 
 %Depending on context, elements of $A$ will be called \emph{monadic predicates}, \emph{names} or \emph{propositional variables}.
 
@@ -11,15 +17,18 @@ A \emph{one-step language} is a map assigning to $A$ a set $\llang(A)$ of object
 
 The following semantic properties will be useful when studying parity automata.
 
-\begin{definition}\label{def:semnotions} Given a one-step language $\llang(A)$ and $\varphi \in \llang(A)$,
+\begin{definition}\label{def:semnotions} Given a one-step language $\llang(A)$, $\varphi \in \llang(A)$ and $B \subseteq A$,
 \begin{itemize}
-\item $\varphi$ is \emph{monotone} in $B \subseteq A$ if for every one step model $(D,\val)$ and $V' \: A \to \wp(D)$ such that $V(b) \subseteq V'(b)$ for all $b \in B$, $(D,\val) \models \varphi$ implies $(D,\val') \models \varphi$.
-\item $\varphi$ is \emph{functional} in $B\subseteq A$ if it is monotone in $B \subseteq A$ and, whenever $(D,\val) \models \varphi$, then there exists a restriction $\val' \: A \to \wp(D)$ of $\val$ such that $(D,\val') \models \varphi$ and $s \in \val'(b)$ for some $b \in B$ implies $s \not\in \val'(a)$ for all $a \in B\setminus\{b\}$.
-\item $\varphi$ is \emph{continuous} in $B \subseteq A$ if $\varphi$ is monotone in $B$ and, whenever $(D,\val) \models \varphi$, then there exists a restriction $V' \: A \to \wp(D)$ of $V$ such that $(D,\val') \models \varphi$ and $V'(b)$ is finite for all $b \in B$.
+\item $\varphi$ is \emph{$B$-monotone} if for every one step models $(D,\val)$ and $(D,\val')$, $(D,V) \models \phi$ and $V \leq_{B} V'$ imply $(D,V'),g \models \phi$.
+\item $\varphi$ is \emph{$B$-continuous} if $\varphi$ is monotone in $B$ and, whenever $(D,\val) \models \varphi$, then there exists $V' \: A \to \wp(D)$ such that $V \leq_{B} V'$, $(D,\val') \models \varphi$ and $V'(b)$ is finite for all $b \in B$.
 %\item $\varphi$ is \emph{functionally continuous} in $B \subseteq A$ if, whenever $(D,\val) \models \varphi$, then there exists a restriction $\val' \: A \to \wp(D)$ of $\val$ witnessing both functionality and continuity in $B$.
-\item $\varphi$ is \emph{co-continuous} in $B \subseteq A$ if its dual $\varphi^{\delta}$ is continuous in $B$.
+\item $\varphi$ is \emph{$B$-cocontinuous} if its dual $\varphi^{\delta}$ is continuous in $B$.
+\item $\varphi \in \llang(A)$ is \emph{$B$-separating} if $\varphi$ is monotone in $B$ and, whenever $(D,\val) \models \varphi$, then there exists a $B$-separating $V' \: A \to \wp(D)$ such that $V \leq_{B} V'$, $(D,\val') \models \varphi$. %\item $\varphi$ is \emph{functional} in $B\subseteq A$ if it is monotone in $B \subseteq A$ and, whenever $(D,\val) \models \varphi$, then there exists $\val' \: A \to \wp(D)$ such that $V \leq_{B} V'$, $(D,\val') \models \varphi$ and $s \in \val'(b)$ for some $b \in B$ implies $s \not\in \val'(a)$ for all $a \in B\setminus\{b\}$.
 \end{itemize}
 \end{definition}
+
+Intuitively, a formula $\varphi$ is $B$-separating if its truth in a monadic model never requires an element of the domain to satisfy two distinct predicates in $B$ at the same time; any valuation violating this constraint can be reduced to a valuation satisfying it, without sacrificing the truth of $\varphi$.
+
 
 Our chief examples of one-step languages will be variants of first-order logic.
 
@@ -51,7 +60,24 @@ Formulas of $\ofoe$ are interpreted over one-step models $(D,\val \: A \to \wp(D
 
 %As desired, this definition induces a truth relation $(D, \val) \models \varphi$ between one-step models and one-step formulas, as the one-step formulas of $\ofoe(A)$ are defined to be the \emph{sentences}, thus there is no need of an explicit free variables assignment $\ass$ in determining their semantics.
 
-In order for the semantic notion of co-continuity to be well-defined (Definition \ref{def:semnotions}), we also need to define what is the dual of a formula. This just coincides with the familiar notion of boolean dual.
+
+
+We now introduce an extension of first-order logic with two additional quantifiers, which first appeared in the context of Mostowski's study~\cite{Mostowski1957} of generalised quantifiers. The first, written $\qu x. \varphi$, expresses that there exist infinitely many elements satisfying a formula $\varphi$. Its dual, written $\dqu x. \varphi$, expresses that there are \emph{at most finitely many} elements \emph{falsifying} the formula $\varphi$. The formal definition goes as follows, where $\mathcal Q$ ranges over $\{\qu, \dqu\}$.
+\begin{equation}\label{eq:definfquant}
+\begin{aligned}
+\qu := \{(J,X) \mid |X| \geq \aleph_0\} \qquad \qquad \dqu =\{(J,X) \mid |J\setminus X| < \aleph_0\} \\
+(D,V),\ass \models {\mathcal Q}x. \phi(x) \quad\text{iff}\quad (D , \{s\in D \mid (D, \val),\ass[x\mapsto s] \models \phi(x) \}) \in {\mathcal Q}
+\end{aligned}
+\end{equation}
+
+\begin{definition}
+The one-step language $\ofoei(A)$ is defined by adding to the grammar \eqref{eq:grammarofoe} of $\ofoe(A)$ the cases $\qu x. \varphi$ and $\dqu x. \varphi$. The truth relation $(D, \val) \models \varphi$ is defined by extending the one for $\ofoe(A)$ with clauses \eqref{eq:definfquant}.
+\end{definition}
+%Notice that there is no need to explicitly introduce a clause $\dqu x. \varphi$ in the grammar, as semantically it is just equivalent to $\lnot \qu x. \lnot \varphi$. 
+
+%Observe that every valuation $\val: A \to \wp (D)$ can equivalently be seen as a marking (or coloring) $\val^\natural:D \to \wp(A)$ given by $\val^\natural(d) := \{a \in A \mid d \in \val(a)\}$ and as a relation $Z_\val := \{ (a,d) \mid d\in \val(a)\}$. We will use these perspectives interchangeably.
+
+In order for the semantic notion of cocontinuity to be well-defined (Definition \ref{def:semnotions}), we also need to define what is the dual of a formula. This just coincides with the familiar notion of boolean dual.
 \begin{definition}\label{def:concreteduals} 
 The \emph{dual} $\varphi^{\delta} \in {\ofoei}(A)$ of $\varphi\in {\ofoei}(A)$ is given by:
 \begin{align*}
@@ -70,33 +96,48 @@ The \emph{dual} $\varphi^{\delta} \in {\ofoei}(A)$ of $\varphi\in {\ofoei}(A)$ i
 \end{align*}
 \end{definition}
 
-We now introduce an extension of first-order logic with two additional quantifiers, which first appeared in the context of Mostowski's study~\cite{Mostowski1957} of generalised quantifiers. The first, written $\qu x. \varphi$, expresses that there exist infinitely many elements satisfying a formula $\varphi$. Its dual, written $\dqu x. \varphi$, expresses that there are \emph{at most finitely many} elements \emph{falsifying} the formula $\varphi$. The formal definition goes as follows, where $\mathcal Q$ ranges over $\{\qu, \dqu\}$.
-\begin{equation}\label{eq:definfquant}
-\begin{aligned}
-\qu := \{(J,X) \mid |X| \geq \aleph_0\} \qquad \qquad \dqu =\{(J,X) \mid |J\setminus X| < \aleph_0\} \\
-(D,V),\ass \models {\mathcal Q}x. \phi(x) \quad\text{iff}\quad (D , \{s\in D \mid (D, \val),\ass[x\mapsto s] \models \phi(x) \}) \in {\mathcal Q}
-\end{aligned}
-\end{equation}
 
-\begin{definition}
-The one-step language $\ofoei(A)$ is defined by adding to the grammar \eqref{eq:grammarofoe} of $\ofoe(A)$ the cases $\qu x. \varphi$ and $\dqu x. \varphi$. The truth relation $(D, \val) \models \varphi$ is defined by extending the one for $\ofoe(A)$ with clauses \eqref{eq:definfquant}.
-\end{definition}
-%Notice that there is no need to explicitly introduce a clause $\dqu x. \varphi$ in the grammar, as semantically it is just equivalent to $\lnot \qu x. \lnot \varphi$. 
-
-%Observe that every valuation $\val: A \to \wp (D)$ can equivalently be seen as a marking (or coloring) $\val^\natural:D \to \wp(A)$ given by $\val^\natural(d) := \{a \in A \mid d \in \val(a)\}$ and as a relation $Z_\val := \{ (a,d) \mid d\in \val(a)\}$. We will use these perspectives interchangeably.
-
-In the rest of the subsection we recall from \cite{CFVZ-ModelTheoryPaper} syntactic characterisations for semantic properties of the first-order logics $\ofoe$ and $\ofoei$. We first discuss $\ofoe$. The properties of monotonicity and continuity will be characterised both with a grammar and a normal form, introduced by the next definitions.
+In the rest of the subsection we recall from \cite{CFVZ-ModelTheoryPaper} syntactic characterisations for semantic properties of the first-order logics $\ofo$, $\ofoe$ and $\ofoei$. We first discuss characterisations of monotonicity and (co)continuity given by grammars. 
 
 \begin{definition}
 \begin{enumerate}[(a)]
-\item The \emph{positive} fragment of $\ofoe(A)$, written $\ofoe^{+}(A)$, is the set of sentences generated by the grammar \eqref{eq:grammarofoe} without clauses $\lnot a(x)$. 
+\item The \emph{positive} fragment of $\ofoe(A)$, written $\ofoe^{+}(A)$, is the set of sentences generated by the grammar \eqref{eq:grammarofoe} without clauses $\lnot a(x)$. The positive fragment $\ofo^{+}(A)$ of $\ofo(A)$ is defined analogously. 
+
+The \emph{positive} fragment of $\ofoei(A)$, written ${\ofoei}^{+}(A)$, is the set of sentences generated by the grammar \eqref{eq:grammarofoe}-\eqref{eq:definfquant} without clauses $\lnot a(x)$. 
 \item For $B \subseteq A$, the \emph{$B$-continuous} fragment of $\ofoe^{+}(A)$, written $\cont{\ofoe}{B}(A)$, is the set of sentences generated by the following grammar, for $b \in B$ and $\psi \in \ofoe^{+}(A \setminus B)$:
 \[
 \varphi ::= \psi \mid b(x) \mid \exists x.\varphi \mid \varphi \land \varphi \mid \varphi \lor \varphi \mid \exists x. \psi.
 \]
-\item For $B \subseteq A$, the \emph{$B$-cocontinuous} fragment of $\ofoe^{+}(A)$, written $\cocont{\ofoe}{B}(A)$, is the set $\{\varphi \mid \varphi^\delta \in \cont{\ofoei}{B}(A)\}$.
+If $\psi \in \ofo^{+}(A \setminus B)$ in the condition above, we then obtain the $B$-continuous fragment $\cont{\ofo}{B}(A)$ of $\ofo^{+}(A)$.
+
+The  \emph{$B$-continuous} fragment of ${\ofoei}^{+}(A)$, written $\cont{\ofoei}{B}(A)$, is defined by adding to the above grammar the clause $\wqu x.(\varphi,\psi)$, which is a shorthand for $\forall x.(\varphi(x) \lor \psi(x)) \land \dqu x.\psi(x)$. \footnote{Intuitively, $\wqu x.(\varphi,\psi)$ says: ``every element of the domain validates $\varphi(x)$ or $\psi(x)$, but only finitely many need to validate $\varphi(x)$ (where $b \in B$ may occur). Thus $\dqu$ makes a certain use of $\forall$ compatible with continuity.}
+\item For $\llang \in \{\ofoe,\ofoei \}$ and $B \subseteq A$, the \emph{$B$-cocontinuous} fragment of $\llang^{+}(A)$, written $\cocont{\llang}{B}(A)$, is the set $\{\varphi \mid \varphi^\delta \in \cont{\llang}{B}(A)\}$.
 \end{enumerate}
 \end{definition}
+
+
+%\begin{theorem}\label{th:ofoe-monotone} For a sentence $\varphi \in \ofoe(A)$, the following are equivalent.
+%\begin{enumerate}[(i)]
+%\item $\varphi$ is monotone in $A$.
+%\item $\varphi$ belongs to the positive fragment $\ofoe^{+}(A)$.
+%\item There is a translation $(\cdot)^{\bullet}$ turning $\varphi$ into an equivalent sentence in basic form $\varphi^{\bullet} = \bigvee \posdbnfofoe{\vlist{T}}{\Pi}$.
+%\end{enumerate}
+%Furthermore, for $B \subseteq A$, if each $T_1, \dots, T_k$ and each $S \in \Pi$ in $\varphi^{\bullet}$ are either $\emptyset$ of singletons $\{b\}$ for some $b \in B$, then $\varphi$ is functional in $B$.
+%\end{theorem}
+
+\begin{theorem}[\cite{CFVZ-ModelTheoryPaper}] \label{th:onesteplogics-grammars} For $\llang \in \{\ofo, \ofoe,\ofoei \}$,
+\begin{enumerate}[(i)]
+\item $\varphi  \in \llang(A)$ is $A$-monotone iff it is equivalent to some $\psi \in \llang^{+}(A)$. 
+\item $\varphi  \in \llang^{+}(A)$ is $B$-continuous iff it is equivalent to some $\psi \in\cont{\llang}{B}(A)$. 
+\item $\varphi  \in \llang^{+}(A)$ is $B$-cocontinuous iiff it is equivalent to some $\psi \in\cocont{\llang}{B}(A)$. 
+\end{enumerate}
+\end{theorem}
+\begin{proof} The latter is the only statement not proven already in \cite{CFVZ-ModelTheoryPaper}. It can be verified by a straightforward induction on $\varphi$. \end{proof}
+
+
+%%%%
+
+Next we introduce normal forms for positive sentences in $\ofo$, $\ofoe$ and $\ofoei$. 
 
 \index{form, basic!$\ofoe$}
 \index{$\posdbnfofoe{\vlist{T}}{\Pi}$}
@@ -109,48 +150,13 @@ A \emph{type} $T$ is just a subset of $A$. It defines a $\ofoe$-formula $\tau^{+
 \end{equation*}
 %
 such that $\vlist{T} \in \wp(A)^k$ for some $k$ and $\Pi \subseteq \vlist{T}$.  The predicate $\arediff{\vlist{y}}$, stating that the elements $\vlist{y}$ are distinct, is defined as $\arediff{y_1,\dots,y_n} := \bigwedge_{1\leq m < m^{\prime} \leq n} (y_m \not\approx y_{m^{\prime}})$.
+
+A formula $\varphi \in \ofo(A)$ is said to be in \emph{basic form} if $\varphi = \bigvee \posdbnfofo{\Pi}$, where the disjunct $\posdbnfofo{\Pi}$ is defined as $\posdbnfofoe{\vlist{T}}{\Pi}$ but without the predicate $\arediff{\vlist{y}}$ and with the condition $\Pi = \vlist{T}$.
 \end{definition}
 
-Intuitively, the formula $\posdbnfofoe{\vlist{T}}{\Pi}$ says that each one-step model satisfying it admits a partition of its domain in two parts: distinct elements $t_1,\dots,t_n$ witnessing types $T_1,\dots,T_n$, and all the remaining elements witnessing some type $S$ of $\Pi$. The following result syntactically characterises the monotone fragment $\ofoe^+(A)$ of $\ofoe(A)$.
+Intuitively, the formula $\posdbnfofoe{\vlist{T}}{\Pi}$ says that each one-step model satisfying it admits a partition of its domain in two parts: distinct elements $t_1,\dots,t_n$ witnessing types $T_1,\dots,T_n$, and all the remaining elements witnessing some type $S$ of $\Pi$.  On the other hand the formula $\posdbnfofo{\Pi}$ simply states that its cover any one-step model satisfying it (i.e.  each element of its domain witnesses some type $S$ of $\Pi$ and each type $S$ of $\Pi$ is witnessed by some of its elements).
 
-%\begin{theorem}\label{th:ofoe-monotone} For a sentence $\varphi \in \ofoe(A)$, the following are equivalent.
-%\begin{enumerate}[(i)]
-%\item $\varphi$ is monotone in $A$.
-%\item $\varphi$ belongs to the positive fragment $\ofoe^{+}(A)$.
-%\item There is a translation $(\cdot)^{\bullet}$ turning $\varphi$ into an equivalent sentence in basic form $\varphi^{\bullet} = \bigvee \posdbnfofoe{\vlist{T}}{\Pi}$.
-%\end{enumerate}
-%Furthermore, for $B \subseteq A$, if each $T_1, \dots, T_k$ and each $S \in \Pi$ in $\varphi^{\bullet}$ are either $\emptyset$ of singletons $\{b\}$ for some $b \in B$, then $\varphi$ is functional in $B$.
-%\end{theorem}
-
-\begin{theorem}[\cite{CFVZ-ModelTheoryPaper}] \label{th:ofoe-normalforms} 
-\begin{enumerate}[(i)]
-\item $\varphi  \in \ofoe(A)$ is monotone iff it is equivalent to some $\psi \in \ofoe^{+}(A)$. 
-\item $\varphi  \in \ofoe^{+}(A)$ is continuous in $B \subseteq A$ iff it is equivalent to some $\psi \in\cont{\ofoe}{B}(A)$. 
-\item $\varphi  \in \ofoe^{+}(A)$ is cocontinuous in $B \subseteq A$ iiff it is equivalent to some $\psi \in\cocont{\ofoe}{B}(A)$. 
-\item There is an effective translation $(\cdot)^{\bullet} \: \ofoe^{+}(A) \to \ofoe^{+}(A)$ mapping $\varphi$ into an equivalent sentence in basic form $\varphi^{\bullet} = \bigvee \posdbnfofoe{\vlist{T}}{\Pi}$ such that:
-\begin{enumerate}[(a)]
-\item $\varphi$ is functional in $B$ if and only if each $T_1, \dots, T_k$ and $S \in \Pi$ in $\varphi^{\bullet}$ are either $\emptyset$ of singletons $\{b\}$ for some $b \in B$.
-\item $\varphi$ is continuous in $B$ if and only if $b\notin \bigcup\Sigma$ for all $b \in B$.
-\end{enumerate}
-\end{enumerate}
-\end{theorem}
-
-
-
-%%%%
-
-We now provide analogous characterisations for $\ofoei(A)$. The capacity of $\ofoei(A)$ to tear apart finite and infinite sets of elements requires extra care.
-
-\begin{definition}
-\begin{enumerate}[(a)]
-\item The \emph{positive} fragment of $\ofoei(A)$, written ${\ofoei}^{+}(A)$, is the set of sentences generated by the grammar \eqref{eq:grammarofoe} without clauses $\lnot a(x)$. 
-\item For $B \subseteq A$, the \emph{$B$-continuous} fragment of ${\ofoei}^{+}(A)$, written $\cont{\ofoei}{B}(A)$, is the set of sentences generated by the following grammar, where $b \in B$, $\psi \in {\ofoei}^{+}(A \setminus B)$ and $\wqu x.(\varphi,\psi) \df \forall x.(\varphi(x) \lor \psi(x)) \land \dqu x.\psi(x)$. \footnote{Intuitively, $\wqu x.(\varphi,\psi)$ says: ``every element of the domain validates $\varphi(x)$ or $\psi(x)$, but only finitely many need to validate $\varphi(x)$ (where $b \in B$ may occur). Thus $\dqu$ makes a certain use of $\forall$ compatible with continuity.}% --- \emph{cf.} \cite{CFVZ-ModelTheoryPaper}.}
-\[
-\varphi ::= \psi \mid b(x) \mid \exists x.\varphi \mid \varphi \land \varphi \mid \varphi \lor \varphi \mid \wqu x.(\varphi,\psi)
-\]
-\item For $B \subseteq A$, the \emph{$B$-cocontinuous} fragment of ${\ofoei}^{+}(A)$, written $\cocont{\ofoei}{B}(A)$, is the set $\{\varphi \mid \varphi^\delta \in \cont{\ofoei}{B}(A)\}$.
-\end{enumerate}
-\end{definition}
+We now provide a similar normal form for $\ofoei(A)$. The capacity of $\ofoei(A)$ to tear apart finite and infinite sets of elements requires extra care.
 
 \index{$\mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{A'}$}
 \index{$\mondbnfinf{\Sigma}{A'}$}
@@ -167,21 +173,33 @@ We say that $\varphi \in \ofoei(A)$ is in \emph{basic form} if $\varphi = \bigve
 for some set of types $\Pi,\Sigma \subseteq \wp A$ and $T_1, \dots, T_k \subseteq A$.
 \end{definition}
 
-Intuitively, the formula $\posdbnfinf{\Sigma}$ extends the information given by $\posdbnfofoe{\vlist{T}}{\Pi \cup \Sigma}$ by saying that (1) for every type $S\in\Sigma$, there are infinitely many elements satisfying $S$ and (2) only finitely many elements do not satisfy any type in $\Sigma$. In short, any one-step model satisfying $\posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$ admits a partition of its domain in three parts: (1) distinct elements $t_1,\dots,t_n$ witnessing types $T_1,\dots,T_n$ respectively; (2) finitely many elements whose types belong to $\Pi$, and (3) for each $S\in \Sigma$, infinitely many elements witnessing type $S$.
+Intuitively, the formula $\posdbnfinf{\Sigma}$ extends the information given by $\posdbnfofoe{\vlist{T}}{\Pi \cup \Sigma}$ by saying that (1) for every type $S\in\Sigma$, there are infinitely many elements witnessing each $S \in \Sigma$ and (2) only finitely many elements do not satisfy any type in $\Sigma$. 
 
+The next theorem shows that basic forms can be used to provide a syntactic characterisation for semantic properties, alternative to the grammars in Theorem \ref{th:onesteplogics-grammars}. They are also used to characterise $B$-separation, which was not discussed in Theorem \ref{th:onesteplogics-grammars}.
 
-\begin{theorem}[\cite{CFVZ-ModelTheoryPaper}] \label{th:ofoei-normalforms} 
+\begin{theorem}[\cite{CFVZ-ModelTheoryPaper}]  \label{th:onesteplogics-normalforms} %\label{th:ofoei-normalforms} 
 \begin{enumerate}[(i)]
-\item $\varphi  \in \ofoei(A)$ is monotone iff it is equivalent to some $\psi \in{\ofoei}^{+}(A)$. 
-\item $\varphi  \in {\ofoei}^{+}(A)$ is continuous in $B \subseteq A$ iff it is equivalent to some $\psi \in\cont{\ofoei}{B}(A)$. 
-\item $\varphi  \in {\ofoei}^{+}(A)$ is cocontinuous in $B \subseteq A$ iff it is equivalent to some $\psi \in\cocont{\ofoei}{B}(A)$. 
-\item There is an effective translation $(\cdot)^{\bullet} \: {\ofoei}^{+}(A) \to {\ofoei}^{+}(A)$ mapping $\varphi$ into an equivalent sentence in basic form $\varphi^{\bullet} = \bigvee \mondbnfofoei{\vlist{T}}{\Psi \cup \Sigma}{\Sigma}{+}$ such that:
+\item There is an effective procedure that transforms any sentence $\varphi \in \ofo^{+}(A)$ into an equivalent sentence in the basic form $\varphi^{\bullet} = \bigvee \posdbnfofo{\Pi}$.
+\item There is an effective procedure that transforms any sentence $\varphi \in \ofoe^{+}(A)$ into an equivalent sentence in the basic form $\varphi^{\bullet} = \bigvee \posdbnfofoe{\vlist{T}}{\Pi}$.
+\item There is an effective procedure that transforms any sentence $\varphi \in {\ofoei}^{+}(A)$ into an equivalent sentence in the basic form $\varphi^{\bullet} = \bigvee \mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{+}$.
+\item Moreover, for $\llang \in \{ \ofoe, \ofoei\}$,
 \begin{enumerate}[(a)]
-\item $\varphi$ is functional in $B$ if and only if each $T_1, \dots, T_k$ and $S \in \Psi$ in $\varphi^{\bullet}$ are either $\emptyset$ of singletons $\{b\}$ for some $b \in B$.
-\item $\varphi$ is continuous in $B$ if and only if $b\notin \bigcup\Sigma$ for all $b \in B$.
+\item $\varphi \in \llang^{+}(A)$ is $B$-separating if $(S \cap B) \leq 1$ for each $S \in \{T_1, \dots, T_k\} \cup \Pi \cup \Sigma$.\item $\varphi \in \llang^{+}(A)$ is $B$-continuous if and only if $b\notin \bigcup\Sigma$ for all $b \in B$.
 \end{enumerate}
 \end{enumerate}
 \end{theorem}
+\begin{proof}
+The only statement not already proven in \cite{CFVZ-ModelTheoryPaper} is the one about $B$-separation. We discuss the case $\llang = \ofoei$: a simplification of the same argument yields the case $\llang = \ofoe$. We consider $\varphi^{\bullet} = \bigvee \mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{+}$ and assume that $(D,V) \models \varphi^{\bullet}$ for some model $(D,V)$. We want to construct $V'$ witnessing the $B$-separation property. First, we fix one disjunct $\psi = \mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{+}$ of $\varphi^{\bullet}$ such that $(D,V) \models \psi$. The syntactic shape of $\psi$ implies that
+$(D,V)$ can be partitioned in three sets $D_1$, $D_2$ and $D_3$ as
+follows: $D_1$ contains elements $s_1, \dots, s_k$ witnessing types
+$T_1,\dots, T_k,$ respectively; among the remaining
+elements, there are infinitely many witnessing some
+$S\in \Sigma$ (these form $D_2$), and finitely many not witnessing
+any $S \in \Sigma$ but witnessing $R$ for some $R \in \Pi$
+(these form $D_3$). If we now prune any other assignment of
+predicates to elements of $D$ but for the types they witness
+according to this description, we obtain a $V'$ such that $V \leq_{B} V'$, and $(D,V') \models \psi$. Therefore, also $(D,V') \models \varphi^{\bullet}$. Moreover, because $(S \cap B) \leq 1$ for each $S \in \{T_1, \dots, T_k\} \cup \Pi \cup \Sigma$, $V'$ defined in this way is $B$-separating. Therefore $\varphi^{\bullet}$ is $B$-separating and $\varphi$ is too.
+\end{proof}
 
 %There is a syntactic characterisation for monotonicity analogous to the one of $\ofoe$.
 %

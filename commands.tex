@@ -3,6 +3,7 @@
 \newcommand{\nxt}[1]{\raisebox{.3ex}{$\scriptstyle \bigcirc$}_{#1}}
 \renewcommand{\phi}{\varphi}
 \newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\tmod}{\Diamond}
 
 %various
 \newcommand{\bpr}{{\upharpoonright}}
@@ -166,6 +167,7 @@
 \newcommand{\rmucaML}{\ensuremath{\mu_{a}^{-}\ML}\xspace}
 \newcommand{\rnmucaML}{\ensuremath{\mu_{na}^{-}\ML}\xspace}
 \newcommand{\mucML}{\ensuremath{\mu_{C}\ML}\xspace}
+\newcommand{\mudML}{\ensuremath{\mu_{D}\ML}\xspace}
 \newcommand{\lmuML}{\ensuremath{\mu\ML^{\lor}}\xspace}
 \newcommand{\lmucML}{\ensuremath{\mu_{C}\ML^{\lor}}\xspace}
 \newcommand{\lnmucML}{\ensuremath{\mu_{nc}\ML^{\lor}}\xspace}
@@ -268,8 +270,8 @@
    %\newcommand{\trees}{\ensuremath{\mathcal{T}}}
 \newcommand{\mccomp}{C} %{\mathfrak{C}}
 \newcommand{\dcc}{\ensuremath{\mathrm{DCC}}\xspace}
-   % \newcommand{\ord}{\prec}
-\newcommand{\ord}{\lhd}
+    \newcommand{\ord}{\prec}
+%\newcommand{\ord}{\lhd}
 \newcommand{\ordeq}{\preceq}
 \newcommand{\reach}{\leadsto}
 \newcommand{\treach}{\stackrel{+}{\reach}}%\twoheadrightarrow}
@@ -307,12 +309,12 @@
 \newcommand{\eloise}{\ensuremath{\exists}\xspace}
 \newcommand{\abelard}{\ensuremath{\forall}\xspace}
 \newcommand{\pmatches}[2]{\mathsf{PM}^{#1}_{#2}}
-\newcommand{\win}{\text{\sl Win}} 
+\newcommand{\win}{\text{\sl Win}}
 \newcommand{\controller}{\ensuremath{\mathbf{C}}\xspace}
 \newcommand{\opponent}{\ensuremath{\mathbf{O}}\xspace}
 \newcommand{\sucpos}{\textup{SP}}
 \newcommand{\strat}{f}
-\newcommand{\last}{\textsf{last}} 
+\newcommand{\last}{\textsf{last}}
 
 \newcommand{\oml}{\ensuremath{\mathrm{ML}_1}\xspace}%{\ensuremath{\textrm{ML}^+_1}\xspace}
 \newcommand{\omls}{\oml^\flat}
@@ -359,7 +361,7 @@
 \newcommand{\fwc}[2]{{#1}^{\!\div}_{#2}} %{\mathsf{\fconst}^{#2}_{wa}(#1)}
 \newcommand{\matches}{\mathcal{B}}
 \newcommand{\match}{\pi}
-\newcommand{\shA}{A^{\sharp}}
+\newcommand{\shA}{\pw A}
 % \newcommand{\good}{\circ}
 % \newcommand{\bad}{\bullet}
 % \newcommand{\goodA}{A^{\good}}
@@ -406,8 +408,8 @@
 \newenvironment{tbs}{%
    \small\tt
    \begin{enumerate}[$\blacktriangleright$]}{\end{enumerate}}
-\newcommand{\btbs}{\begin{tbs}}                                                                      
-\newcommand{\etbs}{\end{tbs}}                                                                      
+\newcommand{\btbs}{\begin{tbs}}
+\newcommand{\etbs}{\end{tbs}}
 \newcommand{\shtbs}[1]{\begin{tbs} \item #1 \end{tbs}}
 
 

@@ -133,16 +133,16 @@ each point in $T_{\chi,s}$ lies on some path belonging to $B^\model(\chi')$.
 %Moreover it holds that each $r \in  T_{\chi,s}$ lies in some path in $B^\model(\chi')$.
 Let %$s \in \mng{\mu p.\phi(p)}^{\model}$, with 
 $\phi(p) \in \mu_{D}\foe{p}$. Then 
-\\(1) for every positional winning strategy $\chi$ for $\eloise$ in $\UG_F@s$,
+\\(i) for every positional winning strategy $\chi$ for $\eloise$ in $\UG_F@s$,
 there is a compatible positional winning strategy $\chi'$ for her in 
 $\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$;
-\\(2) for every positional winning strategy $\chi'$ for $\eloise$ in 
+\\(ii) for every positional winning strategy $\chi'$ for $\eloise$ in 
 $\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$, there is a compatible  positional 
 winning strategy $\chi'$ for her in $\UG_F@s$.
 \end{proposition}
 
 \begin{proof}
-For point (1) we reason as follows. 
+For point (i) we reason as follows. 
 Let $\chi: S \to \wp{(S)}$  be a positional winning strategy for $\eloise$ in $\UG_F@s$. 
 Hence, for every $t \in \win_{\eloise}(\UG_{F})$, it holds that $t \in F(\chi(t))$ 
 and therefore that there is a positional winning strategy $\chi_t$ for $\eloise$ 
@@ -151,24 +151,51 @@ in the game $\egame(\phi,\bbS[p \mapsto \chi(s)])$ starting at $(\phi,t)$.
 %\item
 %YV: I get confused with the T,t and $\chi, s$.
 %\etbs
-The following  strategy is thence a compatible winning strategy for $\eloise$ in
+Let $\chi'$ be the following strategy for $\eloise$ in
 $\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$:
-\begin{itemize}
+\begin{enumerate}
 \item after the initial automatic move, the position of the match is $(\phi,s)$; 
 $\eloise$ first plays her strategy $\chi_s$;
-\item each time a position $(p,t)$ is reached, necessarily 
-$t \in \win_{\eloise}(\UG_{F})$, and thus $\eloise$ continues with $\chi_t$.
+\item each time a position $(p,t)$ is reached, 
+\begin{enumerate}
+%necessarily 
+\item if $t \in \win_{\eloise}(\UG_{F})$, then $\eloise$ continues with $\chi_t$;
+\item if $t \notin \win_{\eloise}(\UG_{F})$, then $\eloise$ continues with a random positional strategy.
+\end{enumerate}
+\end{enumerate}
+We verify that this positional strategy is actually a compatible positional winning strategy for her.
+
+First of all, notice that whenever by applying $\chi'$ a position of the form $(p,t)$ is reached,  necessarily $t \in \win_{\eloise}(\UG_{F})$. This can be proved by induction on the number of position of the form $(p,t)$ visited during a $\chi'$-guided match. For the inductive step, assume $w \in \win_{\eloise}(\UG_{F})$. Hence $\chi_w$ is winning for $\eloise$ in  $\egame(\phi,\bbS[p \mapsto \chi(w)])@(\phi,w)$. This means that if a position of the form $(p, t)$ is reached, the variable $p$ must be true at $t$ in the model $\bbS[p \mapsto \chi(w)]$, meaning that it belongs to the set $\chi(w)$. By assumption $\chi$ is a winning strategy for $\eloise$ in $\UG_F$, and therefore any element of $\chi(w)$ is again a member of $ \win_{\eloise}(\UG_{F})$. 
+Finally, let $\pi$ any $\chi'$-guided match $\egame(\phi,\bbS[p \mapsto \chi(w)])@(\phi,w)$. We verify that $\pi$  is winning for $\eloise$. First notice that since $\chi$ is winning for her in $\UG_F@s$, the fixpoint variable $p$ is unfolded only finitely many often in $\pi$. 
+Let $(p,t)$ be the last basic position in $\pi$ where $p$ occurs. Then from now on $\chi'$ and $\chi_t$ coincide, yielding  that the match is winning for $\eloise$. Clearly $\chi'$ and $\chi$ are compatible.
+
+
+For point (ii), let $\chi'$ be a winning strategy for $\eloise$ in
+$\egame(\mu p.\phi(p),\model)@(\mu p.\phi(p),s)$.  Let $B(\chi')$ be the set of all finite $\chi'$-guided partial matches in $\egame$, $\pi\in B(\chi')$ and define \[P_{\last(\pi)}:=\{ (p,w) \mid \exists \pi' \in B(\chi'), \pi'=\pi \rho(p,w), p\text{ does not occur in }\rho\}.\]
+
+Remember that for every $\pi, \pi' \in B(\chi')$ such that $\last(\pi)=\last(\pi')$,  by positionality of $\chi'$ it holds that $\pi\rho \in B(\chi')$ if and only if $\pi'\rho \in B(\chi')$, for every finite match $\rho$.
+
+Hence, consider  the positional strategy $\ystrat$ in $\UG_{F}@s$ 
+defined by \[\chi(t)= \{ w \mid (p,w) \in P_{\last(\pi)}, \pi\in B(\chi'), \last(\pi)=(\mu p. \phi(p), t)\}.\]
+
+
+%While playing the unfolding game $\UG$, $\eloise$ builds an 
+%$\chi'$-guided `shadow match' $\egame(\mu p.\phi(p),\model)@(\mu p.\phi(p),s)$ 
+%such that the positions in the $\UG$-match of the form $t$ exactly correspond to
+%the positions of the form $(\phi(p),t)$ in the evaluation game $\egame$.
+
+Compatibility being immediate, it suffices to verify that $\ystrat$ is winning for $\eloise$. First of all, since $\chi'$ is winning, $B(\chi')$ does not contain an infinite 
+ascending chain of $\chi'$-guided matches, and thence any  $\chi$-guided match in $\UG_{F}@s$ is finite. It therefore remains to verify that for every $\chi$-guided match $\pi$ in $\UG_{F}@s$ such that $\last(\pi)$ is an $\eloise$ position, she can always move. But this is immediate since 
+\begin{itemize}
+\item $(\mu p. \phi(p), s) \in \last(B(\chi'))$, 
+\item if $(\mu p. \phi(p), t) \in \last(B(\chi'))$, then %$(\phi(p), t) \in \last(B(\chi'))$ and  
+$\chi'$ is (naturally induces) a winning strategy for $\eloise$ in $\egame(\phi(p),\bbS[p \mapsto \chi(t)])@(\phi(p),t)$, and thus in particular $t \in F(\chi(t))$,
+\item if $(p, t) \in \last(B(\chi'))$ then $(\mu p. \phi(p), t) \in \last(B(\chi'))$,
 \end{itemize}
-For point (2), let $\chi'$ be a winning strategy for $\eloise$ in
-$\egame(\mu p.\phi(p),\model)@(\mu p.\phi(p),s)$. 
-Then the appropriate compatible winning strategy $\ystrat$ in $\UG_{F}@s$ is 
-defined as follows: while playing the unfolding game $\UG$, $\eloise$ builds an 
-$\chi'$-guided `shadow match' $\egame(\mu p.\phi(p),\model)@(\mu p.\phi(p),s)$ 
-such that the positions in the $\UG$-match of the form $t$ exactly correspond to
-the positions of the form $(\phi(p),t)$ in the evaluation game $\egame$.
-\btbs
-\item YV: some more detail here?
-\etbs
+%\btbs
+%\item YV: some more detail here?
+%\etbs
+where $\last(B(\chi')):=\{\last(\pi) \mid \pi \in B(\chi')\} \subseteq \win_{\eloise}(\egame(\mu p.\phi(p),\model))$.
 \end{proof}
 
 %Notice that the evaluation game for the modal $\mu$ calculus can be easily adapted to $\mu_{D}\foe$ and provide a corresponding Adequacy Theorem (Proposition \ref{p:unfold=evalgame}). In particular, we would have that 

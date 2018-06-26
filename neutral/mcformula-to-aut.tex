@@ -1,0 +1,134 @@
+% !TEX root = ../00CFVZ_TOCL.tex
+
+In this subsection we focus on the other meaning preserving translation from formula to automata.
+
+\begin{theorem}\label{t:fortoaut}
+There is an effective procedure that, given a formula $\xi  \in \mu\llang$ returns an automaton $\bbA_{\xi}$ in 
+$\Aut(\llang)$, which satisfies
+the following properties:
+
+(1) $\bbA_\xi$ is equivalent to $\xi$;
+
+(2)  $\bbA_\xi \in \AutW(\llang)$ if $\xi \in \mu_{D}\llang$;
+
+(3)  $\bbA_\xi \in \AutWC(\llang)$ if $\xi \in \mu_{C}\llang$.
+\end{theorem}
+
+
+As before, the proof of this theorem, presented in the remainder of this subsection, is  also (a refinement of)
+a variation of the standard proof showing that any fixpoint modal formula can be 
+translated into an equivalent modal automaton (see for
+instance~\cite[Section 6]{Ven08}). 
+Hence, we will not go too much into the details of showing that ${\bbA}_\xi$ and 
+$\xi$ are equivalent, but we will provide a detailed definition of the 
+translation, and pay special attention to showing that the translations of weak
+and of weak-continuous fragments of 
+$\mu\llang$ land in the right subclass of  $\llang$-automata.
+
+We first gather the observation that, without loss of generality, fixpoint variables can be assumed to be guarded, that is in a scope of a modal operator.
+ 
+\begin{definition}
+An occurrence of a bound variable $p$ in $\xi  \in \mu\llang$ is called \emph{guarded} if there is a modal operator between its binding definition and the variable itself. An occurrence is weakly guarded if there is another fixpoint quantifier between its binding definition and the variable itself. A formula $\xi  \in \mu\llang$ is called guarded if every occurrence of every bound variable is guarded.
+\end{definition}
+
+\begin{proposition}
+For every $\xi  \in \mu\llang$ we can effectively construct a guarded formula $\xi^\flat  \in \mu\llang$ such that $\xi \equiv \xi^\flat$. Moreover
+
+(1)  $\xi^\flat \in \mu_{D}\llang$ if $\xi \in \mu_{D}\llang$;
+
+(2)  $\xi^\flat \in \mu_{C}\llang$ if $\xi \in \mu_{C}\llang$.
+\end{proposition}
+\btbs
+\item
+For this result, reference to "Orna Kupferman, Moshe Y. Vardi, and Pierre Wolper. An automata-theoretic approach to branching-time model checking."
+\etbs
+
+Let $\xi$ be formula. By the previous result, without loss of generality we can assume that $\xi$ is guarded. 
+We therefore define the automaton $\bbA_{\xi}=\tup{A,\tmap,\pmap,a_I}$ such that 
+
+\begin{itemize}
+\item $A:=\{ \fsub{\psi} \mid \psi  \subf \xi\}$,
+\item $a_I:= \fsub{\xi}$
+\item $\pmap: A \to \nat$ is the parity map where 
+%$\pmap(\hat{\psi}):= 
+%\begin{cases} 
+%0 & \text{if $\psi$ is a $\nu$-subformula of $\xi$} \\ 
+%1 & \text{ otherwise.}\\
+%\end{cases}
+%$
+\btbs
+\item
+Give definition, compatible with weakness condition (cf. Wilke)
+\etbs
+\end{itemize}
+The critical point is to define the transition map $\tmap: A\times \wp(\props) \to \llang^+(A)$.
+
+We do it in three steps.
+Firstly define a map $\Delta': A \to \mu\llang(A \cup  \props)$ by simply stating
+\begin{align*}
+		\tmap'(\fsub{\psi \lor \gamma}) &:= \fsub{\psi} \lor \fsub{\gamma} &
+		\tmap'(\fsub{\psi \land \gamma}) &:= \fsub{\psi} \land \fsub{\gamma} \\
+		\tmap'(\fsub{\nxt{\al}(\psi_{1},\ldots,\psi_{n})}) &:= \nxt{\al}(\fsub{\psi_{1}},\ldots,\fsub{\psi_{n}}) &
+		\tmap'(\fsub{\somefp_p p.\psi}) &:= \fsub{\psi}
+	\end{align*}
+	\vspace{-2mm}
+	\begin{align*}	
+		\tmap'(\fsub{\gamma}) &:= \gamma \quad \text{for $\gamma \in \{\top,\bot,p,\lnot p\}$ with \emph{unbound} $p$,} \\
+		\tmap'(\fsub{p}) &:= \fsub{\delta_p} \quad \text{for bound $p$.}
+	\end{align*}
+	
+Secondly, for every $\fsub{\psi}\in A$, we define a new term $\underline{\tmap}(\fsub{\psi})$. To begin with, we set $\underline{\tmap}(\fsub{\psi}) := \tmap'(\fsub{\psi})$. Next, we replace every non-guarded occurrence of every $\fsub{\gamma}\in A$ in $\underline{\tmap}(\fsub{\psi})$ by $\tmap'(\fsub{\gamma})$. We repeat this process until every occurrence of every $\fsub{\gamma} \in A$ is of the form $\nxt{\al}(\fsub{\psi_{1}},\ldots,\fsub{\psi_{n}})$. It is crucial to observe that this process will eventually converge because $\xi$ was originally \emph{guarded}. This means that while running this process, for every branch of $\underline{\tmap}(\fsub{\psi})$ we will always go through some modality before unfolding some state that was already unfolded.
+
+	Observe that $\underline{\tmap}(\fsub{\psi})$ belongs to the modal sublanguage of $\mu\llang(A \cup  \props)$ whose formulas have modal depth one and are given by
+	\[
+\varphi ::= 
+   p \mid \neg p \mid \top \mid \bot 
+   \mid \varphi\lor\varphi \mid \varphi\land\varphi 
+   \mid \nxt{\al}(\fsub{\psi_{1}},\ldots,\fsub{\psi_{n}})
+\]
+where $p \in\props$, $\fsub{\psi_{1}},\ldots,\fsub{\psi_{n}} \in A$. Now, notice that every $\underline{\tmap}(\fsub{\psi})$ is equivalent to a formula $\bigvee_{{\sf Q}\in \wp{(\props)}} (\tau_{{\sf Q}} \land \psi_{{\sf Q}})$, where $\psi_{{\sf Q}}$ is either $\bot$, $\top$ or $\nxt{\al}(\fsub{\psi_{1}},\ldots,\fsub{\psi_{n}})$, for some $\fsub{\psi_{1}},\ldots,\fsub{\psi_{n}} \in A$.
+
+Finally, we state $\tmap: (\fsub{\psi}, {\sf Q}) \mapsto 
+\begin{cases}
+\top & \text{ if $\psi_{{\sf Q}}= \top$} \\
+\bot & \text{ if $\psi_{{\sf Q}}= \bot$} \\
+\al(\fsub{\psi_{1}},\ldots,\fsub{\psi_{n}}) & \text{ if $\psi_{{\sf Q}}=\nxt{\al}(\fsub{\psi_{1}},\ldots,\fsub{\psi_{n}})$} \\
+\end{cases}
+\in \llang^+(A)$.
+
+
+\begin{proofof}{Theorem~\ref{t:fortoaut}}
+It is straightforward to show that $\bbA_\xi$ is equivalent to $\xi$. The crux of the matter is thence to verify that the translation lands in the right class of automata.
+%Recall that  $a \ord b$ in the automaton $\bbA_\xi$ if $b$ can be reached from $a$ in the graph structure induced by the transition map of $\bbA_\xi$
+Before doing this, we gather another easy observation on the structural properties of formulas without alternation of fixpoints. 
+We say that a subformula 
+$\psi  \subf \xi$  is a $\mu$-subformula of $\xi$ (resp. $\nu$-subformula) if there is a subformula $\mu p. \psi' \supf \psi$ (resp. $\nu p. \psi' \supf \psi$) of $\xi$ and $p$ is free in $\psi$. 
+Hence, let $\xi$ be alternation-free, we immediately obtain that:
+
+\begin{claim}
+Every subformula $\psi$ of $\xi$ belongs to exactly one of the following categories: (a) no free variable of $\psi$ is bound in $\xi$; or (b) $\psi$ is a $\mu$-subformula; or (c) $\psi$ is a $\nu$-subformula.
+\end{claim}
+
+From this, given $\xi$ alternation-free, it  therefore holds that, if $\fsub{\psi}$ and $\fsub{\gamma}$ belongs to the same cluster, modulo switching the order of the states, one of the following cases holds:
+		\begin{align*}
+			\text{(a) } \somefp_p p.\delta_p & \supf \psi \supf \gamma \supf p &
+			\text{(b) } \somefp_p p.\delta_p & \supf \psi \supf p &
+			\text{(c) } \somefp_q q.\delta_q \supf \somefp_p p.\delta_p & \supf \psi \supf q \\
+								   &&& \supf \gamma \supf p
+								   && \supf \gamma \supf p,
+		\end{align*}
+		where $p$ is both free in $\psi$ and $\gamma$  in cases (a) and (b); and $q$ is free in $\psi$ and $p$ is free in $\gamma$ in (c). In particular, both $\psi$ and $\gamma$ are $\somefp$-subformulas of $\xi$ of the same type $\somefp$, thus $\somefp_p=\somefp_q$ in (c). From this, we obtain that $\bbA_\xi \in \AutW(\llang)$, whenever $\xi  \in \mu_{D}\llang$.
+
+Next, we verify that the translation preserve continuity. We do it only for the case of a cluster $M$ corresponding to a least fixpoint, the other case being dual. Thus, let $\fsub{\psi} \in M$. We need to check that for every  $\qprops$, the formula $\tmap(\fsub{\psi}, \qprops)$ is continuous in $M$, or equivalently that $\tmap(\fsub{\psi}, \qprops)$ is continuous in each $\fsub{\gamma} \in M$. 
+
+		We consider the relative positioning of $\psi$ and $\gamma$ in the formula graph of $\xi$, assuming that $\somefp_p=\somefp_q=\mu$. In cases (b) and (c) above, it is obvious that $\tmap(\fsub{\psi}, \qprops)$ is continuous in $\fsub{\gamma}$, since $\fsub{\gamma}$ does not occur in $\tmap(\fsub{\psi},  \qprops)$. For case (a) we reason as follows. 
+		Let us assume for simplicity that $p$ occurs only once in $\delta_p$. Thus let $\pi:= \pi(0)\dots \pi(n)$ be the unique path from $\delta_p$ to  $p$ in the formula tree of $\xi$ (hence $\pi(0)=\delta_p$,  $\pi(n)=p$, $\phi(i)=\psi$ and $\phi(k)=\gamma$ for some $i<k$). Note that $\phi(\ell) \in \cont{\mu\llang}{p}$, for $\ell \leq n$. We  verify that $\tmap(\fsub{\phi(\ell)}, \qprops)$ is continuous in $M_\ell:=\{\fsub{ \phi(i)} \mid \ell \leq i \leq n\}$. We only consider the case when $\phi(\ell)$ is of the form $\nxt{\al}(\psi_{1},\ldots,\psi_{m}, \phi(\ell+1))$, the other cases being immediate. Notice that $p$ occurs free in $\phi(\ell+1)$  but does not occurs in any $\psi_i$. Since $\phi(\ell) \in \cont{\mu\llang}{p}$, it holds that $\al(a, b_1, \dots, b_m)  \in 
+\cont{\llang}{a}$, for $b_1=\fsub{\psi_{1}},\ldots,b_m=\fsub{\psi_{m}}, a=\fsub{\phi(\ell+1)}$. A fortiori $\al(\fsub{\psi_{1}},\ldots,\fsub{\psi_{m}}, \fsub{\phi(\ell+1)}) $ is $M_\ell$-continuous, and therefore it is not difficult to see that  $\tmap(\fsub{\phi(\ell)}, \qprops)$ is also $M_\ell$-continuous. 
+		
+%Let $\qprops:=\{ q \in \props \mid \fsub{\mu q. \phi} \in M\}$, and let $\pi:= \pi(0)\dots \pi(n)$ the path from$\delta_p$ to  $p$ in the formula tree of $\xi$ (hence $\pi(0)=\delta_p$ and $\pi(n)=p$). For the initial step, $\gamma = p$, and thus $\gamma$ is continuous on  
+
+\btbs
+\item Check last paragraph. Correct? Enough?
+%\item Remember to add that Section from Aut to For holds also for FO$_1$
+\etbs
+\end{proofof}
