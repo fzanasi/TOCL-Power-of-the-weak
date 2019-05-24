@@ -25,14 +25,12 @@
 %%% packages
 \usepackage{amsfonts,amssymb,amsmath,stmaryrd}
 \usepackage{enumerate,multicol,array,eqparbox}
-\usepackage{xspace,xcolor}
+\usepackage{xspace,xcolor,colortbl}
 \usepackage[hidelinks]{hyperref}
 \usepackage[shortlabels]{enumitem}
 \usepackage[e]{esvect}
 \usepackage[T1]{fontenc}
 
-\newtheorem{fact}[theorem]{Fact}
-\newtheorem{claim}{Claim}
 
 \usepackage{fixme}
 %\usepackage[author=anonymous]{fixme}
@@ -44,6 +42,20 @@
 \input{macros.tex}
 \input{commands.tex}
 \input{commands-fz.tex}
+
+\includeonly{%
+yde/sec-introduction,
+yde/sec-prel,
+yde/mso-mu,
+neutral/sec-3,
+neutral/sec-wmso-automata,
+neutral/sec-nmso-automata,
+neutral/sec-mu2so,
+neutral/sec-expr
+}
+%\section{Expressiveness modulo bisimilarity}\label{sec:expresso}
+%\clearpage
+
 
 
 %%%%
@@ -104,47 +116,16 @@ Fabio Zanasi
 
 \maketitle
 
+\include{neutral/sec-introduction}
+\include{neutral/sec-prel}
+\include{neutral/mso-mu}
+\include{neutral/sec-3}
+\include{neutral/sec-wmso-automata}
+\include{neutral/sec-nmso-automata}
+\include{neutral/sec-mu2so}
+\include{neutral/sec-expr}
 
-%%%% \tableofcontents
 
-%%%%
-%%%% SECTION 1: INTRODUCTION
-%%%%
-
-\input{neutral/sec-introduction}
-%\section{Introduction}\label{sec:intro}
-
-%\clearpage
-
-% section 2: preliminaries
-\input{neutral/sec-prel}
-% \section{Preliminaries}\label{sec:prel}
-%\clearpage
-
-% section 3: one step logics, automata etc
-\input{neutral/sec-3}
-% \section{One-step logics, parity automata and $\mu$-calculi}\label{sec:parityaut}
-%\clearpage
-
-%%%% SECTION 4: AUTOMATA FOR WMSO
-\input{neutral/sec-wmso-automata.tex}
-% \section{Automata for $\wmso$}\label{sec:autwmso}
-%\clearpage
-
-%%%% SECTION 5: AUTOMATA FOR NMSO
-\input{neutral/sec-nmso-automata.tex}
-%\section{Automata for $\nmso$}\label{sec:autnmso}
-%\clearpage
-
-%%%% SECTION 6: FROM MFL TO MSO
-\input{neutral/sec-mu2so.tex}
-% \section{Fixpoint operators and second-order quantifiers}
-%\clearpage
-
-%%%% SECTION 7: EXPRESSIVENESS
-\input{neutral/sec-expr}
-%\section{Expressiveness modulo bisimilarity}\label{sec:expresso}
-%\clearpage
 
 % Bibliography
 \bibliographystyle{ACM-Reference-Format-Journals}
