@@ -1,0 +1,129 @@
+% !TEX root = ../00CFVZ_TOCL.tex
+\subsection{From Formulas to Automata}
+   \label{sec:mc-to-parity}
+
+In this subsection we focus on the meaning preserving translation in the
+opposite direction, viz., from formula to automata.
+In our set-up we need the one-step language to be closed under conjunctions and
+disjunctions.
+
+\begin{theorem}\label{t:fortoaut}
+Let $\oslang$ be a on-step language that is closed under taking conjunctions and 
+disjunctions.
+Then there is an effective procedure that, given a formula $\xi \in \mu\oslang$
+returns an automaton $\bbA_{\xi}$ in $\Aut(\oslang)$, which satisfies the 
+following properties:
+\begin{enumerate}[(1)]
+\item $\bbA_\xi$ is equivalent to $\xi$;
+\item  $\bbA_\xi \in \AutW(\oslang)$ if $\xi \in \mu_{D}\oslang$;
+\item  $\bbA_\xi \in \AutWC(\oslang)$ if $\xi \in \mu_{C}\oslang$.
+\end{enumerate}
+\end{theorem}
+
+As in the case of the translation from automata to formulas, the proof of part
+(1) of this theorem, is a straightforward variation of the standard proof showing
+that any fixpoint modal formula can be translated into an equivalent modal 
+automaton (see for instance~\cite[Section 6]{Ven08}). 
+The point is to show that this standard construction transforms formulas from 
+$\mu_{D}\oslang$ and $\mu_{C}\oslang$ into automata of the right kind.
+In fact, we will confine our attention to proving the (second and) third part
+of the theorem; the fact that the input formula belongs to the alternation-free
+fragment of $\mu\oslang$ enables a slightly simplified presentation of the 
+construction.
+
+Our first observation is that without loss of generality we may confine 
+attention to \emph{guarded} formulas.
+
+\begin{definition}
+An occurrence of a bound variable $p$ in $\xi  \in \mu\oslang$ is called 
+\emph{guarded} if there is a modal operator between its binding definition and 
+the variable itself. 
+A formula $\xi  \in \mu\oslang$ is called \emph{guarded} if every occurrence of
+every bound variable is guarded.
+\end{definition}
+
+There is a standard construction, going back to \cite{Koz83}, which transforms
+any formula $\xi$ in $\mu\oslang$ into an equivalent guarded $\xi^\flat \in 
+\mu\oslang$, and it is easily verified that the construction $(\cdot)^{\flat}$
+restricts to the fragments $\mu_{D}\oslang$ and $\mu_{C}\oslang$.
+It therefore suffices to show that any guarded formula in $\mu_{D}\oslang$
+($\mu_{C}\oslang$, respectively) can be transformed into an equivalent
+continuous-weak $\oslang$-automaton.
+
+In the remainder of this section we will show that any guarded formula $\xi$ 
+in $\mu_{C}\oslang$ can be transformed into an equivalent continuous-weak 
+$\oslang$-automaton $\bbA_{\xi}$; the analogous result for $\mu_{D}\oslang$ will
+be obvious from our construction.
+
+We will prove the result by induction on the so-called weak alternation depth
+of the formula $\xi$.
+We only consider the $\mu$-case of the inductive proof step; that is, we 
+assume that $\xi$ can be obtained as a formula in the following grammar, for 
+some set $\qprop$ of variables:
+\begin{equation}
+\label{eq:gr}
+\phi \isbnf 
+   q \mid \psi \mid \phi\lor\phi \mid \phi\land\phi \mid
+   \nxt{\al}(\ol{\phi},\ol{\psi}) \mid \mu q. \phi,
+\end{equation}
+where $q \in \qprop$, every $\psi,\psi_{j}$ is $\qprop$-free, and 
+$\al(\ol{a},\ol{b}) \in \cont{\oslang}{\ol{a}}$.
+We write $\phi \subf' \xi$ if $\phi$ is a subformula of $\xi$ according to 
+the grammar \eqref{eq:gr} (that is, we consider $\qprop$-free formulas $\psi$
+to be atomic).
+Furthermore, we inductively assume that for every $\qprop$-free formula $\psi
+\subf' \xi$ we have already constructed an equivalent continuous-weak 
+$\oslang$-automaton $\bbA_{\psi} = \tup{A_{\psi},a_{\psi},\tmap_{\psi},
+\pmap_{\psi}}$.
+(Observe that every subformula of a guarded formula it itself guarded, so that 
+we are justified to apply the induction hypothesis.)
+
+Define
+$\Psi \isdef \{ \psi \subf' \xi \mid \psi\text{ $\qprop$-free} \}$, let $\Phi$
+consist of all formulas $\phi \not\in \Psi$ that occur as some $\phi = \phi_{i}$
+in a formula $\nxt{\al}(\ol{\phi},\ol{\psi}) \subf' \xi$, and set $A_{\Psi} 
+\isdef \{ a_{\psi} \mid \psi \in \Psi \}$ and $A_{\Phi} \isdef \{ a_{\phi} \mid 
+\phi \in \Phi \}$.
+It now follows by guardedness of $\xi$ that there is a unique map $(\cdot)^{o}$ 
+assigning a one-step formula $\chi^{o} \in \oslang(A_{\Psi} \cup A_{\Phi})$
+to every formula $\chi \subf' \xi$ such that 
+\[\begin{array}{lll}
+   q^{o}    & = & \delta_{q}^{o}
+\\ \psi^{o} & = & a_{\psi}
+\\ (\phi_{0}\lor\phi_{1})^{o}  & = & \phi_{0}^{o} \lor \phi_{1}^{o}
+\\ (\phi_{0}\land\phi_{1})^{o} & = & \phi_{0}^{o} \land \phi_{1}^{o}
+\\ \nxt{\al}(\phi_{1},\ldots,\phi_{n},\psi_{1},\ldots,\psi_{k})^{o} & = &
+   \al(a_{\phi_{1}},\ldots,a_{\phi_{n}},a_{\psi_{1}},\ldots,a_{\psi_{k}})
+\\ (\mu q. \delta_{q})^{o}     & = & \delta_{q}^{o},
+\end{array}\]
+where $\delta_{q}$ is the unique formula $\delta$ such that $\mu q.\delta 
+\subf' \xi$.
+% \bigskip\hrule\bigskip
+
+It is easy to verify that for every $\chi \subf' \xi$, the formula $\chi^{o}$ 
+is continuous in $A_{\Phi}$.
+We may thus assume without loss of generality that every $\chi^{o}$ belongs to
+the syntactic fragment $\cont{\oslang}{A_{\Phi}}$.
+(Should this not be the case, then by Theorem~\ref{t:osnf-cont} we may replace
+$\chi^{o}$ with an equivalent formula that does belong to this fragment.)
+We are now ready to define the automaton $\bbA_{\xi} = \tup{A_{\xi},a_{I},
+\tmap_{\xi},\pmap_{\xi}}$ by putting 
+\[\begin{array}{lll}
+A_{\xi} &\isdef& \{ a_{\xi} \} \cup A_{\Phi} \cup \bigcup_{\psi\subf'\xi}A_{\psi}
+\\ a_{I}    &\isdef& a_{\xi}
+\\ \tmap_{\xi}(a,c) &\isdef& 
+   \left\{\begin{array}{ll}
+    \chi^{o} & \text{if } a = a_{\chi} \text{ with } \chi \in \{ \xi \} \cup \Phi
+   \\ \tmap_{\psi}(a,c) & \text{if } a \in A_{\psi}.
+   \end{array}\right.
+\\ \pmap_{\xi}(a) &\isdef& 
+   \left\{\begin{array}{ll}
+   1 & \text{if } a \in \{ a_{\xi} \} \cup A_{\Phi}
+   \\ \pmap_{\psi}(a) & \text{if } a \in A_{\psi}.
+   \end{array}\right.
+\end{array}\]
+It is then straightforward to check that $\bbA_{\xi}$ is a continuous-weak
+$\oslang$-automaton.
+Proving the equivalence of $\xi$ and $\bbA_{\xi}$ is a routine exercise.
+
+

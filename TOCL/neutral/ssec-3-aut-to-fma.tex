@@ -1,0 +1,372 @@
+% !TEX root = ../00CFVZ_TOCL.tex
+\subsection{From automata to formulas}
+   \label{sec:parity-to-mc}
+
+It is well-known that there are effective translations from automata to formulas
+and vice versa~\cite{ALG02}.
+The first result on $\oslang$-automata that we need in this paper is the 
+following.
+
+\begin{theorem}\label{t:autofor}
+There is an effective procedure that, given an automaton $\bbA$ in 
+$\Aut(\oslang)$, returns a formula $\xi_{\bbA} \in \mu\oslang$ which satisfies
+the following properties:
+\begin{enumerate}[(1)]
+    
+\item $\xi_{\bbA}$ is equivalent to $\bbA$;
+
+\item $\xi_{\bbA} \in \mu_{D}\oslang$ if $\bbA \in \AutW(\oslang)$;
+
+\item $\xi_{\bbA} \in \mu_{C}\oslang$ if $\bbA \in \AutWC(\oslang)$.
+\end{enumerate}
+\end{theorem}
+
+In the remainder of this subsection
+% (which is not used in other parts of the paper) 
+we focus on the proof of this theorem, which is (a refinement of)
+a variation of the standard proof showing that any modal automaton can be 
+translated into an equivalent formula in the modal $\mu$-calculus (see for
+instance~\cite[Section 6]{Ven08}). 
+For this reason we will not go into the details of showing that $\bbA$ and 
+$\xi_{\bbA}$ are equivalent, but we will provide a detailed definition of the 
+translation, and pay special attention to showing that the translations of weak
+and of weak-continuous $\oslang$-automata land in the right fragments of 
+$\mu\oslang$. 
+
+The definition of $\xi_{\bbA}$ is by induction on the number of clusters of
+$\bbA$, with a subinduction based on the number of states in the top cluster 
+of $\bbA$.
+For this inner induction we need to widen the class of $\oslang$-automata, and
+it will also be convenient to introduce the notion of a preautomaton (which is  
+basically an automaton without initital state).
+
+\begin{definition}
+A \emph{preautomaton} based on $\oslang$ and $\pprop$, or briefly: a
+\emph{preautomaton}, is a triple $\bbA = \tup{A,\tmap,\pmap}$ such that $A$ is
+a (possibly empty) finite set of states, $\tmap: A\times \pow(\pprop) \to 
+\oslang^+(A)$ and $\pmap: A \to \nat$.
+
+Given a set $X$ of propositional variables, a \emph{generalized preautomaton} 
+over $\pprop$ and $X$ is a triple $\bbA = \tup{A,\tmap,\pmap}$ such that $\pmap:
+A \to \nat$ is a priority map on the finite state set $A$, while the transition 
+map is of the form $\tmap: A\times \pow(\pprop) \to \oslang^+(A\cup X)$.
+\end{definition}
+
+Since we will not prove the semantic equivalence of $\bbA$ and $\xi_{\bbA}$,
+we confine our attention to the semantics of generalised automata to the
+following remark.
+
+\begin{remark}
+Generalised automata operate on $\pprop \cup X$-models; it will be convenient to
+denote these structures as quintuples of the form $\bbS = \tup{S,R,\tscolors,U,
+s_{I}}$, where $\tscolors: \pprop \to \pow S$ is a $\pprop$-colouring and $U: S \to 
+\pow X$ is an $X$-valuation on $S$.
+The acceptance game $\agame(\bbA,\bbS)$ associated with a generalised automaton
+$\bbA = \tup{A,a_{I},\tmap,\pmap}$ and a $\pprop \cup X$-model $\bbS$ is a minor
+variation of the one associated with a standard automaton.
+At a basic position of the form $(a,s) \in A \times S$, as before $\eloise$ 
+needs to come up with a valuation $V$ turning the set $R[s]$ into the domain of 
+a one-step model of the formula $\tmap(a,\tscolors(s))$.
+The difference with standard automata is that the formula $\tmap(a,\tscolors(s))$
+may now involve variables from the set $X$, and that the interpretation of these
+is already fixed by the valuation $U$ of $\bbS$, namely by the restriction 
+$U_{s}: x \mapsto R[s] \cap U(x)$ to the collection of successors of $s$.
+In table, we can present this game as follows:
+\begin{center}
+\small
+\begin{tabular}{|l|c|l|c|} \hline
+Position & Player & Admissible moves & Priority \\
+\hline
+    $(a,s) \in A \times S$
+  & $\eloise$
+  & $\{V : A \to \pow(R[s]) \mid (R[s],V\cup U_{s}) \models \tmap (a, \tscolors(s)) \}$
+  & $\pmap(a)$ 
+\\
+    $V : A \rightarrow \pow(S)$
+  & $\abelard$
+  & $\{(b,t) \mid t \in V(b)\}$
+  & $0$
+\\ \hline
+ \end{tabular}
+\end{center}
+where $V \cup U_{s}$ is the obviously defined $ A \cup X$-valuation on $R[s]$.
+\end{remark}
+
+We now turn to the definition of the translation.
+We will use the same notation for substitution as for the standard 
+$\mu$-calculus, cf.~Subsection~\ref{subsec:mu}.
+In addition we use the following notation.
+
+\begin{definition}
+Consider, for some preautomaton $\bbA = \tup{A,\tmap,\pmap}$, some state $a \in
+A$, and some colour $c \in \pow(\pprop)$, the one-step formula $\tmap(a,c)\in 
+\oslang(A)$.
+Suppose that for some subset $B \sse A$ we have a collection of 
+$\mu\oslang$-formulas $\{ \phi_{b} \mid b \in B \}$.
+Without loss of generality we may write $\tmap(a,c) = 
+\al(a_{1},\ldots,a_{m},b_{1},\ldots,b_{n})$, where the $a_{i}$ and $b_{j}$ 
+belong to $A\setminus B$ and $B$ respectively.
+Then we will denote the $\mu\oslang$-formula 
+$\nxt{\al}(a_{1},\ldots,a_{m},\phi_{1},\ldots,\phi_{n})$ as follows:
+\[
+\nxt{\tmap(a,c)}(\phi_{b}/b \mid b \in B)
+\isdef \nxt{\al}(a_{1},\ldots,a_{m},\phi_{1},\ldots,\phi_{n}).
+\]
+\end{definition}
+
+\noindent
+We can now define the desired translation from $\oslang$-automata to 
+$\mu\oslang$-formulas.
+
+
+\begin{definition}
+\label{d:tr}
+By induction on the number of clusters of a preautomaton $\bbA = \tup{A,\tmap,
+\pmap}$ we define a map 
+\[
+\ytr_{\bbA}: A \to \mu\oslang(P).
+\]
+Based on this definition, for an automaton $\bbA = \tup{A,\tmap,\pmap, a_{I}}$ 
+we put
+\[
+\xi_{\bbA} \isdef \ytr_{\tup{A,\tmap,\pmap}}(a_{I}).
+\]
+
+In the base case of the definition of $\ytr$ the preautomaton $\bbA$ has no 
+clusters at all, which means in particular that $A = \nada$.
+In this case we let $\ytr_{\bbA}$ be the empty map.
+
+In the inductive case we assume that $\bbA = \tup{A,\tmap,\pmap, a_{I}}$ does 
+have clusters. 
+Let $B \neq \nada$ be the highest cluster, and let $\bbA^{-}$ denote the 
+preautomaton with carrier $A \setminus B$, obtained by restricting the maps 
+$\tmap$ and $\pmap$ to the set $A \setminus B$.
+Then inductively we may assume a translation $\ytr_{\bbA^{-}}: (A \setminus B)
+\to \mu\oslang(P)$, and we will define
+\[
+\ytr_{\bbA}(a) \isdef \ytr_{\bbA^{-}}(a), \quad\text{ if } a \in A \setminus B.
+\]
+
+To extend this definition to the states in $B$, we make a case 
+distinction.
+If $B$ is a degenerate cluster, that is, $B = \{ b \}$ for some state $b$ 
+which is not active in itself, then we define
+\[
+\ytr_{\bbA}(b) \isdef
+   \bigvee_{c \in \pow{\pprop}}
+   \nxt{\tmap(b,c)}(\ytr_{\bbA^{-}}(a)/a \mid a \in A \setminus B).
+\]
+The main case of the definition is where $B$ is not degenerate.
+Fix an enumeration $b_{1},\ldots,b_{n}$ of $B$ such that $i \leq j$ implies 
+$\pmap(b_{i}) \leq \pmap(b_{j})$.
+Let $\bbA_{k}$ be the generalized preautomaton\footnote{%
+   Here we see the reason to generalise the notion of an automaton:
+   in the structure $\bbA_{k}$ ($0 \leq k \leq n$) the objects $b_{k+1},\ldots,
+   b_{n}$ are no longer states, but in the formulas $\tmap_{k}(a,c)$ they still 
+   occur at the position of states.
+}
+obtained from $\bbA$ by restricting the transition and priority map to the set
+\[
+A_{k} \isdef (A\setminus B) \cup \{ b_{1},\ldots,b_{k} \},
+\]
+so that $\bbA^{0} = \bbA^{-}$ and $\bbA^{n} = \bbA$.
+Where $B_{k} \isdef \{ b_{1},\ldots,b_{k} \}$, we now define, by induction on 
+$k$, a map 
+\[
+\ytr^{k}: B \to \mu\oslang(P \cup (B \setminus B_{k})).
+\]
+In the base case of this definition we set
+\[
+\ytr^{0}(b) \isdef 
+   \bigvee_{c \in \pow{\pprop}} 
+   \nxt{\tmap(b,c)}(\ytr_{\bbA^{-}}(a)/a \mid a \in A \setminus B),
+\]
+and in the inductive case we first define $\eta_{k+1} \isdef \mu$ if
+$\pmap(b_{k+1})$ is odd, and $\eta_{k+1} \isdef \nu$ if $\pmap(b_{k+1})$ is 
+even, and then set
+\[\begin{array}{llll}
+     \ytr^{k+1}(b_{k+1}) &\isdef &
+   \eta_{k+1} b_{k+1}. \ytr^{0}(b_{k+1})[\ytr^{k}(b_{i})/b_{i} \mid 1 \leq i\leq k]
+\\ \ytr^{k+1}(b_{i}) &\isdef &
+   \ytr^{k}(b_{i})[\ytr^{k+1}(b_{k+1})/b_{k+1}]
+   & \text{ for } i \neq k+1.
+\end{array}\]
+Finally, we complete the definition of $\ytr_{\bbA}$ by putting
+\[
+\ytr_{\bbA}(b) \isdef \ytr^{n}(b),
+\]
+for any $b \in B$.
+\end{definition}
+
+In the proof of Theorem~\ref{t:autofor} we will need the following closure 
+property of the fragments $\noe{\mu\oslang}{\qprop}$ and 
+$\cocont{\mu\oslang}{\qprop}$.
+
+\begin{proposition}
+\label{p:comp}
+Let $\rprop \subseteq \qprop$ be sets of proposition letters, and let $\phi$ 
+and $\phi_{q}$, for each $q \in \qprop$, be formulas in $\mu\oslang$.
+
+(1) If $\phi$ and each $\phi_{q}$ belongs to 
+    $\noe{\mu\oslang}{\qprop\setminus\rprop}$ 
+    ($\conoe{\mu\oslang}{\qprop\setminus\rprop}$), 
+   then so does $\phi[\phi_{q}/q \mid q \in \qprop]$.
+
+(2) If $\phi$ and each $\phi_{q}$ belongs to
+   $\cont{\mu\oslang}{\qprop\setminus\rprop}$
+   ($\cocont{\mu\oslang}{\qprop\setminus\rprop}$), 
+   then so does $\phi[\phi_{q}/q \mid q \in \qprop]$.
+\end{proposition}
+
+Both items of this proposition can be proved by a straightforward formula 
+induction --- we omit the details.
+
+
+\begin{proofof}{Theorem~\ref{t:autofor}}
+As mentioned, the verification of the equivalence of $\xi_{\bbA}$ and $\bbA$
+% for any $\oslang$-automaton $\bbA$, 
+is a standard exercise in the theory of parity automata and mu-calculi, and so
+we omit the details.
+We also skip the proof of item (2), completely focussing on the (harder) third 
+item.
+
+To prove this item, it suffices to take an arbitrary continuous-weak 
+$\oslang$-preautomaton $\bbA = \tup{A,\tmap,\pmap}$ for the set $\pprop$,
+and to show that 
+\begin{equation}
+\label{eq:tr1}
+\ytr_{\bbA}(a) \in \mu_{C}\oslang(\pprop)
+\end{equation}
+for all $a \in A$.
+We will prove this by induction on the number of clusters of $\bbA$.
+
+Since there is nothing to prove in the base case of the proof, we immediately
+move to the inductive case.
+Let $B$ be the highest cluster of $\bbA$.
+By the induction hypothesis we have $\ytr_{\bbA}(a) = \ytr_{\bbA^{-}}(a) \in 
+\mu_{C}\oslang(\pprop)$ for all $a \in A \setminus B$, where 
+$\bbA^{-}$ is as in Definition~\ref{d:tr}.
+To show that \eqref{eq:tr1} also holds for all $b \in B$, we distinguish cases.
+
+If $B$ is a degenerate cluster, say, $B = \{ b \}$, then for every $c \in 
+\pow(\pprop)$, the variables occurring in the formula $\tmap(b,c) \in \oslang(A)$
+are all from $A \setminus \{ b \}$.
+Given the definition of $\ytr_{\bbA}(b)$, it suffices to show that all formulas 
+of the form $\nxt{\tmap(b,c)}(\ytr_{\bbA}(a)/a \mid a \in A \setminus \{ b \})$
+belong to the set $\mu_{C}\oslang(\pprop)$, but this is immediate by the 
+induction hypothesis and the definition of the language.
+
+If, on the other hand, $B$ is nondegenerate, let $b_{1},\ldots,b_{n}$ enumerate
+$B$, and let, for $0\leq k \leq n$, the map $\ytr^{k}: B \to \mu\oslang$ be as in
+Definition~\ref{d:tr}.
+We only consider the case where $B$ is an odd cluster, i.e., $\pmap(b)$ is odd
+for all $b \in B$.
+Our key claim here is that 
+\begin{equation}
+\label{eq:tr2}
+\ytr^{k}(b_{i}) \in \mu_{C}\oslang(\pprop \cup \{ b_{k+1},\ldots,b_{n}\}) \cap 
+\cont{\mu\oslang}{\{ b_{k+1},\ldots,b_{n}\}},
+\end{equation}
+for all $k$ and $i$ with $0 \leq k \leq n$ and $0 < i \leq n$.
+We will prove this statement by induction on $k$ --- this is the `inner' 
+induction that we announced earlier on.
+
+In the base case of this inner induction we need to show that $\ytr^{0}(b_{i})$ 
+belongs to both $\mu_{C}\oslang(\pprop \cup B)$ and $\cont{\mu\oslang}{B}$.
+Showing the first membership relation is straightforward; for the second, the 
+key observation is that by our assumption on $\bbA$, every one-step formula of
+the form $\tmap(b_{i},c)$ is syntactically continuous in every variable $b \in 
+B$.
+Furthermore, by the outer inductive hypothesis we have $\ytr_{\bbA^{-}}(a) \in
+\mu_{C}\oslang(\pprop) \subseteq \cont{\mu\oslang}{B}$,
+for every $a \in A \setminus B$, and we trivially have that every variable $b 
+\in B$ belongs to the set $\cont{\mu\oslang}{B}$.
+But then it is immediate by the definition of $\cont{\mu\oslang}{B}$ that 
+this fragment contains the formula $\nxt{\tmap(b_{i},c)}(\ytr_{\bbA^{-}}(b)
+\mid b \in B)$, and since this fragment is closed under taking disjunctions, 
+we find that $\ytr^{0}(b_{i}) \in \cont{\mu\oslang}{B}$ indeed.
+This finishes the proof of the base case of the inner induction.
+
+For the inner induction step we fix a $k$ and assume that
+% $\ytr^{k}(b_{i}) \in \mu_{C}\oslang(\pprop  \cup \{ b_{k+1},\ldots,b_{n}\}) 
+% \cap \cont{\mu\oslang}{\{ b_{k+1},\ldots,b_{n}\}}$,
+\eqref{eq:tr2} holds for this $k$ and for all $i$ with $0 < i \leq k$.
+We will prove that
+\begin{equation}
+\label{eq:tr3}
+\ytr^{k+1}(b_{i}) \in \mu_{C}\oslang(\pprop) \cap 
+    \cont{\mu\oslang}{\{ b_{k+2},\ldots,b_{n}\}}.
+\end{equation}
+first for $i = k+1$, and then for an arbitrary $i \neq k+1$.
+To prove \eqref{eq:tr3} for the case $i = k+1$, first note that
+% \begin{equation}
+% \label{eq:tr3}
+% \ytr^{k+1}(b_{k+1}) \in \mu_{C}\oslang(\pprop) \cap 
+%     \cont{\mu\oslang}{\{ b_{k+2},\ldots,b_{n}\}}.
+% \end{equation}
+% To see this, 
+% \[\begin{array}{lcl}
+% \ytr^{0}(b_{k+1}) &\in& \mu_{C}\oslang(\pprop\cup \{ b_{k+1},\ldots,b_{n}\}) 
+%    \cap \cont{\mu\oslang}{\{ b_{k+1},\ldots,b_{n}\}},
+% \end{array}\]
+\[\begin{array}{lcl}
+\ytr^{0}(b_{k+1}) &\in& \mu_{C}\oslang(\pprop\cup B) 
+   \cap \cont{\mu\oslang}{B},
+\end{array}\]
+as we just saw in the base case of the inner induction.
+But then it is immediate by Proposition~\ref{p:comp} and the induction 
+hypothesis on the formulas $\ytr^{k}(b_{i})$ that 
+\[
+\ytr^{0}(b_{k+1})[\ytr^{k}(b_{i})/b_{i} \mid 1 \leq i\leq k]
+\in \cont{\mu\oslang}{\{ b_{k+1},\ldots,b_{n}\}},
+\]
+and from this it easily follows by the definition of 
+$\cont{\mu\oslang}{\{ b_{k+1},\ldots,b_{n}\}}$ that 
+\[
+\mu b_{k+1} b_{k+1}. \ytr^{0}(b_{k+1})[\ytr^{k}(b_{i})/b_{i} \mid 1 \leq i\leq k]
+\in \cont{\mu\oslang}{\{ b_{k+2},\ldots,b_{n}\}}
+\]
+as well. 
+That is, 
+\[
+\ytr^{k+1}(b_{k+1}) \in \cont{\mu\oslang}{\{ b_{k+2},\ldots,b_{n}\}}.
+\]
+This is the crucial step in proving \eqref{eq:tr3} for the case $i=k+1$,
+the proof that $\ytr^{k+1}(b_{k+1}) \in \mu_{C}\oslang(\pprop)$ is easy.
+
+Second, to prove \eqref{eq:tr3} for the case $i \neq k+1$, we first 
+% claim that
+% \begin{equation}
+% \label{eq:tr4}
+% \ytr^{k+1}(b_{i}) \in \mu_{C}\oslang(\pprop) \cap 
+%     \cont{\mu\oslang}{\{ b_{k+2},\ldots,b_{n}\}}.
+% \end{equation}
+% To see this,
+recall that by the induction hypothesis we have
+\[
+\ytr^{k}(b_{i}) \in \mu_{C}\oslang(\pprop) \cap 
+    \cont{\mu\oslang}{\{ b_{k+1},\ldots,b_{n}\}},
+\]
+while we just saw that 
+$\ytr^{k+1}(b_{k+1}) \in \cont{\mu\oslang}{\{ b_{k+2},\ldots,b_{n}\}}$.
+But from the latter two statements it is immediate by Proposition~\ref{p:comp} 
+that 
+\[
+\ytr^{k+1}(b_{i}) = \ytr^{k}(b_{i})[\ytr^{k+1}(b_{k+1})/b_{k+1}] 
+\in \cont{\mu\oslang}{\{ b_{k+2},\ldots,b_{n}\}}
+\]
+so that we have indeed proved \eqref{eq:tr2} for the case $i \neq 
+k+1$.
+This finishes the proof of the inner induction.
+
+Finally, it follows from \eqref{eq:tr2}, instantiated with $k = n$, 
+that for all $b \in B$ we have
+\[
+\ytr_{\bbA}(b) = \ytr^{n}(b) \in \mu_{C}\oslang(\pprop),
+\]
+as required for proving the outer induction step.
+In other words, we are finished with the proof of \eqref{eq:tr1}, and 
+hence, finished with the proof of the theorem.
+\end{proofof}
+
+

@@ -1,0 +1,103 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%NEXT
+
+
+% claims
+\makeatletter
+\newcounter{ourclaimcounter}
+\newenvironment{ourclaim}{%
+ 	\stepcounter{ourclaimcounter}%
+	\def\@currentlabel{\theourclaimcounter}%
+	\begin{trivlist}\item[]{\sc Claim~\arabic{ourclaimcounter}.~}
+	}
+	{\end{trivlist}
+        }
+\newenvironment{claimfirst}{%
+	\setcounter{ourclaimcounter}{0}%
+	\begin{ourclaim}}{\end{ourclaim}}
+\makeatother
+
+% to be supplied
+\newenvironment{tbs}{%
+   \small\tt
+   \begin{enumerate}[$\blacktriangleright$]}{\end{enumerate}}
+\newcommand{\btbs}{\begin{tbs}}
+\newcommand{\etbs}{\end{tbs}}
+\newcommand{\shtbs}[1]{\begin{tbs} \item #1 \end{tbs}}
+
+\newcommand{\todo}{\marginpar{$\bullet$}}
+
+%%%%%%%%%% LEFTOVERS %%%%%%%%
+
+%\newcommand*\sepsection{\bigskip}
+
+% \newcommand{\umods}{\mathfrak{M}_1}
+% \newcommand{\sumods}{\umods^s}
+% \newcommand{\rest}{|}
+% \newcommand{\iso}{\simeq}
+% \newcommand{\resto}{{\upharpoonright}}
+% \newcommand{\dcup}{\uplus}
+% \newcommand{\stl}{\rightarrowtriangle} %\prec}
+% \newcommand{\tc}{\mathsf{TC}}
+% \newcommand{\st}{\mathrm{ST}}
+% \newcommand{\ot}{\mathrm{OT}}
+% \newcommand{\sorts}{\mathcal{S}}
+% \newcommand{\asort}{\mathtt{s}}
+% \newcommand{\aSort}{\mathtt{S}}
+% \newcommand{\pto}{\rightharpoonup}
+% \newcommand{\llet}{\subseteq}
+% \newcommand{\lletneq}{\subsetneq}
+% \newcommand{\ffunc}[2]{F^{#1}_{#2}}
+% \newcommand{\somemod}{\heartsuit}
+% \newcommand{\gsubmodel}[2]{{#1}^{\downarrow}_{#2}}
+% \newcommand{\gsubaut}[2]{{#1}^{\blacktriangle}_{#2}}
+% \newcommand{\pleadsto}[1]{R^{\shortrightarrow}_{#1}}
+
+% \newcommand{\omls}{\oml^\flat}
+% \newcommand{\oca}{\ensuremath{\mathrm{ADD}_1}\xspace}
+% \newcommand{\ocm}{\ensuremath{\mathrm{MUL}_1}\xspace}
+% \newcommand{\ocam}{\ensuremath{\oca^s}\xspace}
+% \newcommand{\ocmm}{\ensuremath{\ocm^s}\xspace}
+% \newcommand{\ogcam}{\ensuremath{\textup{g}\oca^s}\xspace}
+% \newcommand{\ogcmm}{\ensuremath{\textup{g}\ocm^s}\xspace}
+
+% mu-calculi
+% \newcommand{\mucaML}{\ensuremath{\mu_{a}\ML}\xspace}
+% \newcommand{\nmucaML}{\ensuremath{\mu_{na}\ML}\xspace}
+% \newcommand{\rmucaML}{\ensuremath{\mu_{a}^{-}\ML}\xspace}
+% \newcommand{\rnmucaML}{\ensuremath{\mu_{na}^{-}\ML}\xspace}
+% \newcommand{\lmuML}{\ensuremath{\mu\ML^{\lor}}\xspace}
+% \newcommand{\lmucML}{\ensuremath{\mu_{C}\ML^{\lor}}\xspace}
+% \newcommand{\lnmucML}{\ensuremath{\mu_{nc}\ML^{\lor}}\xspace}
+% \newcommand{\mufoe}{\ensuremath{\mu\foe}\xspace}
+% \newcommand{\mufoei}{\ensuremath{\mufoe^\infty}\xspace}
+% \newcommand{\mucfoe}{\ensuremath{\mu_{c}\foe}\xspace}
+% \newcommand{\mucfoei}{\ensuremath{\mu_{c}\foe^\infty}\xspace}
+% \newcommand{\mucafoe}{\ensuremath{\mu_{a}\foe}\xspace}
+% \newcommand{\so}[1]{\mathrm{SO}(#1)}
+% \newcommand{\afmc}{\ensuremath{\mathrm{AFMC}}\xspace}
+% \newcommand{\muMC}{\ensuremath{\Sigma\mu\ML}}    %least fixpoint-fragment of Mu-calculus
+% \newcommand{\muffoe}{\ensuremath{\mufoe^\ff}\xspace}
+% \newcommand{\muffoei}{\ensuremath{{\mufoei}^\ff}\xspace}
+% \newcommand{\mucaffoe}{\ensuremath{\mucafoe^\ff}\xspace}
+% \newcommand{\mucffoei}{\ensuremath{{\mucfoei}^\ff}\xspace}
+
+% \newcommand{\matches}{\mathcal{B}}
+% \newcommand{\match}{\pi}
+% \newcommand{\fwa}[2]{{#1}^{\!\div}_{#2}} %{\mathsf{\fconst}^{#2}_{wa}(#1)}
+% \newcommand{\fwc}[2]{{#1}^{\!\div}_{#2}} %{\mathsf{\fconst}^{#2}_{wa}(#1)}
+
+% \newcommand{\sgame}{\mathcal{S}}
+% \newcommand{\agamesym}{\mathcal{A}_\textrm{s}}
+% \newcommand{\agamenfa}{\underline{\mathcal{A}}} %{\mathcal{A}_\textrm{FA}}
+% \newcommand{\xgame}{\mathcal{X}}
+
+% \newcommand{\aut}{\ensuremath\mathbb{A}\xspace}
+% \newcommand{\baut}{\ensuremath\mathbb{B}\xspace}
+% \newcommand{\iaut}{\ensuremath\mathbb{X}\xspace}
+% \newcommand{\efgame}{\mathrm{EF}}
+% \newcommand{\game}{\mathcal{G}}
+
+% \newcommand{\toprops}[1]{\varpi_c}
+% \newcommand{\compset}[1]{\{#1\}}
+

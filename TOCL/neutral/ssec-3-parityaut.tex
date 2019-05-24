@@ -1,0 +1,213 @@
+% !TEX root = ../00CFVZ_TOCL.tex
+
+\subsection{Parity automata}
+\label{ssec:parityaut}
+
+Throughout the rest of the section we fix, next to a set $\pprop$ of proposition 
+letters, a one-step language $\oslang$, as defined in 
+Subsection \ref{sec:onestep-short}.
+In light of the results therein, we assume that we have isolated fragments 
+$\oslang^+(A)$, $\cont{\oslang(A)}{B}$ and $\cocont{\oslang(A)}{B}$ consisting
+of one-step formulas in $\oslang(A)$ that are respectively monotone, 
+$B$-continuous and $B$-co-continuous, for $B \subseteq A$.
+
+We first recall the definition of a general parity automaton, adapted to this
+setting. 
+
+\begin{definition}[Parity Automata] \label{def:partityaut}
+A \emph{parity automaton} based on the one-step language $\oslang$ and the set
+$\pprop$ of proposition letters, or briefly: an \emph{$\oslang$-automaton}, is a 
+tuple $\bbA = \tup{A,\tmap,\pmap,a_I}$ such that $A$ is a finite set of states,
+$a_I \in A$ is the initial state, $\tmap: A\times \pow(\pprop) \to \oslang^+(A)$
+is the transition map, and $\pmap: A \to \nat$ is the priority map.
+The class of such automata will be denoted by $\Aut(\oslang)$.
+
+Acceptance of a $\pprop$-transition system $\bbS = \tup{T,R,\tscolors,s_I}$ by
+$\bbA$ is determined by the \emph{acceptance game} $\agame(\bbA,\bbS)$ of $\bbA$
+on $\bbS$. 
+This is the parity game defined according to the rules of the following table.
+\begin{center}
+\small
+\begin{tabular}{|l|c|l|c|} \hline
+Position & Player & Admissible moves & Priority \\
+\hline
+    $(a,s) \in A \times T$
+  & $\eloise$
+  & $\{V : A \to \pow(R[s]) \mid (R[s],V) \models \tmap (a, \tscolors(s)) \}$
+  & $\pmap(a)$ 
+\\
+    $V : A \rightarrow \pow(T)$
+  & $\abelard$
+  & $\{(b,t) \mid t \in V(b)\}$
+  & $0$
+\\ \hline
+ \end{tabular}
+\end{center}
+%
+$\bbA$ \emph{accepts} $\bbS$ if $\eloise$ has a winning strategy in 
+$\agame(\bbA,\bbS)@(a_I,s_I)$, and \emph{rejects} $\bbS$ if $(a_I,s_I)$ is 
+a winning position for $\abelard$. 
+We write $\Mod(\bbA)$ for the class of transition systems that are accepted
+by $\bbA$ and $\TMod(\bbA)$ for the class of tree models in $\Mod(\bbA)$.
+\end{definition}
+
+Explained in words, the acceptance game $\agame(\bbA,\bbS)$ proceeds in rounds, 
+each round moving from one basic position $(a,s) \in A \times T$ to the next.
+At such a basic position, it is $\eloise$'s task to turn the set $R(s)$ of 
+successors of $s$ into the domain of a one-step model for the formula 
+$\tmap(a, \tscolors(s)) \in \oslang(A)$.
+That is, she needs to come up with a valuation $V: A \to \pow(R[s])$ such that
+$(R[s],V) \models \tmap (a, \tscolors(s))$ (and if she cannot find such a 
+valuation, she looses immediately).
+One may think of the set $\{(b,t) \mid t \in V(b)\}$ as a collection of 
+witnesses to her claim that, indeed, $(R[s],V) \models \tmap (a, \tscolors(s))$.
+The round ends with $\abelard$ picking one of these witnesses, which then
+becomes the basic position at the start of the next round.
+(Unless, of course, $\eloise$ managed to satisfy the formula $\tmap(a, 
+\tscolors(s))$ with an empty set of witnesses, in which case $\abelard$ gets 
+stuck and looses immediately.)
+
+% \myparagraphns{Closure under complementation.}
+Many properties of parity automata can already be determined at the one-step
+level.
+An important example concerns the notion of complementation, which will be used
+later in this section. Recall the notion of \emph{dual} of a one-step formula (Definition \ref{def:one-step}). Following ideas from~\cite{Muller1987,DBLP:conf/calco/KissigV09}, we can use duals, together with a \emph{role switch} between $\abelard$ and
+$\eloise$, in order to define a negation or complementation operation on 
+automata.
+
+%\begin{definition}
+%\label{d:bdual1}
+%Two one-step formulas $\varphi$ and $\psi$ are each other's \emph{Boolean dual}
+%if for every structure $(D,V)$ we have $(D,V) \models \varphi\quad
+%\text{iff}\quad (D,V^{c}) \not\models \psi$, where $V^{c}$ is the 
+%valuation given by $V^{c}(a) \mathrel{:=} D \setminus V(a)$, for all $a$.
+%%
+%A one-step language $\oslang$ is \emph{closed under Boolean duals} if for every
+%set $A$, each formula $\varphi \in \oslang(A)$ has a Boolean dual $\dual{\varphi}
+%\in \oslang(A)$.
+%\end{definition}
+
+
+
+\begin{definition}
+\label{d:caut}
+Assume that, for some one-step language $\oslang$, the map $\dual{(\cdot)}$
+provides, for each set $A$, a dual $\dual{\varphi} \in \oslang(A)$ for each
+$\varphi \in \oslang(A)$.
+We define the \emph{complement} of a given $\oslang$-automaton 
+$\bbA = \tup{A,\tmap,\pmap,a_I}$ as the automaton $\dual{\bbA} \isdef 
+\tup{A,\dual{\tmap},\dual{\pmap},a_I}$ where $\dual{\tmap}(a,c) \isdef
+\dual{(\tmap(a,c))}$, and $\dual{\pmap}(a) \isdef 1 + \pmap(a)$, for all 
+$a \in A$ and $c \in \pow(\pprop)$.
+\end{definition}
+
+\begin{proposition}
+\label{prop:autcomplementation}
+Let $\oslang$ and $\dual{(\cdot)}$ be as in the previous definition.
+For each $\bbA \in \Aut(\oslang)$ and $\bbS$ we have that $\dual{\bbA}$ accepts
+$\bbS$ if and only if $\bbA$ rejects $\bbS$.
+\end{proposition}
+
+The proof of Proposition~\ref{prop:autcomplementation} is based on the fact
+that the \emph{power} of $\eloise$ in $\agame(\dual{\bbA},\bbS)$ is the same
+as that of $\abelard$ in $\agame(\bbA,\bbS)$, as defined 
+in~\cite{DBLP:conf/calco/KissigV09}. 
+As an immediate consequence, one may show that if the one-step language 
+$\oslang$ is closed under duals, then the class $\Aut(\oslang)$ is closed 
+under taking complementation.
+Further on we will use Proposition~\ref{prop:autcomplementation} to show that
+the same may apply to some subclasses of $\Aut(\oslang)$.
+
+The automata-theoretic characterisation of $\wmso$ and $\nmso$ will use classes 
+of parity automata constrained by two additional properties.
+To formulate these we first introduce the notion of a \emph{cluster}.
+
+\begin{definition}
+Let $\oslang$ be a one-step language, and let $\bbA = \tup{A,\tmap,\pmap,a_I}$
+be in $\Aut(\oslang)$. 
+Write $\ord$ for the reachability relation in $\bbA$, i.e., the transitive 
+closure of the ``occurrence relation'' $\{ (a,b) \mid b \text{ occurs in }
+\tmap(a,c) \text{ for some } c \in \pow(\pprop) \}$;
+in case $a \ord b$ we say that $b$ is \emph{active} in $a$.
+A \emph{cluster} of $\bbA$ is a cell of the equivalence relation generated by 
+the relation $\ord \cap \succ$ (i.e., the intersection of $\ord$ with its 
+converse).
+A cluster is called \emph{degenerate} if it consists of a  single element which
+is not active in itself.
+\end{definition}
+
+Observe that any cluster of an automaton is either degenerate, or else each
+of its states is active in itself and in any other state of the cluster.
+Observe too that there is a natural order on clusters: we may say that one
+cluster is \emph{higher} than another if each member of the second cluster
+if active in each member of the first.
+We may assume without loss of generality that the initial state belongs to the
+highest cluster of the automaton.
+
+We can now formulate the mentioned requirements on $\oslang$-automata as follows.
+
+\begin{definition}
+\label{d:wk}
+\label{d:ctwk}
+Let $\bbA = \tup{A,\tmap,\pmap,a_I}$ be some $\oslang$-automaton.
+We say that $\bbA$ is \emph{weak} if $\pmap(a) = \pmap(b)$ whenever $a$ and $b$
+belong to the same cluster.
+For the property of \emph{continuity} we require that, for any cluster $M$, any
+state $a \in M$ and any $c \in \pow\pprop$, we have that 
+$\pmap(a) = 1$ implies $\tmap(a,c) \in \cont{\oslang(A)}{M}$
+and 
+$\pmap(a) = 0$ implies $\tmap(a,c) \in \cocont{\oslang(A)}{M}$.
+
+We call a parity automaton $\bbA \in \Aut(\oslang)$ \emph{weak-continuous} if it 
+satisfies both properties, weakness and continuity.
+The classes of weak and weak-continuous automata are denoted as $\AutW(\oslang)$
+and $\AutWC(\oslang)$, respectively.
+\end{definition}
+
+% \begin{definition}
+% \label{d:wk}
+% \label{d:ctwk}
+% Let $\oslang$ be a one-step language, and let $\bbA = \tup{A,\tmap,\pmap,a_I}$
+% be in $\Aut(\oslang)$. Write $\ord$ for the reachability relation in $\bbA$, i.e.
+% the reflexive-transitive closure of $\{ (a,b) \mid \exists c. b \text{ occurs 
+% in }\tmap(a,c)\}$. 
+% A \emph{strongly connected $\ord$-component} ($\ord$-SCC) is a subset $M
+% \subseteq A$ such that, for every $a,b \in M$ we have $a \ord b$ and $b \ord c$.
+% The SCC is called \emph{maximal} (MSCC) when $M\cup\{a\}$ ceases to be a SCC for
+% any choice of $a \in A\setminus M$.
+% We formulate two requirements on automata from $\Aut(\oslang)$:
+% \begin{description}
+% \item[(weakness)] if $a \ord b$ and $b \ord a$ then $\pmap(a) = \pmap(b)$.
+% \item[(continuity)] if $a \ord b$ and $b \ord a$, then for any $c\in C$:
+%   \\ if ${\pmap(a)}=1$ then $\tmap(a,c)$ is syntactically continuous in $b$,
+%      i.e., $\tmap(a,c) \in \cont{\oslang}{b}(A)$;
+%   \\ if ${\pmap(a)}=0$ then $\tmap(a,c)$ is syntactically co-continuous in $b$,
+%      i.e., $\tmap(a,c) \in \cocont{\oslang}{b}(A)$.
+% \end{description}
+% We call a parity automaton $\bbA \in \Aut(\oslang)$ \emph{weak} if it satisfies
+% \emph{(weakness)}, and \emph{weak-continuous} if it additionally satisfies 
+% \emph{(continuity)}.
+% The classes of weak and weak-continuous automata are denoted as $\AutW(\oslang)$
+% and $\AutWC(\oslang)$, respectively.
+% \end{definition}
+
+Intuitively, weakness forbids an automaton to register non-trivial properties 
+concerning the vertical `dimension' of input trees, whereas continuity expresses
+a constraint on how much of the horizontal `dimension' of an input tree the 
+automaton is allowed to process. 
+In terms of second-order logic, they correspond respectively to quantification 
+over `vertically' finite (i.e. included in well-founded subtrees) and 
+`horizontally' finite (i.e. included in finitely branching subtrees) sets. 
+The conjunction of weakness and continuity thus corresponds to quantification 
+over finite sets. 
+
+\begin{remark}\label{rmk:weak01}
+Any weak parity automaton $\bbA$ is equivalent to a special weak automaton
+$\bbA'$ with $\pmap: A' \to \{0,1\}$. 
+This is because \emph{(weakness)} prevents states of different parity to occur
+infinitely often in acceptance games; so we may just replace any even priority 
+with $0$, and any odd priority with $1$.
+We shall assume such a restricted priority map for weak parity automata.
+\end{remark}
+
+

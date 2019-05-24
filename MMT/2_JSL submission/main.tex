@@ -1,0 +1,167 @@
+\documentclass[bibother]{asl} 
+
+%\input{preamble}
+
+
+%\usepackage{amsfonts,amssymb,amsmath}
+\usepackage{stmaryrd,latexsym}
+\usepackage{enumerate,array,xspace}
+\usepackage{array}
+\usepackage{epsfig}
+\usepackage[all]{xy}
+\usepackage{enumerate}
+\usepackage{color}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage{multirow}
+
+
+
+\title[Monadic Predicate Logic with the Infinity Quantifier]{Model Theory of Monadic Predicate Logic with the Infinity Quantifier%: \\ some model theory
+}
+
+% \keywords{This is not required.}
+% \subjclass{This is not required.}
+
+\author[F. Carreiro]{Facundo Carreiro}
+\revauthor{F. Carreiro}
+
+\address{Institute for Logic, Language and Computation \\ Universiteit van Amsterdam \\
+   P.O. Box 94242\\ 1090 GE Amsterdam, The Netherlands}
+
+\email{contact@facundo.io}
+
+
+\author[A. Facchini]{Alessandro Facchini}
+\revauthor{A. Facchini}
+
+\address{Dalle Molle Institute for Artificial Intelligence (IDSIA) \\
+Galleria 2 \\ 6928 Manno (Lugano), Switzerland}
+
+\email{alessandro.facchini@idsia.ch}
+
+\author[Y. Venema]{Yde Venema}
+\revauthor{Y. Venema}
+
+\address{Institute for Logic, Language and Computation \\ Universiteit van Amsterdam \\
+   P.O. Box 94242\\ 1090 GE Amsterdam, The Netherlands}
+
+\email{y.venema@uva.nl}
+
+\author[F. Zanasi]{Fabio Zanasi}
+\revauthor{F. Zanasi}
+
+\address{University College London\\
+66-72 Gower Street \\ WC1E 6BT London, United Kingdom}
+
+\email{f.zanasi@ucl.ac.uk}
+
+%%%%%%%%%%%%%%% ENVIRONMENTS %%%%%%%%%%%%%%
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{fewtheorem}{Theorem}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{defi}[theorem]{Definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{conv}[theorem]{Convention}
+\newtheorem{rema}[theorem]{Remark}
+\newtheorem{exam}[theorem]{Example}
+\newtheorem{observation}[theorem]{Observation} %%niet in LLNCS style
+
+\newenvironment{definition}{\begin{defi}\rm}{\hfill $\lhd$\end{defi}}
+\newenvironment{convention}{\begin{conv}\rm}{\end{conv}}
+\newenvironment{remark}{\begin{rema}\rm}{\hfill $\lhd$\end{rema}}
+\newenvironment{example}{\begin{exam}\rm}{\hfill $\lhd$\end{exam}}
+
+%% proof
+%\newenvironment{proof}{\begin{trivlist}\item[]{\bf
+%Proof.}}{\hfill {\sc qed}\end{trivlist}}
+\newenvironment{proofsketch}{\begin{trivlist}\item[]{\bf
+Proof sketch.}}{\hfill {\sc qed}\end{trivlist}}
+\newenvironment{proofof}[1]{\begin{trivlist}\item[\hskip\labelsep{\bf
+Proof~of~{#1}.\ }]}{\hspace*{\fill} {\sc qed}\end{trivlist}}
+
+%claims
+%Use claim only inside a proof and start always with claimfisrt. 
+%Then the claims are numbered inside the proof.
+
+\newtheorem{claim2}{\sc Claim}
+\newenvironment{claim}{\begin{claim2}\rm}{\end{claim2}\rm}
+\newenvironment{claimfirst}{\setcounter{claim2}{0}
+               \begin{claim2}\rm}{\end{claim2}\rm}
+
+\newenvironment{pfclaim}{\begin{trivlist}\item[]{\sc Proof of
+Claim.}}{\hfill {\mbox{$\blacktriangleleft$}}\end{trivlist}}
+
+\newenvironment{ourlist}{\begin{list}{}%
+    {\setlength{\topsep}{1mm}\setlength{\itemsep}{0mm}\setlength{\parsep}{0mm}}
+    }{\end{list}}
+
+
+
+%%%%%%%%%%%%%%% ENVIRONMENTS %%%%%%%%%%%%%%
+\input{macros}
+
+%%%%
+%%%% BEGIN DOCUMENT
+%%%%
+
+\begin{document}
+
+\maketitle
+
+%%%%
+% 0. ABSTRACT
+%%%%
+
+\input{neutral/sec-abstract}
+
+
+
+%%%%
+% 1. INTRO
+%%%%
+
+\input{neutral/sec-intro}
+%%%%
+% 2. PRELIMINARIES
+%%%%
+
+\input{neutral/sec-prel}
+%%%%
+% 3. NORMAL FORMS
+%%%%
+
+\input{neutral/sec-nf}
+
+%%%%
+% 4. MONOTONICITY
+%%%%
+
+\input{neutral/sec-mono}
+%%%%
+% 5. CONTINUITY
+%%%%
+
+\input{neutral/sec-cont}
+%%%%
+% 6. SUBMODELS AND QUOTIENTS
+%%%%
+
+\input{neutral/sec-inv}
+
+%%%%
+% BIBLIO
+%%%%
+
+
+\bibliographystyle{plain}
+\bibliography{logic}
+
+
+\end{document}
+
+

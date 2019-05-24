@@ -1,0 +1,316 @@
+\subsection{Fixpoints of noetherian maps}
+
+We will now see how to prove Proposition~\ref{p:keyfix}(1), which is the key 
+result that we need to embed alternation-free $\mu$-calculi such as 
+$\mu_{D}\ofoe$ and $\mu_{D}\ML$ into noetherian second-order logic.
+Perhaps suprisingly, this case is slightly more subtle than the characterisation of
+fixpoints of continuous maps.
+
+We start with stating some auxiliary definitions and results on monotone 
+functionals, starting with a game-theoretic characterisation of their least
+fixpoints~\cite{Ven08}.
+
+\begin{definition}
+\label{d:unfgame}
+Given a monotone functional $F: \pow(S)\to \pow(S)$ we define the 
+\emph{unfolding game} $\UG_{F}$ as follows:
+\begin{itemize}
+\item at any position $s \in S$, $\eloise$ needs to pick a set $X$ such that 
+$s \in FX$;
+\item at any position $X \in \pow(S)$, $\abelard$ needs to pick an element of 
+$X$
+\item all infinite matches are won by $\abelard$.
+\end{itemize}
+A positional strategy $\ystrat: S \to \pow(S)$ for $\eloise$ in $\UG_{F}$ is 
+\emph{descending} if, for all ordinals $\alpha$,
+\begin{equation}
+\label{eq:dec}
+s \in F^{\alpha+1}(\nada) \text{ implies } \ystrat(s) \sse F^{\alpha}(\nada).
+\end{equation}
+\end{definition}
+
+It is not the case that \emph{all} positional winning strategies for $\eloise$ 
+in $\UG_{F}$ are descending, but the next result shows that there always is one.
+
+\begin{proposition}
+\label{p:unfg}
+The following hold for any monotone functional $F: \pow(S)\to \pow(S)$:
+\begin{enumerate}[(1)]
+\item
+for all $s \in S$, $s \in \win_{\eloise}(\UG_{F})$ iff $s \in \LFP. F$;
+\item if $s \in \LFP. F$, then \eloise has a descending winning strategy in 
+$\UG_{F}@s$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Point (1) corresponds to \cite[Theorem 3.14(2)]{Ven08}.
+For part (2) one can simply take the following strategy.
+Given $s \in \LFP.F$, let $\alpha$ be the least ordinal such that $s \in 
+F^{\alpha}(\nada)$; it is easy to see that $\alpha$ must be a successor ordinal,
+say $\alpha = \beta + 1$. 
+Now simply put $\ystrat(s) := F^{\beta}(\nada)$.
+\end{proof}
+
+\begin{definition}
+\label{d:str-tree}
+Let $F: \pow(S)\to \pow(S)$ be a monotone functional, let $\ystrat$ be a 
+positional winning strategy for $\eloise$ in $\UG_{F}$, and let $r \in S$. 
+Define $T_{\ystrat,r} \sse S$ to be the set of states in $S$ that are 
+$\ystrat$-reachable in $\UG_{F}@r$.
+This set has a tree structure induced by the map $\ystrat$ itself, where the 
+children of $s \in T_{\ystrat,r}$ are given by the set $\ystrat(s)$; we will
+refer to $T_{\ystrat,r}$ as the \emph{strategy tree} of
+$\ystrat$.
+\end{definition}
+Note that a strategy tree $T_{\ystrat,r}$ will have no infinite paths, since we
+define the notion only for a \emph{winning} strategy $\ystrat$.
+
+\begin{proposition}
+\label{p:afmc-2}
+Let $F: \pow(S)\to \pow(S)$ be a monotone functional, let $r \in S$, and let 
+$\ystrat$ be a descending winning strategy for $\eloise$ in $\UG_{F}$.
+Then
+\begin{equation}
+\label{eq:afmc3}
+r \in \LFP. F \text{ implies } r \in \LFP. F\rst{T_{\ystrat,r}}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Let $F,r$ and $\ystrat$ be as in the formulation of the proposition.
+% The direction from right to left in \eqref{eq:afmc3} is immediate by
+% Proposition~\ref{p:rstfix}.
+% For the opposite direction, 
+Assume that $r \in \LFP. F$, then clearly $r \in F^{\al}(\nada)$ for some 
+ordinal $\al$; furthermore, $T_{\ystrat,r}$ is defined and clearly we have 
+$r \in T_{\ystrat,r}$.
+Abbreviate $T \isdef T_{\ystrat,r}$
+It then clearly suffices to show that for all ordinals $\alpha$ we have
+\begin{equation}
+\label{eq:unf1}
+F^{\al}(\nada) \cap T \sse (F\rst{T})^{\alpha}(\nada).
+\end{equation}
+We will prove \eqref{eq:unf1} by transfinite induction.
+The base case, where $\alpha = 0$, and the inductive case where $\alpha$ is a 
+limit ordinal are straightforward, so we focus on the case where $\alpha$ is a 
+successor ordinal, say $\alpha = \beta +1$.
+Take an arbitrary state $u \in F^{\beta+1}(\nada) \cap T$, then we 
+find $\ystrat(u) \sse F^{\beta}(\nada)$ by our assumption \eqref{eq:dec}, and 
+$\ystrat(u) \sse T$ by definition of $T$.
+Then the induction hypothesis yields that 
+$\ystrat(u) \sse (F\rst{T})^{\beta}(\nada)$, and so we have 
+$\ystrat(u) \sse (F\rst{T})^{\beta}(\nada) \cap T$.
+But since $\ystrat$ is a winning strategy, and $u$ is a winning position for 
+$\eloise$ in $\UG_{F}$ by Claim~\ref{p:unfg}(i), $\ystrat(u)$ is a
+legitimate move for $\eloise$, and so we have $u \in F(\ystrat(u))$.
+Thus by monotonicity of $F$ we obtain $u \in 
+F((F\rst{T})^{\beta}(\nada) \cap T)$, and since $u \in T$ 
+by assumption, this means that $u \in (F\rst{T})^{\beta+1}(\nada)$ as 
+required.
+\end{proof}
+
+We now turn to the specific case where we consider the least fixed point of a 
+functional $F$ which is induced by some formula $\phi(p) \in 
+\mu_{D}\mathcal{L}_1$ on some LTS $\bbS$.   
+By Proposition \ref{p:unfg} and Fact~\ref{f:adeqmu}, we have that $\eloise$ has
+a winning strategy in  $\egame(\mu p.\phi(p),\bbS)@(\mu p.\phi(p),s)$ if and only if she has one in $\UG_{F}@s$ too, where $F := \phi_{p}^{\bbS}$ is the monotone functional defined by $\phi(p)$. The next Proposition  makes this correspondence explicit when $\mathcal{L}_1=\foe$. 
+
+First, we need to introduce some auxiliary concepts and notations.
+Given  a winning strategy   $\ystrat$ for $\eloise$ in $\egame(\mu p. \phi,\bbS)@(\mu p. \phi,s)$, 
+let $B(\ystrat)$ be the set of all finite $\ystrat$-guided, possibly partial, 
+matches in  $\egame(\psi,\bbS)@(\psi,s)$ in which no position of the form 
+$(\nu q. \psi, r)$ is visited. 
+$\eloise$ is said to have \emph{compatible} positional winning strategies
+$\chi$ in $\UG_F@s$ and  $\chi'$  in $\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$ if
+each point in $T_{\chi,s}$ lies on some path belonging to $B^\bbS(\chi')$. 
+
+\btbs
+\item
+please define $B^\bbS(\chi')$
+\etbs
+
+\begin{proposition}\label{p:unfold=evalgame2}
+%Player $\exists$ has a winning strategy $\chi$ in $\UG_F@(s,\phi(p))$ if and only she has winning strategy $\chi'$ in 
+%$\egame(\mu p.\phi,\bbS)@(s, \mu p.\phi)$. 
+%Moreover it holds that each $r \in  T_{\chi,s}$ lies in some path in $B^\bbS(\chi')$.
+%$s \in \ext{\mu p.\phi(p)}^{\bbS}$, with 
+The following hold, for any formula $\phi(p) \in \mu_{D}\foe{p}$:
+\begin{enumerate}[(1)]
+\item For every positional winning strategy $\chi$ for $\eloise$ in $\UG_F@s$,
+there is a compatible positional winning strategy $\chi'$ for her in 
+$\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$;
+\item For every positional winning strategy $\chi'$ for $\eloise$ in 
+$\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$, there is a compatible  positional 
+winning strategy $\chi$ for her in $\UG_F@s$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+For the first statement of the Proposition we reason as follows. 
+Let $\chi: S \to \pow{(S)}$  be a positional winning strategy for $\eloise$ in $\UG_F@s$. 
+Hence, for every $t \in \win_{\eloise}(\UG_{F})$, it holds that $t \in F(\chi(t))$ 
+and therefore that there is a positional winning strategy $\chi_t$ for $\eloise$ 
+in the game $\egame(\phi,\bbS[p \mapsto \chi(s)])$ starting at $(\phi,t)$. 
+%\btbs
+%\item
+%YV: I get confused with the T,t and $\chi, s$.
+%\etbs
+Let $\chi'$ be the following strategy for $\eloise$ in
+$\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$:
+\begin{enumerate}
+\item after the initial automatic move, the position of the match is $(\phi,s)$; 
+$\eloise$ first plays her strategy $\chi_s$;
+\item each time a position $(p,t)$ is reached, 
+\begin{enumerate}
+%necessarily 
+\item if $t \in \win_{\eloise}(\UG_{F})$, then $\eloise$ continues with $\chi_t$;
+\item if $t \notin \win_{\eloise}(\UG_{F})$, then $\eloise$ continues with a random positional strategy.
+\end{enumerate}
+\end{enumerate}
+We verify that this positional strategy is actually a compatible positional 
+winning strategy for her.
+
+\btbs
+\item
+Why is $\chi'$ positional?
+Do we actually need the strategy to be positional?
+\etbs
+
+First of all, observe that every position of the form $(p,t)$ reached during
+a $\chi'$-guided match, we have $t \in \win_{\eloise}(\UG_{F})$. 
+This can be proved by induction on the number of position of the form $(p,t)$
+visited during a $\chi'$-guided match. 
+For the inductive step, assume $w \in \win_{\eloise}(\UG_{F})$. 
+Hence $\chi_w$ is winning for $\eloise$ in  $\egame(\phi,\bbS[p \mapsto 
+  \chi(w)])@(\phi,w)$. 
+This means that if a position of the form $(p, t)$ is reached, the variable $p$ 
+must be true at $t$ in the model $\bbS[p \mapsto \chi(w)]$, meaning that it
+belongs to the set $\chi(w)$.
+By assumption $\chi$ is a winning strategy for $\eloise$ in $\UG_F$, and 
+therefore any element of $\chi(w)$ is again a member of the set 
+$\win_{\eloise}(\UG_{F})$. 
+
+Finally, let $\pi$ be an arbitrary $\chi'$-guided match of $\egame(\phi,
+\bbS[p \mapsto \chi(w)])@(\phi,w)$. 
+We verify that $\pi$ is winning for $\eloise$. 
+First observe that since $\chi$ is winning for her in $\UG_F@s$, the fixpoint 
+variable $p$ is unfolded only finitely many times during $\pi$. 
+Let $(p,t)$ be the last basic position in $\pi$ where $p$ occurs. 
+Then from now on $\chi'$ and $\chi_t$ coincide, yielding  that the match is 
+winning for $\eloise$. Clearly $\chi'$ and $\chi$ are compatible.
+
+\btbs
+\item
+Why is that so clear?
+\etbs
+
+\newpage
+
+Now we turn to part (2) of the Proposition.
+Let $\chi'$ be a positional winning strategy for $\eloise$ in 
+$\egame(\mu p.\phi(p),\bbS)@(\mu p.\phi(p),s)$. 
+Let $B(\chi')$ be the set of all finite $\chi'$-guided partial matches in 
+$\egame$, 
+
+\btbs
+\item
+If $B(\chi')$ is indeed different from the earlier defined $B(\chi')$, 
+better give it a different name.
+\etbs
+
+let $\pi\in B(\chi')$ and define \[P_{\last(\pi)}:=\{ (p,w) \mid \exists \pi' \in B(\chi'), \pi'=\pi \rho(p,w), p\text{ does not occur in }\rho\}.\]
+
+It is not hard to derive from the positionality of $\chi'$ that for every $\pi, 
+\pi' \in B(\chi')$ such that $\last(\pi)=\last(\pi')$, it holds that $\pi\rho 
+\in B(\chi')$ if and only if $\pi'\rho \in B(\chi')$, for every finite match 
+$\rho$.
+
+Now consider  the positional strategy $\ystrat$ in $\UG_{F}@s$ defined by 
+\[
+\chi(t) \isdef \{ w \mid (p,w) \in P_{\last(\pi)}, \pi\in B(\chi'), 
+\last(\pi)=(\mu p. \phi(p), t)\}.
+\]
+\btbs
+\item
+?? We can only have $\last(\pi)=(\mu p. \phi(p), t)$ if $\pi$ is a trivial
+match of lenght 1
+\item
+Why is $\chi$ positional?
+\etbs
+
+%While playing the unfolding game $\UG$, $\eloise$ builds an 
+%$\chi'$-guided `shadow match' $\egame(\mu p.\phi(p),\bbS)@(\mu p.\phi(p),s)$ 
+%such that the positions in the $\UG$-match of the form $t$ exactly correspond to
+%the positions of the form $(\phi(p),t)$ in the evaluation game $\egame$.
+
+Compatibility being immediate, it suffices to verify that $\ystrat$ is winning for $\eloise$. First of all, since $\chi'$ is winning, $B(\chi')$ does not contain an infinite 
+ascending chain of $\chi'$-guided matches, and thence any  $\chi$-guided match in $\UG_{F}@s$ is finite. It therefore remains to verify that for every $\chi$-guided match $\pi$ in $\UG_{F}@s$ such that $\last(\pi)$ is an $\eloise$ position, she can always move. But this is immediate since 
+\begin{itemize}
+\item $(\mu p. \phi(p), s) \in \last(B(\chi'))$, 
+\item if $(\mu p. \phi(p), t) \in \last(B(\chi'))$, then %$(\phi(p), t) \in \last(B(\chi'))$ and  
+$\chi'$ is (naturally induces) a winning strategy for $\eloise$ in $\egame(\phi(p),\bbS[p \mapsto \chi(t)])@(\phi(p),t)$, and thus in particular $t \in F(\chi(t))$,
+\item if $(p, t) \in \last(B(\chi'))$ then $(\mu p. \phi(p), t) \in \last(B(\chi'))$,
+\end{itemize}
+%\btbs
+%\item YV: some more detail here?
+%\etbs
+where $\last(B(\chi')):=\{\last(\pi) \mid \pi \in B(\chi')\} \subseteq \win_{\eloise}(\egame(\mu p.\phi(p),\bbS))$.
+\end{proof}
+
+%Notice that the evaluation game for the modal $\mu$ calculus can be easily adapted to $\mu_{D}\foe$ and provide a corresponding Adequacy Theorem (Proposition \ref{p:unfold=evalgame}). In particular, we would have that 
+%$\eloise$ has a winning strategy in  $\egame(\mu p.\phi(p),\bbS)@(\mu p.\phi(p),s)$ if and only if $s \in \ext{\mu p.\phi(p)}^{\bbS}$, with $\phi(p) \in \mu_{D}\foe{p}$.
+
+\begin{proofof}{Proposition~\ref{p:keyfix}(1)}
+%    
+%\btbs
+%\item
+%the argument below needs to be thoroughly checked.
+%\etbs
+Let $\bbS$ be an LTS and $\phi(p) \in \mu_{D}\ofoe{p}$. 
+
+The right-to-left direction of \eqref{eq:foe-d} being proved by 
+Proposition \ref{p:rstfix}, we check the left-to-right direction.
+We first verify that winning strategies in evaluation games for noetherian 
+fixpoint formulas naturally induce bundles. 
+More precisely:
+\medskip
+%Given  a winning strategy   $\ystrat$ for $\eloise$ in $\egame(\mu p. \phi,\bbS)@(\mu p. \phi,s)$,  let $B(\ystrat)$ be the set of all finite $\ystrat$-guided, possibly partial, matches in  $\egame(\psi,\bbS)@(\psi,s)$ in which a position of the form $(\nu q. \psi, r)$ is not visited.
+
+\textsc{Claim}
+% \begin{claim*}\label{p:strategybundledEv}
+Let $B^\bbS(\ystrat)$ be the projection of $B(\ystrat)$ on $S$, that is the set
+of all paths in $\bbS$ that are a projection on $S$ of a $\ystrat$-guided 
+(partial) match in $B(\ystrat)$. Then $B^\bbS(\ystrat)$ is a bundle.
+% \end{claim*}
+\medskip
+
+\begin{pfclaim}
+Assume towards a contradiction that $B^\bbS(\ystrat)$ contains an infinite 
+ascending chain $\pi_{0} \sqsubset \pi_{1} \sqsubset \cdots$. 
+Let $\pi$ be its limit and consider the set of elements in $B(\ystrat)$ that,
+projected on $S$, are prefixes of $\pi$. 
+By  K\"{o}nig's Lemma, this set contains an infinite ascending chain whose 
+limit is an infinite $\ystrat$-guided match in $\egame(\mu p. \phi,\bbS)$
+which starts at $(\mu p. \phi,s)$, and of which $\pi$ is the projection on $S$.
+By definition of $B(\ystrat)$,  the highest bound variable of $\mu p. \phi$ 
+that gets unravelled infinitely often in $\rho$ is a $\mu$-variable, meaning 
+that the match is winning for $\abelard$, a contradiction.
+\end{pfclaim}
+
+Then, let $F := \phi_{p}^{\bbS}$ be the monotone functional defined by $\phi(p)$.
+Assume that $s \in \ext{\mu p.\phi}^{\bbS}$. 
+This means that $s \in \LFP. F$, and by Proposition~\ref{p:afmc-2}, we obtain 
+that $s \in \LFP. F\rst{T_{\ystrat,r}}$.
+We verify that $T_{\chi, s}$ is noetherian.
+Applying Proposition~\ref{p:unfg} to the fact that $s \in \LFP. F$ yields that 
+$\eloise$ has a descending winning strategy $\chi$ in $\UG_{F}@s$. 
+By Proposition \ref{p:unfold=evalgame2}, $\eloise$ has a winning strategy 
+$\chi'$ in $\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$ compatible with $\chi$.
+Because of compatibility, every node in $T_{\chi, s}$ lies on some path of 
+$B^\bbS(\ystrat)$. 
+From the Claim
+% Claim \ref{p:strategybundledEv}
+we known that $B^\bbS(\ystrat)$ is a bundle, meaning that  $T_{\chi, s}$ is
+noetherian as required.   
+\end{proofof}

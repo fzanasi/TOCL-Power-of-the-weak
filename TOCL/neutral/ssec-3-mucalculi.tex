@@ -1,0 +1,243 @@
+\subsection{$\mu$-Calculi}
+\label{sec:onestep-to-mc}
+
+We now see how to associate, with each one-step language $\oslang$, the 
+following variant $\mu\oslang$ of the modal $\mu$-calculus.
+These logics are of a fairly artificial nature; their main use is to smoothen
+the translations from automata to second-order formulas further on.
+
+\begin{definition}
+Given a one-step language $\oslang$, we define the language $\mu\oslang$ of the 
+\emph{$\mu$-calculus over $\oslang$}  by the following grammar:
+% \[
+% \varphi \isbnf  q \mid \neg\varphi \mid \varphi\lor\varphi 
+%    \mid \nxt{\al}(\varphi_{1},\ldots,\varphi_{n})
+%    \mid \mu p. \varphi',
+% \]
+\[
+\varphi \isbnf  
+   q \mid \neg q 
+   \mid \varphi\lor\varphi \mid \varphi\land\varphi 
+   \mid \nxt{\al}(\varphi_{1},\ldots,\varphi_{n})
+   \mid \mu p. \varphi'    \mid \nu p. \varphi',
+\]
+where $p,q \in\Prop$, $\al(a_{1},\ldots,a_{n}) \in \oslang^{+}$ and $\varphi'$ 
+is monotone in $p$.
+
+As in the case of the modal $\mu$-calculus $\muML$, we will freely use standard
+syntactic concepts and notations related to this language.
+\end{definition}
+
+Observe that the language $\mu\oslang$ generally has a wealth of modalities:
+one for each one-step formula in $\oslang$.
+
+The semantics of this language is given as follows.
+
+\begin{definition}
+Let $\bbS$ be a transition system.
+The satisfaction relation $\mmodels$ is defined in the standard way, with the 
+following clause for the modality $\nxt{\alpha}$:
+\begin{equation}\label{eq:mumod}
+\bbS \mmodels \nxt{\al}(\varphi_{1},\ldots,\varphi_{n})
+\quad\text{iff}\quad 
+(R[s_{I}],V_{\overline{\varphi}}) \models \al(a_{1},\ldots,a_{n}),
+\end{equation}
+where $V_{\overline{\varphi}}$ is the one-step valuation given by 
+\begin{equation}\label{eq:valmod}
+V_{\overline{\varphi}}(a_{i}) \isdef 
+  \{ t \in R[s_{I}] \mid \bbS.t \mmodels \varphi_{i}\}.
+\end{equation}
+\end{definition}
+
+\begin{example}
+\label{ex:mul1}
+\begin{enumerate}[(1)]
+\item
+If we identify the modalities $\nxt{\Diamond a}$ and $\nxt{\Box a}$ of the basic
+modal one-step language $\oml$ (cf.~Definition~\ref{d:oml}) with the standard
+$\Diamond$ and $\Box$ operators, we may observe that $\mu(\oml)$ corresponds to
+the standard modal $\mu$-calculus: $\mu(\oml) = \muML$.
+\item
+Consider the one-step formulas 
+$\al = \exists x (a_{1}(x) \land \forall y\, a_{2}(y))$,
+$\beta = \exists x y (x \not\foeq y \land a_{1}(x) \land a_{1}(y))$, and
+$\gamma = \wqu x (a_{1}(x), a_{2}(x))$.
+Then $\nxt{\al}(\phi_{1},\phi_{2})$ is equivalent to the modal formula
+$\Diamond \phi_{1} \land \Box \phi_{2}$ and 
+$\nxt{\beta}(\phi)$ expresses that the current state has at least two 
+successors where $\phi$ holds.
+The formula $\nxt{\gamma}(\phi_{1},\phi_{2})$ holds at a state $s$ if all 
+its successors satisfy $\phi_{1}$ or $\phi_{2}$, while at most finitely
+many successors refute $\phi_{2}$.
+Neither $\nxt{\beta}$ nor $\nxt{\gamma}$ can be expressed in standard modal 
+logic.
+\item
+If the one-step language $\oslang$ is closed under taking disjunctions  
+(conjunctions, respectively), it is easy to see that 
+$\nxt{\al\lor\beta}(\ol{\phi}) \equiv \nxt{\al}(\ol{\phi}) \lor 
+\nxt{\beta}(\ol{\phi})$ 
+($\nxt{\al\land\beta}(\ol{\phi}) \equiv \nxt{\al}(\ol{\phi}) \land 
+\nxt{\beta}(\ol{\phi})$, respectively).
+\end{enumerate}
+\end{example}
+
+Alternatively but equivalently, one may interpret the language
+game-theoretically.
+
+\begin{definition}
+Given a $\mu\oslang$-formula $\phi$ and a model $\bbS$ we define the 
+\emph{evaluation game} $\egame(\varphi,\bbS)$ as the two-player infinite
+game %of which the 
+whose rules are given in the next table.
+% Table~\ref{tab:EGL}.%
+%\begin{table}[htb]
+\begin{center}
+\begin{tabular}{|l|c|l|c|}
+\hline
+Position & Player & Admissible moves
+\\\hline
+    $(q,s)$, with $q \in \FV(\phi) \cap \tscolors(s)$ 
+  & $\abelard$ 
+  & $\emptyset$
+\\  $(q,s)$, with $q \in \FV(\phi) \setminus \tscolors(s)$ 
+  & $\eloise$ & $\emptyset$
+\\  $(\lnot q,s)$, with $q \in \FV(\phi) \cap \tscolors(s)$ 
+  & $\eloise$ 
+  & $\emptyset$
+\\  $(\lnot q,s)$, with $q \in \FV(\phi) \setminus \tscolors(s)$ 
+  & $\abelard$ 
+  & $\emptyset$
+\\ $(\psi_1 \lor \psi_2,s)$ 
+  & $\eloise$ 
+  & $\{(\psi_1,s),(\psi_2,s) \}$ 
+\\  $(\psi_1 \land \psi_2,s)$ 
+  & $\abelard$ 
+  & $\{(\psi_1,s),(\psi_2,s) \}$ 
+\\  $(\nxt{\al}(\varphi_{1},\ldots,\varphi_{n}),s)$ 
+  & $\eloise$ 
+  & $\{ Z \sse \{ \varphi_{1},\ldots,\varphi_{n} \} \times R[s]
+     \mid (R[s],V^{*}_{Z}) \models \al(\ol{a}) \}$ 
+\\  $Z \sse  \Sfor(\phi) \times S$
+  & $\abelard$
+  & $\{ (\psi, s) \mid (\psi,s) \in Z \}$
+\\  $(\mu p.\varphi,s)$ & $-$ & $\{(\varphi,s) \}$ 
+\\  $(\nu p.\varphi,s)$ & $-$ & $\{(\varphi,s) \}$ 
+\\  $(p,s)$, with $p \in \BV(\phi)$ & $-$ & $\{(\delta_p,s) \}$ \\
+  \hline
+\end{tabular}
+\end{center}
+ %\caption{Evaluation game for $\mu\oslang$}
+%\caption{}
+%\label{tab:EGL}
+%\end{table}
+For the admissible moves at a position of the form 
+$(\nxt{\al}(\varphi_{1},\ldots,\varphi_{n}),s)$, we consider the valuation 
+$V^{*}_{Z}: \{ a_{1}, \ldots, a_{n} \} \to \pow(R[s])$, given by
+$V^{*}_{Z}(a_{i}) \isdef \{ t \in R[s] \mid (\phi_{i},t) \in Z \}$.
+The winning conditions of $\egame(\varphi,\bbS)$ are standard: $\eloise$ wins
+those infinite matches of which the highest variable that is unfolded infinitely
+often during the match is a $\mu$-variable.
+\end{definition}
+
+The following proposition, 
+stating the adequacy of the evaluation game for the semantics of $\mu\oslang$,
+is formulated explicitly for future reference.
+We omit the proof, which is completely routine.
+
+\begin{fact}[Adequacy]
+\label{f:adeqmu}
+For any formula $\phi \in \mu\oslang$ and any model $\bbS$ the following 
+equivalence holds:
+\[
+\bbS \mmodels \phi
+\quad\text{iff}\quad 
+(\phi,s_{I}) \text{ is a winning position for $\eloise$ in } 
+\egame(\varphi,\bbS).
+\]
+\end{fact}
+
+We will be specifically interested in two fragments of $\mu\oslang$, associated 
+with the properties of being noetherian and continuous, respectively, and with 
+the associated variants of the $\mu$-calculus $\mu\oslang$ where the use of the 
+fixpoint operator $\mu$ is restricted to formulas belonging to these two
+respective fragments.
+
+\begin{definition}
+Let $\qprop$ be a set  of proposition letters.
+We first define the fragment $\noe{\mu\oslang}{\qprop}$ of $\mu\oslang$ of 
+formulas that are syntactically \emph{noetherian} in $\qprop$ by the following 
+grammar:
+\begin{equation*}
+   \varphi \isbnf  q
+   \mid \psi
+   \mid \varphi \lor \varphi
+   \mid \varphi \land \varphi
+   \mid \nxt{\al}(\varphi_{1},\ldots,\varphi_{n})
+   \mid \mu p.\phi'
+\end{equation*}
+where $q \in \qprop$, $\psi$ is a $\qprop$-free $\muML$-formula,
+$\al(a_{1},\ldots,a_{n}) \in \oslang^{+}$ and 
+$\phi' \in \noe{\mu\oslang}{\qprop\cup\{p\}}$. 
+The \emph{co-noetherian} fragment $\conoe{\mu\oslang}{Q}$ is defined dually.
+
+Similarly, we define the fragment $\cont{\mu\oslang}{\qprop}$ of 
+$\mu\oslang$-formulas that are syntactically \emph{continuous} in $\qprop$ as
+follows:
+\begin{equation*}
+   \varphi \isbnf  q
+   \mid \psi
+   \mid \varphi \lor \varphi
+   \mid \varphi \land \varphi
+   \mid 
+   \nxt{\al}(\varphi_{1},\ldots,\varphi_{k},\psi_{1},\ldots,\psi_{m})
+   \mid \mu p.\phi'
+\end{equation*}
+where $p\in\Prop$, $q \in \qprop$, $\psi$, $\psi_{i}$ are $\qprop$-free 
+$\mu\oslang$-formula, $\al(a_{1},\ldots,a_{k},b_{1},\ldots,b_{m}) \in 
+\cont{\oslang}{\ol{a}}(\ol{a},\ol{b})$,
+and $\phi' \in \cont{\mu\oslang}{\qprop\cup\{p\}}$. 
+The \emph{co-continuous} fragment $\cocont{\mu\oslang}{Q}$ is defined dually.
+\end{definition}
+
+Based on this we can now define the mentioned variants 
+% $\mu_{D}\oslang$ and $\mu_{C}\oslang$ 
+of the $\mu$-calculus $\mu\oslang$ where the use of the least (greatest) 
+fixpoint operator can only be applied to formulas that belong to, 
+respectively, the noetherian (co-noetherian) and continuous (co-continuous)
+fragment of the language that we are defining.
+
+\begin{definition}
+The formulas of the \emph{alternation-free} $\mu$-calculus $\mu_{D}\oslang$ 
+are defined by the following grammar:
+\begin{equation*}
+   \varphi \isbnf  
+      q \mid \neg q 
+   \mid \varphi\lor\varphi \mid \varphi\land\varphi 
+   \mid \nxt{\al}(\varphi_{1},\ldots,\varphi_{n})
+   \mid \mu p. \varphi'    
+   \mid \nu p. \varphi'',
+\end{equation*} 
+where $\al(a_{1},\ldots,a_{n}) \in \oslang^{+}$,
+$\phi' \in \mu_{D}\oslang \cap \noe{\mu\oslang}{p}$
+and dually $\phi'' \in \mu_{D}\oslang \cap \conoe{\mu\oslang}{p}$.
+
+Similarly, the formulas of the \emph{continuous} $\mu$-calculus $\mu_{C}\oslang$
+are given by the grammar
+\begin{equation*}
+   \varphi \isbnf  
+      q \mid \neg q 
+   \mid \varphi\lor\varphi \mid \varphi\land\varphi 
+   \mid \nxt{\al}(\varphi_{1},\ldots,\varphi_{n})
+   \mid \mu p. \varphi'    
+   \mid \nu p. \varphi'',
+\end{equation*} 
+where $\al(a_{1},\ldots,a_{n}) \in \oslang^{+}$,
+$\phi' \in \mu_{C}\oslang \cap \cont{\mu\oslang}{p}$
+and dually $\phi'' \in \mu_{C}\oslang \cap \cocont{\mu\oslang}{p}$.
+\end{definition}
+
+\begin{example}
+Following up on Example~\ref{ex:mul1}, it is easy to verify that 
+$\mu_{D}\oml = \mudML$ and $\mu_{C}\oml = \mucML$.
+\end{example}
+%%%

@@ -1,0 +1,728 @@
+\section{Preliminaries}
+   \label{sec:prel}
+
+We assume the reader to be familiar with the syntax and (game-theoretic)
+semantics of the modal $\mu$-calculus and with the automata-theoretic 
+perspective on this logic.
+For background reading we refer to~\cite{ALG02,Ven08}; the purpose of this 
+section is to fix some notation and terminology. 
+
+\subsection{Transition systems and trees} 
+\label{ssec:prelim_trees}
+
+Throughout this article we fix a set $\Prop$ of elements that will be called
+\emph{proposition letters} and denoted with small Latin letters $p, q, \ldots$ .
+We will often focus on a finite subset $\pprop \subseteq_{\om} \Prop$, and
+denote with $C$ the set $\pow (\pprop)$ of \emph{labels} on $\pprop$; it will
+be convenient to think of $C$ as an \emph{alphabet}.
+Given a binary relation $R \subseteq X \times Y$, for any element $x \in X$,
+we indicate with $R[x]$ the set $\{ y \in Y \mid (x,y) \in R \}$ while 
+$R^+$ and $R^{*}$ are defined respectively as the transitive closure of~$R$ and
+the reflexive and transitive closure of~$R$. 
+The set $\Ran(R)$ is defined as $\bigcup_{x\in X}R[x]$.
+
+A \emph{$\pprop$-labeled transition system} (LTS) is a tuple $\bbS = 
+\tup{T,R,\tscolors,s_I}$ where $T$ is the universe or domain of $\bbS$, 
+$\tscolors:T\to\pow(\pprop)$ is a colouring (or marking),
+$R\subseteq T^2$ is the accessibility relation and $s_I \in T$ is a 
+distinguished node.
+% We use $|\bbS|$ to denote the domain of $\bbS$.
+We call $\tscolors(s)$ the colour, or type, of node $s \in T$.
+Observe that the colouring %marking 
+${\tscolors:T\to\pow(\pprop)}$ can be seen as a 
+valuation $\tsval:\pprop\to\pow (T)$ given by $\tsval(p) \isdef \{s \in T \mid
+p\in \tscolors(s)\}$. 
+%
+A \emph{$\pprop$-tree} is a $\pprop$-labeled LTS in which every node can
+be reached from $s_I$, and every node except $s_I$ has a unique predecessor;
+the distinguished node $s_I$ is called the \emph{root} of $\bbS$.
+Each node $s \in T$ uniquely defines a subtree of $\bbS$ with carrier
+$R^{*}[s]$ and root $s$. We denote this subtree by ${\bbS.s}$.
+
+The \emph{tree unravelling} of an LTS $\bbS$ is given by $\unravel{\bbS} 
+\isdef \tup{T_P,R_P,\tscolors',s_I}$ where $T_P$ is the set of finite paths in 
+$\bbS$ stemming from $s_I$, $R_P(t,t')$ iff $t'$ is a one-step extension of $t$ 
+and the colour of a path $t\in T_P$ is given by the colour of its last node in
+$T$.
+The \emph{$\omega$-unravelling} $\omegaunrav{\bbS}$ of $\bbS$ is an 
+unravelling which has $\omega$-many copies of each node different from the root.
+
+A \emph{$p$-variant} of a transition system $\bbS = \tup{T,R,\tscolors,s_I}$
+is a $\pprop\cup\{p\}$-transition system $\tup{T,R,\tscolors',s_I}$
+such that $\tscolors'(s)\setminus\{p\} = \tscolors(s) \setminus \{p \}$ for all 
+$s \in T$.
+Given a set $S \subseteq T$, we let $\bbS[p\mapsto S]$ denote the $p$-variant
+where $p \in \tscolors'(s)$ iff $s \in S$.
+
+Let $\phi \in \yvlang$ be a formula of some logic $\yvlang$,
+we use $\Mod_{\yvlang}(\phi) = \{\bbS \mid \bbS \models \phi\}$ to denote 
+the class of transition systems that make $\phi$ true.
+The subscript $\yvlang$ will be omitted when $\yvlang$ is clear from context.
+A class $\mathsf{C}$ of transition systems is said to be 
+\emph{$\yvlang$-definable} if there is a formula $\phi \in \yvlang$ such that
+$\Mod_{L}(\phi) = \mathsf{C}$.
+We use the notation $\phi \equiv \psi$ to mean that $\Mod_{L}(\phi) = 
+\Mod_{L}(\psi)$ and given two logics $\yvlang, \yvlang'$ we use $\yvlang \equiv 
+\yvlang'$ when the $\yvlang$-definable and $\yvlang'$-definable classes of 
+models coincide.
+
+% \textcolor{red}{%
+% \textit{Convention.}
+% Throughout this paper, we will only consider transition systems $\bbS$
+% in which $R[s]$ is non-empty for every node $s \in T$.
+% \marginpar{\fbox{check!}}
+% In particular this means that every tree we consider is \emph{leafless}.
+% All our results, however, can easily be lifted to the general case.
+% }
+
+\subsection{Games}
+
+We introduce some terminology and background on infinite games.
+All the games that we consider involve two players called \emph{\'Eloise}
+($\exists$) and \emph{Abelard} ($\forall$).
+In some contexts we refer to a player $\Pi$ to specify a
+a generic player in $\{\exists,\forall\}$.
+%
+Given a set $A$, by $A^*$ and $A^\omega$ we denote respectively the set of
+words (finite sequences) and streams (or infinite words) over $A$.
+
+A \emph{board game} $\mc{G}$ is a tuple $(G_{\exists},G_{\forall},E,\win)$,
+where $G_{\exists}$ and $G_{\forall}$ are disjoint sets whose union
+$G=G_{\exists}\cup G_{\forall}$ is called the \emph{board} of $\mc{G}$,
+$E\subseteq G \times G$ is a binary relation encoding the \emph{admissible
+moves}, and $\win \subseteq G^{\omega}$ is a \emph{winning condition}.
+An \emph{initialized board game} $\mc{G}@u_I$ is a tuple
+$(G_{\exists},G_{\forall},u_I, E,\win)$ where
+%$(G_{\exists},G_{\forall},E,\win)$ is a board game and
+$u_I \in G$ is the
+\emph{initial position} of the game.
+In a \emph{parity game}, the set $\win$ is  given by a \emph{parity function},
+that is, a map $\pmap: G \to \omega$ of finite range, in the sense that a
+sequence $(a_{i})i<\om$ belongs to $\win$ iff the maximal value $n$ that 
+is reached as $n = \pmap(a_{i})$ for infinitely many $i$, is even.
+% we say that $\mc{G}$ is a parity game and sometimes
+% simply write $\mc{G}=(G_{\exists},G_{\forall},E,\pmap)$.
+
+Given a board game $\mc{G}$, a \emph{match} of $\mc{G}$ is simply a path
+through the graph $(G,E)$; that is, a sequence $\pi = (u_i)_{i< \alpha}$ of
+elements of $G$, where $\alpha$ is either $\omega$ or a natural number,
+and $(u_i,u_{i+1}) \in E$ for all $i$ with $i+1 < \alpha$.
+A match of $\mc{G}@u_{I}$ is supposed to start at $u_{I}$.
+Given a finite match $\pi = (u_i)_{i< k}$ for some $k<\omega$, we call
+$\mathit{last}(\pi) \isdef u_{k-1}$ the \emph{last position} of the match; the
+player $\Pi$ such that $\mathit{last}(\pi) \in G_{\Pi}$ is supposed to move
+at this position, and if $E[\mathit{last}(\pi)] = \emptyset$, we say that
+$\Pi$ \emph{got stuck} in $\pi$.
+%
+A match $\pi$ is called \emph{total} if it is either finite, with one of the
+two players getting stuck, or infinite. Matches that are not total are called
+\emph{partial}.
+Any total match $\pi$ is \emph{won} by one of the players:
+If $\pi$ is finite, then it is won by the opponent of the player who gets stuck.
+Otherwise, if $\pi$ is infinite, the winner is $\exists$ if $\pi \in
+\win$, and $\forall$ if $\pi \not\in \win$.
+
+Given a board game $\mc{G}$ and a player $\Pi$, let $\pmatches{G}{\Pi}$ denote
+the set of partial matches of $\mc{G}$ whose last position belongs to player
+$\Pi$.
+A \emph{strategy for $\Pi$} is a function $f:\pmatches{G}{\Pi}\to G$.
+A match $\pi  = (u_i)_{i< \alpha}$ of $\mc{G}$ is
+\emph{$f$-guided} if for each $i < \alpha$ such that $u_i \in G_{\Pi}$ we
+have that $u_{i+1} = f(u_0,\dots,u_i)$.
+%
+Let $u \in G$ and a $f$ be a strategy for $\Pi$.
+We say that $f$ is a \emph{surviving strategy} for $\Pi$ in $\mc{G}@u$ if
+for each $f$-guided partial match $\pi$ of $\mc{G}@u$, if $\mathit{last}(\pi)$
+is in $G_{\Pi}$ then $f(\pi)$ is legitimate, that is, $(\mathit{last}(\pi),
+f(\pi)) \in E$.
+We say that $f$ is a \emph{winning strategy} for $\Pi$ in $\mc{G}@u$ if,
+additionally, $\Pi$ wins each $f$-guided total match of $\mc{G}@u$.
+%
+If $\Pi$ has a winning strategy for $\mc{G}@u$ then $u$ is called a 
+\emph{winning position} for $\Pi$ in $\mc{G}$.
+The set of positions of $\mc{G}$ that are winning for $\Pi$ is denoted by
+$\win_{\Pi}(\mc{G})$.
+
+A strategy $f$ is called \emph{positional} if $f(\pi) = f(\pi')$ for
+each $\pi,\pi'\in \Dom(f)$ with $\mathit{last}(\pi) = 
+\mathit{last}(\pi')$.
+A board game $\mc{G}$ with board $G$ is \emph{determined} if $G = \win_{\exists}(\mc{G}) \cup \win_{\forall}(\mc{G})$, that is, each $u \in G$ is a winning position for one of the two players.
+%
+The next result states that parity games are positionally determined.
+
+\begin{fact}[\cite{EmersonJ91,Mostowski91Games}]
+\label{THM_posDet_ParityGames}
+For each parity game $\mc{G}$, there are positional strategies $f_{\exists}$
+and $f_{\forall}$ respectively for player $\exists$ and $\forall$, such that
+for every position $u \in G$ there is a player $\Pi$ such that $f_{\Pi}$ is a
+winning strategy for $\Pi$ in $\mc{G}@u$.
+\end{fact}
+%
+In the sequel we will often assume, without notification, that strategies in
+parity games are positional. 
+Moreover, we think of a positional strategy $f_\Pi$ for player $\Pi$ as a 
+function $f_\Pi:G_\Pi\to G$.
+
+\subsection{The Modal $\mu$-Calculus and some of its fragments.}
+\label{subsec:mu}
+
+The language of the modal $\mu$-calculus ($\muML$) is given by the following 
+grammar:
+%
+\begin{equation*}
+    \phi\ \isbnf  q \mid \neg q \mid \phi \land \phi \mid
+    \phi \lor \phi \mid  \Diamond \phi \mid \Box \phi \mid
+    \mu p.\phi \mid \nu p.\phi
+\end{equation*}
+% \begin{equation*}
+%     \phi\ \isbnf  q \mid \phi \land \phi \mid \lnot\phi
+%     \mid  \Diamond \phi \mid
+%     \mu p.\phi
+% \end{equation*}
+%
+where $p,q \in \Prop$ and $p$ is positive in $\phi$ (i.e., $p$ is not
+negated).
+We will freely use standard syntactic concepts and notations related to this
+language, such as the sets $\FV(\phi)$ and $\BV(\phi)$ of \emph{free} and 
+\emph{bound} variables of $\phi$, and the collection $\Sfor(\phi)$ of subformulas
+of $\phi$.
+We use the standard convention that no variable is both free and bound in a
+formula and that every bound variable is fresh.
+We let $\muML(\pprop)$ denote the collection of formulas $\phi$ with $\FV(\phi)
+\sse \pprop$.
+Sometimes we write $\psi \subf \phi$ to denote that $\psi$ is a subformula
+of $\phi$.
+%
+For a bound variable $p$ occurring in some formula $\phi \in \muML$, we use
+$\delta_p$ to denote the binding definition of $p$, that is, the unique formula
+such that either $\mu p.\delta_p$ or $\nu p.\delta_p$ is a subformula of 
+$\phi$.
+
+We need some notation for the notion of \emph{substitution}.
+Let $\phi$ and $\{ \psi_{z} \mid z \in Z \}$ be modal fixpoint formulas, where
+$Z \cap \BV{(\phi)} = \nada$.
+Then we let $\phi[\psi_{z}/z \mid z \in Z]$
+denote the formula obtained from $\phi$ by simultaneously substituting each
+formula $\psi_{z}$ for $z$ in $\phi$ (with the usual understanding that no 
+free variable in any of the $\psi_{z}$ will get bound by doing so).
+In case $Z$ is a singleton $z$, we will simply write $\phi[\psi_{z}/z]$, or 
+$\phi[\psi]$ if $z$ is clear from context.
+\smallskip
+
+The semantics of this language is completely standard. 
+Let $\bbS = \tup{T,R,\tscolors, s_I}$ be a transition system and $\phi \in 
+\muML$. 
+We inductively define the \emph{meaning} $\ext{\phi}^{\bbS}$ which includes
+the following clauses for the least $(\mu)$ and greatest ($\nu$) fixpoint 
+operators:
+%
+\begin{align*}
+  \ext{\mu p.\psi}^{\bbS}  & \isdef   \bigcap \{S \subseteq T \mid S \supseteq \ext{\psi}^{\bbS[p\mapsto S]} \}  \\
+  \ext{\nu p.\psi}^{\bbS}  & \phi   \bigcup \{S \subseteq T \mid S \subseteq \ext{\psi}^{\bbS[p\mapsto S]} \}
+\end{align*}
+%
+We say that $\phi$ is \emph{true} in $\bbS$ (notation $\bbS \mmodels \phi$) iff $s_I \in \ext{\phi}^{\bbS}$.% As for the case of $\wmso$, $\ext{\phi}$ denotes the class of transition systems where $\phi$ is true.\fcwarning{Pointed or not?}
+
+We will now describe the semantics defined above in game-theoretic terms. 
+That is, we will define the evaluation game $\egame(\phi,\bbS)$ associated with
+a formula $\phi \in \muML$ and a transition system $\bbS$. 
+This game is played by two players (\eloise and \abelard) moving through 
+positions $(\xi,s)$ where $\xi \subf \phi$ and $s \in T$.
+%
+
+%\begin{table}
+%\centering
+%\begin{tabular}{|l|c|l|c|}
+%\hline
+%Position & Player & Admissible moves
+%\\ \hline
+%   $(\psi_1 \vee \psi_2,s)$   & $\exists$ & $\{(\psi_1,s),(\psi_2,s) \}$ 
+%\\ $(\psi_1 \wedge \psi_2,s)$ & $\forall$ & $\{(\psi_1,s),(\psi_2,s) \}$ 
+%\\ $(\Diamond\phi,s)$         & $\exists$ & $\{(\phi,t)\ |\ t \in R[s] \}$ 
+%\\ $(\Box\phi,s)$             & $\forall$ & $\{(\phi,t)\ |\ t \in R[s] \}$ 
+%\\ $(\mu p.\phi,s)$           & $-$       & $\{(\phi,s) \}$ 
+%\\ $(\nu p.\phi,s)$           & $-$       & $\{(\phi,s) \}$ 
+%\\ $(p,s)$ with $p \in \BV(\phi)$ & $-$ & $\{(\delta_p,s) \}$ 
+%\\ $(\lnot q,s)$ with $q \in \FV(\phi)$ and $q \notin \tscolors(s)$ 
+%   & $\forall$ & $\emptyset$
+%\\ $(\lnot q,s)$ with $q \in \FV(\phi)$ and $q \in \tscolors(s)$ 
+%   & $\exists$ & $\emptyset$
+%\\ $(q,s)$ with $q \in \FV(\phi)$ and $q \in \tscolors(s)$ 
+%   & $\forall$ & $\emptyset$
+%\\ $(q,s)$ with $q \in \FV(\phi)$ and $q \notin \tscolors(s)$ 
+%   & $\exists$ & $\emptyset$
+%\\ \hline
+%\end{tabular}
+%\caption{}
+%\label{egame_mucalc}
+%\end{table}
+
+%\begin{acmtable}{\textwidth}
+%\centering
+%\begin{tabular}{|l|c|l|c|}
+%\hline
+%Position & Player & Admissible moves
+%\\ \hline
+%   $(\psi_1 \vee \psi_2,s)$   & $\exists$ & $\{(\psi_1,s),(\psi_2,s) \}$ 
+%\\ $(\psi_1 \wedge \psi_2,s)$ & $\forall$ & $\{(\psi_1,s),(\psi_2,s) \}$ 
+%\\ $(\Diamond\phi,s)$         & $\exists$ & $\{(\phi,t)\ |\ t \in R[s] \}$ 
+%\\ $(\Box\phi,s)$             & $\forall$ & $\{(\phi,t)\ |\ t \in R[s] \}$ 
+%\\ $(\mu p.\phi,s)$           & $-$       & $\{(\phi,s) \}$ 
+%\\ $(\nu p.\phi,s)$           & $-$       & $\{(\phi,s) \}$ 
+%\\ $(p,s)$ with $p \in \BV(\phi)$ & $-$ & $\{(\delta_p,s) \}$ 
+%\\ $(\lnot q,s)$ with $q \in \FV(\phi)$ and $q \notin \tscolors(s)$ 
+%   & $\forall$ & $\emptyset$
+%\\ $(\lnot q,s)$ with $q \in \FV(\phi)$ and $q \in \tscolors(s)$ 
+%   & $\exists$ & $\emptyset$
+%\\ $(q,s)$ with $q \in \FV(\phi)$ and $q \in \tscolors(s)$ 
+%   & $\forall$ & $\emptyset$
+%\\ $(q,s)$ with $q \in \FV(\phi)$ and $q \notin \tscolors(s)$ 
+%   & $\exists$ & $\emptyset$
+%\\ \hline
+%\end{tabular}
+%\caption{\label{egame_mucalc}Rules of the evaluation game.}
+%\end{acmtable}
+%
+
+In an arbitrary position $(\xi,s)$ it is useful to think of \eloise trying to
+show that $\xi$ is true at $s$, and of \abelard of trying to convince her that 
+$\xi$ is false at $s$. 
+The rules of the evaluation game are given in  the following table.%Table~\ref{egame_mucalc}.
+%\begin{table}
+\begin{center}
+\begin{tabular}{|l|c|l|c|}
+\hline
+Position & Player & Admissible moves
+\\ \hline
+   $(\psi_1 \vee \psi_2,s)$   & $\exists$ & $\{(\psi_1,s),(\psi_2,s) \}$ 
+\\ $(\psi_1 \wedge \psi_2,s)$ & $\forall$ & $\{(\psi_1,s),(\psi_2,s) \}$ 
+\\ $(\Diamond\phi,s)$         & $\exists$ & $\{(\phi,t)\ |\ t \in R[s] \}$ 
+\\ $(\Box\phi,s)$             & $\forall$ & $\{(\phi,t)\ |\ t \in R[s] \}$ 
+\\ $(\mu p.\phi,s)$           & $-$       & $\{(\phi,s) \}$ 
+\\ $(\nu p.\phi,s)$           & $-$       & $\{(\phi,s) \}$ 
+\\ $(p,s)$ with $p \in \BV(\phi)$ & $-$ & $\{(\delta_p,s) \}$ 
+\\ $(\lnot q,s)$ with $q \in \FV(\phi)$ and $q \notin \tscolors(s)$ 
+   & $\forall$ & $\emptyset$
+\\ $(\lnot q,s)$ with $q \in \FV(\phi)$ and $q \in \tscolors(s)$ 
+   & $\exists$ & $\emptyset$
+\\ $(q,s)$ with $q \in \FV(\phi)$ and $q \in \tscolors(s)$ 
+   & $\forall$ & $\emptyset$
+\\ $(q,s)$ with $q \in \FV(\phi)$ and $q \notin \tscolors(s)$ 
+   & $\exists$ & $\emptyset$
+\\ \hline
+\end{tabular}
+\end{center}
+%\caption{}
+%\label{egame_mucalc}
+%\end{table}
+Every finite match of this game is lost by the player that got stuck. 
+To give a winning condition for an infinite match let $p$ be, of the bound 
+variables of $\phi$ that get unravelled infinitely often, the one such that 
+$\delta_{p}$ the highest subformula in the syntactic tree of $\phi$. 
+The winner of the match is \abelard if $p$ is a $\mu$-variable and \eloise if 
+$p$ is a $\nu$-variable.
+We say that $\phi$ is true in $\bbS$ iff \eloise has a winning strategy in 
+$\egame(\phi,\bbS)$.
+
+\begin{proposition}[Adequacy Theorem]\label{p:unfold=evalgame}
+Let $\phi = \phi(p)$ be a formula of $\muML$ in which all occurrences of $p$ are positive, $\bbS$ be a LTS and $s \in T$. Then:
+\begin{equation}
+\label{eq:adeq3}
+s \in \ext{\mu p.\phi}^{\bbS} %\iff s \in \Win_{\eloi}(\UG(\phi_{x}^{\bbS}))
+\iff (\mu p.\phi,s) \in \win_{\eloise}(\egame(\mu p.\phi,\bbS)).
+\end{equation}
+\end{proposition}
+
+\bigskip
+Formulas of the modal $\mu$-calculus may be classified according to their
+\emph{alternation depth}, which roughly is given as the maximal length of
+a chain of nested alternating least and greatest fixpoint operators~\cite{Niwinski86}.
+The \emph{alternation-free fragment} of the modal $\mu$-calculus~($\AFMC$) is 
+usually defined as the collection of $\muML$-formulas without nesting of least
+and greatest fixpoint operators. 
+It can also be also given a more standard grammatical definition as follows.
+
+\begin{definition}
+Given a set $\qprop$ of propositional variables, we define the fragment 
+$\noe{\mu\ML}{\qprop}$ of \muML-formulas that are (syntactically) 
+\emph{noetherian} in $\qprop$, by the following grammar:
+\begin{equation*}
+   \phi \isbnf  q
+   \mid \psi
+   \mid \phi \lor \phi
+   \mid \phi \land \phi
+     \mid \Diamond \phi
+       \mid \Box \phi
+   \mid \mu p.\phi'
+\end{equation*}
+where $q \in \qprop$, $\psi$ is a $\qprop$-free $\muML$-formula, and 
+$\phi' \in \noe{\mu\ML}{\qprop\cup\{p\}}$. 
+The \emph{co-noetherian} fragment $\conoe{\mu\ML}{Q}$ is defined dually.
+\end{definition}
+
+The alternation-free $\mu$-calculus can be defined as the fragment of the full
+language where we restrict the application of the least fixpoint operator $\mu
+p$ to formulas that are noetherian in $p$ (and apply a dual condition to the 
+greatest fixpoint operator).
+
+\begin{definition}
+The formulas of the \emph{alternation-free} $\mu$-calculus $\AFMC$ 
+are defined by the following grammar:
+\begin{equation*}
+   \phi \isbnf  
+      q \mid \neg q  
+   \mid \phi\lor\phi \mid \phi\land\phi 
+      \mid \Diamond \phi
+       \mid \Box \phi
+   \mid \mu p. \phi'    
+   \mid \nu p. \phi'',
+\end{equation*} 
+where $p,q \in \Prop$, $\phi' \in \AFMC \cap \noe{\mu\ML}{p}$
+and dually $\phi'' \in \AFMC \cap \conoe{\mu\ML}{p}$.
+\end{definition}
+
+It is then immediate to verify that the above definition indeed captures exactly
+all formulas without alternation of least and greatest fixpoints.
+One may prove that 
+% \begin{fact}
+a formula $\phi \in \muML$ belongs to the fragment $\AFMC$ iff for all 
+subformulas $\mu p.\psi_1$ and $\nu q.\psi_2$ it holds that $p$ is not free in
+$\psi_2$ and $q$ is not free in $\psi_1$.
+% \end{fact}
+%
+Over arbitrary transition systems, this fragment is less expressive than the 
+whole $\muML$~\cite{Park79}. 
+
+In order to properly define the fragment $\mucML \subseteq \AFMC$ which is of
+critical importance in this article, we are particularly interested in the 
+\emph{continuous} fragment of the modal $\mu$-calculus. 
+As observed in Section~\ref{sec:intro}, the abstract notion of continuity can 
+be given a concrete interpretation in the context of $\mu$-calculus.
+%
+\begin{definition}
+Let $\phi \in \muML$, and $q$ be a propositional variable. 
+We say that \emph{$\phi$ is continuous in $q$} iff for every transition 
+system $\bbS$ there exists some finite $S \subseteq_\omega \tsval(q)$ such that
+$$
+\bbS \mmodels \phi \quad\text{iff}\quad \bbS[q \mapsto S] \mmodels \phi.
+$$
+\end{definition}
+
+We can give a syntactic characterisation of the fragment of $\muML$ that captures
+this property. 
+
+\begin{definition}
+Given a set $\qprop$ of propositional variables, we define the fragment of \muML 
+\emph{continuous} in $\qprop$, denoted by $\cont{\muML}{\qprop}$, by induction 
+in the following way
+\begin{equation*}
+   \phi \isbnf  q
+   \mid \psi
+   \mid \phi \lor \phi
+   \mid \phi \land \phi
+   \mid \Diamond \phi
+   \mid \mu p.\phi'
+\end{equation*}
+%
+where $q,p \in \qprop$, $\psi$ is a $\qprop$-free $\muML$-formula and 
+$\phi' \in \cont{\muML}{\qprop\cup\{p\}}$.
+
+The  \emph{co-continuous} fragment $\cocont{\mu\ML}{Q}$ is defined dually. 
+\end{definition}
+
+\begin{proposition}[\cite{Fontaine08,FV12}]\label{prop:FVcont}
+A $\muML$-formula is continuous in $q$ iff it is equivalent to a formula in the
+fragment $\cont{\muML}{q}$.
+\end{proposition}
+
+Finally, we define $\mucML$ to be the fragment of $\muML$ where the use of the
+least fixed point operator is restricted to the continuous fragment. 
+
+\begin{definition}
+Formulas of the fragment $\mucML$ are given by:% the following induction:
+\begin{equation*}
+   \phi \isbnf  q \mid \lnot q
+    \mid \phi \lor \phi
+        \mid \phi \land \phi
+    \mid \Diamond \phi
+     \mid \Box \phi \mid
+    \mu p.\phi' 
+    \mid \nu p.\phi''
+    \end{equation*}
+%
+where $p,q \in \Prop$,  $\phi' \in \cont{\muML}{p} \cap \mucML$, and dually 
+$\phi'' \in \cocont{\muML}{p} \cap \mucML$.
+\end{definition}
+
+% \begin{proposition}
+% The following hold for any formula $\phi \in \mucML$:
+% \begin{enumerate}[(1)]
+% \itemsep 0pt
+% \item $\phi$ is an $\AFMC$-formula,
+% \item 
+% Every $\mu$-variable in $\phi$ is existential (i.e., is only in the scope of
+% diamonds), and dually every $\nu$-variable in $\phi$ is universal (i.e., is 
+% only in the scope of boxes).
+% \end{enumerate}
+% \end{proposition}
+% \begin{proof}
+% Both points are proved by an easy induction on the complexity of a formula. 
+% For the first one,  it is enough to notice that if $\phi \in \cont{\muML}{q} 
+% \cap \AFMC$, then $\mu q. \phi \in \AFMC$ by definition of $\cont{\muML}{q} $.
+% \end{proof}
+
+It is easy to verify that $\mucML \sse \mudML$.
+Characteristic about $\mucML$ is that in a formula $\mu p. \phi \in \mucML$,
+all occurrences of $p$ are \emph{existential} in the sense that they may be 
+in the scope of a diamond but not of a box.
+Furthermore, as an immediate consequence of Proposition \ref{prop:FVcont} we 
+may make the following observation.
+
+\begin{corollary}\label{cor:cont}
+For every $\mucML$-formula $\mu p. \phi$, $\phi$ is continuous in $p$.
+\end{corollary}
+
+\subsection{Bisimulation}
+% \input{yde/prelim/prel-bisimulation}
+
+Bisimulation is a notion of behavioral equivalence between processes.
+For the case of  transition systems, it is formally defined as follows.
+
+\begin{definition}
+Let $\bbS = \tup{T, R, \tscolors, s_I}$ and $\bbS' = \tup{T', R', \tscolors', 
+s'_I}$ be $\pprop$-labeled transition systems.
+A \emph{bisimulation} is a relation $Z \subseteq T \times T'$ such that for all 
+$(t,t') \in Z$ the following holds:
+\begin{description}
+  \itemsep 0 pt
+  \item[(atom)] 
+  $\tscolors(t) = \tscolors'(t')$;
+  \item[(forth)] 
+  for all $s \in R[t]$ there is $s'\in R'[t']$ such
+  that $(s,s') \in Z$;
+  \item[(back)] 
+  for all $s'\in R'[t']$ there is $s \in R[t]$ such
+  that $(s,s') \in Z$.
+\end{description}
+%
+Two pointed transition systems $\bbS$ and $\bbS'$ are
+\emph{bisimilar} (denoted $\bbS \bis \bbS'$) if there is a
+bisimulation $Z \subseteq T \times T'$ containing $(s_I,s'_I)$.
+\end{definition}
+
+The following observation about tree unravellings is the key to understand
+the importance of tree models in the setting of invariance modulo bismilarity
+results.
+
+\begin{fact}
+    \label{prop:tree_unrav}
+$\bbS$, $\unravel{\bbS}$ and $\bbS^{\om}$ are bisimilar, for every transition
+system $\bbS$.
+\end{fact}
+
+A class $\mathsf{C}$ of transition systems is \emph{bisimulation closed} if 
+$\bbS \bis \bbS'$ implies that $\bbS \in \mathsf{C}$ iff $\bbS'
+\in \mathsf{C}$, for all $\bbS$ and $\bbS'$.
+A formula $\phi \in \yvlang$ is \emph{bisimulation-invariant} if $\bbS \bis
+\bbS'$ implies that $\bbS \mmodels \phi$ iff $\bbS'
+\mmodels \phi$, for all $\bbS$ and $\bbS'$.
+%An analogous definition can be given for $\wmso$.
+
+\begin{fact}
+Each $\muML$-definable class of transition systems is bisimulation closed.
+\end{fact}
+
+
+\subsection{Monadic second-order logics}
+\label{sec:prel-so}
+% \input{yde/prelim/prel-so}
+
+Three variants of monadic second-order logic feature in our work:
+\emph{standard}, \emph{weak}, and \emph{noetherian} monadic second-order 
+logic, and for each of these three variants, we consider a one-sorted and 
+a two-sorted version.
+As we will see later, the one-sorted version fits better in the 
+automata-theoretic framework, whereas it is more convenient to use the 
+two-sorted approach when translating $\mu$-calculi into second order languages.
+In both the one-sorted and the two-sorted version, the syntax of the three 
+languages is the same, the difference lying in the semantics, more specificaly,
+in the type of subsets over which the second-order quantifiers range.
+In the case of standard and weak monadic second-order logic, these quantifiers 
+range over all, respectively, all finite subsets of the model.
+In the case of \nmso we need the concept of a \emph{noetherian} subset of an LTS.
+
+\begin{definition}
+\label{d:bundle1}
+Let $\bbS = \tup{T,R,\tscolors, s_I}$ be an LTS, and let $B$ be a non-empty set 
+of finite paths that all share the same starting point $s$; we call $B$ a 
+\emph{bundle rooted at} $s$, or simply an $s$-\emph{bundle}, if $B$ does not
+contain an infinite ascending chain $\pi_{0} \sqsubset \pi_{1} \sqsubset 
+\cdots$, where $\sqsubset$ denotes the (strict) initial-segment relation on 
+paths.
+A \emph{bundle} is simply an $s$-bundle for some $s \in T$.
+
+A subset $X$ of $T$ is called \emph{noetherian} if there is a bundle $B$ such
+that each $t \in X$ lies on some path in $B$.
+\end{definition}
+
+Notice that in a tree model, the noetherian subsets coincide with those that
+are included in a well-founded subtree.
+
+\subsubsection*{One-sorted monadic second-order logics}
+%
+\begin{definition}\label{def:mso}
+The formulas of the \emph{(one-sorted) monadic second-order language} are
+defined by the following grammar:
+%
+\begin{eqnarray*}\label{EQ_mso}
+  \phi \isbnf  \here{p} \mid p \inc q \mid R(p,q) \mid \lnot\phi 
+     \mid \phi\lor\phi \mid \exists p.\phi,
+\end{eqnarray*}
+where $p$ and $q$ are letters from $\Prop$.
+We  adopt the standard convention that no proposition letter is both free and
+bound in $\phi$.
+\end{definition}
+
+
+As mentioned, the three logics $\smso$, $\wmso$ and $\nmso$ are distinguished by
+their semantics. 
+Let  $\bbS = \tup{T,R,\tscolors, s_I}$ be an LTS.
+The interpretation of the atomic formulas is fixed:
+\begin{align*}
+\bbS \models \here{p} & \quad\text{ iff }\quad  \tsval(p) = \{s_I\} \\
+\bbS \models p \inc q & \quad\text{ iff }\quad  \tsval(p) \subseteq \tsval(q) \\
+\bbS \models R(p,q) & \quad\text{ iff }\quad  \text{for every $s\in \tsval(p)$ there exists $t\in \tsval(q)$ such that $sRt$} 
+\end{align*}
+Furthermore, the interpretation of the boolean connectives is standard.
+The interpretation of the existential quantifier is where the logics diverge:
+
+\begin{align*}
+\bbS \models\ \exists p. \phi  & \quad\text{ iff }\quad  \bbS[p \mapsto X] \models \phi \,
+\left.\begin{cases}
+   \text{for some }                   & (\smso)
+\\ \text{for some \emph{finite} }     & (\wmso) 
+\\ \text{for some \emph{noetherian} } & (\nmso)
+\end{cases}\right\}\,
+ X \subseteq T.
+\end{align*}
+
+Observe that for a given monadic second-order formula $\phi$, the classes 
+$\Mod_{\smso}(\phi)$, $\Mod_{\wmso}(\phi)$ and $\Mod_{\nmso}(\phi)$ will 
+generally be different.
+
+\subsubsection*{Two-sorted monadic second-order logics}
+The reader may have expected to see the following more standard language for
+second-order logic.
+\begin{definition}
+\label{def:2mso}
+Given a set $\fovar$ of individual (first-order) variables, we define the 
+formulas of the \emph{two-sorted monadic second-order language} by the following
+grammar:
+\[
+\phi \isbnf  p(x)
+%\mid X(y)
+\mid R(x,y)
+\mid x \foeq y
+\mid \neg \phi
+\mid \phi \lor \phi
+\mid \exists x.\phi
+\mid \exists p.\phi
+\]
+where $p \in \Prop$, $x,y \in \fovar$ and $\foeq$ is the symbol for equality.   
+\end{definition}
+
+Formulas are interpreted over an LTS $\bbS = \tup{T,R,\tscolors, s_I}$ with a
+variable assignment $g: \fovar \to T$, and the semantics of the language is
+completely standard. 
+Depending on whether second-order quantification ranges over all subsets, over 
+finite subsets or over noetherian subsets, we obtain the three two-sorted 
+variants denoted respectively as $2\smso$, $2\wmso$ and $2\nmso$.
+
+%\begin{remark}
+\subsubsection*{Equivalence of the two versions}
+In each variant, the one-sorted and the two-sorted versions can be proved to
+be equivalent, but there is a sublety due to the fact that our models have a 
+distinguished state.
+In the one-sorted language, we use the downarrow $\here$ to access this
+distinguished state; in the two-sorted approach, we will use a \emph{fixed}
+variable $v$ to refer to the distinguished state, and given a formula 
+$\phi(v)$ of which $v$ is the only free individual variable, we write 
+$\bbS \models \phi[s_{I}]$ rather than $\bbS[v \mapsto s_{I}] \models \phi$.
+As a consequence, the proper counterpart of the one-sorted language $\smso$ is
+the set $2\smso(v)$ of those $2\smso$-formulas that have precisely $v$ 
+as their unique free variable.
+
+More in particular, with $L \in \{\smso, \wmso, \nmso\}$, we say that $\phi \in
+L$ is \emph{equivalent to} $\psi(v) \in L(v)$ if
+\[
+\bbS \models \phi \text{ iff } \bbS \models \psi[s_{I}]
+\]
+for every model $\bbS = \tup{T,R,\tscolors, s_I}$.
+We can now state the equivalence between the two approaches to 
+monadic second-order logic as follows.
+
+\begin{fact}
+\label{fact:msovs2mso}
+Let $L \in \{\smso, \wmso, \nmso\}$ be a monadic second-order logic.
+\begin{enumerate}
+\item
+There is an effective construction transforming a formula $\phi \in L$ into
+an equivalent formula $\phi^{t} \in 2L(v)$.
+\item
+There is an effective construction transforming a formula $\psi \in 2L(v)$ into
+an equivalent formula $\psi^{o} \in L$.
+\end{enumerate}
+\end{fact}
+
+Since it is completely straightforward to define a translation $(\cdot)^{t}$ as 
+required for part (1) of Fact~\ref{fact:msovs2mso}, we only discuss the proof 
+of part (2). 
+The key observation here is that a single-sorted language can interpret the 
+corresponding two-sorted language by encoding every individual variable $x \in 
+\fovar$ as a set variable $p_x$ denoting a singleton, and that it is easy to 
+write down a formula stating that a variable indeed is interpreted by a 
+singleton.
+As a consequence, where $2\yvlang(\pprop,\mathsf{X})$ denotes the set of
+$2L$-formulas with free second-order variables in $\pprop$ and free first-order
+variables in $\mathsf{X}$, it is not hard to formulate a translation 
+$(\cdot)^{m} : 2\yvlang(\pprop,\mathsf{X}) \to \yvlang(\pprop \uplus 
+\{ p_{x} \mid x \in \mathsf{X} \})$
+such that, for every model $\bbS$, every variable assignment $g$ and every
+formula $\psi \in 2\yvlang(\Prop,\mathsf{X})$:
+\[
+\bbS,g \models \psi \quad\text{iff}\quad 
+\bbS[p_{x} \mapsto \{g(x)\} \mid x \in \mathsf{X}] \models \psi^m.
+\]
+From this it is immediate that any $\psi \in 2L(v)$ satisfies
+\[
+\bbS \models \psi[s_{I}]
+\quad\text{iff}\quad 
+\bbS \models \exists p_{v} (\here{p_{v}} \land \psi^{m}),
+\]
+so that we may take $\psi^{o} \isdef \exists p_{v} (\here{p_{v}} \land 
+\psi^{m})$.
+
+% \begin{fact}
+% Let $\yvlang \in \{\mso, \wmso, \nmso\}$ and $\Prop_X\isdef  \{p_x\mid x \in \fovar\}$.
+% The translation $(\cdot)^{m} : 2\yvlang(\pprop) \to \yvlang(\pprop \uplus
+% \Prop_X)$ defined as
+% \begin{itemize}
+% \item $(p(x))^m\isdef   p_x \sqsubset p$,
+% \item $(R(x,y))^m\isdef  R(p_x, p_y)$,
+% \item $ (x \foeq y)^m\isdef    p_x \sqsubset p_y \land p_y \sqsubset p_x$,
+% \item $(\exists p. \phi)^m \isdef   \exists p. \phi^m$,
+% \item $(\exists x. \phi)^m\isdef   \exists p_x. \texttt{singleton}(p_x) \land \phi^m$,
+% \end{itemize}
+% where  
+% \begin{align*}
+%    \texttt{empty}(p) & \isdef \forall q. (p \inc q) 
+% \\ \texttt{singleton}(p) & \isdef \neg\texttt{empty}(p) \land 
+%    \forall q. (q \inc p \to (\texttt{empty}(q) \lor p\inc q))
+% \end{align*}
+% is such that
+%   \[
+%   \bbS,g \models \phi \quad\text{iff}\quad 
+%   \bbS[p_{x} \mapsto \{g(x)\}] \models \phi^m).
+%   \]
+% \end{fact}
+

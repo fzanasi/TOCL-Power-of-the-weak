@@ -1,0 +1,163 @@
+
+The language of the modal $\mu$-calculus ($\MC$) on $\props$ is given by the following grammar:
+%
+\begin{equation*}
+    \varphi\ ::= q \mid \neg q \mid \varphi \land \varphi \mid
+    \varphi \lor \varphi \mid  \Diamond \varphi \mid \Box \varphi \mid
+    \mu p.\varphi \mid \nu p.\varphi
+\end{equation*}
+% \begin{equation*}
+%     \varphi\ ::= q \mid \varphi \land \varphi \mid \lnot\varphi
+%     \mid  \Diamond \varphi \mid
+%     \mu p.\varphi
+% \end{equation*}
+%
+where $p,q \in \props$ and $p$ is positive in $\varphi$ (i.e., $p$ is not negated).
+We use the standard convention that no variable is both free and bound in a formula and that every bound variable is fresh.
+Sometimes we write $\psi \subf \varphi$ to denote that $\psi$ is a subformula of $\varphi$.
+
+%
+Let $p$ be a bound variable occuring in some formula $\varphi \in \MC$, we use $\delta_p$ to denote the binding definition of $p$, that is, the formula such that either $\mu p.\delta_p$ or $\nu p.\delta_p$ are subformulas of $\varphi$.
+
+The semantics of this language is completely standard. Let $\model = \tup{T,R,\tscolors, s_I}$ be a transition system and $\varphi \in \MC$. We inductively define the \emph{meaning} $\ext{\varphi}^{\model}$ which includes the following clauses for the least $(\mu)$ and greatest ($\nu$) fixpoint operators:
+%
+\begin{align*}
+  \ext{\mu p.\psi}^{\model}  & :=   \bigcap \{S \subseteq T \mid S \supseteq \ext{\psi}^{\model[p\mapsto S]} \}  \\
+  \ext{\nu p.\psi}^{\model}  & :=   \bigcup \{S \subseteq T \mid S \subseteq \ext{\psi}^{\model[p\mapsto S]} \}
+\end{align*}
+%
+We say that $\varphi$ is \emph{true} in $\model$ (notation $\model \mmodels \varphi$) iff $s_I \in \ext{\varphi}^{\model}$.% As for the case of $\wmso$, $\ext{\varphi}$ denotes the class of transition systems where $\varphi$ is true.\fcwarning{Pointed or not?}
+
+We will now describe the semantics defined above in game-theoretic terms. That is,
+we will define the evaluation game $\egame(\varphi,\model)$ associated with a formula $\varphi \in \MC$ and a transition system $\model$. This game is played by two players (\eloise and \abelard) moving through positions $(\xi,s)$ where $\xi \subf \varphi$ and $s \in T$.
+%
+
+\begin{table}
+\centering
+\begin{tabular}{|l|c|l|c|}
+  \hline
+  Position & Player & Admissible moves\\
+  \hline
+  $(\psi_1 \vee \psi_2,s)$ & $\exists$ & $\{(\psi_1,s),(\psi_2,s) \}$ \\
+  $(\psi_1 \wedge \psi_2,s)$ & $\forall$ & $\{(\psi_1,s),(\psi_2,s) \}$ \\
+  $(\Diamond\varphi,s)$ & $\exists$ & $\{(\varphi,t)\ |\ t \in R[s] \}$ \\
+  $(\Box\varphi,s)$ & $\forall$ & $\{(\varphi,t)\ |\ t \in R[s] \}$ \\
+  $(\mu p.\varphi,s)$ & $-$ & $\{(\varphi,s) \}$ \\
+  $(\nu p.\varphi,s)$ & $-$ & $\{(\varphi,s) \}$ \\
+  $(p,s)$ with $p$ bound in $\varphi$ & $-$ & $\{(\delta_p,s) \}$ \\
+  $(\lnot q,s) \in \props \times T$, $q$ free in $\varphi$ and $q \notin \tscolors(s)$ & $\forall$ & $\emptyset$\\
+  $(\lnot q,s) \in \props \times T$, $q$ free in $\varphi$ and $q \in \tscolors(s)$ & $\exists$ & $\emptyset$\\
+  $(q,s) \in \props \times T$, $q$ free in $\varphi$ and $q \in \tscolors(s)$ & $\forall$ & $\emptyset$\\
+  $(q,s) \in \props \times T$, $q$ free in $\varphi$ and $q \notin \tscolors(s)$ & $\exists$ & $\emptyset$\\
+  \hline
+\end{tabular}
+\caption{}
+\label{egame_mucalc}
+\end{table}
+%
+
+In an arbitrary position $(\xi,s)$ it is useful to think of
+\eloise trying to show that $\xi$ is true at $s$, and of \abelard of trying to convince her that $\xi$ is false at $s$. The rules of the evaluation game are given in Table~\ref{egame_mucalc}.
+Every finite match of this game is lost by the player that got stuck. To give a winning condition for an infinite match let $p$ be, of the bound variables of $\varphi$ that get unravelled infinitely often, the one that is the highest in the syntactic tree of $\varphi$. The winner of the match is \abelard if $p$ is a $\mu$-variable and \eloise if $p$ is a $\nu$-variable. We say that $\varphi$ is true in $\model$ iff \eloise has a winning strategy in $\egame(\varphi,\model)$.
+
+\begin{proposition}[Adequacy Theorem]\label{p:unfold=evalgame}
+Let $\varphi = \varphi(p)$ be a formula of $\MC$ in which all occurrences of $p$ are positive, and let $(\model,s)$ be a pointed Kripke model. Then:
+\begin{equation}
+\label{eq:adeq3}
+s \in \mng{\mu p.\varphi}^{\model} %\iff s \in \Win_{\eloi}(\UG(\varphi_{x}^{\bbS}))
+\iff (\mu p.\varphi,s) \in \win_{\eloise}(\egame(\mu p.\varphi,\model)).
+\end{equation}
+\end{proposition}
+
+\bigskip
+Formulas of the modal $\mu$-calculus are classified according to their
+\emph{alternation depth}, which roughly is given as the maximal length of
+a chain of nested alternating least and greatest fixpoint operators~\cite{Niwinski86}.
+The \emph{alternation-free fragment} of the modal $\mu$-calculus~($\AFMC$) is the collection of
+$\MC$-formulas without nesting of least and greatest fixpoint operators.
+
+\begin{definition}
+  Let $\varphi$ be a formula of the modal $\mu$-calculus. We say that $\varphi\in\AFMC$ iff for all subformulas $\mu p.\psi_1$ and $\nu q.\psi_2$ we have that $p$ is not free in $\psi_2$ and $q$ is not free in $\psi_1$.
+\end{definition}
+
+Over arbitrary transition systems, this fragment is
+less expressive than the whole $\MC$~\cite{Park79}. %That is, there is a $\MC$-formula $\varphi$ such that $\ext{\varphi}$ is not $\AFMC$-definable~\cite{Park79}.
+
+In order to properly define the fragment $\mucML \subseteq \AFMC$ which is of critical importance in this article, we are particularly interested in the \emph{continuous} fragment of the modal $\mu$-calculus. As observed in Section~\ref{sec:intro}, the abstract notion of continuity can be given a concrete interpretation in the context of $\mu$-calculus.
+%
+\begin{definition}
+Let $\varphi \in \MC$, and $q$ be a propositional variable. We say that \emph{$\varphi$ is continuous in $q$} iff for every transition system $\model$ there exists some finite $S \subseteq_\omega \tsval(q)$ such that
+$$
+\model \mmodels \varphi \quad\text{iff}\quad \model[q \mapsto S] \mmodels \varphi .
+$$
+\end{definition}
+
+We can give a syntactic characterisation of the fragment of $\MC$ that captures this property. Given a set $\qprops$ of propositional variables, we define the fragment of \MC \emph{continuous} in $\qprops$, denoted by $\cont{\MC}{\qprops}$, by induction in the following way
+\begin{equation*}
+   \varphi ::= q
+   \mid \psi
+   \mid \varphi \lor \varphi
+   \mid \varphi \land \varphi
+   \mid \Diamond \varphi
+   \mid \mu p.\alpha
+\end{equation*}
+%
+where $q \in \qprops$, $p \in \props \setminus \qprops$, $\alpha \in \cont{\MC}{\qprops\cup\{p\}}$, and $\psi$ is a $\qprops$-free $\MC$-formula.
+
+\begin{proposition}[\cite{Fontaine08,FV12}]\label{prop:FVcont}
+A $\MC$-formula is continuous in $q$ iff it is equivalent to a formula in the fragment $\cont{\MC}{q}$.
+\end{proposition}
+
+Finally, we define $\mucML$ to be the fragment of $\MC$ where the use of the least fixed point operator is restricted to the continuous fragment. Formally, it is defined as follows.
+
+\begin{definition}
+Formulas of the fragment $\mucML$ are given by:% the following induction:
+\begin{equation*}
+   \varphi ::= q \mid \lnot \varphi
+    \mid \varphi \lor \varphi
+    \mid \Diamond \varphi
+    \mid \mu p.\alpha
+\end{equation*}
+%
+where $p,q \in \props$, and $\alpha \in \cont{\MC}{p} \cap \mucML$.
+\end{definition}
+
+\begin{proposition}
+Let $\varphi \in \mucML$, the following hold
+\begin{enumerate}[(1)]
+\itemsep 0pt
+\item $\varphi$ is an $\AFMC$-formula,
+\item Every $\mu$-variable in $\varphi$ is existential (i.e., is only in the scope of diamonds), and dually every $\nu$-variable in $\varphi$ is universal (i.e., is only in the scope of boxes).
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+Both points are proved by an easy induction on the complexity of a formula. For the first one,  it is enough to notice that if $\varphi \in \cont{\MC}{q} \cap \AFMC$, then $\mu q. \varphi \in \AFMC$ by definition of $\cont{\MC}{q} $.
+\end{proof}
+
+As an immediate consequence of Proposition \ref{prop:FVcont} we have the following:
+
+\begin{corollary}\label{cor:cont}
+For every $\mucML$-formula $\mu p. \varphi$, $\varphi$ is continuous in $p$.
+\fznote{can we say also that $\nu p. \varphi$ is co-continuous in $p$, on the base of the second part of Prop. 2.14(2)?}
+\end{corollary}
+
+
+%\myparagraph{Finite approximants of monotone maps.}
+%\index{approximant}
+%\index{$F^\alpha$}
+%Let $F:\wp(\moddom) \to \wp(\moddom)$ be a monotone map. The approximants of the least fixpoint of $F$ are the sets ${F^\alpha(\nada) \subseteq \moddom}$, where $\alpha$ is an ordinal. The map $F^\alpha$ is intuitively the $\alpha$-fold composition of $F$. Formally,% it is defined as
+%
+%\begin{itemize}
+%	\itemsep 0pt
+%	\item $F^0(X) := \nada$,
+%	\item $F^{\alpha+1}(X) := F(F^\alpha(X))$,
+%	\item $F^\lambda(X) := \bigcup_{\alpha<\lambda} F^\alpha(X)$ for limit ordinals $\lambda$.
+%\end{itemize}
+%
+%\noindent The sets $F^\alpha(\nada)$ are called approximants because of the following fact.
+%
+%\begin{fact}
+%	For every $s\in\moddom$ we have that $s\in \lfp(F)$ if and only if $s\in F^\beta(\nada)$ for some ordinal $\beta$.
+%\end{fact}
+%
+%Moreover, this approximation starts at $F^0(\nada) = \nada$ and grows strictly until it stabilizes for some ordinal $\beta$. This ordinal is called the closure or unfolding ordinal of $F$.

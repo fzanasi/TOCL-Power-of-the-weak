@@ -1,0 +1,226 @@
+% !TEX root = ../main.tex
+
+\section{Introduction}\label{sec:intro}
+
+Model theory investigates the relationship between formal languages and 
+semantics. 
+From this perspective, among the most important results are the so called 
+\emph{preservation theorems}. 
+Such results typically characterise a certain language as the fragment of 
+another, richer language satisfying a certain model-theoretic property.
+In doing so, they therefore  link the syntactic shape of a formula with the 
+semantic properties of the class of models  it defines. 
+In the case of classical first-order logic, notable examples are the 
+{\L}o\'s-Tarski theorem,  stating that a first-order  formula is equivalent to a universal one if and only if the class of its models is closed under taking submodels, and Lyndon's theorem, stating that a first-order formula is equivalent to  one for which each occurrence of a relation symbol $R$  is positive if and only if it is monotone with respect to the interpretation of $R$ (see e.g. \cite{Hodges1993}).
+
+The aim of this paper is to show that similar results also hold when considering the predicate logic $\ofoei$ that allows only monadic predicate symbols and no function symbols, but that goes beyond standard first-order logic with equality in that it features the generalised quantifier `there are infinitely many'. 
+ 
+Generalised quantifiers were introduced by Mostowski in \cite{Mostowski1957}, 
+and in a more general sense by Lindstr\"{o}m in \cite{perlindstrom1966first},
+the main motivation being the observation that standard first-order quantifiers 
+`there are some' and `for all' are not sufficient for expressing some basic 
+mathematical concepts. 
+Since then, they have attracted a lot of interests, insomuch that their study
+constitutes nowadays a well-established field of logic with important 
+ramifications in disciplines such as linguistics and computer 
+science.\footnote{%
+   For an overview see e.g. 
+   \cite{van1995directions,vaananen1997generalized,sep-generalized-quantifiers}.
+   For an introduction to the model theory of generalised quantifiers, the 
+   interested reader can consult for 
+   instance~\cite[Chapter~10]{vaananen2011models}.
+   }. 
+
+
+Despite the fact that the absence of polyadic predicates clearly restricts its expressing power, monadic first-order logic (with identity) displays nice properties, both from a computational and a model-theoretic point of view. Indeed, the  
+satisfiability problem becomes decidable  \cite{Behmann1922,Loewenheim1915}, and, in addition of an immediate application of {\L}o\'s-Tarski  and Lyndon's theorems, one can also obtain a Lindstr\"om like characterisation result  \cite{tharp1973characterization}.
+Moreover, adding the possibility of quantifying over predicates does not increase the expressiveness of the language \cite{ackermann1954solvable}, meaning that when restricted to monadic predicates, monadic second order logic collapses into first-order logic. 
+
+For what concerns monadic first-order logic extended with an infinity quantifier,
+in \cite{Mostowski1957} Mostowski, already proved its decidability, whereas from 
+work of V\"a\"an\"anen  \cite{vaananen77} we know that its expressive power 
+coincides with that of weak monadic second-order logic restricted to monadic 
+predicates, that is monadic first-order logic extended with a second order 
+quantifier ranging over finite sets\footnote{%
+   Extensions of monadic first-order logic with other generalised quantifiers
+   have also been studied (see 
+   e.g.~\cite{slomson1968monadic,caicedo1981extensions}).
+   }.
+
+
+\subsection*{Preservation results and proof outline.}
+
+A preservation result involves some fragment $\llang_{\mathfrak{P}}$ of a given
+yardstick logic $\llang$, related to a certain semantic property $\mathfrak{P}$. 
+It is usually formulated as
+\begin{equation}\label{eq:intro-0}
+\phi  \in \llang \text{ has the property } \mathfrak{P} \text{ iff } 
+\phi \text{ is equivalent to some } \phi' \in \llang_{\mathfrak{P}}.
+\end{equation}
+
+In this work, our main yardstick logic will be $\ofoei$. 
+Table \ref{tab:0} summarises the semantic properties
+($\mathfrak{P}$) we are going to consider,  
+the corresponding expressively complete fragment ($\llang_{\mathfrak{P}}$) and preservation theorem.
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+$\mathfrak{P}$				
+   & $\llang_{\mathfrak{P}}$ 		
+   & Preservation Theorem 
+\\ \hline \hline
+     Monotonicity     
+   & Positive fragment         
+   & Theorem \ref{t:mono}                        
+\\ (Definition \ref{def:mono})		
+   & $\monot{\ofoei}{}$
+   &
+\\ \hline	
+     Continuity     
+   & Continuous fragment  
+   & Theorem \ref{t:cont}            
+\\ (Definition \ref{def:cont})       	
+   & $\cont{\ofoei}{}$        
+   &                              
+\\\hline
+     Preservation under submodels
+   & Universal fragment    	 
+   &          Theorem \ref{t:univ}                    
+\\ (Definition \ref{d:inv}(\ref{d:inv}))    
+   &          $\univ{\ofoei}{}$          
+   &                              
+\\ \hline
+     Invariance under quotients& Monadic first-order logic
+   & Theorem \ref{t:qinv}                 
+\\ (Definition \ref{d:inv}(\ref{d:inv}))   	
+   & $\ofo$             	
+   &                              
+\\\hline
+\end{tabular}
+\caption{A summary of our preservation theorems}
+\label{tab:0}
+\end{center}
+\end{table}
+
+The proof of each  preservation theorem is composed of two parts. 
+The first, simpler one concerns 
+the claim that each sentence in the fragment satisfies the concerned property. 
+It is usually proved  by induction on the structure of the sentence.  
+The other direction is the  \emph{expressive completeness statement}, stating 
+that within the considered logic, the fragment is expressively complete for the 
+property. 
+Its verification generally requires more effort. 
+In this paper, we will actually verify a stronger expressive completeness 
+statement. 
+Namely, for each semantic property $\mathfrak{P}$ and corresponding fragment
+$\llang_{\mathfrak{P}}$ from Table \ref{tab:0}, we are going to provide an 
+effective translation operation $(\cdot)^{\sf p}: \ofoei \to 
+\llang_{\mathfrak{P}}$ such that \begin{equation}\label{eq:intro-i}
+\text{if }\phi \in \ofoei\text{ has the property } \mathfrak{P} \text{ then }
+\phi \text{ is equivalent to } \phi^{\sf p}.
+\end{equation}
+Since the satisfiability problem for $\ofoei$ is decidable and the translation
+$(\cdot)^{\sf p}$ is effectively computable, we obtain, as an immediate 
+corollary of (\ref{eq:intro-i}), that for each property $\mathfrak{P}$ listed
+in Table \ref{tab:0}
+\begin{equation}\label{eq:intro-ii}
+\text{the problem whether a $\ofoei$-sentence satisfies property $\mathfrak{P}$
+or not is decidable.}
+\end{equation}
+
+
+The proof of each instance of (\ref{eq:intro-i})  will follow an uniform 
+pattern, analogous to the one employed in the aim of obtaining similar results
+in the context of the modal $\mu$-calculus \cite{Jan96,d2000logical,FV12}.
+The crux of the adopted proof method is that, extending known results on monadic
+first-order logic, for each sentence $\phi$ in $ \ofoei$ it is possible to compute
+a logically equivalent sentence in \emph{basic normal norm}. 
+Such normal forms will take the shape of a disjunction $\bigvee \dbnf_{\ofoei}$, 
+where each disjunct $\dbnf_{\ofoei}$ characterises a class of models of $\phi$
+satisfying the same set of ${\ofoei}$-sentences of equal quantifier rank as 
+$\phi$. 
+Based on this, it will therefore be enough to define an effective translation
+$(\cdot)^{\sf p}$ for sentences in normal form, point-wise in each disjunct 
+$\dbnf_{\ofoei}$, and  then verify that it indeed satisfies (\ref{eq:intro-i}). 
+
+As a corollary of the employed proof method, we thus obtain effective normal
+forms for sentences satisfying the considered property.
+
+In addition to $\ofoei$, in this paper we are also going to consider monadic 
+first-order logic with and without equality, denoted respectively by $\ofoe$ 
+and $\ofo$.
+Table \ref{tab:1} shows a summary of the expressive completeness and normal 
+form results presented in this paper. 
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{cc|c|c|c|c|}
+\cline{3-5}
+& & \multicolumn{3}{ c| }{Language} \\ \cline{3-5}
+& 									& $\ofo$ 					& $\ofoe$ 				& $\ofoei$  			\\ \cline{2-5}
+& \multicolumn{1}{ |c| }{ Normal forms}		& Fact \ref{fact:ofonormalform} &  Thm. \ref{thm:bnfofoe} 	& Thm. \ref{thm:bfofoei} \\ \hline
+\multicolumn{1}{ |c  }{\multirow{2}{*}{Monotonicity} }&
+\multicolumn{1}{ |c| }{Completeness}   & Prop. \ref{p:fomon} & Prop. \ref{p:monofoeismonot} & Prop. \ref{p:mono-ofoei} \\ \cline{2-5}		
+\multicolumn{1}{ |c  }{}                        &
+\multicolumn{1}{ |c| }{Normal forms} 	& Cor. \ref{cor:ofopositivenf}	 		& Cor. \ref{cor:ofoepositivenf}		& Cor. \ref{cor:ofoeipositivenf}  \\ \cline{1-5}		
+\multicolumn{1}{ |c  }{\multirow{2}{*}{Continuity} }&
+\multicolumn{1}{ |c| }{Completeness}   & Prop. \ref{prop:ofocont}  & Fact \ref{fact:vb}  & Prop. \ref{lem:ofoeictrans} \\ \cline{2-5}		
+\multicolumn{1}{ |c  }{}                        &
+\multicolumn{1}{ |c| }{Normal forms} 	& Cor. \ref{cor:ofocontinuousnf}	 		& --		& Cor. \ref{cor:ofoeicontinuousnf}  \\ \cline{1-5}			
+\multicolumn{1}{ |c  }{\multirow{2}{*}{Preservation under submodels} }&
+\multicolumn{1}{ |c| }{Completeness}   & \multicolumn{3}{ c| }{Prop. \ref{p:univ2} }  \\ \cline{2-5}		
+\multicolumn{1}{ |c  }{}                        &
+\multicolumn{1}{ |c| }{Normal forms} 	& Cor. \ref{cor:univ}(\ref{cor:ofo})	 		& Cor. \ref{cor:univ}(\ref{cor:ofoe})		& Cor. \ref{cor:univ}(\ref{cor:ofoei})  \\ \cline{1-5}	
+\multicolumn{1}{ |c  }{\multirow{2}{*}{Invariance under quotients } }&
+\multicolumn{1}{ |c| }{Completeness}   & Prop. \ref{p:m-qinv} &\multicolumn{2}{ c| }{Prop. \ref{p:invq} }  \\ \cline{2-5}		
+\multicolumn{1}{ |c  }{}                        &
+\multicolumn{1}{ |c| }{Normal forms} 	& Fact \ref{fact:ofonormalform} & \multicolumn{2}{ c| }{Cor. \ref{cor:qinv} }  \\ \cline{1-5}	
+\end{tabular}
+\caption{An overview of our expressive completeness and normal form results.}
+\label{tab:1}
+\end{center}
+\end{table}
+
+\subsection*{Application of obtained results: the companion paper}
+\emph{Parity automata} are finite-state systems playing a crucial role in 
+obtaining decidability and expressiveness results in fixpoint logic (see e.g. 
+\cite{vardi2008automata}).
+They are specified by a finite set of states $A$, a distinguished, initial state
+$a \in A$, a function $\Omega$ assigning to each states a priority (a natural 
+number), and a transition function $\Delta$ whose co-domain is usually given by
+a monadic logic in which  the set of (monadic) predicates  coincides with $A$.
+Hence, each monadic logic $\llang$ induces its own class of automata 
+$\aut{\llang}$.
+
+A landmark result in this area is Janin and Walukiewicz's theorem stating that
+the bisimulation-invariant fragment of monadic second order logic coincides 
+with the modal $\mu$-calculus \cite{Jan96}, and the proof of this result is an 
+interesting mix of the theory of parity automata and the model theory of
+monadic predicate logic.
+First, preservation and normal forms results are used to verify that (on tree 
+models) $\aut{\monot{\ofoe}{}}$ is the class of automata characterising the
+expressive power of monadic second order logic \cite{Walukiewicz96}, whereas 
+$\aut{\monot{\ofo}{}}$ corresponds to the modal $\mu$-calculus \cite{JaninW95},
+where $\monot{\llang}{}$ denote the positive fragment of the monadic logic 
+$\llang$. 
+Then, Janin-Walukieiwcz's expressiveness theorem is a consequence of these 
+automata characterisations and the fact that positive monadic first-order 
+logic without equality provides the quotient-invariant fragment of positive
+monadic first-order logic with equality (see Theorem \ref{t:inv1}).
+
+In our companion paper \cite{companionWEAK}, we provide a Janin-Walukiewicz 
+type characterisation result for \emph{weak} monadic second order logic.
+Our proof, analogously to the case of full monadic second order logic discussed 
+previously,  crucially employs preservation and normal form results for $\ofoei$
+listed in  Tables \ref{tab:0} and \ref{tab:1}. 
+
+
+
+\subsection*{Other versions}
+Results in this paper first appeared in the first author's PhD thesis
+(\cite[Chapter 5]{carreiro2015fragments}); this journal version largely expands
+material first published as part of the conference 
+papers \cite{DBLP:conf/lics/FacchiniVZ13,carreiro2014weak}. 
+In particular, the whole of Section \ref{sec:inv} below contains new results.

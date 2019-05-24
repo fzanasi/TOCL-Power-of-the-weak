@@ -1,0 +1,175 @@
+%%%%%
+%%%%%  FOE
+%%%%%
+\subsection{Continuous fragment of $\ofoe$}
+
+The case of $\ofoe$ is similar to the previous one. Indeed, the fragment that characterizes the property of continuity can be 
+defined as follows.
+
+\begin{definition}
+The fragment $\cont{\ofoe(A)}{B}$ of $\ofoe(A)$ of formulas that are 
+\emph{syntactically continuous} in a subset $B \subseteq A$ is 
+defined by the following grammar:
+\[
+\phi \defbnf \psi 
+   \mid b(x) 
+   \mid \phi \land \phi \mid \phi \lor \phi
+   \mid \exists x.\phi,
+\]
+where $b\in B$ and $\psi \in \ofoe(A\setminus B)$. 
+\end{definition}
+
+\begin{theorem}
+\label{thm:ofoecont}
+Let $\phi$ be a sentence of the  logic $\ofoe(A)$.
+Then $\phi$ is continuous in a set $B \subseteq A$ if and only if there is a 
+equivalent sentence $\phi^{\tcont} \in \cont{\ofoe(A)}{B}$.
+Furthermore, it is decidable whether a formula $\phi \in \ofoe(A)$ has this 
+property or not.
+\end{theorem}
+
+The theorem will follow from the next two lemmas.
+% and Remark~\ref{rem:contprodeach}.
+The first one is proved as in the case of Lemma \ref{lem:cofoiscont}
+
+\begin{lemma}\label{lem:cofoeiscont}
+Every $\phi \in \cont{\ofoe(A)}{B}$ is continuous in $B$.
+\end{lemma}
+
+The main result underlying the proof of Theorem~\ref{thm:ofoecont} is the 
+following.
+
+\begin{lemma}
+There is a translation $(-)^\tcont:\ofoe(A) \to \cont{\ofoe(A)}{B}$
+such that a formula $\phi \in \ofoe(A)$ is continuous in 
+$B \subseteq A$ if and only if $\phi\equiv \phi^\tcont$.
+\end{lemma}
+
+\begin{proof}
+To define the translation, assume first $\phi$ is equivalent to the formula in basic form
+$\bigvee \mondbnfofoe{\vlist{T}}{\Pi}{} $.
+For the translation, let
+\[
+\phi^\tcont \isdef 
+\bigvee \mondbnfofoe{\vlist{T}}{\Pi^{-}_{B}}{B} 
+\]
+where $\Pi^{-}_{B} \isdef \{S\in \Pi \mid B \cap S = \nada \}$.
+From the construction it is clear that $\phi^\tcont \in \cont{\ofoe(A)}{B}$ and
+therefore the right-to-left direction of the lemma is immediate by 
+Lemma~\ref{lem:cofoiscont}. 
+
+For the left-to-right direction assume that $\phi$ is continuous in $B$, we have
+to prove that, given any  
+one-step model $(D, V)$ 
+\[(D, V) \models \phi \text{ iff }(D, V) \models \phi^\tcont.\]
+
+Our proof strategy consists in a variation of the one used in the proof of Theorem \ref{thm:ofoecont}.
+
+\bigskip
+
+\noindent \fbox{$\Leftarrow$}
+Let $(D, V) \models \mondbnfofoe{\vlist{T}}{\Pi^{-}_{B}}{B}$.
+Since $\phi$ is continuous in $B$, it is also monotone in $B$. By Corollary \ref{cor:ofoepositivenf} it is therefore enough to show that $(D, V) \models \mondbnfofoe{\vlist{T}}{\Pi}{B}$. The 
+existential part is trivial. For the universal part just observe that 
+$\Pi^{-}_{B} \subseteq \Pi$.
+
+\bigskip
+\noindent \fbox{$\Rightarrow$}
+We discuss the case $\{b\}=B$, the general case being treated analogously.
+Assume that $\qr(\varphi)=k$.
+Let $\osmodel=(D,V)$ such that $\osmodel \models \phi$.  Call $S_1,\dots,S_n \subseteq A$ to the types such that $|S_i|_\osmodel = n_i< k$
+and $S'_1,\dots,S'_m \subseteq A$ to those satisfying $|S'_i|_\osmodel \geq k$. Consider $\osmodel^{k, \omega}=(D^{k, \omega}, V^{k, \omega})$ such that $|S_i|_\osmodel = n_i< k$
+and  $|S'_i|_\osmodel = \omega$. By construction  $\osmodel \sim^=_k \osmodel^{k, \omega}$, and therefore $\osmodel^{k, \omega} \models \phi$  by Lemma \ref{lem:connofoe}.
+
+As $\phi$ is continuous in $b$ there is a valuation $U \leq^{\omega}_{b} V^{k, \omega}$ 
+satisfying $(D^{k, \omega}, U) \models \phi$.  
+ Call $\osmodel':=(D^{k, \omega}, U)$. Notice that if $b \in S'_i$, then $|S'_i|_{\osmodel'} < \omega$ and $|S'_i\setminus \{b\} |_{\osmodel'} = \omega$, and that if $b \notin S'_i$, then $|S'_i|_{\osmodel'}= \omega$. 
+   By monotonicity, we can assume that
+   \begin{itemize}
+   \item    $|S_i|_{\osmodel'} = n_i< k$, and
+   \item if $S'_i \in b$, then $|S'_i|_{\osmodel'}\geq k < \omega$.
+   \end{itemize}
+   Let $\mondbnfofoe{\vlist{T}}{\Pi}{}$ be the disjunct of (the formula in basic form equivalent with) $\phi$ characterising the class $E \in \umods/{\sim^=_k}$, for ${\osmodel'}\in E$. This means in particular that  ${\osmodel'} \models\mondbnfofoe{\vlist{T}}{\Pi}{}$, where
+   $\Pi= \{S'_1,\dots,S'_m\} \cup \{{S'}_1^{-b},\dots,{S'}_m^{-b}\}$, 
+   for $S^{-b}:= S \setminus \{b\}$, and where $\vlist{T}$ contains  $n_i$ occurrences of type $S_i$ 
+and $k$ occurrences of each $S'_j$ and ${S'}_j^{-b}$. Now, for every one step model $\osmodel$, if ${\osmodel} \models \tau_{S'_j}(d)$ then ${\osmodel} \models \tau^B_{{S'}_j^{-b}}(d)$
+
+
+
+
+Below we will use the following fact:
+\begin{equation}
+\label{eq:conofoe101}
+(D^{k, \omega}, U) \models \tau^{B}_{S}(d,k) \text{ iff }
+S \setminus B = U^{\flat}(d,k) \setminus B \text{ and }
+S \cap B \subseteq U^{\flat}(d,k).
+\end{equation}
+
+Our claim is now that $(D^{k, \omega}, U) \models 
+ \mondbnfofoe{\vlist{T}}{\Pi^{-}_{B}}{B} $.  Consider $ \vlist{x} \mapsto \vlist{m}$ such that
+ 
+ \[(D^{k, \omega}, U), g[\vlist{x} \mapsto \vlist{m}] \models \big(\arediff{\vlist{x}} \land \bigwedge_i \tau_{T_i}(x_i)   \land \forall z.(\arediff{\vlist{x},z}  \to \bigvee_{S\in \Pi} \tau_S(z))\big).\]
+ Then 
+ \[(D^{k, \omega}\setminus \vlist{m}, U) \models \forall z.\bigvee_{S\in \Pi} \tau_S(z)).\]
+
+The existential part of $ \mondbnfofoe{\vlist{T}}{\Pi^{-}_{B}}{B} $ is trivially 
+true. 
+
+
+*******
+
+To cover the universal part, it remains to show that every element of 
+$(D\times\omega, U)$ realizes a $B$-positive type in $\Sigma^{-}_{B}$.
+Take an arbitrary pair $(d,k) \in D\times\omega$ and let $T$ be the (full) type 
+of $(d,k)$, that is, let $T \isdef U^{\flat}(d,k)$.
+If $B \cap T = \nada$ then trivially $T\in \Sigma^{-}_{B}$ and we are done. 
+So suppose $B \cap T \neq \nada$. 
+% In this case we must have $T = V_{\pi}^{\flat}(d,k)$.
+Observe that in $D\times\omega$ we have infinitely many copies of $d\in D$.
+Hence, as $U(b)$ is finite for every $b \in B$, there must be some $(d,k')$ 
+with type $U^{\flat}(d,k') = V_{\pi}^{\flat}(d,k') \setminus B = 
+V_{\pi}^{\flat}(d,k) \setminus B = T \setminus B$.
+It follows from $(D\times\omega, U) \models \mondbnfofo{\Sigma}{B}$ and 
+\eqref{eq:con101} that there is some $S \in \Sigma$ such that
+$S \setminus B = U^{\flat}(d,k') \setminus B = U^{\flat}(d,k')$ and 
+$S \cap B \subseteq U^{\flat}(d,k) \cap B = \nada$.
+From this we easily derive that $S = U^{\flat}(d,k')$ and $S \in \Sigma^{-}_{B}$.
+Finally, we observe that $S \setminus B = U^{\flat}(d,k') \setminus B =
+U^{\flat}(d,k) \setminus B$ and $S \cap B = \nada \subseteq U^{\flat}(d,k)$, 
+so that by \eqref{eq:con101} we find that $D \times \omega,U) \models 
+\tau^{B}_{S}(d,k)$ indeed.
+
+Finally, by monotonicity it directly follows from
+$(D\times\omega, U) \models \mondgbnfofo{\Sigma}{\Sigma^{-}_{B}}{B}$
+that 
+$(D\times\omega, V_{\pi}) \models \mondgbnfofo{\Sigma}{\Sigma^{-}_{B}}{B}$,
+and from this it is immedate that $(D\times\omega, V_\pi) \models \phi^\tcont$.
+\bigskip
+
+******
+
+
+\end{proof}
+
+Putting together the above lemmas we obtain Theorem~\ref{thm:ofoecont}. 
+Moreover, a careful analysis of the translation gives us the following corollary,
+providing normal forms for the continuous fragment of $\ofoe$.
+
+\begin{corollary}\label{cor:ofoecontinuousnf}
+For any sentence $\phi \in \ofoe(A)$, the following hold.
+\begin{enumerate}
+\item 
+The formula $\phi$ is continuous in $B \subseteq A$ iff it is equivalent to a 
+formula $\bigvee \mondgbnfofo{\Sigma}{\Sigma^{-}_{B}}{B}$ for some types $\Sigma
+\subseteq \wp A$, where $\Sigma^{-}_{B} \isdef \{S\in \Sigma \mid B \cap S = 
+\nada \}$.
+\item 
+If $\phi$ is monotone in $A$ 
+% (i.e., $\phi\in\ofo^+(A)$) 
+then $\phi$ is continuous in $B \subseteq A$ iff it is equivalent to a formula 
+in the basic form $\bigvee \posdgbnfofo{\Sigma}{\Sigma^{-}_{B}}$ for some types 
+$\Sigma \subseteq \wp A$, where $\Sigma^{-}_{B} \isdef \{S\in \Sigma \mid B \cap
+S = \nada \}$.
+\end{enumerate}
+\end{corollary}
+

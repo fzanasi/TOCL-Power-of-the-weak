@@ -1,0 +1,315 @@
+% !TEX root = ../main.tex
+
+\section{Basics}
+
+In this section we provide the basic definitions of the monadic predicate 
+liftings that we study in this paper.
+Throughout this paper we fix a finite set $A$ of objects that we shall refer to 
+as \emph{(monadic) predicate symbols} or \emph{names}.
+
+
+We shall also assume an infinite set $\fovar$ of \emph{individual variables}.
+
+\begin{definition}
+Given a finite set $A$ we define a \emph{(monadic) model} to be a pair
+$\osmodel = (D,V )$ consisting of a set $D$,  which we call the \emph{domain} of 
+$\osmodel$, and an interpretation or \emph{valuation} $V : A \to \wp (D)$.
+The class of all models will be denoted by $\umods$.
+\end{definition}
+
+\begin{remark}~
+Note that we make the somewhat unusual choice of allowing the domain of a
+monadic model to be \emph{empty}.
+In view of the applications of our results to automata theory (see 
+Section \ref{sec:intro}) this choice is very natural, even if it means that 
+some of our proofs here become more laborious in requiring an extra check.
+Observe that there is exactly one monadic model based on the empty domain;
+we shall denote this model as $\emodel \isdef (\nada, \nada)$. 
+\end{remark}
+
+\begin{definition}
+Observe that a valuation $V: A \to \wp (D)$ can equivalently be presented via 
+its associated \emph{colouring} $V^{\flat}:D \to \wp(A)$ given by
+\[
+V^{\flat}(d) \isdef \{a \in A \mid d \in V(a)\}.
+\]
+We will use these perspectives interchangeably, calling the set $V^{\flat}(d)
+\subseteq A$ the \emph{colour} or \emph{type} of $d$.
+In case $D = \nada$, $V^{\flat}$ is simply the empty map.
+\end{definition}
+
+In this paper we study three languages of monadic predicate logic: the languages 
+$\ofoe$ and $\ofo$ of monadic first-order logic with and without equality, 
+respectively, and the extension $\ofoei$ of $\ofoe$ with the 
+generalised quantifiers $\qu$ and $\dqu$.
+Probably the most concise definition of the full language of monadic predicate 
+logic would be given by the following grammar:
+\[
+\varphi \defbnf a(x)
+\mid x \foeq y
+\mid \neg \varphi
+\mid \varphi \lor \varphi
+\mid \exists x.\varphi
+\mid \qu x.\varphi,
+\]
+where $a \in A$ and $x$ and $y$ belong to the set $\fovar$ of individual 
+variables.
+In this set-up we would need to introduce the quantifiers $\forall$ and $\dqu$ 
+as abbreviations of $\neg \exists \neg$ and $\neg \qu \neg$, respectively.
+However, for our purposes it will be more convenient to work with a variant of 
+this language where all formulas are in negation normal form; that is, we only 
+permit the occurrence of the negation symbol $\neg$ in front of an atomic 
+formula.
+In addition, for technical reasons we will add $\bot$ and $\top$ as constants,
+and we will write $\neg (x \foeq y)$ as $x \foneq y$.
+Thus we arrive at the following definition of our syntax.
+
+\begin{definition}
+The set $\ofoei(A)$ of \emph{monadic formulas} is given by the following grammar:
+\[
+\varphi \defbnf
+\top \mid \bot 
+\mid a(x)
+\mid \neg a(x)
+\mid x \foeq y
+\mid x \foneq y
+\mid \varphi \lor \varphi
+\mid \varphi \land \varphi
+\mid \exists x.\varphi
+\mid \forall x.\varphi
+\mid \qu x.\varphi
+\mid \dqu x.\varphi
+\]
+where $a \in A$ and $x,y\in \fovar$. 
+The language $\ofoe(A)$ of \emph{first-order logic with equality} is defined as
+the fragment of $\ofoei(A)$ where occurrences of the generalised quantifiers 
+$\qu$ and $\dqu$ are not allowed:
+\[
+\varphi \defbnf
+\top \mid \bot 
+\mid a(x)
+\mid \neg a(x)
+\mid x \foeq y
+\mid x \foneq y
+\mid \varphi \lor \varphi
+\mid \varphi \land \varphi
+\mid \exists x.\varphi
+\mid \forall x.\varphi
+\]
+Finally, the language $\ofo(A)$ of \emph{first-order logic} is the equality-free
+fragment of $\ofoe(A)$; that is, atomic formulas of the form $x \foeq y$ and 
+$x \foneq y$ are not permitted either:
+\[
+\varphi \defbnf
+\top \mid \bot 
+\mid a(x)
+\mid \neg a(x)
+\mid \varphi \lor \varphi
+\mid \varphi \land \varphi
+\mid \exists x.\varphi
+\mid \forall x.\varphi
+\]
+
+In all three languages we use the standard definition of free and bound
+variables, and we call a formula a \emph{sentence} if it has no free variables.
+In the sequel we will often use the symbol $\llang$ to denote either of the 
+languages $\ofo$, $\ofoe$ or $\ofoei$.
+
+For each of the languages $\llang \in \{ \ofo, \ofoe, \ofoei \}$, we define the 
+\emph{positive fragment} $\llang^{+}$ of $\llang$ as the language obtained by 
+almost the same grammar as for $\llang$, but with the difference that we do not
+allow negative formulas of the form $\neg a(x)$.
+\end{definition}
+
+\noindent
+
+The semantics of these languages is given as follows. 
+
+\begin{definition}
+The semantics of the languages $\ofo, \ofoe$ and $\ofoei$ is given in the form
+of a truth relation $\models$ between models and sentences of the language.
+To define the truth relation on a model $\osmodel = (D ,V)$, we distinguish 
+cases.
+
+
+\begin{description}
+\item[Case $D=\nada$:] 
+We define the \emph{truth relation} $\models$ on the empty model $\emodel$ for
+all formulas that are Boolean combinations of sentences of the form $Qx. \phi$,
+where $Q \in \{ \exists, \qu, \forall, \dqu \}$ is a quantifier.
+The definition is by induction on the complexity of such sentences; the 
+``atomic'' clauses, where the sentence is of the form $Qx. \phi$, is as follows:
+\[\begin{array}{lll}
+ \emodel \not\models Qx. \phi 
+   & \text{if}\quad Q \in \{ \exists,  \qu \},&
+\\   
+\emodel \models Qx. \phi 
+   & \text{if}\quad Q \in \{ \forall,  \dqu \}.&
+\end{array}\]
+The clauses for the Boolean connectives are as expected.
+
+\item[Case $D \neq \nada$:] 
+In the (standard) case of a non-empty model $\osmodel$, we extend the truth 
+relation to arbitrary formulas, involving assignments of individual variables 
+to elements of the domain.
+That is, given a model $\osmodel = (D,V)$, an assignment $g :\fovar\to D$ and 
+a formula $\phi \in \ofoei(A)$ we define the \emph{truth} relation $\models$ 
+by a straightforward induction on the complexity of $\phi$.
+Below we explicitly provide the clauses of the quantifiers:
+%
+\[\begin{array}{lll}
+   \osmodel,g \models \exists x.\varphi 
+   & \text{iff}\quad \osmodel,g [x\mapsto d] \models \varphi 
+     \text{ for some $d\in D$},
+\\   \osmodel,g \models \forall x.\varphi 
+   & \text{iff}\quad \osmodel,g [x\mapsto d] \models \varphi 
+     \text{ for all $d\in D$},
+\\   \osmodel,g \models \qu x.\varphi 
+   & \text{iff}\quad \osmodel,g [x\mapsto d] \models \varphi 
+     \text{ for infinitely many $d\in D$},
+\\   \osmodel,g \models \dqu x.\varphi 
+   & \text{iff}\quad \osmodel,g [x\mapsto d] \models \varphi 
+     \text{ for all but at most finitely many $d\in D$}.
+\end{array}\]
+The clauses for the atomic formulas and for the Boolean connectives are standard.
+\end{description}
+In what follows, when discussing the truth of $\phi$ on the empty model, we
+always implicitly assume that $\phi$ is a sentence.
+\end{definition}
+
+As mentioned in the introduction, general quantifiers such as $\qu$ and $\dqu$
+were introduced by Mostowski~\cite{Mostowski1957}, who proved the decidability 
+for the language obtained by  extending $\ofo$ with such quantifiers. 
+The decidability of the full language $\ofoei$ was then proved by Slomson
+in \cite{slomson1968monadic}.\footnote{%
+   The argument in \cite{slomson1968monadic} is given in terms of the so called
+   \emph{Chang quantifier} but is easily seen to work also for $\qu$ and $\dqu$.
+   Both Mostowski's and Slomson's decidability results can be extended to the 
+   case of the empty domain.}
+The case for $\ofo$ and $\ofoe$ goes back already to
+\cite{Behmann1922,Loewenheim1915}.
+
+\begin{fact}\label{f:decido}
+For each logic $\llang \in \{ \ofo, \ofoe, \ofoei \}$, the problem of whether a
+given $\llang$-sentence $\phi$ is satisfiable, is decidable.
+\end{fact}
+
+\noindent
+In the remainder of the section we fix some further definitions and notations,
+starting with some useful syntactic abbreviations.
+
+\begin{definition}
+Given a list $\vlist{y} = y_1\cdots y_n$ of individual variables, we use the
+formula
+\[
+\arediff{\vlist{y}} \isdef
+\bigwedge_{1\leq m < m^{\prime} \leq n} (y_m \foneq y_{m^{\prime}})
+\]
+to state that the elements $\vlist{y}$ are all distinct.
+%
+An \emph{$A$-type} is a formula of the form 
+\[
+\tau_{S}(x) \isdef
+\bigwedge_{a\in S}a(x) \land \bigwedge_{a\in A\setminus S}\lnot a(x).
+\]
+where $S \subseteq A$.
+Here and elsewhere we use the convention that $\bigwedge \nada = \top$ (and 
+$\bigvee \nada = \bot$).
+The \emph{positive} $A$-type $\tau_{S}^+(x)$ only bears positive information, 
+and is defined as 
+\[
+\tau_{S}^+(x) \isdef \bigwedge_{a\in S}a(x).
+\]
+Given a one-step model $\osmodel = (D,V)$ we define
+\[
+\sz{S}_\osmodel \isdef |\{d\in D \mid \osmodel \models \tau_S(d) \}|
+\]
+as the number of elements of $\osmodel$ that realise the type $\tau_{S}$.
+\end{definition}
+
+We often blur the distinction between the formula $\tau_{S}(x)$ and the subset 
+$S \subseteq A$, calling $S$ an $A$-type as well.
+Note that we have $\osmodel \models \tau_S(d)$ iff $V^{\flat}(d) = S$, so that
+we may refer to $V^{\flat}(d)$ as the \emph{type of} $d \in D$ indeed.
+
+\begin{definition}
+The quantifier rank $\qr(\varphi)$ of a formula $\varphi \in \ofoei$ (hence also 
+for $\ofo$ and $\ofoe$) is defined as follows:
+%
+\[\begin{array}{llll}
+\qr(\varphi) &\isdef & 0 
+  & \text{if $\varphi$ is atomic},
+\\ \qr(\neg\psi) & \isdef & \qr(\psi)
+\\ \qr(\psi_{1}\mathrel{\hs}\psi_{2}) & \isdef & \max\{\qr(\psi_1),\qr(\psi_2)\}
+  & \text{where } \hs \in \{ \land,\lor\}
+\\ \qr(Qx.\psi) & \isdef & 1+\qr(\psi),
+  & \text{where } Q \in \{\exists,\forall,\qu,\dqu\}
+\end{array}\]
+%
+Given a monadic logic $\llang$ we write $\osmodel \equiv_k^{\llang} \osmodel'$
+to indicate that the models $\osmodel$ and $\osmodel'$ satisfy exactly the same
+sentences $\varphi \in \llang$ with $\qr(\varphi) \leq k$. 
+We write $\osmodel \equiv^{\llang} \osmodel'$ if $\osmodel \equiv_k^{\llang}
+\osmodel'$ for all $k$.
+When clear from context, we may omit explicit reference to $\llang$.
+\end{definition}
+
+\begin{definition}
+A \emph{partial isomorphism} between two models $(D,V )$ and $(D',V ')$ is a 
+partial function $f: D \pto D'$ which is injective and satisfies that 
+$d \in V (a) \Leftrightarrow f(d) \in V '(a)$ for all $a\in A$ and $ d\in 
+\Dom(f)$.
+Given two sequences $\vlist{d} \in D^k$ and $\vlist{d'} \in {D'}^k$ we use 
+$f:\vlist{d} \mapsto \vlist{d'}$ to denote the partial function $f:D\pto D'$ 
+defined as $f(d_i) \isdef d'_i$. 
+We will take care to avoid cases where there exist $d_i,d_j$ such that $d_i = 
+d_j$ but $d'_i \neq d'_j$.
+\end{definition}
+
+Finally, for future reference we briefly discuss the notion of \emph{Boolean 
+duals}.
+We first give a concrete definition of a dualisation operator on the set of 
+monadic formulas.
+
+\begin{definition}\label{def:concreteduals} 
+The \emph{(Boolean) dual} $\phi^{\delta} \in {\ofoei}(A)$ of $\phi\in 
+{\ofoei}(A)$ is the formula given by:
+\begin{align*}
+ (a(x))^{\delta} & \isdef  a(x) 
+ & (\lnot a(x))^{\delta} & \isdef  \lnot a(x) 
+\\ (\top)^{\delta} & \isdef  \bot 
+  & (\bot)^{\delta} & \isdef  \top 
+\\  (x \approx y)^{\delta} & \isdef  x \not\approx y 
+  & (x \not\approx y)^{\delta}& \isdef  x \approx y 
+\\ (\phi \wedge \psi)^{\delta} &\isdef  \phi^{\delta} \vee \psi^{\delta} 
+  &(\phi \vee \psi)^{\delta}& \isdef  \phi^{\delta} \wedge \psi^{\delta}
+\\ (\exists x.\psi)^{\delta} &\isdef  \forall x.\psi^{\delta} 
+  &(\forall x.\psi)^{\delta} &\isdef  \exists x.\psi^{\delta} 
+\\ (\exists^{\infty} x.\psi)^{\delta} &\isdef \forall^{\infty} x.\psi^{\delta} 
+  &(\forall^{\infty} x.\psi)^{\delta} &\isdef  \exists^{\infty} x.\psi^{\delta}
+\end{align*}
+\end{definition}
+
+\begin{remark}
+Where $\llang\in\{\ofo,\ofoe,\ofoei\}$, observe that if $\phi \in \llang(A)$ 
+then $\phi^{\delta} \in \llang(A)$. 
+Moreover, the operator preserves positivity of the predicates, that is, if $\phi
+\in \llang^+(A)$ then $\phi^{\delta} \in \llang^+(A)$.
+\end{remark}
+
+\noindent 
+The following proposition states that the formulas $\phi$ and $\phi^{\delta}$ 
+are Boolean duals.
+We omit its proof, which is a routine check.
+
+\begin{proposition}\label{props:duals}
+Let $\phi \in \ofoei(A)$ be a monadic formula.
+Then $\phi$ and $\phi^{\delta}$ are indeed Boolean duals, in the sense that for
+every monadic model $(D,V)$ we have that
+\[
+(D,V) \models \phi \text{ iff } (D,V^{c}) \not\models \phi^{\delta},
+\]
+where $V^{c}: A \to \wp (D)$ is the valuation given by $V^{c}(a) \isdef 
+D \setminus V(a)$.
+\end{proposition}
+

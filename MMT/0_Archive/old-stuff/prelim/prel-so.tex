@@ -1,0 +1,90 @@
+Given a set of propositional letters, or predicates, $\prop$, we define three variants of monadic second-order logic on it:
+\emph{(standard) monadic second-order logic} ($\mso(\prop)$),
+\emph{weak monadic second-order logic} ($\wmso(\prop)$) and
+\emph{noetherian monadic second-order logic} ($\nmso(\prop)$).
+We omit  $\prop$ when the set of proposition letters is clear from context. 
+These logics share the same syntax.
+\begin{definition}\label{def:mso}
+The formulas of the \emph{monadic second-order
+language} on a set of predicates $\prop$ are defined by the following grammar:
+%
+\begin{eqnarray*}\label{EQ_mso}
+  \varphi ::= \here{p} \mid p \inc q \mid R(p,q) \mid \lnot\varphi \mid \varphi\lor\varphi \mid \exists p.\varphi,
+\end{eqnarray*}
+where $p$ and $q$ are letters from $\prop$.
+We  adopt the standard convention that no letter is both free and bound in
+$\varphi$.
+\end{definition}
+
+Before giving the semantics of the three logics, we need to define what a noetherian subset of a LTS is. 
+\begin{definition}
+\label{d:bundle1}
+Let $\model = \tup{T,R,\tscolors, s_I}$ be a LTS, and let $B$ be a non-empty set of 
+finite paths that all share the same starting point $s$; we call $B$ an 
+\emph{bundle rooted at} $s$, or simply an $s$-\emph{bundle}, if $B$ does not
+contain an infinite ascending chain $\pi_{0} \sqsubset \pi_{1} \sqsubset 
+\cdots.$
+A \emph{bundle} is simply an $s$-bundle for some $s \in T$.
+
+A subset $X$ of $T$ is called \emph{noetherian} if there is a bundle $B$ such
+that each $t \in X$ lies on some path in $B$.
+\end{definition}
+
+Notice that when a LTS $\model$ is a tree, being noetherian and being included in well-founded subtree are coextensive properties of sets of nodes.
+
+The three logics are thence distinguished by their semantics. 
+Let  $\model = \tup{T,R,\tscolors, s_I}$ be a LTS, the interpretation of the
+atomic formulas and the boolean connectives is fixed and standard, e.g.:
+\begin{align*}
+\model \models \here{p} & \quad\text{ iff }\quad  \tsval(p) = \compset{s_I} \\
+\model \models p \inc q & \quad\text{ iff }\quad  \tsval(p) \subseteq \tsval(q) \\
+\model \models R(p,q) & \quad\text{ iff }\quad  \text{for every $s\in \tsval(p)$ there exists $t\in \tsval(q)$ such that $sRt$} 
+\end{align*}
+
+The interpretation of the existential quantifier is that
+
+\begin{align*}
+\model \models\ \exists p. \varphi  & \quad\text{ iff }\quad  \model[p \mapsto X] \models \phi \,
+\left.\begin{cases}
+ \text{for some }   & {\bf (\mso)} \\
+  \text{for some \emph{finite} }   & {\bf (\wmso)} \\
+    \text{for some \emph{noetherian} }   & {\bf (\nmso)} 
+ \end{cases}\right\}\,
+ X \subseteq T.
+\end{align*}
+%if and only if
+%\begin{description}
+%%[\IEEEsetlabelwidth{$\alpha\omega \pi\theta\mu\varphi$}\IEEEusemathlabelsep]
+%\item[$(\Wmso)$] $\model[p \mapsto X] \models \phi$ for some finite $S \subseteq_\omega T$
+%\item[$(\Nmso)$] $\model[p \mapsto X] \models \phi$ for some noetherian
+%    $X \subseteq T$.
+%\end{description}
+
+Let $\varphi\in \mso$ be a formula. We denote with $\|\varphi \|_P$ the set
+of $C$-transition structures $\model$ such that $\model\models \varphi$.
+The subscript $P$ is omitted when the set $P$ of proposition letters is clear
+from the context.
+A class $\mc{L}$ of transition systems is $\mso$\emph{-definable} if there
+is a formula $\varphi \in \mso$ such that $\| \varphi \| = \mc{L}$.
+We define the analogous notions for $\wmso$ and $\nmso$ in the same way.
+
+
+
+\begin{remark}
+The reader may have expected a more standard two-sorted language for second-order logic, for example given by
+%
+$$
+\varphi ::= p(x)
+%\mid X(y)
+\mid R(x,y)
+\mid x \foeq y
+\mid \neg \varphi
+\mid \varphi \lor \varphi
+\mid \exists x.\varphi
+\mid \exists p.\varphi
+$$%
+where $p \in \prop$, $x,y \in \fovar$ (individual variables), %$X \in \sovar$ (second-order variables)
+and $\foeq$ is the symbol for equality.
+Both definitions can be proved to be equivalent. Definition~\ref{def:mso} is better suited to work with in the context of automata, whereas it is easier to use the standard two-sorted language for second-order logic when translating modal fixpoint languages into second order languages.
+%, however, we choose to keep Definition~\ref{def:mso} as it will be better suited to work with in the context of automata.
+\end{remark}

@@ -1,0 +1,60 @@
+\documentclass[10pt]{article} 
+
+\input{arxiv-preamble}
+\input{macros.tex}
+\input{commands-fz.tex}
+
+%%%%
+%%%% BEGIN DOCUMENT
+%%%%
+
+
+% Title portion
+\title{The Power of the Weak}
+
+\author{
+Facundo Carreiro
+\thanks{Institute for Logic, Language and Computation, Universiteit van Amsterdam,
+   P.O. Box 94242, 1090 GE Amsterdam. E-mail: \url{contact@facundo.io}.}
+%\affil{University of Amsterdam}
+\and Alessandro Facchini\thanks{Dalle Molle Institute for Artificial Intelligence (IDSIA),
+Galleria 2, 6928 Manno (Lugano), Switzerland. E-mail: \url{alessandro.facchini@idsia.ch}.}
+%\affil{IDSIA, Switzerland}
+\and Yde Venema
+\thanks{Institute for Logic, Language and Computation, Universiteit van Amsterdam,
+   P.O. Box 94242, 1090 GE Amsterdam. E-mail: \url{y.venema@uva.nl}.}
+\and Fabio Zanasi
+\thanks{University College London,
+66-72 Gower Street, London, United Kingdom. E-mail: \url{f.zanasi@ucl.ac.uk}.}
+%\affil{University College London}
+}
+
+\begin{document}
+
+\maketitle
+
+\input{neutral/abstract}
+
+\textit{Keywords}
+Modal $\mu$-Calculus, Weak Monadic Second Order Logic, Tree Automata, Bisimulation.
+
+\newpage
+
+\input{neutral/sec-introduction}
+\input{neutral/sec-prel}
+\input{neutral/sec-3}
+\input{neutral/sec-wmso-automata.tex}
+\input{neutral/sec-nmso-automata.tex}
+\input{neutral/sec-mu2so.tex}
+\input{neutral/sec-expr}
+
+% Bibliography
+{\small 
+\bibliographystyle{plain}
+\bibliography{references/logic,references/extra}
+}
+
+
+\end{document}
+
+

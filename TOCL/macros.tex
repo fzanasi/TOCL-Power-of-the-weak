@@ -1,0 +1,211 @@
+%%%%%%% ENVIRONMENTS %%%%%%%%
+
+%% proofs
+%\newcommand{\qed}{$\square$}
+%\newenvironment{proof}{\begin{trivlist}\item[]{\bf
+%Proof.}}{\hfill {\qed}\end{trivlist}}
+\newenvironment{proofof}[1]{\begin{trivlist}\item[\hskip\labelsep{\textsc{Proof
+  of {#1}.\ }}]}{\hspace*{\fill} {\qed}\end{trivlist}}
+\newenvironment{pfclaim}{\begin{trivlist}\item[]{\sc Proof of Claim.~}}
+{\hfill {\mbox{$\blacktriangleleft$}}\end{trivlist}}
+
+%%%%%%% ENVIRONMENTS %%%%%%%%
+
+%%%%%%% MATHEMATICS %%%%%%%%
+
+\newcommand{\Dom}{\mathsf{Dom}}
+\newcommand{\Ran}{\mathsf{Ran}}
+\newcommand{\nada}{\varnothing}
+\newcommand{\rst}[1]{{\upharpoonright}_{#1}\,}
+\newcommand{\isdef}{\mathrel{:=}}
+\newcommand{\tup}[1]{\langle{#1}\rangle}
+\newcommand{\pow}{\wp}
+\newcommand{\sz}[1]{|#1|}
+
+\newcommand{\LFP}{\mathit{LFP}}
+\newcommand{\GFP}{\mathit{GFP}}
+
+
+%%%%%%% MATHEMATICS %%%%%%%%
+
+
+%%%%%%% SYNTAX %%%%%%%%
+
+% ingredients
+\newcommand{\Prop}{\mathsf{Prop}}
+  \newcommand{\pprop}{\mathsf{P}}
+  \newcommand{\qprop}{\mathsf{Q}}
+  \newcommand{\rprop}{\mathsf{R}}
+\newcommand{\sovar}{\mathsf{Var}}
+\newcommand{\fovar}{\mathsf{iVar}}
+
+
+% symbols
+\newcommand{\nxt}[1]{\raisebox{.3ex}{$\scriptstyle \bigcirc$}_{#1}}
+\newcommand{\tmod}{\Diamond}
+% \newcommand{\bq}{{\tilde\exists}}
+% \newcommand{\wcbq}{\bq_\textup{wc}}
+\newcommand{\qu}{\ensuremath{\exists^\infty}\xspace}
+% \newcommand{\fqu}{\ensuremath{\exists^{<\omega}}\xspace}
+\newcommand{\dqu}{\ensuremath{\forall^\infty}\xspace}
+\newcommand{\wqu}{\ensuremath{\mathbf{W}}\xspace}
+\newcommand{\inc}{\sqsubseteq}
+\newcommand{\foeq}{\approx}
+\newcommand{\here}[1]{{\Downarrow}#1}
+\newcommand{\arediff}[1]{\mathrm{diff}(#1)}
+
+% operations/translations
+\newcommand{\dualop}{\delta}
+\newcommand{\dual}[1]{#1^{\dualop}}
+\newcommand{\ytr}{\mathtt{tr}}
+
+
+% languages
+\newcommand{\yvlang}{L}
+\newcommand{\oslang}{L_{1}}
+
+\newcommand{\muML}{\ensuremath{\mu\ML}\xspace}
+\newcommand{\ML}{\ensuremath{\mathrm{ML}}\xspace}
+\newcommand{\mucML}{\ensuremath{\mu_{C}\ML}\xspace}
+\newcommand{\mudML}{\ensuremath{\mu_{D}\ML}\xspace}
+   \newcommand{\AFMC}{\ensuremath{\mu_{D}\ML}\xspace}
+
+\newcommand{\fo}{\ensuremath{\mathrm{FO}}\xspace}
+\newcommand{\mso}{\ensuremath{\mathrm{MSO}}\xspace}
+\newcommand{\wmso}{\ensuremath{\mathrm{WMSO}}\xspace}
+\newcommand{\nmso}{\ensuremath{\mathrm{NMSO}}\xspace}
+\newcommand{\smso}{\ensuremath{\mathrm{SMSO}}\xspace}
+
+% one-step languages
+\newcommand{\ofo}{\ensuremath{\fo_1}\xspace}%\mathrm{FO}_1}\xspace}
+\newcommand{\foe}{\ensuremath{\mathrm{FOE}}\xspace}
+\newcommand{\foei}{\ensuremath{\mathrm{FOE}^{\infty}}\xspace}
+\newcommand{\ofoe}{\ensuremath{\foe_1}\xspace}%\mathrm{FO}^=_1}\xspace}
+\newcommand{\ofoei}{\ensuremath{\foei_1}\xspace}%\mathrm{FO}^=_1}\xspace}
+\newcommand{\oml}{\ensuremath{\mathrm{ML}_1}\xspace}%{\ensuremath{\textrm{ML}^+_1}\xspace}
+\newcommand{\owmso}{\ensuremath{\mathrm{WMSO}_1}\xspace}
+
+% fragments
+\newcommand{\monot}[2]{\mathtt{Pos}_{#2}(#1)}
+\newcommand{\cont}[2]{\mathtt{Con}_{#2}(#1)}
+\newcommand{\cocont}[2]{\mathtt{CoCon}_{#2}(#1)}
+\newcommand{\noe}[2]{\mathtt{Noe}_{#2}(#1)}
+\newcommand{\conoe}[2]{\mathtt{CoNoe}_{#2}(#1)}
+
+
+% nabla's
+\newcommand{\dbnf}{\nabla}
+\newcommand{\dbnfofo}[1]{\dbnf_{\fo}(#1)}
+\newcommand{\dgbnfofo}[2]{\dbnf_{\fo}(#1,#2)}
+\newcommand{\dbnfofoe}[2]{\dbnf_{\foe}(#1,#2)}
+\newcommand{\dbnfofoei}[3]{\dbnf_{\foei}(#1,#2,#3)}
+\newcommand{\dbnfinf}[1]{\dbnf_{\!\!\infty}(#1)}
+\newcommand{\dbnfoml}[1]{\dbnf_{\ML}(#1)}
+
+\newcommand{\mondbnfofo}[2]{\dbnf^{#2}_\fo(#1)}
+\newcommand{\mondgbnfofo}[3]{\dbnf^{#3}_\fo(#1,#2)}
+\newcommand{\mondbnfofoe}[3]{\dbnf^{#3}_{\foe}(#1,#2)}
+\newcommand{\mondbnfofoei}[4]{\dbnf^{#4}_{\foei}(#1,#2,#3)}
+\newcommand{\mondbnfinf}[2]{\dbnf^{#2}_\infty(#1)}
+\newcommand{\mondbnfoml}[2]{\dbnf^{#2}_\ML(#1)}
+\newcommand{\mondgbnfoml}[3]{\dbnf^{#3}_\ML(#1,#2)}
+
+\newcommand{\posdbnfofo}[1]{\dbnf^+_{\fo}(#1)}
+\newcommand{\posdgbnfofo}[2]{\dbnf^+_{\fo}(#1,#2)}
+\newcommand{\posdbnfofoe}[2]{\dbnf^+_{\foe}(#1,#2)}
+\newcommand{\posdbnfofoei}[3]{\dbnf^+_{\foei}(#1,#2,#3)}
+\newcommand{\posdbnfinf}[1]{\dbnf^+_\infty(#1)}
+\newcommand{\posdbnfoml}[1]{\dbnf^+_{\ML}(#1)}
+\newcommand{\posdgbnfoml}[2]{\dbnf^+_{\ML}(#1,#2)}
+
+
+% various
+\newcommand{\FV}{\mathit{FV}}
+\newcommand{\BV}{\mathit{BV}}
+\newcommand{\Sfor}{\mathit{Sfor}}
+\newcommand{\subf}{\trianglelefteq}
+\newcommand{\supf}{\trianglerighteq}
+\newcommand{\isbnf}{\mathrel{::=}}
+
+
+%%%%%%% SYNTAX %%%%%%%%
+
+
+
+%%%%%%% STRUCTURES %%%%%%%%
+
+%objects
+\newcommand{\mathstr}[1]{\mathbb{#1}}
+\newcommand{\bbA}{\mathstr{A}}
+\newcommand{\bbN}{\mathstr{N}}
+\newcommand{\bbS}{\mathstr{S}}
+\newcommand{\bbT}{\mathstr{T}}
+\newcommand{\nat}{\ensuremath{\mathbb{N}}\xspace}
+
+% models
+\newcommand{\tscolors}{\kappa}
+\newcommand{\tsval}{\tscolors^\natural}
+
+
+% automata
+\newcommand{\Aut}{\mathit{Aut}}
+\newcommand{\AutW}{\mathit{Aut}_{w}}
+\newcommand{\AutWA}{\mathit{Aut}_{wa}}
+\newcommand{\AutWSA}{\mathit{Aut}_{wa}^{-}}
+\newcommand{\AutWC}{\mathit{Aut}_{wc}}
+
+\newcommand{\ord}{\prec}
+\newcommand{\tmap}{\Delta}
+\newcommand{\tmapProj}{\tmap^\exists}
+\newcommand{\pmap}{\Omega}
+    
+
+% games
+\newcommand{\egame}{\mathcal{E}}
+\newcommand{\agame}{\mathcal{A}}
+\newcommand{\UG}{\mathcal{U}}
+
+\newcommand{\strat}{f}
+   \newcommand{\ystrat}{\strat}
+\newcommand{\player}{\ensuremath{\Pi}\xspace}
+\newcommand{\eloise}{\ensuremath{\exists}\xspace}
+\newcommand{\abelard}{\ensuremath{\forall}\xspace}
+\newcommand{\pmatches}[2]{\mathsf{PM}^{#1}_{#2}}
+\newcommand{\win}{\text{\sl Win}}
+\newcommand{\last}{\textsf{last}}
+
+
+% operations/relations
+\newcommand{\unravel}[1]{\hat{#1}}
+\newcommand{\omegaunrav}[1]{{#1}^\omega}
+\newcommand{\bis}{\mathrel{\underline{\leftrightarrow}}}
+
+% semantics
+\newcommand{\ext}[1]{\llbracket#1\rrbracket}
+\newcommand{\mmodels}{\Vdash}
+\newcommand{\Mod}{\ensuremath{\mathsf{Mod}}}
+\newcommand{\TMod}{\ensuremath{\mathsf{TMod}}}
+%\newcommand{\autlang}{\ensuremath{\mathsf{Mod}}}
+%\newcommand{\trees}{\ensuremath{\mathsf{TMod}}}
+
+%%%%%%% STRUCTURES %%%%%%%%
+
+
+
+
+%%%%%%% VARIOUS %%%%%%%%
+
+% abbreviations etc
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\sse}{\subseteq}
+\newcommand{\vlist}[1]{\overline{{\mathbf{#1}}}}%{\vv{#1}}
+\newcommand{\mc}{\mathcal}
+
+
+
+% other
+\renewcommand{\phi}{\varphi}
+
+%%%%%%% VARIOUS %%%%%%%%
+
+

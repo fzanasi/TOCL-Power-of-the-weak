@@ -1,0 +1,460 @@
+% !TEX root = ../main.tex
+
+\section{Monotonicity}
+\label{sec-mono}
+
+In this section we provide our first characterisation result, which concerns the
+notion of monotonicity. 
+
+\begin{definition}\label{def:mono}
+Let $V$ and $V'$ be two valuations on the same domain $D$, then we say that $V'$
+is a \emph{$B$-extension of} $V$, notation: $V \leq_{B} V'$, if $V(b) \subseteq
+V'(b)$ for every $b \in B$, and $V(a) = V'(a)$ for every $a \in A \setminus B$.
+
+Given a monadic logic $\llang$ and a formula $\phi \in \llang(A)$ we say 
+that $\phi$ is \emph{monotone in $B \subseteq A$} if 
+\begin{equation}
+\label{eq:mono}
+(D,V),g \models \phi \text{ and } V \leq_{B} V' \text{ imply } 
+(D,V'),g \models \phi,
+\end{equation}
+for every pair of monadic models $(D,V)$ and $(D,V')$ and every assignment 
+$g:\fovar\to D$.
+\end{definition}
+
+\begin{remark}\label{rem:monotprodeach}
+It is easy to prove that a formula is monotone in $B \subseteq A$ if and only if 
+it is monotone in every $b \in B$. 
+\end{remark}
+
+The semantic property of monotonicity can usually be linked to the syntactic 
+notion of positivity.
+Indeed, for many logics, a formula $\phi$ is monotone in $a \in A$ iff 
+$\phi$ is equivalent to a formula where all occurrences of $a$ have a positive
+polarity, that is, they are situated in the scope of an even number of 
+negations.
+
+\begin{definition}
+For $\llang \in \{ \ofo, \ofoe \}$ we define the fragment of $A$-formulas that 
+are \emph{positive} in all predicates in $B$, in short: the \emph{$B$-positive 
+formulas} by the following grammar:
+\[
+\phi \defbnf  \psi \mid b(x) 
+  \mid \phi \land \phi \mid \phi \lor \phi
+  \mid \exists x.\phi \mid \forall x.\phi, 
+\]
+where $b \in B$ and $\psi \in \llang(A\setminus B)$ (that is, there are no 
+occurrences of any $b \in B$ in $\psi$).
+Similarly, the $B$-positive fragment of $\ofoei$ is given by
+\[
+\phi \defbnf  \psi \mid b(x) 
+  \mid \phi \land \phi \mid \phi \lor \phi
+  \mid \exists x.\phi \mid \forall x.\phi 
+  \mid \qu x.\phi \mid \dqu x.\phi, 
+\]
+where $b\in B$ and $\psi \in \ofoei(A\setminus B)$. 
+
+In all three cases, we let $\monot{\llang(A)}{B}$ denote the set of $B$-positive
+sentences.
+\end{definition}
+
+Note that the difference between the fragments $\monot{\ofo(A)}{B}$ and 
+$\monot{\ofoe(A)}{B}$ lies in the fact that in the latter case, the `$B$-free'
+formulas $\psi$ may contain the equality symbol. 
+Clearly $\monot{\llang(A)}{A}= \llang^+$.
+
+\begin{theorem}
+\label{t:mono}
+Let $\phi$ be a sentence of the monadic logic $\llang(A)$, where $\llang \in 
+\{ \ofo, \ofoe, \ofoei \}$.
+Then $\phi$ is monotone in a set $B \subseteq A$ if and only if there is a 
+equivalent formula $\phi^{\tmono} \in \monot{\llang(A)}{B}$.
+Furthermore, it is decidable whether a sentence $\phi \in \llang(A)$ has this 
+property or not.
+\end{theorem}
+
+The `easy' direction of the first claim of the theorem is taken care of by the following 
+proposition.
+
+\begin{proposition}
+\label{p:monoismonot}
+Every formula $\phi \in \monot{\llang(A)}{B}$ is monotone in $B$,
+where $\llang$ is one of the logics $\{ \ofo, \ofoe, \ofoei \}$.
+\end{proposition}
+
+\begin{proof} 
+The case for $D= \nada$ being immediate, we assume $D \neq \nada$.
+The proof is a routine argument by induction on the complexity of $\phi$.
+That is, we show by induction, that any formula $\phi$ in the $B$-positive
+fragment (which may not be a sentence) satisfies \eqref{eq:mono}, for every 
+monadic model $(D,V)$, valuation $V' \geq_{B} V$ and assignment ${g:\fovar\to 
+D}$.
+We focus on the generalised quantifiers. 
+Let $(D,V),g \models \phi$ and
+$V \leq_{B} V'$.
+%
+\begin{enumerate}[\textbullet]
+\item
+Case $\phi = \qu x.\phi'(x)$. By definition there exists an infinite set
+$I\subseteq D$ such that for all $d\in I$ we have $(D,V),g[x\mapsto d] \models 
+\phi'(x)$. 
+By induction hypothesis $(D,V'),g[x\mapsto d] \models\phi'(x)$ 
+for all $d \in I$. Therefore $(D,V'),g \models \qu x.\phi'(x)$.
+
+\item Case $\phi = \dqu x.\phi'(x)$. 
+Hence there exists $C\subseteq D$ such that for all $d\in C$ we have 
+$(D,V),g[x\mapsto d] \models \phi'(x)$ and $D\setminus C$ is \emph{finite}. 
+By induction hypothesis $(D,V'),g[x\mapsto d] \models \phi'(x)$ for all $d 
+\in C$. 
+Therefore $(D,V'),g \models \dqu x.\phi'(x)$.
+\end{enumerate}
+%
+This finishes the proof.
+\end{proof}
+
+The `hard' direction of the first claim of the theorem states that the fragment
+$\monot{\ofo}{B}$ is complete for monotonicity in $B$. In order to prove it,
+we need to show that every sentence which is monotone in $B$ is equivalent to 
+some formula in $\monot{\ofo}{B}$. 
+We actually are going to prove a stronger result.
+
+\begin{proposition}
+\label{p:efftrans}
+Let $\llang$ be one of the logics $\{ \ofo, \ofoe, \ofoei \}$.
+There exists an effective translation $(-)^\tmono:\llang(A) \to \monot{\llang(A)}{B}$ such that
+a sentence ${\phi \in \llang(A)}$ is monotone in $B \subseteq A$ %if and 
+only if 
+$\phi\equiv \phi^\tmono$.
+\end{proposition}
+
+We prove the three manifestations of Proposition \ref{p:efftrans} separately,
+in three respective subsections.
+
+%\begin{proofof}
+\begin{proof}[Proof of Theorem \ref{t:mono}]
+The first claim of the Theorem is an immediate consequence of
+Proposition~\ref{p:efftrans}.
+By effectiveness of the translation and Fact \ref{f:decido}, it is therefore 
+decidable whether a sentence $\phi \in \llang(A)$ is monotone in $B \subseteq A$
+or not.
+%\end{proofof}
+\end{proof}
+The following definition will be used throughout in the remaining of the section.
+
+\begin{definition}
+Given $S \subseteq A$ and $B \subseteq A$ we use the following notation
+\[
+\tau^{B}_S(x) \isdef  \bigwedge_{b\in S} b(x) \land 
+   \bigwedge_{b\in A\setminus (S\cup B)}\lnot b(x) ,
+\]
+for what we call the \emph{$B$-positive} $A$-type $\tau^{B}_S$.
+\end{definition}
+
+Intuitively, $\tau^{B}_S$ works almost like the $A$-type $\tau_S$, the 
+difference being that $\tau^{B}_S$ discards the negative information for the 
+names in $B$.
+If $B = \{a\}$ we write $\tau^a_S$ instead of $\tau^{\{a\}}_S$. 
+Observe that with this notation, $\tau^+_S$ is equivalent to $\tau^A_S$.
+
+\subsection{Monotone fragment of $\ofo$}
+
+In this subsection we prove the $\ofo$-variant of Proposition~\ref{p:efftrans}.
+That is, we give a translation that constructively maps arbitrary sentences
+into $\monot{\ofo}{B}$ and that moreover it preserves truth iff the given
+sentence is monotone in $B$.
+To formulate the translation we need to introduce some new notation. 
+
+\begin{definition}\label{def:monbasicformofoe}
+Let $B\subseteq A$ be a finite set of names. 
+The $B$-positive variant of $\dbnfofo{\Sigma}$ is given as follows:
+\[
+\mondbnfofo{\Sigma}{B} \isdef  
+\bigwedge_{S\in\Sigma} \exists x. \tau^{B}_S(x) \land 
+  \forall x. \bigvee_{S\in\Sigma} \tau^{B}_S(x).
+\]
+We also introduce the following generalised forms of the above notation:
+\[
+\mondgbnfofo{\Sigma}{\Pi}{B} \isdef  
+\bigwedge_{S\in\Sigma} \exists x. \tau^{B}_S(x) \land 
+  \forall x. \bigvee_{S\in\Pi} \tau^{B}_S(x).
+\]
+The \emph{positive} variants of the above notations are defined as 
+$\posdbnfofo{\Sigma} \isdef  \mondbnfofo{\Sigma}{A}$ and 
+$\posdgbnfofo{\Sigma}{\Pi} \isdef  \mondgbnfofo{\Sigma}{\Pi}{A}$.
+\end{definition}
+
+
+\begin{proposition}
+\label{p:fomon}
+There exists an effective translation $(-)^\tmono:\ofo(A) \to \monot{\ofo(A)}{B}$ such that
+a sentence ${\phi \in \ofo(A)}$ is monotone in $B\subseteq A$ if and only if 
+$\phi\equiv \phi^\tmono$.
+\end{proposition}
+%
+\begin{proof}
+To define the translation, by Fact \ref{fact:ofonormalform}, we assume, without loss of generality, that $\phi$
+is in the normal form $\bigvee \dbnfofo{\Sigma}$ given in 
+Definition~\ref{def:bfofo}, where
+$\dbnfofo{\Sigma} = 
+\bigwedge_{S\in\Sigma} \exists x. \tau_S(x) \land 
+  \forall x. \bigvee_{S\in\Sigma} \tau_S(x)$.
+We define the translation as
+\[
+(\bigvee \dbnfofo{\Sigma})^\tmono\isdef  \bigvee \mondbnfofo{\Sigma}{B}.
+\]
+From the construction it is clear that $\phi^\tmono \in \monot{\ofo(A)}{B}$ 
+and therefore the right-to-left direction of the proposition is immediate by 
+Proposition~\ref{p:monoismonot}. 
+For the left-to-right direction assume that $\phi$ is monotone in $B$, we 
+have to prove that $(D,V) \models \phi$ if and only if $(D,V) \models 
+\phi^\tmono$.
+
+\bigskip
+\noindent \fbox{$\Rightarrow$} This direction is trivial.
+
+\bigskip
+\noindent \fbox{$\Leftarrow$} Assume $(D,V) \models \phi^\tmono$ and let 
+$\Sigma$ be such that $(D,V) \models \mondbnfofo{\Sigma}{B}$. 
+If $D = \nada$, then $\Sigma = \nada$ and $\mondbnfofo{\Sigma}{B}= 
+\dbnfofo{\Sigma}$. 
+Hence, assume $D \neq \nada$, and clearly $\Sigma \neq \nada$.
+
+Because of the existential part of $\mondbnfofo{\Sigma}{B}$, every type $S \in
+\Sigma$ has a `$B$-witness' in $\osmodel$, that is, an element $d_{S} \in D$
+such that $(D,V) \models \tau^{B}_{S}(d_{S})$.
+It is in fact safe to assume that all these witnesses are \emph{distinct}
+(this is because $(D,V)$ can be proved to be $\ofo$-equivalent to such a model,
+cf.~Proposition~\ref{p-1P}).
+But because of the universal part of $\mondbnfofo{\Sigma}{B}$, we may assume
+that for all states $d$ in $D$ there is a type $S_{d}$ in $\Sigma$ such that
+$(D,V) \models \tau^{B}_{S_{d}}(d)$.
+Putting these observations together we may assume that the map $d \mapsto S_{d}$
+is surjective.
+
+Note however, that where we have $(D,V) \models \tau^{B}_{S}(d)$, this does not 
+necessarily imply that $(D,V) \models \tau_{S}(d)$: it might well be the case
+that $d \in V(b)$ but $b \not\in S_{d}$, for some $ b \in B$.
+What we want to do now is to shrink $V$ in such a way that the witnessed type
+($S_d$) and the actually satisfied type coincide.
+That is, we consider the valuation $U$ defined as $U^{\flat}(d) \isdef 
+S_d$.\footnote{%
+   Recall that a valuation $U:A\to\wp(D)$ can also be represented as a 
+   colouring $U^{\flat}: D\to\wp(A)$ given by $U^{\flat}(d) \isdef 
+   \{a \in A \mid d\in V(a)\}$.
+   } 
+It is then immediate by the surjectivity of the map $d \mapsto S_{d}$ that 
+$(D,U) \models \dbnfofo{\Sigma}$, which implies that $(D,U) \models \phi$.
+
+We now claim that 
+\begin{equation}
+\label{eq:moninf1}
+U \leq_{B} V.
+\end{equation}
+To see this, observe that for $a \in A \setminus B$ we have the following 
+equivalences:
+\[
+d \in U(a) \iff a \in S_{d} \iff (D,V) \models a(d) \iff d \in V(a),
+\]
+while for $b \in B$ we can prove
+\[
+d \in U(b) \iff b \in S_{d} \Longrightarrow (D,V) \models b(d) \iff d \in V(b).
+\]
+This suffices to prove \eqref{eq:moninf1}.
+
+But from \eqref{eq:moninf1} and the earlier observation that $(D,U) \models 
+\phi$ it is immediate by the monotonicity of $\phi$ in $B$ that $(D,V) \models 
+\phi$.
+\end{proof}
+
+A careful analysis of the translation gives us the following 
+corollary, providing normal forms for the monotone fragment of $\ofo$.
+
+\begin{corollary}\label{cor:ofopositivenf}
+For any sentence $\phi \in \ofo(A)$, the following hold.
+\begin{enumerate}
+\item 
+The formula $\phi$ is monotone in $B \subseteq A$ iff it is equivalent to a 
+formula in the basic form $\bigvee \mondbnfofo{\Sigma}{B}$ for some types 
+$\Sigma \subseteq \wp(A)$.
+\item The formula $\phi$ is monotone in every $a\in A$ 
+iff $\phi$ is equivalent to a formula $\bigvee \posdbnfofo{\Sigma}$ for some
+types $\Sigma \subseteq \wp(A)$.
+\end{enumerate}
+In both cases the norma forms are effective.
+\end{corollary}
+
+\subsection{Monotone fragment of $\ofoe$}
+
+In order to prove the $\ofoe$-variant of Proposition~\ref{p:efftrans}, we need
+to introduce some new notation. 
+
+\begin{definition}
+Let $B\subseteq A$ be a finite set of names. 
+The $B$-monotone variant of $\dbnfofoe{\vlist{T}}{\Pi}$ is given as follows:
+\begin{align*}
+\mondbnfofoe{\vlist{T}}{\Pi}{B} 
+  &\isdef  \exists \vlist{x}.\big(\arediff{\vlist{x}} 
+     \land \bigwedge_i \tau^{B}_{T_i}(x_i) 
+     \land \forall z.(\arediff{\vlist{x},z} \to \bigvee_{S\in \Pi} \tau^{B}_S(z))
+     \big). 	
+\end{align*}
+When the set $B$ is a singleton $\{a\}$ we will write $a$ instead of $B$. 
+The positive variant $\posdbnfofoe{\vlist{T}}{\Pi}$ of 
+$\dbnfofoe{\vlist{T}}{\Pi}$ is defined as above but with $+$ in place of $B$.
+\end{definition}
+
+\begin{proposition}
+\label{p:monofoeismonot}
+There exists an effective translation $(-)^\tmono:\ofoe(A) \to \monot{\ofoe(A)}{B}$ such
+that a sentence ${\phi \in \ofoe(A)}$ is monotone in $B$ if and only if 
+$\phi\equiv \phi^\tmono$.
+\end{proposition}
+
+\begin{proof}
+In proposition~\ref{p:mono-ofoei} this result is proved for $\ofoei$ (i.e.,
+$\ofoe$ extended with generalised quantifiers). 
+It is not difficult to adapt the proof for $\ofoe$. 
+The translation is defined as follows. By Theorem \ref{thm:bnfofoe} ,without loss of generality, assume that $\phi$ is in basic normal form $\bigvee \dbnfofoe{\vlist{T}}{\Pi}$. Then 
+ $\phi^\tmono \isdef \bigvee \mondbnfofoe{\vlist{T}}{\Pi}{B}$.
+\end{proof}
+
+
+Combining the normal form for $\ofoe$ and the proof of the above proposition, we 
+therefore obtain a normal form for the monotone fragment of
+$\ofoe$.
+
+\begin{corollary}\label{cor:ofoepositivenf}
+For any sentence $\phi \in \ofo(A)$, the following hold.
+\begin{enumerate}
+\item The formula $\phi$ is monotone in $B\subseteq A$ iff it is equivalent
+to a formula in the basic form $\bigvee \mondbnfofoe{\vlist{T}}{\Pi}{B}$ where
+for each disjunct we have $\vlist{T} \in \wp(A)^k$ for some $k$ and 
+$\Pi\subseteq\vlist{T}$.
+		
+\item 
+The formula $\phi$ is monotone in all $a\in A$ iff it is equivalent to a formula
+in the basic form 
+$\bigvee \posdbnfofoe{\vlist{T}}{\Pi}$ where for each disjunct we have 
+$\vlist{T} \in \wp(A)^k$ for some $k$ and $\Pi\subseteq\vlist{T}$.
+\end{enumerate}
+In both cases, normal forms are effective.
+\end{corollary}
+
+\subsection{Monotone fragment of $\ofoei$}
+
+First, in this case too we introduce some notation for the positive variant of
+a sentence in normal form.
+
+\begin{definition}
+Let $B\subseteq A$ be a finite set of names. 
+The $B$-positive variant of $\dbnfofoei{\vlist{T}}{\Pi}{\Sigma}$ is given as 
+follows:
+\begin{align*}
+    \mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{B} 
+  & \isdef  \mondbnfofoe{\vlist{T}}{\Pi \cup \Sigma}{B} 
+       \land \mondbnfinf{\Sigma}{B}
+\\  \mondbnfofoe{\vlist{T}}{\Lambda}{B} 
+  & \isdef  \exists \vlist{x}.\big(\arediff{\vlist{x}} 
+        \land \bigwedge_i \tau^{B}_{T_i}(x_i) 
+	\land \forall z.(\arediff{\vlist{x},z} 
+	    \to \bigvee_{S\in\Lambda} \tau^{B}_S(z))
+	\big)
+\\ \mondbnfinf{\Sigma}{B} 
+  &\isdef  \bigwedge_{S\in\Sigma} \qu y.\tau^{B}_S(y) 
+       \land \dqu y.\bigvee_{S\in\Sigma} \tau^{B}_S(y).
+\end{align*}
+When the set $B$ is a singleton $\{a\}$ we will write $a$ instead of $B$. 
+The positive variant of $\dbnfofoei{\vlist{T}}{\Pi}{\Sigma}$ is defined as 
+$\posdbnfofoei{\vlist{T}}{\Pi}{\Sigma} \isdef  
+\mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{A}$.
+\end{definition}
+
+\noindent
+We are now ready to proceed with the proof of the $\ofoei$-variant of
+Proposition~\ref{p:efftrans} and thus to give the translation.
+
+\begin{proposition}
+\label{p:mono-ofoei}
+There is an effective translation $(-)^\tmono:\ofoei(A) \to \monot{\ofoei(A)}{B}$
+such that a sentence ${\phi \in \ofoei(A)}$ is monotone in $B$ if and only if
+$\phi\equiv \phi^\tmono$.
+\end{proposition}
+\begin{proof}
+By Theorem \ref{thm:bfofoei}, we assume that $\phi$ is in the normal form
+$\bigvee\dbnfofoei{\vlist{T}}{\Pi}{\Sigma} = 
+\dbnfofoe{\vlist{T}}{\Pi \cup \Sigma} \land \dbnfinf{\Sigma}$
+for some sets of types $\Pi,\Sigma \subseteq \wp(A)$ and each $T_i \subseteq A$.
+For the translation we define
+\[
+\Big(\bigvee \dbnfofoei{\vlist{T}}{\Pi}{\Sigma}\Big)^\tmono\isdef  
+\bigvee \mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{B}.
+\]
+%
+From the construction it is clear that $\phi^\tmono \in \monot{\ofoei(A)}{B}$
+and therefore the right-to-left direction of the proposition is immediate by 
+Proposition~\ref{p:monoismonot}. 
+For the left-to-right direction assume that $\phi$ is monotone in $B$, we 
+have to prove that $(D,V) \models \phi$ if and only if $(D,V) \models 
+\phi^\tmono$.
+
+\bigskip
+\noindent \fbox{$\Rightarrow$} This direction is trivial.
+
+\bigskip
+\noindent \fbox{$\Leftarrow$}
+Assume $(D,V) \models \phi^\tmono$, and in particular that $(D,V) \models 
+\mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{B}$. 
+If $D = \nada$, then $\Sigma = \Pi = \vlist{T} = \nada$ and 
+$\mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{B}= \dbnfofoei{\vlist{T}}{\Pi}{\Sigma}$. 
+Hence, assume $D \neq \nada$.
+Observe that the elements of $D$ can be partitioned in the following way:
+%
+\begin{enumerate}[(a)]
+\itemsep 0 pt
+\item distinct elements $t_i \in D$ such that each $t_i$ satisfies 
+   $\tau^{B}_{T_i}(x)$,
+\item\label{it:dpi} for every $S \in \Sigma$ an infinite set $D_S$,
+   such that every $d \in D_S$ satisfies $\tau^{B}_{S}$,
+\item\label{it:ds} 
+a \emph{finite} set $D_\Pi$ of elements, each satisfying one of the $B$-positive
+   types $\tau^{B}_{S}$ with $S \in \Pi$.
+\end{enumerate}
+%
+Following this partition, with every element $d\in D$ we may associate a type
+$S_{d}$ in, respectively, (a)~$\vlist{T}$, (b)~$\Sigma$, or (c)~$\Pi$, such 
+that $d$ satisfies $\tau^{B}_{S_{d}}$.
+As in the proof of proposition~\ref{p:fomon}, we now consider the valuation $U$ 
+defined as $U^{\flat}(d) \isdef S_d$, and as before we can show that
+$U \leq_{B} V$.
+Finally, it  easily from the definitions that $(D,U) \models 
+\dbnfofoei{\vlist{T}}{\Pi}{\Sigma}$, implying that $(D,U) \models \phi$.
+But then by the assumed $B$-monotonicity of $\phi$ it is immediate that $(D,V) 
+\models \phi$, as required.
+\end{proof}
+
+
+As with the previous two cases, the translation provides normal forms for the monotone fragment of $\ofoei$.
+
+\begin{corollary}\label{cor:ofoeipositivenf}
+For any sentence $\phi \in \ofoei(A)$, the following hold:
+\begin{enumerate}
+\item 
+The formula $\phi$ is monotone in $B \subseteq A$ iff it is equivalent to
+a formula $\bigvee \mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{B}$ for 
+$\Sigma\subseteq\Pi \subseteq \wp(A)$ and $\vlist{T} \in \wp(A)^k$ for some $k$.
+\item 
+The formula $\phi$ is monotone in every $a\in A$ iff it is equivalent to a
+formula in the basic form $\bigvee \posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$ for 
+types $\Sigma\subseteq \Pi \subseteq \wp(A)$ and $\vlist{T} \in \wp(A)^k$ for 
+some $k$.
+\end{enumerate}
+In both cases, normal forms are effective.
+\end{corollary}
+
+\begin{proof}
+We only remark that to obtain $\Sigma\subseteq\Pi$ in the above normal forms 
+it is enough to use Proposition~\ref{prop:bfofoei-sigmapi} before applying 
+the translation.
+\end{proof}
+
+

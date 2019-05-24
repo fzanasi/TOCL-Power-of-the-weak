@@ -1,0 +1,517 @@
+% !TEX root = ../main.tex
+
+\section{Continuity}
+\label{sec-cont}
+
+In this section we study the sentences that are \emph{continuous} in some set 
+$B$ of monadic predicate symbols.
+
+\begin{definition}\label{def:cont}
+Let $U$ and $V$ be two $A$-valuations on the same domain $D$.
+For a set $B \subseteq A$, we write $U \leq^{\omega}_{B} V$ if $U \leq_{B} V$ 
+and $U(b)$ is finite, for every $b \in B$.
+
+Given a monadic logic $\llang$ and a formula $\phi \in \llang(A)$ we say that
+$\phi$ is \emph{continuous in $B \subseteq A$} if $\phi$ is monotone in $B$
+and satisfies the following:
+\begin{equation}
+\label{eq:cont}
+\text{if } (D, V), g \models \phi \text{ then } 
+(D,  U), g \models \phi \text{ for some } U \leq^{\omega}_{B} V.
+\end{equation}
+for every monadic model $(D,V)$ and every assignment $g:\fovar\to D$.
+\end{definition}
+
+\begin{remark}\label{rem:contprodeach}
+As for monotonicity, but with slightly more effort, one may show that a formula 
+$\phi$ is continuous in a set $B$ iff it is continuous in every $b \in B$.
+\end{remark}
+
+What explains both the name and the importance of this property is its 
+equivalence to so called \emph{Scott continuity}. 
+To understand it, we may formalise the dependence of the meaning of a  monadic 
+sentence $\phi$ with $m$-free variables $\vlist{x}$ in a one-step model $\osmodel
+= (D,V )$ on a fixed name $b \in A$ as a map $\phi^\osmodel_b : \wp(D) \to 
+\wp(D^m)$ defined by 
+\[
+X \subseteq D \mapsto \{ \vlist{d} \in D^m \mid  
+(D,V[b \mapsto X]) \models \phi(\vlist{d}) \}.
+\]
+One can then verify that a sentence $\phi$ is continuous in $b$ if and only if 
+the operation  $\phi^\osmodel_b$ is continuous with respect to the Scott 
+topology on the powerset algebras\footnote{%
+   The interested reader is referred to \cite[Sec. 8]{FV12} for a more precise 
+   discussion of the connection.}. 
+Scott continuity is of key importance in many areas of theoretical computer 
+sciences where ordered structures play a role, such as domain theory (see 
+e.g. \cite{abramsky1994domain}).
+
+Similarly as for monotonicity, the semantic property of continuity can also be 
+provided with a corresponding syntactical formulation.
+
+\begin{definition}
+Let $\llang \in \{ \ofo, \ofoe \}$
+The fragment of $\ofo(A)$ of formulas that are 
+\emph{syntactically continuous} in a subset $B \subseteq A$ is 
+defined by the following grammar:
+\[
+\phi \defbnf \psi 
+   \mid b(x) 
+   \mid \phi \land \phi \mid \phi \lor \phi
+   \mid \exists x.\phi,
+\]
+where $b\in B$ and $\psi \in \llang(A\setminus B)$. 
+In both cases, we let $\cont{\llang(A)}{B}$ denote the set of $B$-continuous 
+sentences.
+\end{definition}
+
+To define the syntactically continuous fragment of $\ofoei$, we first introduce
+the following binary generalised quantifier $\wqu$: given two formulas $\phi(x)$ 
+and $\psi$, we set
+\[
+\wqu x.(\phi,\psi) \isdef \forall x.(\phi(x) \lor \psi(x)) \land \dqu x.\psi(x).
+\]
+The intuition behind $\wqu$ is the following. If $(D,V),g \models \wqu x.(\phi,
+\psi)$, then because of the second conjunct there are only finitely many $d \in
+D$ refuting $\psi$. 
+The point is that this weakens the universal quantification of the first conjunct
+to the effect that only the finitely many mentioned elements refuting $\psi$ need
+to satisfy $\phi$.
+
+\begin{definition}
+The fragment of $\ofoei(A)$-formulas that are 
+\emph{syntactically continuous} in a subset $B \subseteq A$ is given by the 
+following grammar:
+\[
+\phi \defbnf \psi 
+   \mid a(x) 
+   \mid \phi \land \phi \mid \phi \lor \phi 
+   \mid \exists x.\phi \mid \wqu x.(\phi,\psi),
+\]
+where $b\in B$ and $\psi \in \ofoei(A\setminus B)$. 
+We let $\cont{\ofoei(A)}{B}$ denote the set of $B$-continuous $\ofoei$-sentences.
+\end{definition}
+
+
+For $\ofo$ and $\ofoe$, the equivalence between the semantical and syntactical 
+properties of continuity was established by van Benthem 
+in \cite{van1997dynamic}. 
+
+\begin{proposition}\label{fact:vb}
+Let $\phi$ be a sentence of the monadic logic $\llang(A)$, where $\llang \in 
+\{ \ofo, \ofoe\}$.
+Then $\phi$ is continuous in a set $B \subseteq A$ if and only if there is a 
+equivalent sentence $\phi^{\tcont} \in \cont{\llang(A)}{B}$.
+\end{proposition}
+
+\begin{proof}
+The direction from right to left is covered by Proposition \ref{p:coniscont} 
+below, so we immediately turn to the completeness part of the statement.
+The case of $\ofo$ being treated in Subsection \ref{subsec:conofo}, we only discuss  the statement for $\ofoe$.
+Hence, let $\phi \in \ofoe(A)$ be continuous in 
+$B$. 
+For simplicity in the exposition, we assume $B=\{b\}$, the case of an arbitrary 
+$B$ being easily generalisable from what follows. 
+Let $\vlist{y} \isdef y_0 \dots y_{k-1}$ be a list of $k$ variables not
+occurring in $\phi$. 
+Consider the formula $\phi_k( \vlist{y} )$ obtained from $\phi$  by substituting 
+each occurrence of an atomic formula of the form $b(x)$ with the formula 
+$\bigvee_{\ell < k} x = y_\ell$.
+Define $\Phi \isdef \{ \exists \vlist{y}.\phi_k( \vlist{y} ) \mid k \in \omega \} \cup \{ \phi_{\emodel}\}$, 
+where $ \phi_{\emodel} \isdef \forall x. \bot$ if $\emodel \models \phi$ and 
+$ \phi_{\emodel} \isdef \exists x. \bot$ otherwise. 
+By construction $\Phi \subset \cont{\ofoe(A)}{B}$.
+Now, notice that $\lnot \Phi \cup \{\phi\}$ is inconsistent. 
+Hence, by compactness of first-order logic, there is a $k \in \omega$ such that
+$\phi \models \bigvee_{\ell < k} \exists \vlist{y}.\phi_k( \vlist{y} ) \lor 
+  \phi_{\emodel}$. 
+By monotonicity, $\exists \vlist{y}.\phi_k( \vlist{y} ) \models \phi$, for every
+$k \in \omega$, and by definition $\phi_{\emodel} \models \phi$.
+We therefore conclude that $\phi \equiv \bigvee_{\ell < k} \exists \vlist{y}.
+\phi_k( \vlist{y} ) \lor \phi_\emodel$. 
+As $\cont{\ofoe(A)}{B}$ is closed under disjunctions, this ends the proof of 
+the statement.
+\end{proof}
+
+In this paper, we extend such a characterisation to $\ofoei$. 
+Moreover, analogously to what we did in the previous section, for $\ofo$ and 
+$\ofoei$ we provide both an explicit translation and a decidability result. 
+From this latter perspective, the case of $\ofoe$ remains however open.
+
+\begin{theorem}
+\label{t:cont}
+Let $\phi$ be a sentence of the monadic logic $\llang(A)$, where $\llang \in 
+\{ \ofo, \ofoei \}$.
+Then $\phi$ is continuous in a set $B \subseteq A$ if and only if there is a 
+equivalent sentence $\phi^{\tcont} \in \cont{\llang(A)}{B}$.
+Furthermore, it is decidable whether a sentence $\phi \in \llang(A)$ has this 
+property or not.
+\end{theorem}
+
+Analogously to the previous case of monotonicity, the proof of the theorem is 
+composed of two parts.  
+We start with the right-left implication of the first claim (the preservation
+statement), which also holds for $\ofoe$.
+
+\begin{proposition}\label{p:coniscont}
+Every sentence $\phi \in \cont{\llang(A)}{B}$ is continuous in $B$,
+where $\llang\in\{ \ofo, \ofoe, \ofoei \}$.
+\end{proposition}
+
+\begin{proof}
+First observe that $\phi$ is monotone in $B$ by 
+Proposition~\ref{p:monoismonot}.
+The case for $D=\nada$ being clear, we assume $D\neq\nada$.
+We show, by induction, that any one-step formula $\phi$ in the fragment (which
+may not be a sentence) satisfies \eqref{eq:cont}, for every non-empty one-step
+model $(D, V)$ and assignment ${ g:\fovar\to D}$.
+%
+\begin{enumerate}[\textbullet]
+\item 
+If $\phi = \psi \in \llang(A\setminus B)$, changes in the $B$ part of the 
+valuation will not affect the truth value of $\phi$ and hence the condition is 
+trivial. 
+
+\item
+Case $\phi = b(x)$ for some $b \in B$: if $(D, V), g \models b(x)$ then 
+$g(x)\in  V(b)$. 
+Let $U$ be the valuation given by $U(b) \isdef \{ g(x) \}$,
+$U(a) \isdef \nada$ for $a \in B \setminus \{b \}$ and
+$U(a) \isdef V(a)$ for $a \in A \setminus B$.
+Then it is obvious that $(D,  U), g \models b(x)$, while it is immediate by the
+definitions that $U \leq^{\omega}_{B} V$.
+
+\item 
+Case $\phi = \phi_1 \lor \phi_2$: assume $(D, V), g \models \phi$. 
+Without loss of generality we can assume that $(D, V), g \models \phi_1$ and 
+hence by induction hypothesis there is $U \leq^{\omega}_{B} V$ such that $(D, U),
+g \models \phi_1$ which clearly implies $(D, U), g \models 
+\phi$. 
+
+\item 
+Case $\phi = \phi_1 \land \phi_2$: assume $(D, V), g \models \phi$. 
+By induction hypothesis we have $U_1,U_2 \leq^{\omega}_{B} V$ such that 
+$(D,U_{1}), g \models \phi_1$ and $(D, U_2), g \models \phi_2$.
+Let $U$ be the valuation defined by putting $U(a) \isdef U_{1}(a) \cup U_{2}$; 
+then clearly we have $U \leq^{\omega}_{B} V$, while it follows by monotonicity
+that $(D,U), g \models \phi_1$ and $(D, U), g \models \phi_2$.
+Clearly then $(D, U), g \models \phi$.
+
+\item
+Case $\phi = \exists x.\phi'(x)$ and $(D, V), g \models \phi$. 
+By definition there exists $d\in D$ such that $(D, V), g[x\mapsto d] \models 
+\phi'(x)$. 
+By induction hypothesis there is a valuation $U \leq^{\omega}_{B} V$ such that 
+$(D, U), g[x\mapsto d] \models \phi'(x)$ and hence $(D, U), g \models 
+\exists x.\phi'(x)$.
+\item
+Case $\phi = \wqu x.(\phi',\psi)\in \cont{\ofoei(A)}{B}$ and $(D, V), g \models \phi$.  Define the formulas $\alpha(x)$ and 
+$\beta$ as follows:
+\[
+\phi = 
+\forall x.\underbrace{(\phi'(x) \lor \psi(x))}_{\alpha(x)} \land 
+\underbrace{\dqu x.\psi(x)}_\beta.
+\]
+
+Suppose that $(D, V), g \models \phi$. 
+By the induction hypothesis, for every $d \in D$ which  satisfies $(D, V), g_d
+\models \alpha(x)$ (where we write $ g_d \isdef g[x\mapsto d]$) there is a 
+valuation $U_d \leq^{\omega}_{B} V$ such that $(D, U_d), g_d \models \alpha(x)$. 
+The crucial observation is that because of $\beta$, only finitely many elements
+of $d$ refute $\psi(x)$. 
+Let $U$ be the valuation defined by putting $U(a) \isdef \bigcup \{U_d(a) \mid 
+(D, V), g_d \not\models \psi(x) \}$. 
+Note that for each $b \in B$, the set $U(b)$ is a finite union of finite sets, 
+and hence finite itself; it follows that $U \leq^{\omega}_{B} V$.
+We claim that
+\begin{equation}
+\label{eq:1801}
+(D, U), g \models \phi.
+\end{equation}
+%
+It is clear that $(D, U), g \models \beta$ because $\psi$ (and hence $\beta$) 
+is $B$-free.
+To prove that $(D, U), g \models \forall x\, \alpha(x)$, take an arbitrary $d 
+\in D$, then we have to show that $(D, U), g_d \models \phi'(x) \lor \psi(x)$. 
+We consider two cases: If $(D, V), g_d \models \psi(x)$ we are done, again
+because $\psi$ is $B$-free.
+On the other hand, if $(D, V), g_d \not\models \psi(x)$, then $(D, U_d), g_d 
+\models \alpha(x)$ by assumption on $U_{d}$, while it is obvious that $U_{d} 
+\leq_{B} U$; but then it follows by monotonicity of $\alpha$ that $(D, U), g_d
+\models \alpha(x)$.
+
+\end{enumerate}
+This finishes the proof.
+\end{proof}
+
+
+The second part of the proof of the theorem, is thus constituted by the following stronger version of the expressive completeness result that provides as a corollary normal forms for the syntactically continuous fragments.
+\begin{proposition}
+\label{p:efftranscont}
+Let $\llang$ be one of the logics $\{ \ofo, \ofoei \}$.
+There exists an effective translation $(-)^\tcont:\llang(A) \to \cont{\llang(A)}{B}$ such that
+a sentence ${\phi \in \llang(A)}$ is continuous in $B \subseteq A$ if and only if 
+$\phi\equiv \phi^\tcont$.
+\end{proposition}
+
+We prove the two manifestations of Proposition \ref{p:efftranscont} separately,
+in two respective subsections.
+
+By putting together the two propositions above, we are thence able to conclude.
+%\begin{proofof}
+\begin{proof}[Proof of Theorem \ref{t:cont}]
+The first claim follows from  Proposition~\ref{p:efftranscont}. 
+Hence, by applying Fact \ref{f:decido} to Proposition \ref{p:efftranscont}, the 
+problem of checking whether a sentence $\phi \in \llang(A)$ is continuous in 
+$B \subseteq A$ or not, is decidable.
+\end{proof}
+
+We conjecture that Proposition \ref{p:efftranscont}, and therefore
+Theorem \ref{t:cont}, holds also for $\llang=\ofoe$.
+
+%%%%%
+%%%%%  FO
+%%%%%
+\subsection{Continuous fragment of $\ofo$}\label{subsec:conofo}
+
+Since continuity implies monotonicity, by Theorem \ref{t:mono}, in order to 
+verify the $\ofo$-variant of Proposition \ref{p:efftranscont}, it is enough to
+proof the following result.
+
+\begin{proposition}\label{prop:ofocont}
+There is an effective translation $(-)^\tcont:\monot{\ofo(A)}{B} \to 
+\cont{\ofo(A)}{B}$ such that a sentence $\phi \in \monot{\ofo(A)}{B}$ is
+continuous in $B \subseteq A$ if and only if $\phi\equiv \phi^\tcont$.
+\end{proposition}
+
+\begin{proof}
+By Corollary \ref{cor:ofopositivenf}, to define the translation we assume, without loss of generality, that $\phi$
+is in the basic form $\bigvee \mondbnfofo{\Sigma}{B}$.
+For the translation, let
+\[
+(\bigvee \mondbnfofo{\Sigma}{B})^\tcont \isdef 
+\bigvee \mondgbnfofo{\Sigma}{\Sigma^{-}_{B}}{B}
+\]
+where $\Sigma^{-}_{B} \isdef \{S\in \Sigma \mid B \cap S = \nada \}$.
+From the construction it is clear that $\phi^\tcont \in \cont{\ofo(A)}{B}$ and
+therefore the right-to-left direction of the proposition is immediate by 
+Proposition~\ref{p:coniscont}. 
+
+For the left-to-right direction assume that $\phi$ is continuous in $B$, we have
+to prove that $(D, V) \models \phi$ iff $(D, V) \models \phi^\tcont$, for every 
+one-step model $(D, V)$.
+Our proof strategy consists of proving the same equivalence for the model 
+$(D\times \omega, V_\pi)$, where $D\times\omega$ consists of $\omega$ many 
+copies of each element in $D$ and $V_\pi$ is the valuation given by $V_{\pi}(a) 
+\isdef \{(d,k) \mid d\in  V(a), k\in\omega\}$.
+It is easy to see that $(D, V) \equiv^{\ofo} (D\times \omega, V_\pi)$ (see 
+Proposition~\ref{p-1P}) and so it suffices indeed to prove that
+\[
+(D\times\omega, V_\pi) \models \phi
+\text{ iff }
+(D\times\omega, V_\pi) \models \phi^\tcont.
+\]
+Consider first $D= \nada$.
+Then $(D\times\omega, V_\pi) = \emodel$, and therefore the claim is true since 
+$\mondbnfofo{\nada}{B} = \mondgbnfofo{\nada}{\nada^{-}_{B}}{B}$ and
+$\emodel \models  \mondbnfofo{\Sigma}{B}$ iff $\Sigma=\nada$. 
+Hence, assume $D \neq \nada$.
+\bigskip
+
+\noindent \fbox{$\Rightarrow$}
+Let $(D\times\omega, V_\pi) \models \phi$.
+As $\phi$ is continuous in $B$ there is a valuation $U \leq^{\omega}_{B} V_\pi$ 
+satisfying $(D\times\omega, U) \models \phi$. 
+This means that  $(D\times\omega, U) \models \mondbnfofo{\Sigma}{B}$ for some
+disjunct $\mondbnfofo{\Sigma}{B}$ of $\phi$.
+Below we will use the following fact (which can easily be verified):
+\begin{equation}
+\label{eq:con101}
+(D\times\omega),U \models \tau^{B}_{S}(d,k) \text{ iff }
+S \setminus B = U^{\flat}(d,k) \setminus B \text{ and }
+S \cap B \subseteq U^{\flat}(d,k).
+\end{equation}
+
+Our claim is now that $(D\times\omega, U) \models 
+\mondgbnfofo{\Sigma}{\Sigma^{-}_{B}}{B}$. 
+
+The existential part of $\mondgbnfofo{\Sigma}{\Sigma^{-}_{B}}{B}$ is trivially 
+true. 
+To cover the universal part, it remains to show that every element of 
+$(D\times\omega, U)$ realizes a $B$-positive type in $\Sigma^{-}_{B}$.
+Take an arbitrary pair $(d,k) \in D\times\omega$ and let $T$ be the (full) type 
+of $(d,k)$, that is, let $T \isdef U^{\flat}(d,k)$.
+If $B \cap T = \nada$ then trivially $T\in \Sigma^{-}_{B}$ and we are done. 
+So suppose $B \cap T \neq \nada$. 
+Observe that in $D\times\omega$ we have infinitely many copies of $d\in D$.
+Hence, as $U(b)$ is finite for every $b \in B$, there must be some $(d,k')$ 
+with type $U^{\flat}(d,k') = V_{\pi}^{\flat}(d,k') \setminus B = 
+V_{\pi}^{\flat}(d,k) \setminus B = T \setminus B$.
+It follows from $(D\times\omega, U) \models \mondbnfofo{\Sigma}{B}$ and 
+\eqref{eq:con101} that there is some $S \in \Sigma$ such that
+$S \setminus B = U^{\flat}(d,k') \setminus B = U^{\flat}(d,k')$ and 
+$S \cap B \subseteq U^{\flat}(d,k) \cap B = \nada$.
+From this we easily derive that $S = U^{\flat}(d,k')$ and $S \in \Sigma^{-}_{B}$.
+Finally, we observe that $S \setminus B = U^{\flat}(d,k') \setminus B =
+U^{\flat}(d,k) \setminus B$ and $S \cap B = \nada \subseteq U^{\flat}(d,k)$, 
+so that by \eqref{eq:con101} we find that $D \times \omega,U) \models 
+\tau^{B}_{S}(d,k)$ indeed.
+
+Finally, by monotonicity it directly follows from
+$(D\times\omega, U) \models \mondgbnfofo{\Sigma}{\Sigma^{-}_{B}}{B}$
+that 
+$(D\times\omega, V_{\pi}) \models \mondgbnfofo{\Sigma}{\Sigma^{-}_{B}}{B}$,
+and from this it is immediate that $(D\times\omega, V_\pi) \models \phi^\tcont$.
+\bigskip
+
+\noindent \fbox{$\Leftarrow$}
+Let $(D\times\omega, V_\pi) \models 
+\mondgbnfofo{\Sigma}{\Sigma^{-}_{B}}{B}$.
+To show that $(D\times\omega, V_\pi) \models \mondbnfofo{\Sigma}{B}$, the 
+existential part is trivial. For the universal part just observe that 
+$\Sigma^{-}_{B} \subseteq \Sigma$.
+\end{proof}
+
+A careful analysis of the translation gives us the following corollary,
+providing normal forms for the continuous fragment of $\ofo$.
+
+\begin{corollary}\label{cor:ofocontinuousnf}
+For any sentence $\phi \in \ofo(A)$, the following hold.
+\begin{enumerate}
+\item 
+The formula $\phi$ is continuous in $B \subseteq A$ iff it is equivalent to a 
+formula $\bigvee \mondgbnfofo{\Sigma}{\Sigma^{-}_{B}}{B}$ for some types $\Sigma
+\subseteq \wp(A)$, where $\Sigma^{-}_{B} \isdef \{S\in \Sigma \mid B \cap S = 
+\nada \}$.
+\item 
+If $\phi$ is monotone in $A$ 
+then $\phi$ is continuous in $B \subseteq A$ iff it is equivalent to a formula 
+in the basic form $\bigvee \posdgbnfofo{\Sigma}{\Sigma^{-}_{B}}$ for some types 
+$\Sigma \subseteq \wp(A)$, where $\Sigma^{-}_{B} \isdef \{S\in \Sigma \mid B \cap
+S = \nada \}$.
+\end{enumerate}
+\end{corollary}
+
+%%%%%
+%%%%%  FOEI
+%%%%%
+
+
+\subsection{Continuous fragment of $\ofoei$}
+
+As for the previous case, the $\ofoei$-variant of
+Proposition \ref{p:efftranscont} is an immediate consequence of 
+Theorem \ref{t:mono} and the following proposition.
+
+\begin{proposition}\label{lem:ofoeictrans}
+There is an effective translation $(-)^\tcont:\monot{\ofoei(A)}{B} \to 
+\cont{\ofoei(A)}{B}$ such that a sentence $\phi \in \monot{\ofoei(A)}{B}$ is 
+continuous in $B$ if and only if $\phi\equiv \phi^\tcont$.
+\end{proposition}
+
+\begin{proof}
+By Corollary \ref{cor:ofoeipositivenf}, we assume that $\phi$ is in basic normal form, i.e., $\phi = \bigvee 
+\mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{B}$.
+For the translation let 
+$\big(\bigvee \mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{B}\big)^\tcont \isdef 
+\bigvee \mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{B}^\tcont$ where
+\[
+\mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{B}^\tcont \isdef
+\begin{cases}
+   \bot &\text{ if } B \cap \bigcup \Sigma \neq \nada
+\\ \mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{B} &\text{ otherwise}.
+\end{cases}
+\]
+
+First we prove the right-to-left direction of the proposition. 
+By Proposition~\ref{p:coniscont} it is enough to show that $\phi^\tcont \in
+\cont{\ofoei(A)}{B}$. 
+We focus on the disjuncts of $\phi^\tcont$. 
+The interesting case is where $B \cap \bigcup \Sigma = \nada$.
+If we rearrange $\mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{B}$ somewhat and define
+the formulas $\phi', \psi$ as follows:
+%
+\begin{align*}
+\exists \vlist{x}.\Big(
+   & \arediff{\vlist{x}} \land \bigwedge_i \tau^B_{T_i}(x_i)\ 
+     \land \forall z.(\underbrace{\lnot\arediff{\vlist{x},z} 
+         \lor \bigvee_{S\in \Pi} \tau^B_S(z)}_{\phi'(\vlist{x},z)} 
+         \lor \underbrace{\bigvee_{S\in \Sigma} \tau^B_S(z)}_{\psi(z)})\ 
+     \land \dqu y.\underbrace{\bigvee_{S\in\Sigma} \tau^B_S(y)}_{\psi(y)} \Big)
+\\ &  
+     \land \bigwedge_{S\in\Sigma} \qu y.\tau^B_S(y).
+\end{align*}
+%
+Then we find that
+\[
+\mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{B} \equiv 
+\exists \vlist{x}.\Big(\arediff{\vlist{x}} 
+     \land \bigwedge_i \tau^B_{T_i}(x_i) \land \wqu z.(\phi'(\vlist{x},z),\psi(z)) 
+      \Big) 
+   \land \bigwedge_{S\in\Sigma} \qu y.\tau^B_S(y),
+\]
+which belongs to the required fragment because $B \cap \bigcup \Sigma = \nada$.
+
+For the left-to-right direction of the proposition we have to prove that $\phi \equiv
+\phi^\tcont$.
+
+\bigskip
+\noindent\fbox{$\Rightarrow$} 
+Let $(D, V) \models \phi$. 
+Because $\phi$ is continuous in $B$ we may assume that $ V(b)$ is finite, for
+all $b \in B$.
+Let $\mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{B}$ be a disjunct of $\phi$ such that
+$(D, V) \models \mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{B}$.
+If $D = \nada$, then $ {\vlist{T}}={\Pi}={\Sigma}=\nada$, and 
+$\mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{B} =
+(\mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{B})^\tcont$. 
+Hence, let $D \neq \nada$.
+%
+Suppose for contradiction that $B \cap \bigcup \Sigma \neq \nada$, then there 
+must be some $S\in\Sigma$ with $B \cap S \neq \nada$. 
+Because $(D, V) \models \mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{B}$ we have, in
+particular, that $(D, V) \models \qu y.\tau^B_S(x)$ and hence $V(b)$ must be 
+infinite, for any $b \in B \cap S$, which is absurd.
+It follows that $B \cap \bigcup \Sigma = \nada$, but then we trivially conclude
+that $(D, V) \models \phi^\tcont$ because the disjunct remains unchanged. 
+
+\bigskip
+\noindent\fbox{$\Leftarrow$} 
+Let $(D, V) \models \phi^\tcont$. 
+The only difference between $\phi$ and $\phi^\tcont$ is that some disjuncts may 
+have been replaced by $\bot$. Therefore this direction is trivial.
+\end{proof}
+
+We conclude the section by stating the following corollary, 
+providing normal forms for the continuous fragment of $\ofoei$. 
+
+\begin{corollary}\label{cor:ofoeicontinuousnf}
+For any sentence $\phi \in \ofoei(A)$, the following hold.
+\begin{enumerate}
+\item \label{pt:ofoeifcontinuous}
+The formula $\phi$ is continuous in $B \subseteq A$ iff 
+$\phi$ is equivalent to a 
+formula, effectively obtainable from $\phi$, which is a disjunction of 
+formulas $\mondbnfofoei{\vlist{T}}{\Pi}{\Sigma}{B}$
+where $\vlist{T},\Sigma$ and $\Pi$ are such that $\Sigma \subseteq \Pi \subseteq 
+\vlist{T}$ and $B \cap \bigcup\Sigma = \nada$. 	
+\item \label{pt:ofoeimonotone}
+If $\phi$ is monotone 
+(i.e., $\phi\in{\ofoei}^+(A)$) then 
+$\phi$ is continuous in $B \subseteq A$
+iff
+it is equivalent to a formula, effectively obtainable from $\phi$, which is a 
+disjunction of formulas
+$\bigvee \posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$,
+where $\vlist{T},\Sigma$ and $\Pi$ are such that $\Sigma \subseteq \Pi \subseteq 
+\vlist{T}$ and $B \cap \bigcup\Sigma = \nada$. 	
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Notice that, from Proposition \ref{prop:bfofoei-sigmapi}, every sentence in the
+basic form $\bigvee \dbnfofoei{\vlist{T}}{\Pi}{\Sigma}$
+can be assumed such that $\Sigma \subseteq 
+\Pi \subseteq \vlist{T}$. The claims hence follow by construction of the translation.
+\end{proof}
+

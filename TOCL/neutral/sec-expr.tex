@@ -1,0 +1,344 @@
+% !TEX root = ../00CFVZ_TOCL.tex
+% \section{Expressiveness modulo bisimilarity}\label{sec:expresso}
+
+\section{Expressiveness modulo bisimilarity}
+   \label{sec:expresso}
+
+In this Section we use the tools developed in the previous parts to prove the
+main results of the paper on expressiveness modulo bisimilarity, viz., 
+Theorem~\ref{t:11} stating
+\begin{eqnarray}
+% \[\begin{array}{rcl}
+%\label{eq:1}
+%\eqno{(*)}
+   \AFMC &\equiv& \nmso / {\bis} 
+   \label{eq:z11}
+\\[1mm] \mucML &\equiv& \wmso / {\bis} 
+   \label{eq:z12}
+% \end{array}\]
+\end{eqnarray}
+
+\begin{proofof}{Theorem~\ref{t:11}}
+The structure of the proof is the same for the statements \eqref{eq:z11} and
+\eqref{eq:z12}.
+In both cases, we will need three steps to establish a link between the modal 
+language on the left hand side of the equation to the bisimulation-invariant 
+fragment of the second-order logic on the right hand side.
+
+The first step is to connect the fragments $\AFMC$ and $\mucML$ of the modal 
+$\mu$-calculus to, respectively, the weak and the continuous-weak automata for
+first-order logic without equality.
+That is, in Theorem~\ref{t:mlaut} below we prove the following:
+\begin{eqnarray}
+   \AFMC &\equiv& \AutW(\ofo)
+   \label{eq:z21}
+\\[1mm] \mucML &\equiv&  \AutWC(\ofo)
+   \label{eq:z22}
+\end{eqnarray}
+
+Second, the main observations that we shall make in this section is that 
+\begin{eqnarray}
+\AutW(\ofo)  &\equiv& \AutW(\ofoe)/{\bis} 
+   \label{eq:z31}
+\\[1mm] 
+\AutWC(\ofo) &\equiv&  \AutWC(\ofoei)/ {\bis} 
+   \label{eq:z32}
+\end{eqnarray}
+That is, for \eqref{eq:z31} we shall see in Theorem~\ref{t:bi-aut} below that a
+weak $\ofoe$-automaton $\bbA$ is bisimulation invariant iff it is equivalent to
+a weak $\ofo$-automaton $\bbA^{\tmod}$ (effectively obtained from $\bbA$);
+% which can be effectively obtained from $\bbA$ via a one-step translation applied
+% to the transition map of $\bbA$
+and similarly for \eqref{eq:z32}.
+
+Finally, we use the automata-theoretic characterisations of $\nmso$ and $\wmso$
+that we obtained in earlier sections:
+\begin{eqnarray}
+\AutW(\ofoe)   &\equiv&  \nmso
+   \label{eq:z41}
+\\[1mm] 
+\AutWC(\ofoei) &\equiv&  \wmso 
+   \label{eq:z42}
+\end{eqnarray}
+
+Then it is obvious that the equation \eqref{eq:z11} follows from \eqref{eq:z21},
+\eqref{eq:z31} and \eqref{eq:z41}, while similarly 
+\eqref{eq:z12} follows from \eqref{eq:z22}, \eqref{eq:z32} and \eqref{eq:z42}.
+\end{proofof}
+
+It is left to prove the equations \eqref{eq:z21} and \eqref{eq:z22}, and 
+\eqref{eq:z31} and  \eqref{eq:z32}; this we will take care of in the two 
+subsections below.
+
+\subsection{Automata for $\AFMC$ and $\mucML$}
+
+In this subsection we consider the automata corresponding to the 
+continuous and the alternation-free $\mu$-calculus. 
+That is, we verify the equations \eqref{eq:z21} and \eqref{eq:z22}.
+
+\begin{theorem}
+\label{t:mlaut}
+\begin{enumerate}
+\item 
+There is an effective construction transforming a formula $\phi \in \muML$ into
+an equivalent automaton in $\Aut(\ofo)$, and vice versa.
+\item 
+There is an effective construction transforming a formula $\phi \in \AFMC$ into
+an equivalent automaton in $\AutW(\ofo)$, and vice versa.
+\item 
+There is an effective construction transforming a formula $\phi \in \mucML$ into
+an equivalent automaton in $\AutWC(\ofo)$, and vice versa.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+In each of these cases the direction from left to right is easy to verify,
+so we omit details.
+For the opposite direction, we focus on the hardest case, that is, we will 
+only prove that $\AutWC(\ofo) \leq \mucML$.
+By Theorem~\ref{t:autofor} it suffices to show that $\mu_{C}\ofo \leq \mucML$,
+and we will in fact provide a direct, inductively defined, truth-preserving 
+translation $(\cdot)^{t}$ from $\mu_{C}\ofo(\pprop)$ to $\mucML(\pprop)$.
+Inductively we will ensure that, for every set $\qprop \sse \pprop$:
+\begin{equation}
+\label{eq:zz1}
+\phi \in \cont{\mu\ofo}{\qprop} % \cap \mu_{C}\ofo
+\text{ implies } \phi^{t} \in 
+\cont{\muML}{\qprop} % \cap \mucML,
+\end{equation}
+and that the dual property holds for cocontinuity.
+
+Most of the clauses of the definition of the translation $(\cdot)^{t}$ are 
+completely standard: for the atomic clause we take $p^{t} \isdef p$ and
+$(\neg p)^{t} \isdef \neg p)$, for the boolean connectives we define 
+$(\phi_{0}\lor\phi_{1})^{t} \isdef \phi_{0}^{t} \lor \phi_{1}^{t}$ and 
+$(\phi_{0}\land\phi_{1})^{t} \isdef \phi_{0}^{t} \land \phi_{1}^{t}$, and 
+for the fixpoint operators we take $(\mu p. \phi)^{t} \isdef \mu p. \phi^{t}$ 
+and $(\nu p. \phi)^{t} \isdef \nu p. \phi^{t}$ ---
+to see that the latter clauses indeed provide formulas in $\mucML$ we use
+\eqref{eq:zz1} and its dual.
+In all of these cases it is easy to show that \eqref{eq:zz1} holds (or remains
+true, in the inductive cases).
+
+The only interesting case is where $\phi$ is of the form 
+$\nxt{\al}(\phi_{1},\ldots,\phi_{n})$.
+By definition of the language $\mu_{C}\ofo$ we may assume that 
+$\al(a_{1},\ldots,a_{n}) \in \cont{\ofo(A)}{B}$, where 
+$A = \{ a_{1},\ldots,a_{n} \}$ and $B = \{ a_{1}, \ldots, a_{k} \}$,
+that for each $1 \leq i \leq k$ the formula $\phi_{i}$ belongs to the set 
+$\cont{\mu_{C}\ofo}{\qprop}$ and that for each $k+1\leq j \leq n$ the formula 
+$\phi_{j}$ is $\qprop$-free.
+It follows by the induction hypothesis 
+that $\phi_{l} \equiv \phi_{l}^{t} \in \mucML$ for each $l$, 
+that $\phi_{i}^{t} \in \cont{\muML}{\qprop}$ for each $1 \leq i \leq k$,
+and that  the formula $\phi_{j}^{t}$ is $\qprop$-free for each $k+1\leq j \leq n$.
+The key observation is now that by Theorem~\ref{t:osnf-cont} we may without 
+loss of generality assume that $\al$ is in \emph{normal form}; that is, a 
+disjunction of formulas of the form $\al_{\Sigma} = \posdgbnfofo{\Sigma}{\Pi}$,
+where every $\Sigma$ and $\Pi$ is a subset of $\pow (A)$, $B \cap \bigcup\Pi =
+\nada$ for every $\Pi$, and 
+\[
+\posdgbnfofo{\Sigma}{\Pi} \isdef 
+\bigwedge_{S\in\Sigma} \exists x \bigwedge_{a \in S} a(x) 
+\;\land\; \forall x \bigvee_{S\in\Pi} \bigwedge_{a \in S} a(x) 
+\]
+We now define
+\[\begin{array}{rll}
+\bigvee \big(\nxt{\al_{\Sigma}}(\ol{\phi})\big)^{t} & \isdef &
+    \bigwedge_{S\in\Sigma} \Diamond \bigwedge_{a_{l} \in S} \phi_{l}^{t}
+     \;\land\; 
+     \Box \bigvee_{S\in\Pi} \bigwedge_{a_{j} \in S} \phi_{j}^{t} 
+\\ \phi^{t} & \isdef & {\bigvee}_{\Sigma} \big(\nxt{\al_{\Sigma}}(\ol{\phi})\big)^{t}
+\end{array}\]
+It is then obvious that $\phi$ and $\phi^{t}$ are equivalent, so it remains to 
+verify \eqref{eq:zz1}.
+But this is immediate by the observation that all formulas $\phi_{j}^{t}$
+in the scope of the $\Box$ are associated with an $a_{j}$ belonging to a set 
+$S \sse A$ that has an empty intersection with the set $B$; that is, each 
+$a_{j}$ belongs to the set $\{ a_{k+1}, \ldots, a_{n}\}$ and so $\phi_{j}^{t}$
+is $\qprop$-free.
+\end{proof}
+
+\subsection{Bisimulation invariance, one step at a time}
+\label{ss:bisinv}
+
+In this subsection we will show how the bisimulation invariance results in this
+paper can be proved by automata-theoretic means.
+Following Janin \& Walukiewicz~\cite{Jan96}, 
+we will define a construction that, for $\oslang \in \{{\ofoe},{\ofoei}\}$, 
+transforms an arbitrary $\oslang$-automaton $\bbA$ into an $\ofo$-automaton 
+$\bbA^{\tmod}$ such that $\bbA$ is bisimulation invariant iff it is equivalent
+to $\bbA^{\tmod}$.
+In addition, we will make sure that this transformation preserves both the
+weakness and the continuity condition.
+The operation $(\cdot)^{\tmod}$ is completely determined by the following 
+translation at the one-step level.
+
+\begin{definition}
+Recall from Theorem~\ref{t:osnf} that any formula in ${\ofoe}^+(A)$ is 
+equivalent to a disjunction of formulas of the form 
+$\posdbnfofoe{\vlist{T}}{\Sigma}$, whereas any formula in ${\ofoei}^+(A)$ is 
+equivalent to a disjunction of formulas of the form 
+$\posdbnfolque{\vlist{T}}{\Pi}{\Sigma}$. 
+Based on these normal forms, for both one-step languages $\oslang={\ofoe}$ and 
+$\oslang={\ofoei}$, we define the translation 
+$(\cdot)^{\tmod} : {\oslang}^+(A) \to \ofo^+(A)$ by setting
+% \[
+% \Big( \posdbnfofoe{\vlist{T}}{\Sigma} \Big)^{\tmod} = 
+% \Big( \posdbnfolque{\vlist{T}}{\Pi}{\Sigma} \Big)^{\tmod} 
+% \df
+% \bigwedge_{i} \exists x_i. \tau^+_{T_i}(x_i) \land 
+% \forall x. \bigvee_{S\in\Sigma} \tau^+_S(x),
+% \]
+\[
+\left.\begin{array}{l}
+   \Big( \posdbnfofoe{\vlist{T}}{\Sigma} \Big)^{\tmod} 
+\\ \Big( \posdbnfolque{\vlist{T}}{\Pi}{\Sigma} \Big)^{\tmod} 
+\end{array}\right\}
+\df \bigwedge_{i} \exists x_i. \tau^+_{T_i}(x_i) \land 
+\forall x. \bigvee_{S\in\Sigma} \tau^+_S(x),
+\]
+and for $\al = \bigvee_{i} \al_{i}$ we define $\al^{\tmod} \df \bigvee 
+\al_{i}^{\tmod}$.
+\end{definition}
+
+\noindent
+This definition propagates to the level of automata in the obvious way.
+
+\begin{definition}
+Let $\oslang\in \{{\ofoe},{\ofoei}\}$ be a one-step language.
+Given an automaton $\bbA = \tup{A,\tmap,\pmap,a_{I}}$ in $\Aut(\oslang)$, define 
+the automaton $\bbA^{\tmod} \df \tup{A,\tmap^{\tmod},\pmap,a_{I}}$ in 
+$\Aut(\ofo)$ by putting, for each $(a,c) \in A \times C$:
+\[
+\tmap^{\tmod}(a,c) \df (\tmap(a,c))^{\tmod}.
+\]
+\end{definition}
+
+The main result of this section is the theorem below.
+For its formulation, recall that $\bbS^{\om}$ is the $\om$-unravelling of 
+the model $\bbS$ (as defined in the preliminaries).
+As an immediate corollary of this result, we see that \eqref{eq:z31} and
+\eqref{eq:z32} hold indeed.
+
+\begin{theorem}
+\label{t:bi-aut}
+Let $\oslang\in \{{\ofoe},{\ofoei}\}$ be a one-step language and let $\bbA$ be an
+$\oslang$-automaton.
+
+\begin{enumerate}
+\item
+The automata $\bbA$ and $\bbA^{\tmod}$ are related as follows, for every model $\bbS$:
+\begin{equation}
+\label{eq:crux}
+\bbA^{\tmod} \text{ accepts } \bbS \text{ iff } \bbA \text{ accepts
+} \bbS^{\om}.
+\end{equation}
+\item
+The automaton $\bbA$ is bisimulation invariant iff $\bbA \equiv \bbA^{\tmod}$.
+\item
+If $\bbA\in \AutW(\oslang)$ then $\bbA^{\tmod}\in \AutW(\ofo)$, and 
+if $\bbA\in \AutWC(\ofoei)$ then $\bbA^{\tmod}\in \AutWC(\ofo)$.
+\end{enumerate}
+\end{theorem}
+
+
+The remainder of this section is devoted to the proof of Theorem~\ref{t:bi-aut}.
+The key proposition is the following observation on the one-step translation,
+that we take from the companion paper~\cite{carr:mode18}.
+
+\begin{proposition}
+\label{p-1P}
+Let $\oslang\in \{{\ofoe},{\ofoei}\}$.
+For every one-step model $(D,V)$ and every $\al \in \oslang^+(A)$ we have
+\begin{equation}
+\label{eq-1cr}
+(D,V) \models \alpha^{\tmod} \text{ iff } (D\times \om,V_\pi) \models \alpha,
+\end{equation}
+where $V_{\pi}$ % =  f^{-1} \circ V$
+ is the induced valuation given by 
+$V_{\pi}(a) \df \{ (d,k) \mid d \in V(a), k\in\omega\}$.
+\end{proposition}
+
+% \begin{proof}
+% We prove the claim for $\oslang={\ofoei}$, the other case being similar.
+% Clearly it suffices to prove \eqref{eq-1cr} for formulas of the form
+% $\al = \posdbnfolque{\vlist{T}}{\Pi}{\Sigma}$.
+% \smallskip
+% 
+% \noindent\fbox{$\Rightarrow$} 
+% Assume $(D,V) \models \alpha^{\tmod}$, we will show that 
+% $(D\times \omega,V_\pi) \models \posdbnfolque{\vlist{T}}{\Pi}{\Sigma}$.
+% Let $d_i$ be such that $\tau_{T_i}^+(d_i)$ in $(D,V)$. 
+% It is clear that the $(d_i,i)$ provide \emph{distinct} elements satisfying 
+% $\tau_{T_i}^+((d_i,i))$ in $(D\times\omega,V_{\pi})$ and therefore the 
+% first-order existential part of $\alpha$ is satisfied. 
+% With a similar but easier argument it is straightforward that the existential 
+% generalized quantifier part of $\alpha$ is also satisfied.
+% For the universal parts of $\posdbnfolque{\vlist{T}}{\Pi}{\Sigma}$ it is enough
+% to observe that, because of the universal part of $\alpha^\circ$, \emph{every}
+% $d\in D$ realizes a positive type in $\Sigma$. 
+% By construction, the same applies to $(D\times\omega,V_{\pi})$, 
+% therefore this takes care of both universal quantifiers.
+% \medskip
+% 		
+% \noindent\fbox{$\Leftarrow$} 
+% Assuming that $(D\times \omega,V_\pi) \models 
+% \posdbnfolque{\vlist{T}}{\Pi}{\Sigma}$,
+% we will show that $(D,V) \models \alpha^\circ$. 
+% The existential part of $\alpha^{\tmod}$ is trivial. 
+% For the universal part we have to show that every element of $D$ realizes the 
+% positive part of a type in $\Sigma$. 
+% Suppose not, and let $d\in D$ be such that $\lnot\tau_S^+(d)$ for all $S\in 
+% \Sigma$. 
+% Then we have $(D\times\omega,V_\pi) \not\models \tau_S^+((d,k))$ for all $k$.
+% That is, there are infinitely many elements not realizing the positive part of 
+% any type in $\Sigma$. 
+% Hence we have $(D\times\omega,V_\pi) \not\models \dqu y.\bigvee_{S\in\Sigma} 
+% \tau_S^+(y)$. 
+% Absurd, because that is part of $\posdbnfolque{\vlist{T}}{\Pi}{\Sigma}$.
+% \end{proof}
+
+\begin{proofof}{Theorem~\ref{t:bi-aut}}
+The proof of the first part is based on a fairly routine comparison, based on
+Proposition~\ref{p-1P}, of the acceptance games $\mathcal{A}(\bbA^{\tmod},\bbS)$
+and $\mathcal{A}(\bbA,\bbS^{\om})$.
+(In a slightly more general setting, the details of this proof can be found 
+in~\cite{Venxx}.)
+
+For part~2, the direction from right to left is immediate by Theorem \ref{t:mlaut}.
+%the observation  by XXXX~\cite{xxxxxxxx} that $\muML \equiv \Aut{(\ofo)}$.
+The opposite direction follows from the following equivalences, where we use
+the bisimilarity of $\bbS$ and $\bbS^{\om}$ (Fact~\ref{prop:tree_unrav}):
+\begin{align*}
+\bbA \text{ accepts } \bbS
+  & \text{ iff } \bbA \text{ accepts } \bbS^{\om}
+  & \tag{$\bbA$ bisimulation invariant}
+\\ & \text{ iff } \bbA^{\tmod} \text{ accepts } \bbS
+  & \tag{equivalence~\eqref{eq:crux}}
+\end{align*}
+
+It remains to be checked that the construction $(\cdot )^{\tmod}$, which has
+been defined for arbitrary automata in $\Aut(\oslang)$, transforms 
+both $\wmso$-automata and $\nmso$-automata into automata of the right kind.
+This can be verified by a straightforward inspection at the one-step level.
+\end{proofof}
+
+\begin{remark}{\rm
+% As a corollary of the previous two propositions we find that 
+% \begin{itemize}
+% 	\itemsep 0 pt
+% 	\item $\AutW(\ofo) \equiv \AutW(\ofoe)/{\bis}$, and
+% 	\item $\AutWC(\ofo) \equiv \AutWC(\ofoei)/{\bis}$.
+% \end{itemize}
+In fact, we are dealing here with an instantiation of a more general phenomenon 
+that is essentially coalgebraic in nature.
+In~\cite{Venxx} it is proved that if $\oslang$ and $\oslang'$ are two one-step
+languages that are connected by a translation $(\cdot )^{\tmod}: \oslang' \to 
+\oslang$ satisfying a condition similar to \eqref{eq-1cr}, then we find that 
+$\Aut(\oslang)$ corresponds to the bisimulation-invariant fragment of 
+$\Aut(\oslang')$: $\Aut(\oslang) \equiv \Aut(\oslang')/{\bis}$.
+This subsection can be generalized to prove similar results relating
+$\AutW(\oslang)$ to $\AutW(\oslang')$, and $\AutWC(\oslang)$ to 
+$\AutWC(\oslang')$.
+}\end{remark}

@@ -1,0 +1,454 @@
+% !TEX root = ../main.tex
+
+\section{Submodels and quotients}
+\label{sec:inv}
+
+There are various natural notions of morphism between monadic models; the one 
+that we will be interested here is that  of a (strong) homomorphism.
+
+\begin{definition}
+\label{d:hom}
+Let $\osmodel = (D,V)$ and $\osmodel' = (D',V')$ be two monadic models.
+A map $f: D \to D'$ is a \emph{homomorphism} from $\osmodel$ to $\osmodel'$, 
+notation: $f: \osmodel \to \osmodel'$, if we have $d \in V(a)$ iff $f(d) \in 
+V'(a)$, for all $a \in A$ and $d \in D$.
+\end{definition}
+
+In this section we will be interested in the sentences of $\ofo, \ofoe$ and 
+$\ofoei$ that are preserved under taking submodels and the ones that are 
+invariant under quotients.
+
+\begin{definition}
+\label{d:inv}
+Let $\osmodel = (D,V)$ and $\osmodel' = (D',V')$ be two monadic models.
+We call $\osmodel$ a \emph{submodel} of $\osmodel'$ if $D \subseteq D'$ and 
+the inclusion map $\iota_{DD'}: D \hookrightarrow D'$ is a homomorphism, and 
+we say that $\osmodel'$ is a \emph{quotient} of $\osmodel$ if there 
+is a surjective homomorphism $f: \osmodel \to \osmodel'$.
+
+Now let $\phi$ be an $\llang$-sentence, where $\llang \in \{ \ofo, \ofoe, \ofoei
+\}$.
+\begin{enumerate}[(a)]
+\item\label{d:inv:i} 
+We say that $\phi$ is \emph{preserved under taking submodels} if 
+$\osmodel \models \phi$ implies $\osmodel' \models \phi$, whenever
+$\osmodel'$ is a submodel of $\osmodel$.
+\item\label{d:inv:ii} Similarly, $\phi$ is \emph{invariant under taking quotients} if we have
+$\osmodel \models \phi$ iff $\osmodel' \models \phi$, whenever $\osmodel'$ is
+a quotient of $\osmodel$.
+\end{enumerate}
+\end{definition}
+
+The first of these properties (preservation under taking submodels) is well
+known from classical model theory --- it is for instance the topic of the
+{\L}os-Tarski Theorem.
+When it comes to quotients, in model theory one is usually more interested in
+the formulas that are \emph{preserved} under surjective homomorphisms (and
+the definition of homomorphism may also differ from ours): for instance, this 
+is the property that is characterised by Lyndon's Theorem.
+Our preference for the notion of \emph{invariance} under quotients stems from 
+the fact that the property of invariance under quotients plays a key role in
+characterising the \emph{bisimulation-invariant fragments} of various monadic
+second-order logics, as is explained in our companion paper~\cite{companionWEAK}.
+
+
+%%%%
+%%%%
+%%%%  LOS-TARSKI 
+%%%%
+%%%%
+
+\subsection{Preservation under submodels}
+
+In this subsection we characterise the fragments of our predicate logics 
+consisting of the sentences that are preserved under taking submodels.
+That is, the main result of this subsection is a {\L}os-Tarksi Theorem for
+$\ofoei$.
+
+\begin{definition}
+The \emph{universal fragment} of the set $\ofoei(A)$ is the collection 
+$\univ{\ofoei(A)}$ of formulas given by the following grammar:
+\[
+\varphi \defbnf
+\top \mid \bot 
+\mid a(x)
+\mid \neg a(x)
+\mid x \foeq y
+\mid x \foneq y
+% \mid \neg \varphi
+\mid \varphi \lor \varphi
+\mid \varphi \land \varphi
+% \mid \exists x.\varphi
+\mid \forall x.\varphi
+% \mid \qu x.\varphi
+\mid \dqu x.\varphi
+\]
+where $x,y\in \fovar$ and $a \in A$.
+The universal fragment $\univ{\ofoe(A)}$ is obtained by deleting the clause for
+$\dqu$ from this grammar, and we obtain the universal fragment $\univ{\ofo(A)}$ 
+by further deleting both clauses involving the equality symbol.
+\end{definition}
+
+% \begin{theorem}
+% \label{t:univ}
+% There is an effective translation $(\cdot)^{\tuniv}: \ofoei(A) \to 
+% \univ{\ofo(A)}$ such that, for every sentence $\phi \in \ofoe(A)$:
+% 
+% (1) $\phi \equiv \phi^{\tuniv}$ iff $\phi$ is preserved under taking submodels;
+% 
+% (2) $\phi^{\tuniv} \in \univ{\ofoe(A)}$ if $\phi \in \ofoe(A)$ and
+% \todo % this may not even be true\ldots
+%     $\phi^{\tuniv} \in \univ{\ofo(A)}$ if $\phi \in \ofo(A)$.
+% \end{theorem}
+
+\begin{theorem}
+\label{t:univ}
+Let $\phi$ be a sentence of the monadic logic $\llang(A)$, where $\llang \in 
+\{ \ofo, \ofoe, \ofoei \}$.
+Then $\phi$ is preserved under taking submodels if and only if there is a 
+equivalent formula $\phi^{\tuniv} \in \univ{\llang(A)}$.
+Furthermore, it is decidable whether a formula $\phi \in \llang(A)$ has this 
+property or not.
+\end{theorem}
+\begin{proof}
+As always, we start by verifying that the the easy side of the theorem.
+
+\begin{claimfirst}
+\label{c:univ1}
+Let $\phi \in \ofoei(A)$ be a universal sentence. 
+Then $\phi$ is preserved under taking submodels.
+\end{claimfirst}
+
+\begin{pfclaim} %{ \ref{c:univ1}.}
+Let $(D',V')$ be a submodel of the monadic model $(D,V)$.
+By induction on the complexity of a formula $\phi \in \univ{\ofoei(A)}$ we will 
+show that for any assignment $g: \fovar \to D'$ we have
+\[
+(D,V),g' \models \phi \text{ implies } (D',V'),g \models \phi,
+\]
+where $g':= g \circ \iota_{D'D}$.
+We will only consider the inductive step of the proof where $\phi$ is of the 
+form $\dqu x. \psi$.
+Define $X_{D,V} \isdef \{ d \in D \mid (D,V), g'[x \mapsto d] \models \psi \}$,
+and similarly, $X_{D',V'} \isdef \{ d \in D' \mid (D',V'), g[x \mapsto d] \models 
+\psi \}$.
+By the inductive hypothesis we have that $X_{D,V} \cap D' \subseteq X_{D',V'}$,
+implying that $D' \setminus X_{D',V'} \subseteq D \setminus X_{D,V}$.
+But from this we immediately obtain that 
+\[
+|D \setminus X_{D,V}| < \omega
+\text{ implies } |D' \setminus X_{D',V'}| < \omega,
+\]
+which means that $(D,V),g' \models \phi$ implies $ (D',V'),g \models \phi$, as 
+required.
+\end{pfclaim}
+
+For the `hard' side of the theorem we need the following result.
+
+\begin{claim} 
+\label{c:univ2}
+For any monadic logic $\llang \in \{ \ofo, \ofoe, \ofoei \}$ there is an effective 
+translation $(-)^\tuniv: \llang(A) \to \univ{\llang(A)}$ such that a
+formula $\phi \in \llang(A)$ is preserved under taking submodels if and only if
+$\phi\equiv \phi^\tuniv$.
+\end{claim}
+
+\begin{pfclaim} %{ \ref{c:univ2}.}
+We only consider the case where $\llang = \ofoei$, leaving the other cases to 
+the reader.
+For simple basic formulas, the translation $(-)^\tuniv$ is given as follows:
+\[
+(\dbnfofoei{\vlist{T}}{\Pi}{\Sigma})^{\tuniv} \isdef 
+   \forall z \bigvee_{S \in \vlist{T}\cup \Pi\cup\Sigma} \tau_{S}(z) 
+   \land \dqu z \bigvee_{S \in \Sigma} \tau_{S}(z).
+\]
+\btbs
+\item comment on this translation
+\etbs
+To extend this definition to an arbitrary $\ofoei$-sentence $\phi$, first use Theorem~\ref{thm:bfofoei} to rewrite $\phi$ into an equivalent
+basic form $\bigvee \dbnfofoei{\vlist{T}}{\Pi}{\Sigma}$. By Proposition~\ref{prop:bfofoei-sigmapi} we can assume that each
+$\Sigma \subseteq \Pi \subseteq \vlist{T}$. Then define 
+$\phi^{\tuniv}\isdef \bigvee \dbnfofoei{\vlist{T}}{\Pi}{\Sigma}^{\tuniv}$.
+
+It is easy to see that $\phi^{\tuniv} \in \univ{\ofoei(A)}$, for every sentence
+$\phi \in \ofoei(A)$; but then it is immediate by Claim~\ref{c:univ1} that 
+$\phi$ is preserved under taking submodels if $\phi \equiv \phi^{\tuniv}$.
+
+For the left-to-right direction, assume that $\phi$ is preserved 
+under taking submodels.
+It is easy to see that $\phi$ implies $\phi^{\tuniv}$, so we focus on proving
+the opposite.
+That is, we suppose that $(D,V) \models \phi^{\tuniv}$, and aim to show that 
+$(D,V) \models \phi$.
+ 
+By Theorem \ref{thm:bfofoei} and Proposition~\ref{prop:bfofoei-sigmapi} we may assume without loss of 
+generality that $\phi$ is a disjunction of formulas of the form 
+$\dbnfofoei{\vlist{T}}{\Pi}{\Sigma}$, where $\Sigma \subseteq \Pi \subseteq 
+\vlist{T}$.
+It follows that $(D,V)$ satisfies some  disjunct 
+$   \forall z \bigvee_{S \in \vlist{T}\cup \Pi\cup\Sigma} \tau_{S}(z) 
+   \land \dqu z \bigvee_{S \in \Sigma} \tau_{S}(z)$
+of $\Big(\dbnfofoei{\vlist{T}}{\Pi}{\Sigma}\Big)^{\tuniv}$.
+Expand $D$ with finitely many elements $\vlist{d}$, in one-one correspondence 
+with $\vlist{T}$, and ensure that the type of each $d_{i}$ is $T_{i}$.
+In addition, add, for each $S \in \Sigma$, infinitely many elements 
+$\{ e^{S}_{n} \mid n \in \omega\}$, each of type $S$.
+Call the resulting monadic model $\osmodel' = (D',V')$.
+
+This construction is tailored to ensure that 
+$(D',V') \models \dbnfofoei{\vlist{T}}{\Pi}{\Sigma}$, and so we obtain $(D',V') 
+\models \phi$.
+But obviously, $\osmodel$ is a submodel of $\osmodel'$, whence $(D,V) \models 
+\phi$ by our assumption on $\phi$.
+\end{pfclaim}
+
+The  first part of  the theorem is thus an immediate consequence of 
+Claims~\ref{c:univ1} and~\ref{c:univ2}. By applying Fact \ref{f:decido} to Claim~\ref{c:univ2} we finally obtain that for the three concerned formalisms the problem of deciding whether a formula is preserved under taking submodels is decidable.
+\end{proof}
+
+\clearpage
+
+
+%%%%
+%%%%
+%%%%  QUOTIENTS 
+%%%%
+%%%%
+
+\subsection{Invariance under quotients}
+
+The following theorem states that monadic first-order logic \emph{without}
+equality ($\ofo$) provides the quotient-invariant fragment of both monadic 
+first-order logic with equality ($\ofoe$), and of infinite-monadic predicate 
+logic ($\ofoei$).
+
+\begin{theorem}
+\label{t:qinv}
+Let $\phi$ be a sentence of the monadic logic $\llang(A)$, where $\llang \in 
+\{ \ofoe, \ofoei \}$.
+Then $\phi$ is invariant under taking quotients if and only if there is a 
+equivalent sentence
+% $\phi^{\tmod}$ 
+in $\ofo$.
+Furthermore, it is decidable whether a formula $\phi \in \llang(A)$ has this 
+property or not.
+\end{theorem}
+
+We first state the `easy' part of the first claim of the theorem. 
+Note that in fact, we have already been using this observation in earlier parts
+of the paper.
+
+\begin{proposition}
+\label{p:m-qinv}
+Every sentence in $\ofo$ is invariant under taking quotients.
+\end{proposition}
+
+\begin{proof}
+Let $f: D \to D'$ provide a surjective homomorphism between the models $(D,V)$ 
+and $(D',V')$, and 
+observe that for any assignment $g: \fovar \to D$ on $D$, the composition $f 
+\circ g: \fovar \to D'$ is an assignment on $D'$.
+
+In order to prove the proposition one may show that, for an arbitrary 
+$\ofo$-formula $\phi$ and an arbitrary assignment $g: \fovar \to D$, we have
+\begin{equation}
+\label{eq:m-qinv1}
+(D,V),g \models \phi \text{ iff } (D',V'), f \circ g \models \phi.
+\end{equation}
+We leave the proof of \eqref{eq:m-qinv1}, which proceeds by a straightforward 
+induction on the complexity of $\phi$, as an exercise to the reader.
+\end{proof}
+
+To prove the remaining part of Theorem~\ref{t:qinv}, we start with providing 
+translations from respectively $\ofoe$ and $\ofoei$ to $\ofo$.
+
+\begin{definition}
+\label{d:7-21}
+For $\ofoe$-sentences in basic form we first define
+\[
+   \Big( \dbnfofoe{\vlist{T}}{\Pi} \Big)^{\tmoda} 
+\isdef \bigwedge_{i} \exists x_i. \tau_{T_i}(x_i) \land 
+\forall x. \bigvee_{S\in\Pi} \tau_S(x),
+\]
+and then set $(\bigvee_{i} \alpha_{i})^{\tmoda} \isdef \bigvee 
+\alpha_{i}^{\tmoda}$.
+This translation is extended to the collection of all $\ofoe$-sentences as expected by 
+defining $\phi^{\tmoda} \isdef (\tbas{\phi})^{\tmoda}$, where $\tbas{\phi}$
+is the basic normal form of $\phi$ as given by Theorem~\ref{thm:bnfofoe}.
+
+For $\ofoei$-sentences in basic form we start with defining
+\[
+\Big( \dbnfofoei{\vlist{T}}{\Pi}{\Sigma} \Big)^{\tmodb} 
+\isdef \bigwedge_{i} \exists x_i. \tau_{T_i}(x_i) \land 
+\forall x. \bigvee_{S\in\Sigma} \tau_S(x).
+\]
+The definition is thus extended to the full language $\ofoei$ in the usual way: %given  by using Proposition~\ref{prop:bfofoei-sigmapi}.
+%To extend this definition to 
+given a $\ofoei$-sentence $\phi$, by Theorem~\ref{thm:bfofoei} and
+Proposition~\ref{prop:bfofoei-sigmapi} we compute an equivalent
+basic form $\bigvee \dbnfofoei{\vlist{T}}{\Pi}{\Sigma}$, with 
+$\Sigma \subseteq \Pi \subseteq \vlist{T}$, and finally we set
+$\phi^{\tmodb}\isdef \bigvee \dbnfofoei{\vlist{T}}{\Pi}{\Sigma}^{\tmodb}$.
+\end{definition}
+
+Note that the two translations may give \emph{different} translations for 
+$\ofoe$-sentences.
+Also observe that the $\Pi$ `disappears' in the translation of the formula
+$\dbnfofoei{\vlist{T}}{\Pi}{\Sigma}$.
+
+The key property of these translations is the following.
+
+\begin{proposition}
+\label{p-1P}
+\begin{enumerate}
+\item
+For every one-step model $(D,V)$ and every $\phi \in \ofoe(A)$ we have
+\begin{equation}
+\label{eq-0cr}
+(D,V) \models \phi^{\tmoda} \text{ iff } (D\times \omega,V_\pi) \models \phi.
+\end{equation}
+\item
+For every one-step model $(D,V)$ and every $\phi \in \ofoei(A)$ we have
+\begin{equation}
+\label{eq-1cr}
+(D,V) \models \phi^{\tmodb} \text{ iff } (D\times \omega,V_\pi) \models \phi.
+\end{equation}
+\end{enumerate}
+\noindent
+Here $V_{\pi}$ % =  f^{-1} \circ V$
+ is the induced valuation given by 
+$V_{\pi}(a) \isdef \{ (d,k) \mid d \in V(a), k\in\omega\}$.
+\end{proposition}
+
+\begin{proof}
+We only prove the claim for $\ofoei$ (i.e., the second part of the proposition),
+the case for $\ofoe$ being similar.
+Clearly it suffices to prove \eqref{eq-1cr} for formulas of the form
+$\alpha = \dbnfofoei{\vlist{T}}{\Pi}{\Sigma}$.
+\smallskip
+
+\noindent\fbox{$\Rightarrow$} 
+Assume $(D, V) \models \alpha^{\tmodb}$, we will show that 
+$(D\times \omega, V_\pi) \models \dbnfofoei{\vlist{T}}{\Pi}{\Sigma}$.
+Let $d_i$ be such that $V^{\flat}(d_i) = T_{i}$ in $(D, V)$. 
+It is clear that the $(d_i,i)$ provide \emph{distinct} elements, with each 
+$(d_i,i)$ satisfying $\tau_{T_i}$ in $(D\times\omega, V_{\pi})$ and therefore 
+the first-order existential part of $\alpha$ is satisfied. 
+With a similar argument it is straightforward to verify that the $\qu$-part of 
+$\alpha$ is also satisfied --- here we critically use the observation that
+$\Sigma \subseteq \vlist{T}$, so that every type in $\Sigma$ is witnessed in 
+the model $(D,V)$, and hence witnessed infinitely many times in $(D\times\omega,
+V_\pi)$.
+
+For the universal parts of $\dbnfofoei{\vlist{T}}{\Pi}{\Sigma}$ it is enough
+to observe that, because of the universal part of $\alpha^\tmodb$, \emph{every}
+$d\in D$ realizes a type in $\Sigma$. 
+By construction, the same applies to $(D\times\omega, V_{\pi})$, 
+therefore this takes care of both universal quantifiers.
+\medskip
+		
+\noindent\fbox{$\Leftarrow$} 
+Assuming that $(D\times \omega, V_\pi) \models 
+\dbnfofoei{\vlist{T}}{\Pi}{\Sigma}$,
+we will show that $(D, V) \models \alpha^\tmodb$. 
+The existential part of $\alpha^{\tmodb}$ is trivial. 
+For the universal part we have to show that every element of $D$ realizes a 
+type in $\Sigma$. 
+Suppose not, and let $d\in D$ be such that $\lnot\tau_S(d)$ for all $S\in 
+\Sigma$. 
+Then we have $(D\times\omega, V_\pi) \not\models \tau_S(d,k)$ for all $k$.
+That is, there are infinitely many elements not realising any type in $\Sigma$. 
+Hence we have $(D\times\omega, V_\pi) \not\models \dqu y.\bigvee_{S\in\Sigma} 
+\tau_S(y)$. 
+Absurd, because this formula is a conjunct of 
+$\dbnfofoei{\vlist{T}}{\Pi}{\Sigma}$.
+\end{proof}
+
+\noindent
+We will now show how the theorem follows from this.
+
+\begin{proofof}{Theorem~\ref{t:qinv}}
+Let $\phi$ be a sentence of $\ofoei$ (we only cover the case of $\llang = 
+\ofoei$, the case for $\llang = \ofoe$ is similar).
+We will show that 
+\begin{equation}
+\label{eq:m-qinv2}
+\phi \equiv \phi^{\tmodb} \text{ iff } \text{$\phi$ is invariant under 
+taking quotients}.
+\end{equation}
+The direction from right to left is immediate by Proposition~\ref{p:m-qinv}.
+For the other direction it suffices to observe that any model $(D,V)$ is a 
+quotient of its `$\omega$-product' $(D\times \omega, V_\pi)$, and to 
+reason as follows:
+\begin{align*}
+(D,V) \models \phi 
+   & \text{ iff } (D\times \omega, V_\pi) \models \phi
+   & \text{(assumption on $\phi$)}
+\\ & \text{ iff } (D,V) \models \phi^{\tmodb}
+   & \text{(Proposition~\ref{p-1P})}
+\end{align*}
+
+Finally, it is immediate by the effectiveness of translation  $(\cdot)^{\tmodb}$, decidability of $\ofoei$ (Fact \ref{f:decido}) and \eqref{eq:m-qinv2}
+that it is decidable whether a given $\ofoei$-sentence $\phi$ is invariant under 
+taking quotients or not.
+\end{proofof}
+
+
+In our companion paper \cite{companionWEAK} on automata, we need versions of these results for 
+the monotone and the continuous fragment.
+For this purpose we define some slight modifications of the translations 
+$(\cdot)^{\tmoda}$ and $(\cdot)^{\tmodb}$ which map positive and syntactically 
+continuous formulas to respectively positive and syntactically continuous 
+formulas.
+
+\begin{theorem}
+\label{t:inv1}
+There are effective translations $(\cdot)^{\tmoda}: \ofoe^{+}(A) \to 
+\ofo^{+}(A)$ and $(\cdot)^{\tmodb}: {\ofoei}^{+}(A) \to \ofo^{+}(A)$ such that 
+$\phi \equiv \phi^{\tmoda}$ (respectively, $\phi \equiv \phi^{\tmodb}$) iff 
+$\phi$ is invariant under quotients.
+Moreover, we may assume that 
+% $(\cdot)^{\tmodb}$ restricts to a map
+$(\cdot)^{\tmodb}: \cont{{\ofoei}^{+}(A)}{B} \to \cont{\ofo^{+}(A)}{B}$,
+for any $B \subseteq A$.
+\end{theorem}
+\begin{proof}
+%\begin{definition}
+We define translations $(\cdot)^{\tmoda}: {\ofoe}^{+}(A) \to {\ofo}^{+}(A)$ and 
+$(\cdot)^{\tmodb}: {\ofoei}^{+}(A) \to {\ofo}^{+}(A)$ as follows. 
+For $\ofoe^{+},{\ofoei}^{+}$-sentences in simple basic form we define
+\[\begin{array}{lll}
+     \Big( \posdbnfofoe{\vlist{T}}{\Pi} \Big)^{\tmoda} 
+   & \isdef 
+   & \bigwedge_{i} \exists x_i. \tau^+_{T_i}(x_i) 
+     \land \forall x. \bigvee_{S\in\Pi} \tau^+_S(x),
+\\   \Big( \posdbnfofoei{\vlist{T}}{\Pi}{\Sigma} \Big)^{\tmodb} 
+   & \isdef 
+   & \bigwedge_{i} \exists x_i. \tau^+_{T_i}(x_i) 
+     \land \forall x. \bigvee_{S\in\Sigma} \tau^+_S(x),
+\end{array}\]
+and then we use, respectively, the Corollaries~\ref{cor:ofoepositivenf} and
+\ref{cor:ofoeipositivenf} to extend these translations to the full positive
+fragments $\ofoe^{+}$ and ${\ofoei}^{+}$, as we did in Definition~\ref{d:7-21}
+for the full language.
+%\end{definition}
+
+%\begin{proofof}{Theorem~\ref{t:inv1}}
+We leave it as an exercise for the reader to prove the analogue of 
+Proposition~\ref{p-1P} for these translations, and to show how the first
+statements of the theorem
+%Theorem~\ref{t:inv1} 
+follows from this.
+
+Finally, to see why we may assume that $(\cdot)^{\tmodb}$ restricts to a map 
+from the syntactically $B$-continuous fragment of $\ofoei(A)$ to the 
+syntactically $B$-continuous fragment of $\ofo(A)$, assume that $\phi 
+\in \ofoei(A)$ is continuous in $B \subseteq A$.
+By Corollary~\ref{cor:ofoeicontinuousnf} we may assume that $\phi$ is a
+disjunction of formulas of the form $\posdbnfofoei{\vlist{T}}{\Pi}{\Sigma}$,
+where $B \cap \bigcup \Sigma = \nada$.
+This implies that in the formula $\phi^{\tmodb}$ no predicate symbol $b \in
+B$ occurs in the scope of a universal quantifier, and so $\phi^{\tmodb}$
+is syntactically continuous in $B$ indeed.
+%\end{proofof}
+\end{proof}

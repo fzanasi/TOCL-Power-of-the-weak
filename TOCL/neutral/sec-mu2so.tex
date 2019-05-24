@@ -1,0 +1,716 @@
+\section{Fixpoint operators and second-order quantifiers}
+\label{sec:fixpointToSO}
+
+In this section we will show how to translate some of the mu-calculi that we
+encountered until now into the appropriate second-order logics.
+Given the equivalence between automata and fixpoint logics that we established 
+in Section~\ref{sec:parityaut}, and the embeddings of $\wmso$ and $\nmso$ into,
+respectively, the automata classes $\AutWC(\ofoei)$ and $\AutW(\ofoe)$ that
+we provided in the Sections~\ref{sec:autwmso} and~\ref{sec:autnmso} for the 
+class of tree models, the results here provide the missing link in the 
+automata-theoretic characterizations of the monadic second order logics
+$\wmso$ and $\nmso$:
+\begin{eqnarray*}
+   \mu_{C}(\ofoei) \equiv \wmso 
+   && \qquad  \text{ (over the class of all tree models)} 
+\\ \mu_{D}(\ofoe)  \equiv \nmso 
+   && \qquad  \text{ (over the class of all tree models)}. 
+\end{eqnarray*}
+
+\subsection{Translating $\mu$-calculi into second-order logics}
+
+More specifically, our aim in this Section is to prove the following result.
+
+\begin{theorem}
+\label{t:mfl2mso}
+\begin{enumerate}[(1)]
+\item
+There is an effective translation $(\cdot)^{*}: \mu_{D}\ofoe \to \nmso$
+such that $\phi \equiv \phi^{*}$ for every $\phi \in \mu_{D}\ofoe$; that is:
+\[
+\mu_{D}\ofoe \leq \nmso.
+\]
+% and as a corollary of this we obtain that 
+% \[
+% \mu_{D}\ML \leq \nmso.
+% \]
+
+\item
+There is an effective translation $(\cdot)^{*}: \mu_{C}\ofoei \to \wmso$
+such that $\phi \equiv \phi^{*}$ for every $\phi \in \mu_{C}\ofoei$; that is:
+\[
+\mu_{C}\ofoei \leq \wmso.
+\]
+\end{enumerate}
+\end{theorem}
+
+Two immediate observations on this Theorem are in order.
+First, note that we use the same notation $(\cdot)^{*}$ for both translations; 
+this should not cause any confusion since the maps agree on formulas belonging 
+to their common domain.
+Consequently, in the remainder we will speak of a single translation 
+$(\cdot)^{*}$.
+Second, as the target language of the translation $(\cdot)^{*}$ we will take 
+the \emph{two-sorted} version of second-order logic, as discussed in 
+section~\ref{sec:prel-so}, and thus we will need Fact~\ref{fact:msovs2mso}
+to obtain the result as formulated in Theorem~\ref{t:mfl2mso}, that is,
+for the one-sorted versions of \mso.
+% although in the Preliminaries we state that in this paper we will work with 
+% one-sorted variants of second-order logics.
+We reserve a fixed individual variable $v$ for this target language, i.e., 
+every formula of the form $\phi^{*}$ will have this $v$ as its unique free 
+variable; the equivalence $\phi \equiv \phi^{*}$ is to be understood accordingly.
+
+The translation $(\cdot)^{*}$ will be defined by a straightforward induction on
+the complexity of fixpoint formulas.
+The two clauses of this definition that deserve some special attention are the
+ones related to the fixpoint operators and the modalities.
+
+\paragraph{Fixpoint operators} 
+It is important to realise that our clause for the fixpoint operators
+\emph{differs} from the one used in the standard inductive translation 
+$(\cdot)^{s}$ of $\muML$ into standard $\mso$, where we would inductively
+translate $(\mu p. \phi)^{*}$ as
+\begin{equation}
+\label{eq:st}
+% \exists p\, \big(   p(x) \land \forall y\, (p(y) \to \phi^{s}_{y}) \big)
+\forall p\, \big( \forall w\, (\phi^{*}[w/v] \to p(w)) \to p(v) \big),
+\end{equation}
+which states that $v$ belongs to any prefixpoint of $\phi$ with respect to $p$.
+To understand the problem with this translation in the current context, suppose,
+for instance, that we want to translate some continuous $\mu$-calculus into
+$\wmso$.
+Then the formula in \eqref{eq:st} expresses that $v$ 
+belongs to the intersection of all \emph{finite} prefixpoints of $\phi$, whereas
+the least fixpoint is identical to the intersection of \emph{all} prefixpoints.
+As a result, \eqref{eq:st} does not give the right translation for the formula 
+$\mu p.\phi$ into \wmso.
+
+To overcome this problem, we will prove that least fixpoints in restricted 
+calculi like $\mu_{D}\ofoe$, $\mu_{C}\ofoei$ and many others, in fact satisfy a
+rather special property, which enables an alternative translation.
+We need the following definition to formulate this property.
+
+\begin{definition}
+\label{d:rst}
+Let $F: \pow(S)\to \pow(S)$ be a functional; for a given $X \subseteq S$ we define
+the \emph{restricted} map $F_{\rst{X}}: \pow(S)\to \pow(S)$ by putting 
+$F_{\rst{X}}(Y) \isdef FY \cap X$.
+\end{definition}
+
+The observations formulated in the proposition below provide the crucial insight
+underlying our embedding of various alternation-free and continuous 
+$\mu$-calculi into, respectively, $\nmso$ and $\wmso$.
+
+\begin{proposition}
+\label{p:afmc-rstGen}
+\label{p:keyfix}
+Let $\bbS$ be an LTS, and let $r$ be a point in $\bbS$.
+\begin{enumerate}[(1)]
+\item
+ For any formula $\phi$ with $\mu p. \phi \in \mu_{D}\ofoe$ we have
+\begin{equation}
+\label{eq:foe-d}
+r \in \ext{\mu p.\phi}^{\bbS} \text{ iff there is a noetherian set $X$ such 
+that } r \in \LFP. (\phi^{\bbS}_{p})_{\rst{X}}.
+\end{equation}
+
+\item
+For any formula $\phi$ with $\mu p. \phi \in \mu_{C}\ofoei$ we have
+\begin{equation}
+\label{eq:foei-c}
+r \in \ext{\mu p.\phi}^{\bbS} \text{ iff there is a finite set $X$ such 
+that } r \in \LFP. (\phi^{\bbS}_{p})_{\rst{X}}.
+\end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}
+In fact, the statements in Proposition~\ref{p:keyfix} can be generalised to the
+setting of a fixpoint logic $\mu\oslang$ associated with an arbitrary one-step 
+language $\oslang$.
+\end{remark}
+
+The right-to-left direction of both \eqref{eq:foe-d} and \eqref{eq:foei-c} follow
+from the following, more general, statement, which can be proved by a routine 
+transfinite induction argument.
+
+\begin{proposition}
+% \label{p:afmc-1}
+\label{p:rstfix}
+Let $F:  \pow(S)\to \pow(S)$ be monotone.
+Then for every subset $X \subseteq S$ it holds that $\LFP. F\rst{X}\subseteq 
+\LFP.F$.
+\end{proposition}
+
+The left-to-right direction of \eqref{eq:foe-d} and \eqref{eq:foei-c} 
+will be proved in the next two sections.
+Note that in the continuous case we will in fact prove a slightly stronger
+result, which applies to \emph{arbitrary} continuous functionals.
+% , we discuss this case separately.
+
+\newcommand{\PRE}{\mathit{PRE}}
+The point of Proposition~\ref{p:keyfix} is that it naturally suggests the
+following translation for the least fixpoint operator, as a subtle but important 
+variation of \eqref{eq:st}:
+
+\begin{equation}
+\label{eq:trlmu}
+(\mu p. \varphi)^{*} \df 
+   \exists q\,\Big(\forall  p \sse q.\,
+      \big(p \in \PRE((\varphi^{\bbS}_{p})_{\rst{q}}) \to p(v)\big)\Big),
+\end{equation}
+where $p \in \PRE((\varphi^{\bbS}_{p})_{\rst{q}})$ expresses that $p \sse q$ 
+is a prefixpoint of the map $(\phi^{\bbS}_{p})_{\rst{q}}$, that is:
+\[
+p  \in \PRE((\varphi^{\bbS}_{p})_{\rst{q}}) \df
+\forall w\, \Big(
+( q(w) \land \varphi^{*}[w/v]) \to p(w)
+\Big).
+\]
+
+\paragraph{Modalities}
+Finally, before we can give the definition of the translation $(\cdot)^{*}$, we
+briefly discuss the clause involving the modalities.
+Here we need to understand the role of the \emph{one-step formulas} in the 
+translation.
+First an auxiliary definition.
+
+\begin{definition}\label{def:exp}
+Let $\bbS = \tup{T,R,\tscolors, s_I}$ be a $\pprop$-LTS, $A$ be a set of
+new variables, and $V: A \to \pow(X)$ be a valuation on a subset $X\subseteq T$. 
+The $\pprop\cup A$-LTS $\bbS^{V}\isdef \tup{T,R,\tscolors^V, s_I}$ given by 
+defining the marking $\tscolors^V: T \to \pow{(\pprop \cup A)}$ where
+\[\tscolors^V(s)\isdef  
+\begin{cases} \tscolors(s) & \text{ if } s \notin X \\
+\tscolors(s) \cup \{ a \in A \mid s \in V(a)\}& \text{ else,}
+\end{cases}\]
+is called the $V$-expansion of $\bbS$.
+\end{definition}
+
+The following proposition states that at the one-step level, the formulas that 
+provide the semantics of the modalities of $\mu\ofoe$ and $\mu\ofoei$ can indeed 
+be translated into, respectively $\nmso$ and $\wmso$.
+
+\begin{proposition}
+\label{p:1trl}
+There is a translation $(\cdot)^{\dag}: \ofoei(A) \to \wmso$ such that for every 
+model $\bbS$ and every valuation $V: A \to \pow(R[s_{I}])$:
+\[
+(R[s_{I}],V) \models \al \text{ iff } \bbS^{V} \models \al^{\dag}[s_{I}].
+\]
+Moreover, $(\cdot)^{\dag}$ restricts to first-order logic, i.e., $\al^{\dag}$ is
+a first-order formula if $\al \in \ofoe$.
+\end{proposition}
+
+% \btbs
+% \item
+% Somehow clarify in the notation that $\al^{\dag}$ has exactly one free 
+% individual variable, $v$.
+% \etbs
+
+\begin{proof}
+Basically, the translation $(\cdot)^{\dag}$ \emph{restricts} all quantifiers
+to the collection of successors of $v$.
+In other words, $(\cdot)^{\dag}$ is the identity on basic formulas, it commutes
+with the propositional connectives, and for the quantifiers $\exists$ and $\qu$
+we define:
+\[\begin{array}{lll}
+(\exists x\, \al)^{\dag} &\df& \exists x\, (Rvx \land \al^{\dag})
+\\ (\qu x\, \al)^{\dag}  &\df& \forall p \exists x\, (Rvx \land \neg p(x) 
+    \land \al^{\dag})
+\end{array}\]
+We leave it for the reader to verify the correctness of this definition ---
+observe that the clause for the infinity quantifier $\qu$ is based on the 
+equivalence between $\wmso$ and $\foei$, established by 
+V\"a\"an\"anen~\cite{vaananen77}.
+\end{proof}
+
+\noindent
+We are now ready to define the translation used in the main result of this 
+section.
+
+\begin{definition}
+By an induction on the complexity of formulas we define the following 
+translation $(\cdot)^{*}$ from $\mu\foei$-formulas to formulas of monadic 
+second-order logic:
+\[\begin{array}{lll}
+   p^{*} &\df& p(v)
+\\ (\neg\phi)^{*}        &\df& \neg \phi^{*}
+\\ (\phi\lor\psi)^{*}    &\df& \phi^{*} \lor \psi^{*}
+\\ (\nxt{\al}(\ol{\phi}))^{*} &\df& \al^{\dag}[\phi_{i}^{*}/a_{i} \mid i \in I],
+\end{array}\]
+where $\al^{\dag}$ is as in Proposition~\ref{p:1trl}, and $[\phi_{i}^{*}/a_{i}
+\mid i \in I]$ is the substitution that replaces every occurrence of an atomic
+formula of the form $a_{i}(x)$ with the formula $\phi_{i}^{*}(x)$ (i.e. the 
+formula $\phi_{i}^{*}$, but with the free variable $v$ substituted by $x$).
+
+Finally, the inductive clause for a formula of the form $\mu p.\phi$ is given
+as in \eqref{eq:trlmu}.
+\end{definition}
+
+\begin{proofof}{Theorem~\ref{t:mfl2mso}}
+%\btbs
+%\item
+%For both parts of the theorem we need to verify that 
+%\\ (i) the translation $(\cdot)^{*}$ lands in the correct language, 
+%\\ (ii) the translation $(\cdot)^{*}$ is truth preserving and
+%\\ (iii) the statement about the modal language indeed follows from the 
+%   main statement.
+%\etbs
+First of all, it is clear that in both cases the translation $(\cdot)^{*}$ lands 
+in the correct language.
+For both parts of the theorem, we thence prove that $(\cdot)^{*}$ is truth
+preserving by a straightforward formula induction.
+E.g., for part (2) we need to show that, for an arbitrary formula $\phi\in
+\mu_{C}\ofoei$ and an arbitrary model $\bbS$:
+\begin{equation}
+\label{eq:xxxx1}
+\bbS \mmodels \phi \text{ iff } \bbS \models \phi^{*}[s_{I}].
+\end{equation}
+
+As discussed in the main text, the two critical cases concern the inductive 
+steps for the modalities and the least fixpoint operators. 
+Let $ \oslang^{+} \in \{\ofoe,\ofoei\}$.
+We start verifying the case of modalities. 
+Hence, consider the formula $\nxt{\al}(\varphi_{1},\ldots,\varphi_{n})$ with 
+$\al(a_{1},\ldots,a_{n}) \in \oslang^{+}$. 
+By induction hypothesis, $\phi_\ell \equiv \phi^{*}_\ell$, for $\ell=1,\dots, n$.
+Now, let $\bbS$ be a transition system. We have that
+\begin{align*}
+\bbS \mmodels \nxt{\al}(\varphi_{1},\ldots,\varphi_{n}) \text{ iff } 
+  & (R[s_{I}],V_{\overline{\varphi}}) \models \al(a_{1},\ldots,a_{n})  
+  & \text{( by \eqref{eq:mumod})}
+\\ \text{ iff } 
+  & \bbS^{V_{\overline{\varphi}}} \models \al^{\dag}[s_{I}] 
+  & \text{( by Prop. \ref{p:1trl})}
+\\ \text{ iff } 
+  & \bbS \models \al^{\dag}[\phi_{i}^{*}/a_{i} \mid i \in I][s_{I}] 
+  & \text{( by \eqref{eq:valmod}, Def. \ref{def:exp} and IH)}
+\end{align*}
+
+The inductive step for the least fixpoint operator will be justified by 
+Proposition~\ref{p:keyfix}.
+In more detail, given a formula of the form $\mu x. \psi \in\mu_{Y} \oslang^{+}$,
+with $Y=D$ for $\oslang^{+} =\ofoe$, and $Y=C$ for $\oslang^{+} =\ofoei$, 
+consider the following chain of equivalences:
+\begin{align*}
+% s_{I} \in \ext{\mu p.\psi}^{\bbS} \text{ iff } 
+  & s_{I} \in \ext{\mu p.\psi}^{\bbS} 
+\\ \text{ iff } 
+  & s_{I} \in \LFP. (\psi^{\bbS}_{p})_{\rst{Q}} \text{ for some }
+        \begin{cases} \text{ finite} & \\ \text{ noetherian} & 
+	\end{cases} 
+    \text{set } Q 
+  & \text{( by \eqref{eq:foe-d}/\eqref{eq:foei-c})}
+\\ \text{ iff } 
+  &  s_{I} \in \bigcap \Big\{ P \subseteq Q \mid P \in 
+         \PRE((\psi^{\bbS}_{p})_{\rst{Q}})\Big\} 
+     \text{ for some }
+        \begin{cases} \text{ finite} & \\ \text{ noetherian} & 
+	\end{cases} 
+     \text{set } Q 
+\\ \text{ iff } & 
+    \bbS \models \exists q.\, \Big(\forall p \subseteq q.\,
+       \big(p \in \PRE((\psi^{\bbS}_{p})_{\rst{q}}) \to p(s_{I})\big)
+       \Big)
+\\ \text{ iff } & 
+    \bbS \models (\mu p. \psi)^{*}[s_{I}].
+   & (\text{IH})
+\end{align*}
+This concludes the proof of \eqref{eq:xxxx1}.
+% \btbs
+% \item
+% We finally verify that the statement about the modal languages follows from the
+% main statement of the Theorem.
+% In order to do this, it is enough to check that for any set $Q$ of propositional
+% variables, both $\noe{\mu\ML}{Q}\subseteq\noe{\mu\ofoei}{Q}$ and 
+% $\conoe{\mu\ML}{Q}\subseteq\conoe{\mu\ofoei}{Q}$, and 
+% $\cont{\mu\ML}{Q}\subseteq\cont{\mu\ofoei}{Q}$ and 
+% $\cocont{\mu\ML}{Q}\subseteq\cocont{\mu\ofoei}{Q}$ hold. 
+% But this follows by a straightforward induction on the structure of a formula
+% by noticing that $\Diamond \varphi = \nxt{\al}(\varphi)$ for $\al(a)\isdef 
+% \exists x.a(x) \in \ofoei \cap \ofoe$ and $\Box \varphi = \nxt{\al'}(\varphi)$
+% for $\al'(a)\isdef \forall x.a(x) \in \ofoei \cap \ofoe$.
+% %This conclude the proof of the Theorem.
+% \etbs
+\end{proofof}
+\subsection{Fixpoints of continuous maps}
+
+It is well-known that continuous functionals are \emph{constructive}.
+That is, if we construct the least fixpoint of a continuous functional $F: 
+\pow(S) \to \pow(S)$ using the ordinal approximation $\nada, F\nada, F^2\nada, 
+\ldots, F^{\al}\nada, \ldots$, then we reach convergence after at most $\omega$
+many steps, implying that $\LFP. F = F^{\omega}\nada$.
+We will see now that this fact can be strengthened to the following observation,
+which is the crucial result needed in the proof of Proposition~\ref{p:keyfix}.
+
+\begin{theorem}
+\label{t:fixcont}
+Let $F: \pow(S)\to \pow(S)$ be a continuous functional.
+Then for any $s \in S$:
+\begin{equation}
+\label{eq:fixcont}
+s \in \LFP. F \text{ iff }
+s \in \LFP.F\rst{X}, \text{ for some finite } X \subseteq S.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The direction from right to left of \eqref{eq:fixcont} is a special case of 
+Proposition~\ref{p:rstfix}.
+For the opposite direction of \eqref{eq:fixcont} a bit more work is needed.
+Assume that $s \in \LFP. F$; we claim that there are sets $U_{1},\ldots,U_{n}$,
+for some $n \in \omega$, such that $s \in U_{n}$, $U_{1} \sse_{\omega} F(\nada)$,
+and $U_{i+1} \sse_{\omega} F(U_{i})$, for all $i$ with $1 \leq i < n$.
+
+To see this, first observe that since $F$ is continuous, we have $\LFP. F = 
+F^{\omega}(\nada) = \bigcup_{n\in\omega}F^{n}(\nada)$, and so we may take $n$ to
+be the least natural number such that $s \in F^{n}(\nada)$.
+By a downward induction we now define sets $U_{n},\ldots,U_{1}$, with $U_{i} 
+\sse F^{i}(\nada)$ for each $i$. 
+We set up the induction by putting $U_{n} \isdef \{ s \}$, then $U_{n}
+\sse F^{n}(\nada)$ by our assumption on $n$.
+For $i<n$, we define $U_{i}$ as follows.
+Using the inductive fact that $U_{i+1} \sse_{\omega} F^{i+1}(\nada) = 
+F(F^{i}(\nada))$, it follows by continuity of $F$ that for each $u \in U_{i+1}$
+there is a set $V_{u} \sse_{\omega} F^{i}(\nada)$ such that $u \in F(V_{u})$.
+We then define $U_{i} \isdef \bigcup \{ V_{u} \mid u \in U_{i+1} \}$,
+so that clearly $U_{i+1} \sse_{\omega} F(U_{i})$ and $U_{i} \sse_{\omega}
+F^{i}(\nada)$.
+Continuing like this, ultimately we arrive at stage $i=1$ where we find
+$U_{1} \sse F(\nada)$ as required.
+
+Finally, given the sequence $U_{n},\ldots,U_{1}$, we define 
+\[
+X \isdef  \bigcup_{0<i\leq n} U_{i}.
+\]
+It is then straightforward to prove that $U_{i} \sse \LFP. F\rst{X}$, for each 
+$i$ with $0<i\leq n$, and so in particular we find that $s \in U_{n} \sse \LFP.
+F\rst{X}$.
+This finishes the proof of the implication from left to right in 
+\eqref{eq:fixcont}.
+\end{proof}
+
+\noindent
+As an almost immediate corollary of this result we obtain the second part of 
+Proposition~\ref{p:keyfix}.
+
+\begin{proofof}{Proposition~\ref{p:keyfix}(2)}
+Take an arbitrary formula $\mu p. \phi \in \mu_{C}\ofoei$, then by definition 
+we have $\phi \in \mu_{C}\ofoei \cap \cont{\mu\ofoei}{p}$.
+But it follows from a routine inductive proof that every formula $\psi \in 
+\mu_{C}\ofoei \cap \cont{\mu\ofoei}{\qprop}$ is continuous in each variable 
+in $\qprop$.
+Thus $\phi$ is continuous in $p$, and so the result is immediate by 
+Theorem~\ref{t:fixcont}.
+\end{proofof}
+
+
+% !TEX root = ../00CFVZ_TOCL.tex
+
+\subsection{Fixpoints of noetherian maps}
+
+We will now see how to prove Proposition~\ref{p:keyfix}(1), which is the key 
+result that we need to embed alternation-free $\mu$-calculi such as 
+$\mu_{D}\ofoe$ and $\mu_{D}\ML$ into noetherian second-order logic.
+Perhaps suprisingly, this case is slightly more subtle than the characterisation of
+fixpoints of continuous maps.
+
+We start with stating some auxiliary definitions and results on monotone 
+functionals, starting with a game-theoretic characterisation of their least
+fixpoints~\cite{Ven08}.
+
+\begin{definition}
+\label{d:unfgame}
+Given a monotone functional $F: \pow(S)\to \pow(S)$ we define the 
+\emph{unfolding game} $\UG_{F}$ as follows:
+\begin{itemize}
+\item at any position $s \in S$, $\eloise$ needs to pick a set $X$ such that 
+$s \in FX$;
+\item at any position $X \in \pow(S)$, $\abelard$ needs to pick an element of 
+$X$
+\item all infinite matches are won by $\abelard$.
+\end{itemize}
+A positional strategy $\ystrat: S \to \pow(S)$ for $\eloise$ in $\UG_{F}$ is 
+\emph{descending} if, for all ordinals $\alpha$,
+\begin{equation}
+\label{eq:dec}
+s \in F^{\alpha+1}(\nada) \text{ implies } \ystrat(s) \sse F^{\alpha}(\nada).
+\end{equation}
+\end{definition}
+
+It is not the case that \emph{all} positional winning strategies for $\eloise$ 
+in $\UG_{F}$ are descending, but the next result shows that there always is one.
+
+\begin{proposition}
+\label{p:unfg}
+Let $F: \pow(S)\to \pow(S)$ be a monotone functional. 
+\begin{enumerate}[(1)]
+\item
+For all $s \in S$, $s \in \win_{\eloise}(\UG_{F})$ iff $s \in \LFP. F$;
+\item 
+If $s \in \LFP. F$, then \eloise has a descending winning strategy in 
+$\UG_{F}@s$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Point (1) corresponds to \cite[Theorem 3.14(2)]{Ven08}.
+For part (2) one can simply take the following strategy.
+Given $s \in \LFP.F$, let $\alpha$ be the least ordinal such that $s \in 
+F^{\alpha}(\nada)$; it is easy to see that $\alpha$ must be a successor ordinal,
+say $\alpha = \beta + 1$. 
+Now simply put $\ystrat(s) \isdef  F^{\beta}(\nada)$.
+\end{proof}
+
+\begin{definition}
+\label{d:str-tree}
+Let $F: \pow(S)\to \pow(S)$ be a monotone functional, let $\ystrat$ be a 
+positional winning strategy for $\eloise$ in $\UG_{F}$, and let $r \in S$. 
+Define $T_{\ystrat,r} \sse S$ to be the set of states in $S$ that are 
+$\ystrat$-reachable in $\UG_{F}@r$.
+This set has a tree structure induced by the map $\ystrat$ itself, where the 
+children of $s \in T_{\ystrat,r}$ are given by the set $\ystrat(s)$; we will
+refer to $T_{\ystrat,r}$ as the \emph{strategy tree} of
+$\ystrat$.
+\end{definition}
+Note that a strategy tree $T_{\ystrat,r}$ will have no infinite paths, since we
+define the notion only for a \emph{winning} strategy $\ystrat$.
+
+\begin{proposition}
+\label{p:afmc-2}
+Let $F: \pow(S)\to \pow(S)$ be a monotone functional, let $r \in S$, and let 
+$\ystrat$ be a descending winning strategy for $\eloise$ in $\UG_{F}$.
+Then
+\begin{equation}
+\label{eq:afmc3}
+r \in \LFP. F \text{ implies } r \in \LFP. F\rst{T_{\ystrat,r}}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Let $F,r$ and $\ystrat$ be as in the formulation of the proposition.
+Assume that $r \in \LFP. F$, then clearly $r \in F^{\al}(\nada)$ for some 
+ordinal $\al$; furthermore, $T_{\ystrat,r}$ is defined and clearly we have 
+$r \in T_{\ystrat,r}$.
+Abbreviate $T \isdef T_{\ystrat,r}$.
+It then suffices to show that for all ordinals $\alpha$ we have
+\begin{equation}
+\label{eq:unf1}
+F^{\al}(\nada) \cap T \sse (F\rst{T})^{\alpha}(\nada).
+\end{equation}
+We will prove \eqref{eq:unf1} by transfinite induction.
+The base case, where $\alpha = 0$, and the inductive case where $\alpha$ is a 
+limit ordinal are straightforward, so we focus on the case where $\alpha$ is a 
+successor ordinal, say $\alpha = \beta +1$.
+Take an arbitrary state $u \in F^{\beta+1}(\nada) \cap T$, then we 
+find $\ystrat(u) \sse F^{\beta}(\nada)$ by our assumption \eqref{eq:dec}, and 
+$\ystrat(u) \sse T$ by definition of $T$.
+Then the induction hypothesis yields that 
+$\ystrat(u) \sse (F\rst{T})^{\beta}(\nada)$, and so we have 
+$\ystrat(u) \sse (F\rst{T})^{\beta}(\nada) \cap T$.
+But since $\ystrat$ is a winning strategy, and $u$ is a winning position for 
+$\eloise$ in $\UG_{F}$ by Claim~\ref{p:unfg}(i), $\ystrat(u)$ is a
+legitimate move for $\eloise$, and so we have $u \in F(\ystrat(u))$.
+Thus by monotonicity of $F$ we obtain $u \in 
+F((F\rst{T})^{\beta}(\nada) \cap T)$, and since $u \in T$ 
+by assumption, this means that $u \in (F\rst{T})^{\beta+1}(\nada)$ as 
+required.
+\end{proof}
+
+We now turn to the specific case where we consider the least fixed point of a 
+functional $F$ which is induced by some formula $\phi(p) \in 
+\mu_{D}\oslang$ on some LTS $\bbS$.   
+By Proposition \ref{p:unfg} and Fact~\ref{f:adeqmu}, $\eloise$ has a winning
+strategy in  $\egame(\mu p.\phi(p),\bbS)@(\mu p.\phi(p),s)$ if and only if she
+has a winning strategy in $\UG_{F}@s$ too, where $F \isdef  \phi_{p}^{\bbS}$ is the 
+monotone functional defined by $\phi(p)$. 
+The next Proposition  makes this correspondence explicit when $\oslang =
+\foe$. 
+
+%\newpage
+
+First, we need to introduce some auxiliary concepts and notations.
+Given  a winning strategy   $\ystrat$ for $\eloise$ in $\egame(\mu p. \phi,
+\bbS)@(\mu p. \phi,s)$, we denote by $B(\ystrat)$ the set of all finite 
+$\ystrat$-guided, possibly partial, matches in  $\egame(\psi,\bbS)@(\psi,s)$ in
+which no position of the form $(\nu q. \psi, r)$ is visited. Let 
+$\ystrat$ be a positional winning strategies for $\eloise$ in $\UG_F@s$ and 
+$\ystrat'$ a winning strategy  for her in $\egame(\mu p.\phi,\bbS)@(\mu p.\phi,
+s)$. We call $\ystrat$ and  $\ystrat'$  \emph{compatible} if
+each point in $T_{\ystrat,s}$ occurs on some path belonging to $B(\ystrat')$. 
+
+\begin{proposition}\label{p:unfold=evalgame2}
+Let $\phi(p) \in \mu_{D}\foe{p}$ and $s \in \ext{\mu p.\phi}^{\bbS}$. 
+Then there is a descending winning strategy for $\eloise$ in $\UG_F@s$ 
+compatible with a  winning strategy for $\eloise$ in 
+$\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$
+\end{proposition}
+
+\begin{proof}
+Let $F \isdef  \phi_{p}^{\bbS}$ be the monotone functional defined by $\phi(p)$.
+From $s \in \ext{\mu p.\phi}^{\bbS}$, we get that $s \in \LFP. F$.  
+Applying Proposition~\ref{p:unfg} to the fact that $s \in \LFP. F$ yields that 
+$\eloise$ has a descending winning strategy $\ystrat: S \to \pow{(S)}$ in $\UG_{F}@s$. 
+We define $\eloise$'s strategies $\ystrat'$  in
+$\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$, and $\ystrat^*$ in $\UG_{F}@s$ as follows:
+\begin{enumerate}
+\item 
+In the evaluation games $\egame$, after the initial automatic move, the position 
+of the match is $(\phi,s)$; there $\eloise$ first plays her positional winning 
+strategy $\ystrat_s$ from $\egame(\phi(p),\bbS[p \mapsto \ystrat(s)])@(\phi(p),
+s)$, and we define her move $\ystrat^*(s)$ in the unfolding game $\UG$ as the 
+set of all nodes $t \in \ystrat(s)$ such that there is a $\ystrat_s$-guided 
+match in $B(\ystrat_s)$ whose last position is $(p,t)$.
+\item 
+Each time a position $(p,t)$ is reached in the evaluation games $\egame$, 
+distinguisg cases:
+\begin{enumerate}
+%necessarily 
+\item 
+if $t \in \win_{\eloise}(\UG_{F})$, then $\eloise$ continues with the positional
+winning strategy $\ystrat_t$ from $\egame(\phi(p),\bbS[p \mapsto
+\ystrat(t)])@(\phi(p),t)$, and we define her move $\ystrat^*(t)$ in $\UG$ as the 
+set of all nodes $w \in \ystrat(t)$ such that there is a $\ystrat_t$-guided
+match in $B(\ystrat_t)$ whose last position $(p,w)$;
+\item 
+if $t \notin \win_{\eloise}(\UG_{F})$, then $\eloise$ continues with a random 
+positional strategy and we define $\ystrat^*(t)\isdef \nada$.
+\end{enumerate}
+\item 
+For any position $(p,t)$ that was not reached in the previous steps, $\eloise$ 
+sets $\ystrat^*(t)\isdef \nada$.
+\end{enumerate}
+By construction, $\ystrat'$ and  $\ystrat^*$ are compatible. 
+Moreover, $\ystrat^*(t) \subseteq \ystrat(t)$, for $t \in S$, meaning that 
+$\ystrat^*$ is descending.
+We verify that both $\ystrat'$ and  $\ystrat^*$ are actually winning strategies
+for $\eloise$ in the respective games.
+
+First of all, observe that every position of the form $(p,t)$ reached during
+a $\ystrat'$-guided match, we have $t \in \win_{\eloise}(\UG_{F})$. 
+This can be proved by induction on the number of position of the form $(p,t)$
+visited during an $\ystrat'$-guided match. 
+For the inductive step, assume $w \in \win_{\eloise}(\UG_{F})$. 
+Hence $\ystrat_w$ is winning for $\eloise$ in  $\egame(\phi,\bbS[p \mapsto 
+  \ystrat(w)])@(\phi,w)$. 
+This means that if a position of the form $(p, t)$ is reached, the variable $p$ 
+must be true at $t$ in the model $\bbS[p \mapsto \ystrat(w)]$, meaning that it
+belongs to the set $\ystrat(w)$.
+By assumption $\ystrat$ is a winning strategy for $\eloise$ in $\UG_F$, and 
+therefore any element of $\ystrat(w)$ is again a member of the set 
+$\win_{\eloise}(\UG_{F})$. 
+
+Finally, let $\pi$ be an arbitrary $\ystrat'$-guided match of $\egame(\phi,
+\bbS[p \mapsto \ystrat(w)])@(\phi,w)$. 
+We verify that $\pi$ is winning for $\eloise$. 
+First observe that since $\ystrat$ is winning for her in $\UG_F@s$, the fixpoint 
+variable $p$ is unfolded only finitely many times during $\pi$. 
+Let $(p,t)$ be the last basic position in $\pi$ where $p$ occurs. 
+Then from now on $\ystrat'$ and $\ystrat_t$ coincide, yielding  that the match is 
+winning for $\eloise$. 
+
+%We define \[P_{\last(\pi)}\isdef \{ (p,w) \mid \exists \pi' \in B(\ystrat'), \pi'=\pi \rho(p,w), p\text{ does not occur in }\rho\}.\]
+%Recall that $B(\ystrat')$ is the set of all finite $\ystrat'$-guided, possibly partial, matches in 
+%$\egame$ in which no position of the form 
+%$(\nu q. \psi, r)$ is visited.
+%\\
+%It is not hard to derive from the positionality of $\ystrat'$ that for every $\pi, 
+%\pi' \in B(\ystrat')$ such that $\last(\pi)=\last(\pi')$, it holds that $\pi\rho 
+%\in B(\ystrat')$ if and only if $\pi'\rho \in B(\ystrat')$, for every finite match 
+%$\rho$.
+%\\
+%Now consider  the  strategy $\ystrat^*$ in $\UG_{F}@s$ defined by 
+%\[
+%\ystrat^*(t) \isdef \{ w \mid (p,w) \in P_{\last(\pi)}, \pi\in B(\ystrat'), 
+%\last(\pi)=(\mu p. \phi(p), t)\}.
+%\]
+%\\
+%Compatibility being immediate, 
+We finally verify that $\ystrat^*$ is winning for $\eloise$ in the unfolding
+game $\UG_F@s$. 
+First of all, since $\ystrat'$ is winning, $B(\ystrat')$ does not contain an
+infinite ascending chain of $\ystrat'$-guided matches, and thence any
+$\ystrat^*$-guided match in $\UG_{F}@s$ is finite. 
+It therefore remains to verify that for every $\ystrat^*$-guided match $\pi$ 
+in $\UG_{F}@s$ such that $\last(\pi)$ is an $\eloise$ position, she can always
+move.
+We do it by induction on the length of a $\ystrat^*$-guided match. 
+At each step, we use compatibility and thus keep track of the corresponding 
+position in the evaluation game $\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$. 
+The initial position for her is $s \in S$. Notice that $\ystrat^*(s) = 
+\ystrat(s) \cap B(\xi')$ and therefore $\ystrat'$ corresponds to $\ystrat_s$
+on $\egame(\phi(p),\bbS[p \mapsto \ystrat^*(s)])@(\phi(p),s)$ and it is 
+therefore winning for $\eloise$.
+In particular, this means  that $s \in F(\ystrat^*(s))$.
+Hence, as initial move, $\eloise$ is allowed to play $\ystrat^*(s)$. 
+Moreover any subsequent choice for $\abelard$ is such that there is a winning
+match $\pi \in B(\xi_s)$ for $\eloise$ such that $\last(\pi)=(p,w)$. 
+For the induction step, assume $\abelard$ has chosen $ t \in \ystrat^*(w)$, 
+where $\ystrat^*(w) = \ystrat(w) \cap B(\xi')$, $\ystrat'$ corresponds to the
+winning strategy $\ystrat_w$ on $\egame(\phi(p),\bbS[p \mapsto 
+\ystrat^*(w)])@(\phi(p),w)$, and there is a winning match $\pi \in B(\xi_w)$ 
+for $\eloise$ such that $\last(\pi)=(p,w)$. 
+By construction, $\ystrat'$ corresponds to the winning strategy $\ystrat_t$ 
+for $\eloise$ on $\egame(\phi(p),\bbS[p \mapsto \ystrat(t)])@(\phi(p),t)$. 
+Because $\ystrat^*(t)= \ystrat(s) \cap B(\xi')$, $\ystrat_t$ is also winning
+for her in $\egame(\phi(p),\bbS[p \mapsto \ystrat^*(t)])@(\phi(p),t)$, meaning
+that $s \in F(\ystrat^*(s))$. 
+The move $\ystrat^*(t)$ is therefore admissible, and any subsequent choice for
+$\abelard$ is such that there is a winning match $\pi \in B(\xi_t)$ for 
+$\eloise$ with $\last(\pi)=(p,w)$.
+\end{proof}
+
+%Notice that the evaluation game for the modal $\mu$ calculus can be easily adapted to $\mu_{D}\foe$ and provide a corresponding Adequacy Theorem (Proposition \ref{p:unfold=evalgame}). In particular, we would have that 
+%$\eloise$ has a winning strategy in  $\egame(\mu p.\phi(p),\bbS)@(\mu p.\phi(p),s)$ if and only if $s \in \ext{\mu p.\phi(p)}^{\bbS}$, with $\phi(p) \in \mu_{D}\foe{p}$.
+
+\begin{proofof}{Proposition~\ref{p:keyfix}(1)}
+%    
+%\btbs
+%\item
+%the argument below needs to be thoroughly checked.
+%\etbs
+Let $\bbS$ be an LTS and $\phi(p) \in \mu_{D}\ofoe{p}$. 
+
+The right-to-left direction of \eqref{eq:foe-d} being proved by 
+Proposition \ref{p:rstfix}, we check the left-to-right direction.
+We first verify that winning strategies in evaluation games for noetherian 
+fixpoint formulas naturally induce bundles. 
+More precisely:
+\medskip
+%Given  a winning strategy   $\ystrat$ for $\eloise$ in $\egame(\mu p. \phi,\bbS)@(\mu p. \phi,s)$,  let $B(\ystrat)$ be the set of all finite $\ystrat$-guided, possibly partial, matches in  $\egame(\psi,\bbS)@(\psi,s)$ in which a position of the form $(\nu q. \psi, r)$ is not visited.
+
+\textsc{Claim.}
+% \begin{claim*}\label{p:strategybundledEv}
+Let $B^\bbS(\ystrat)$ be the projection of $B(\ystrat)$ on $S$, that is the set
+of all paths in $\bbS$ that are a projection on $S$ of a $\ystrat$-guided 
+(partial) match in $B(\ystrat)$. Then $B^\bbS(\ystrat)$ is a bundle.
+% \end{claim*}
+\medskip
+
+\begin{pfclaim}
+Assume towards a contradiction that $B^\bbS(\ystrat)$ contains an infinite 
+ascending chain $\pi_{0} \sqsubset \pi_{1} \sqsubset \cdots$. 
+Let $\pi$ be the limit of this chain and consider the set of elements in 
+$B(\ystrat)$ that, projected on $S$, are prefixes of $\pi$. 
+By  K\"{o}nig's Lemma, this set contains an infinite ascending chain whose 
+limit is an infinite $\ystrat$-guided match in $\egame(\mu p. \phi,\bbS)$
+which starts at $(\mu p. \phi,s)$, and of which $\pi$ is the projection on $S$.
+By definition of $B(\ystrat)$,  the highest bound variable of $\mu p. \phi$ 
+that gets unravelled infinitely often in $\rho$ is a $\mu$-variable, meaning 
+that the match is winning for $\abelard$, a contradiction.
+\end{pfclaim}
+
+Assume that $s \in \ext{\mu p.\phi}^{\bbS}$, and let $F \isdef  \phi_{p}^{\bbS}$ be the monotone functional defined by $\phi(p)$.
+By Proposition \ref{p:unfold=evalgame2}, $\eloise$ has a winning strategy 
+$\ystrat'$ in $\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$ compatible with a descending winning strategy $\ystrat$ in $\UG_{F}@s$.
+By Proposition~\ref{p:afmc-2}, we obtain 
+that $s \in \LFP. F\rst{T_{\ystrat,s}}$. 
+Because of compatibility, every node in $T_{\ystrat, s}$ occurs on some path of 
+$B(\ystrat')$. 
+From the Claim
+% Claim \ref{p:strategybundledEv}
+we known that $B^\bbS(\ystrat')$ is a bundle, meaning that  $T_{\ystrat, s}$ is
+noetherian as required. 
+\end{proofof}

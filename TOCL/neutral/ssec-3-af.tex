@@ -1,0 +1,35 @@
+% !TEX root = ../00CFVZ_TOCL.tex
+\subsection{Automata to formulas}
+   \label{sec:parity-to-mc}
+
+It is well-known that there are effective translations from automata to formulas
+and vice versa~\cite{ALG02}.
+The results on $\oslang$-automata that we need in this paper are the 
+following.
+
+\begin{theorem}\label{t:autofor}
+There is an effective procedure that, given an automaton $\bbA$ in 
+$\Aut(\oslang)$, returns a formula $\xi_{\bbA} \in \mu\oslang$ which satisfies
+the following properties:
+\begin{enumerate}[(1)]
+    
+\item $\xi_{\bbA}$ is equivalent to $\bbA$;
+
+\item $\xi_{\bbA} \in \mu_{D}\oslang$ if $\bbA \in \AutW(\oslang)$;
+
+\item $\xi_{\bbA} \in \mu_{C}\oslang$ if $\bbA \in \AutWC(\oslang)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}\label{t:fortoaut}
+Let $\oslang$ be a on-step language that is closed under taking conjunctions and 
+disjunctions.
+Then there is an effective procedure that, given a formula $\xi \in \mu\oslang$
+returns an automaton $\bbA_{\xi}$ in $\Aut(\oslang)$, which satisfies the 
+following properties:
+\begin{enumerate}[(1)]
+\item $\bbA_\xi$ is equivalent to $\xi$;
+\item  $\bbA_\xi \in \AutW(\oslang)$ if $\xi \in \mu_{D}\oslang$;
+\item  $\bbA_\xi \in \AutWC(\oslang)$ if $\xi \in \mu_{C}\oslang$.
+\end{enumerate}
+\end{theorem}
