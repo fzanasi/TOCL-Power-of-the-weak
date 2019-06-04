@@ -31,18 +31,9 @@ to $\phi$ on the class of trees.
 % \models {\phi}$.
 \end{theorem}
 
-The proof proceeds by induction on the complexity of
-$\phi$. For the inductive steps, we will need to verify that the class of
-$\wmso$-automata is closed under the boolean operations and finite projection.
-The latter closure property requires most of the work: we devote
-Section \ref{sec:simulationwmso} to a simulation theorem that puts
-$\wmso$-automata in a suitable shape for the projection construction.
-%
-To this aim, it is convenient to define a closure operation on classes of 
-tree models corresponding to the semantics of $\wmso$ quantification.
-The inductive step of the proof of Theorem \ref{t:wmsoauto} will show that 
-the classes that are recognizable by $\wmso$-automata are closed under this 
-operation.
+{\color{blue} The proof of Theorem~\ref{t:wmsoauto}, provided at the end of this section, goes by induction on the complexity of
+$\phi$. The case $\phi = \exists p. \psi$ requires most of the work. First, we need to define a closure operation on classes of 
+tree models corresponding to the semantics of $\wmso$ quantification.}
 
 \begin{definition}\label{def:tree_finproj-w}
 Fix a set $\pprop$ of proposition letters, a proposition letter $p \not\in P$ 
@@ -60,13 +51,15 @@ projection over $p$} if it contains the class ${{\finexists} p}.\mathsf{C}$
 whenever it contains the class $\mathsf{C}$ itself.
 \end{definition}
 
+{\color{blue} The case $\phi = \exists p. \psi$ of the proof of Theorem \ref{t:wmsoauto} will require a \emph{projection construction} that, given a $\wmso$-automaton
+$\bbA$, provides one recognising ${\finexists p}.\TMod(\bbA)$. In other words, this will  prove that 
+the collection of classes that are recognisable by $\wmso$-automata is closed under finitary projection. The next subsection is devoted to a preliminary result, allowing to put $\wmso$-automata in a suitable shape for the projection construction.} %As a preliminary step, this will require a simulation  we  subsection \ref{sec:simulationwmso} to a simulation theorem that puts $\wmso$-automata in a suitable shape for the projection construction}
+
 \subsection{Simulation theorem for $\wmso$-automata}
 \label{sec:simulationwmso}
 
 \noindent
-Our next goal is a \emph{projection construction} that, given a $\wmso$-automaton
-$\bbA$, provides one recognizing ${\finexists p}.\TMod(\bbA)$.
-For $\smso$-automata, the analogous construction crucially uses the following
+For $\smso$-automata, the analogous projection construction {\color{blue}(mimicking $\smso$ quantification)} crucially uses the following
 \emph{simulation theorem}: every $\smso$-automaton $\bbA$ is equivalent to a
 \emph{non-deterministic} automaton $\bbA'$ \cite{Walukiewicz96}.
 Semantically, non-determinism yields the appealing property that every node of
@@ -86,7 +79,7 @@ into an equivalent one $\bbA^{\f}$ that behaves non-deterministically on a
 \emph{finite} portion of any accepted tree.
 
 For $\smso$-automata, the simulation theorem is based on a powerset construction:
-if the starting automaton has carrier $A$, the resulting non-deterministic
+if the starting automaton has set of states $A$, the resulting non-deterministic
 automaton is based on ``macro-states'' from the set $\shA$.
 Analogously, for $\wmso$-automata we will associate the non-deterministic
 behaviour with macro-states.
@@ -94,7 +87,7 @@ However, as explained above, the automaton $\bbA^{\f}$ that we construct has to
 be non-deterministic just on finitely many nodes of the input and may behave as
 $\bbA$ (i.e. in ``alternating mode'') on the others.
 To this aim, $\bbA^{\f}$ will be ``two-sorted'', roughly consisting of a copy of
-$\bbA$ (with carrier $A$) together with a variant of its powerset construction,
+$\bbA$ (with set of states $A$) together with a variant of its powerset construction,
 based both on $A$ and $\shA$.
 For any accepted $\bbT$, the idea is to make any match $\pi$ of
 $\mc{A}(\bbA^{\f},\bbT)$ consist of two parts:
