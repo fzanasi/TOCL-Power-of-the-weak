@@ -15,7 +15,7 @@ returns an automaton $\bbA_{\xi}$ in $\Aut(\oslang)$, which satisfies the
 following properties:
 \begin{enumerate}[(1)]
 \item $\bbA_\xi$ is equivalent to $\xi$;
-\item  $\bbA_\xi \in \AutW(\oslang)$ if $\xi \in \mu_{D}\oslang$;
+\item  $\bbA_\xi \in \AutW(\oslang)$ if $\xi \in \mu_{N}\oslang$;
 \item  $\bbA_\xi \in \AutWC(\oslang)$ if $\xi \in \mu_{C}\oslang$.
 \end{enumerate}
 \end{theorem}
@@ -25,7 +25,7 @@ As in the case of the translation from automata to formulas, the proof of part
 that any fixpoint modal formula can be translated into an equivalent modal 
 automaton (see for instance~\cite[Section 6]{Ven08}). 
 The point is to show that this standard construction transforms formulas from 
-$\mu_{D}\oslang$ and $\mu_{C}\oslang$ into automata of the right kind.
+$\mu_{N}\oslang$ and $\mu_{C}\oslang$ into automata of the right kind.
 In fact, we will confine our attention to proving the (second and) third part
 of the theorem; the fact that the input formula belongs to the alternation-free
 fragment of $\mu\oslang$ enables a slightly simplified presentation of the 
@@ -45,14 +45,14 @@ every bound variable is guarded.
 There is a standard construction, going back to \cite{Koz83}, which transforms
 any formula $\xi$ in $\mu\oslang$ into an equivalent guarded $\xi^\flat \in 
 \mu\oslang$, and it is easily verified that the construction $(\cdot)^{\flat}$
-restricts to the fragments $\mu_{D}\oslang$ and $\mu_{C}\oslang$.
-It therefore suffices to show that any guarded formula in $\mu_{D}\oslang$
+restricts to the fragments $\mu_{N}\oslang$ and $\mu_{C}\oslang$.
+It therefore suffices to show that any guarded formula in $\mu_{N}\oslang$
 ($\mu_{C}\oslang$, respectively) can be transformed into an equivalent
 continuous-weak $\oslang$-automaton.
 
 In the remainder of this section we will show that any guarded formula $\xi$ 
 in $\mu_{C}\oslang$ can be transformed into an equivalent continuous-weak 
-$\oslang$-automaton $\bbA_{\xi}$; the analogous result for $\mu_{D}\oslang$ will
+$\oslang$-automaton $\bbA_{\xi}$; the analogous result for $\mu_{N}\oslang$ will
 be obvious from our construction.
 
 We will prove the result by induction on the so-called weak alternation depth

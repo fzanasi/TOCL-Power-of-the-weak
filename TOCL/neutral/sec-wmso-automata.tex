@@ -31,9 +31,13 @@ to $\phi$ on the class of trees.
 % \models {\phi}$.
 \end{theorem}
 
-{\color{blue} The proof of Theorem~\ref{t:wmsoauto}, provided at the end of this section, goes by induction on the complexity of
-$\phi$. The case $\phi = \exists p. \psi$ requires most of the work. First, we need to define a closure operation on classes of 
-tree models corresponding to the semantics of $\wmso$ quantification.}
+{\color{blue} 
+The proof of Theorem~\ref{t:wmsoauto}, provided at the end of this section, 
+proceeds by induction on the complexity of $\phi$. 
+The case $\phi = \exists p. \psi$ requires most of the work.
+First, we need to define a closure operation on classes of tree models 
+corresponding to the semantics of $\wmso$ quantification.
+}
 
 \begin{definition}\label{def:tree_finproj-w}
 Fix a set $\pprop$ of proposition letters, a proposition letter $p \not\in P$ 
@@ -75,8 +79,11 @@ Now, in the case of $\wmso$-automata we are interested in guessing
 \emph{finitary} $p$-variants, which requires $f$ to be functional only on a
 \emph{finite} set of nodes.
 Thus the idea of our simulation theorem is to turn a $\wmso$-automaton $\bbA$
-into an equivalent one $\bbA^{\f}$ that behaves non-deterministically on a
-\emph{finite} portion of any accepted tree.
+into an equivalent device $\bbA^{\f}$ {\color{blue} that consists of an initial, 
+non-deterministic part, together with a final part which is a copy of the 
+(generally alternating) automaton $\bbA$ itself; in this way we can make sure
+that $\bbA^{\f}$ behaves non-deterministically on a \emph{finite} part of 
+any accepted tree.}
 
 For $\smso$-automata, the simulation theorem is based on a powerset construction:
 if the starting automaton has set of states $A$, the resulting non-deterministic
@@ -107,8 +114,8 @@ Therefore successful runs of $\bbA^{\noet}$ will have the property of processing
 only a \emph{finite} amount of the input with $\bbA^{\noet}$ being in a 
 macro-state and all the rest with $\bbA^{\noet}$ behaving exactly as $\bbA$.
 We now proceed in steps towards the construction of $\bbA^{\noet}$. 
-First, recall from Definition \ref{def:basicform-ofoe} that a \emph{$A$-type} is
-just a subset of $A$. 
+First, recall from Definition \ref{def:basicform-ofoe} that an \emph{$A$-type}
+is just a subset of $A$. 
 We now define a notion of liftings for sets of types, which is instrumental in
 translating the transition function from states on macro-states.
 
@@ -127,7 +134,7 @@ This definition is extended to sets of $A$-types by putting $\lift{\Sigma}
 The distinction between empty and non-empty elements of $\Sigma$ is to ensure 
 that the empty type on $A$ is lifted to the empty type on $\pow A$. 
 Notice that the resulting set $\lift{\Sigma}$ is either empty or 
-contains exaclty one $\pow A$-type.
+contains exactly one $\pow A$-type.
 This property is important for functionality, see below.
 
 Next we define a translation on the sentences associated with the transition
@@ -453,6 +460,7 @@ Let $\bbA = \tup{A, \tmap, \Omega, a_I}$ be a parity automaton on alphabet
 $\p(\pprop \cup \{p\})$.
 We define the automaton ${{\exists} p}.\bbA = \tup{A, \tmapProj, \Omega, a_I}$ 
 on alphabet $\p\pprop$ by putting
+\marginpar{\fbox{\color{red}YV: see mail}}
 \begin{equation*}
 % \nonumber to remove numbering (before each equation)
   \tmapProj(a,c) \ \df \ \tmap(a,c) \qquad \qquad

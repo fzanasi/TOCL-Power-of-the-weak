@@ -1,0 +1,163 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf830
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red25\green25\blue25;}
+{\*\expandedcolortbl;;\cssrgb\c12941\c12941\c12941;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww15580\viewh9960\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs20 \cf2 \expnd0\expndtw0\kerning0
+Reviewer(s)' Comments to Author:\
+Referee: 1\
+\
+Recommendation: Needs Minor Revision\
+\
+Comments:\
+The Power of the Weak\
+\
+This submission studies equivalences between fragments of the mu calculus and bisimulation invariant fragments of MSO over abitrary LTSs (as opposed to binary trees where the correspondence between alternation-free mu claculus and WMSO is known). In particular, the authors a) give a syntactic characterisation of the fragment of the mu calculus that is equivalent to WMSO (so called continuous fragment), and b) define a fragment of MSO, the noetherian fragment, that is equally expressive on LTS as the alternation free mu calculus.\
+\
+\
+Another contributions of this paper is to highlight some of the subtle differences in expressivity of fragments of muML and other logics when interpreted on LTSs vs binary trees. This is a healthy reminder of an easily ignored issue.\
+\
+I very much like the presentation of MSO as mu calculus/automata with the modalities replaces with a one-step logic that uses equality (bottom of page 3). I don't know whether this is a novel insight, but it's the first time I see it, and I find it enlightening and indeed of independent interest.\
+\
+Significance and potential impact\
+In brief, the results presented in the submission are without doubt interesting.\
+However, their potential impact is, in my opinion, reduced by the lack of didactic care throughout the paper. Indeed, while the authors take very seriously the task of convincing the reader that the results are correct, they do not take the time to explain what properites the various fragments are able to express. The reader is given the syntactic definitions followed by over 30 pages of very technical developments, without any intuition or examples of what kind of properties can be expressed with the defined fragments. Hence all but the most dedicated readers are likely to be left with very little to take home.\
+\
+In my opinion, the readership of this paper could be widened beyond those who already understand the involved fragments well by taking more care to explain the fragments, giving enlightening examples throughout, and guiding the reader through the proofs. I for one, am very interested in the results presented, and could conceivably use some of these ideas in my own work, but even after spending significant time with this paper am not able to tell you what properties are or are not expressible with these fragments, and therefore am unlikely to be able to work with them.\
+\
+\
+Correctness\
+The results seem plausible and the technical development is written with arduous rigour, which makes the proofs look correct. Unfortunately the technical development is not acompanied by sufficient explanations and intuitions to guide the reader through the proof, so I was unable to check them myself.\
+\
+\
+Overall, this is a solid paper with interesting, rigorously presented results. It could probably be published as it is, but I believe it to be in the interest of the community for these results to be more accessible (and, as a by-product, verifiable). Indeed, if the authors were to add enlightening examples to illustrate the characterisations they define, and put additional effort into guiding the reader through the technical developments, then the readers of this paper will hopefully also be able to enjoy these nice results.\
+With this in mind I suggest the following revisions:\
+- Carefully constructed examples of noetherian property and non-noetherian properties, continuous, cocontinuous and non-continuous and non-cocontinuous properties, with a discussion of their intersection and why they collapse on binary trees, whether they collapse on any class of fixed-arity tree etc.\
+- More intuitive explanations guiding the reader through the proofs.\
+- Some indication of which proofs are "as expected" (for example, unless I missed something, there's nothing surprising or particularly difficult in the construcitons of Section 4? If there is, the difficulties should be highlighted), and where novel ideas are used.\
+\
+Inline comments.\
+Abstract\
+"are equivalent modulo bisimilarity on binary trees" \
+- I find this statement confusing. If you have a binary tree with left and right children, doesn't bisimilarity imply equivalence?\
+\
+Introduction\
+\
+Why does D indicate alternation free mu calculus?\
+\
+"variables bound my least fixpoint operators cannot occur in subformulas 'controlled' by a greatest fixpoint operator and vice-versa"\
+--> cannot occur *free*\
+or "a least and greatest fixpoint variable can not occur free in the same subformula" (at least I think that's equivalent)\
+\
+"our best model-checking algorithms for muML are exponential"\
+--> This is no longer the case. See Calude et al's quasi-polynomial and fixed-parameter tractability results for example.\
+\
+"as soon as we allow for infinite branching..."\
+- You could, perhaps dvelve a bit more on infinite vs finite branching and bisimulation invariance. Intuitively, don't you get infinite branching "for free" in the following sense: the subformulas of a muML formulas can only distinguish a finite number of equivalence classes, so infinitely branching LTSs are indistuingishable from finitely branching ones from the ptw of a muML formula.\
+\
+\
+\
+"a new modal logic mu_cML"\
+- why c? Oh, you explain a paragraph later.\
+\
+- Can you provide an intuition of what is expressible by a mu_cML vs mu_dML?\
+\
+"bundle of paths"\
+- ??\
+\
+"restriction to finitely branching"\
+- do you mean fixed branching? Please clarify what happens in the case of unbounded but finite branching? Is it the same as infinite branching?\
+\
+"... disappears once we focus on the bisimulation-invariant part"\
+- Isn't this a consequence of finite bisimulation invariant formulas not being able to distuinguish infinite branching? I suppose the new results also say this, but it seems like this is a more general property of bisimulation invariance.\
+\
+\
+\
+Section 3.\
+While this section is beautifully precise and rigorous, it is very dense and an arduous section to read.\
+In particular it suffers from a lack of examples to lead the intuition of the reader through the technical development. Could you give examples of monotone, B-continuous and B-cocontinuous formulas?\'a0 Can you give a simple example of a (syntactically) monotone and non-monotone formula that are semantically equivalent? Same quesiton for\'a0 B-(co)continuity. And examples of semantically non-monotone, and B-(co)continuous formulas?\
+\
+\
+Definition 3.1. Try to be consistent with using italics on the terms being defined.\
+monadic predicate -> no italics\
+- the phrasing is a bit ambiguous regarding whether one-step formulas are defined or being defined.\
+\
+Definition 3.8 \
+"... in the condition above, we then obtain"\
+-the different sentence structure makes the mapping between the two analoguous cases difficult to parse. Rephrasing would make it easier to read.\
+\
+Definition 3.10 "for any g"\
+- all or some?\
+\
+basic form formula\
+- this looks like a typo, i.e. that \\Pi should appear instead of one of the \\Sigma. I take it it's not a typo. Is there a way to rephrase this to make it less confusing? For example bring the explanation of the intuition closer to this? By the way, the intuition sounds a lot like Walukiewicz's disjunctive form for the mu calculus. Maybe comment on the relaiton if it's relevant? Or maybe it will come up later with the mu calculus?\
+centered equation\
+- T_i is not defined, probably the s \\in \\Sigma should be something else? i?\
+\
+"any valuation violating this constraint can be reduced to a valuation satisfying it, without sacrificing the truth of psi"\
+-I don't understand this sentence, and suggest rephrasing.\
+\
+Proposition 3.15 \\psi^dot was defined in Theorem 3.11 one page ago -- it would be helpful to recall what it is at this point, and/or point to where it is defined.\
+\
+Section 3.2.\
+First paragraph. "In light of hte results therein..."\
+- I don't understand this sentence.\
+\
+"Intuitively, weakness forbids an automaton to register non-trivial properties concerning the vertical 'dimention'..."\
+- Could you provide an example of what you mean by 'property concerning the vertical dimention'\
+\
+Section 3.3.\
+Example 3.24 This is a helpful example. The paper could use many more of these throughout.\
+\
+Section 3.4.\
+I found this section unnecessarily difficult to parse. The idea is fairly intuitive: we have logics obtained (roughly) by replacing in the traditional mu-calculus the typical modalities with arbitrary modalities (or 'one step languages'); here we take the standard mu-calculus automata, where the modalities become part of the transitions, and replace the standard modalities with the new ones to obtain automata for the new logics.\
+\
+It would be very helpful if the authors could:\
+- emphasise the intuition of what's going on\
+- highlight whether technical details (like the normal forms) are just necessary to formalise this intuition, or whether they are necessary to get around some genuine difficulties that the unguarded reader might not be expecting.\
+\
+Definition 3.34 What's a cluster? What is the highest one? What is an active state? I suddenly feel like I've missed some definitions. Ok, so these were defined four pages ago. Given the density of those four pages, that feels like a long time ago. I'm not sure there's anything to be done to avoid this gap -- but perhaps at least point the reader to where the definitions are or gently recall what they were about.\
+\
+section 3.5\
+"we need the on-step language to be closed under conjunction and disjunction"\
+- could you comment a bit more on this? The differences in expressivity/conciseness when we restrict alternations in some way are very interesting, and given the generality of the automata construction and logics you consider, it seems like it could be interesting to also (one day) consider the alternation mode as a potential parameter. I'm curious about why your set-up forces the restriction to alternating automata.\
+\
+\
+Section 4.\
+Theorem 4.2.\
+- It is not clear how much of the proof you intend to give. Perhaps be a bit more explicit about whether "the proof proceeds by induction..." is an overview of a proof that will be given in detail later, or is this all that the reader will get, plus the simulation theorem?\
+\
+Section 4.1\
+"carrier A"\
+- here and elsewhere, what is a carrier?\
+\
+The opening explanation is very helpful here. However I am struggling with understanding the notion of "non-deterministic in a finite number of places and otherwise alternating" because intuitively non-determinism should be a special case of alternation. Is there anything you could add the the explanation to align it with this intuition?\
+\
+Section 5.\
+\
+"P)-labeled trees"\
+\
+modelss -> models\
+\
+Definition 5.3.\
+- (same as everywhere) This would be a nice spot for explaining what a noetherian variant of T might look like, preferably with an example, and what kinds fo collections of classes of tree models are closed under noetherian projections.\
+\
+Sections 6 and 7 make for difficult reading without an intuition of what noetherian and continuous properties look like. I ran out of steam, and time, and don't have inline comments on these sections.\
+\
+\
+\
+\
+\
+\
+Additional Questions:\
+Please help ACM create a more efficient time-to-publication process: Using your best judgment, what amount of copy editing do you think this paper needs?: None\
+\
+Most ACM journal papers are researcher-oriented. Is this paper of potential interest to developers and engineers?: No\
+\
+\
+\
+\
+}

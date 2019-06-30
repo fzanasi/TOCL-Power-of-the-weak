@@ -13,7 +13,7 @@ translation of) a modal formula:
 \label{eq:vB}
 \ML \equiv \fo/{\bis}  \qquad  \text{ (over the class of all LTSs)}.
 \end{equation}
-Over the years, a wealth of variants of the Characterisation Theorem have been
+Over the years, a wealth of variations of the Characterisation Theorem have been
 obtained.
 For instance, van Benthem's theorem is one of the few
 preservation results that transfers to the setting of finite
@@ -35,7 +35,7 @@ For this reason, only bisimulation-invariant properties are relevant.
 Seen in this light, \eqref{eq:vBGeneral} is an \emph{expressive completeness} 
 result: all the relevant properties expressible in $\yvlang$ (which is generally
 some rich yardstick formalism), can already be expressed in a (usually
-computationally more feasible) fragment $M$.
+computationally more feasible) modal fragment $M$.
 
 Of special interest to us is the work~\cite{Jan96}, which extends van Benthem's
 result to the setting of \emph{second-order} logic, by proving that the 
@@ -49,69 +49,65 @@ basic modal logic with least- and greatest fixpoint operators:
 The aim of this paper is to study the fine structure of such connections between
 second-order logics and modal $\mu$-calculi, obtaining variations of the
 expressiveness completeness results \eqref{eq:vB} and \eqref{eq:JW}.
-Our departure point is the following result, from \cite{ArnNiw92}.
-\begin{equation}
-\label{eq:weakbinary}
-\AFMC^{2} \equiv \wmso  \qquad  \text{ (over the class of binary trees)}.
-\end{equation}
-It relates two variants of $\muML$ and standard $\mso$ respectively. 
-The first, $\AFMC^{2}$ is the \emph{alternation-free} fragment of the modal 
-$\mu$-calculus, or to be precise: of the version of $\muML$ with two modal 
-operators referring to left- and right successors, respectively, instead of 
-the existential ($\Diamond$) and universal $(\Box$) modalities ranging over the 
-unranked collection of successors.
-The ``alternation-free'' constraint means that no least fixpoint variable of a 
-formula can have a free occurrence in a subformula that is  ``controlled'' by a
-greatest fixpoint operator, and viceversa. 
 
-\btbs
-\item
-following text to be modified 
-\etbs
+Our departure point is a result from \cite{ArnNiw92} for the class of 
+\emph{binary} trees.
+Their setting is somewhat different from ours; in particular, since their trees
+have explicit functions accessing the left- and right successor of a node,
+the notion of bisimilarity trivialises to the isomorphism relation.
+Nevertheless, the key observation of Arnold \& Niwi{\'n}nski is to link the 
+\emph{alternation-free fragment} of a modal $\mu$-calculus to so-called 
+\emph{weak} $\mso$, the version of monadic second-order logic where second-order
+quantification is restricted to finite sets.
+Here, the alternation-free constraint means that only trivial interactions 
+between least- and greatest fixpoint operators are permitted (more 
+precise definitions will be provided in Section~\ref{s:mso-mu}).
 
-The fact that our best model-checking algorithms for $\muML$ are exponential in
-the alternation depth of fixpoint operators 
-\cite{EmersonL86,DBLP:conf/cav/LongBCJM94} makes $\AFMC$ of special interest for
-applications. 
-The second-order formalism appearing in \eqref{eq:weakfinite} is \emph{weak}
-monadic second-order logic (see e.g. \cite[Ch. 3]{ALG02}), a variant of standard
-$\mso$ where second-order quantification ranges over finite sets only. 
-The interest in $\wmso$ is also justified by applications in software 
-verification, in which it often makes sense to only consider finite portions of 
-the domain of interest. 
-\medskip
-
-On the basis of the equations \eqref{eq:JW} and \eqref{eq:weakfinite} it is 
-natural to conjecture that 
+On the basis of the results by Janin \& Walukiewicz and by Arnold \& 
+Niwi{\'n}ski it is natural to conjecture that 
 \begin{equation}
 \label{eq:weakfinite}
-\AFMC \equiv \wmso  \qquad  \text{ (over the class of finitely branching trees)},
+\AFMC \equiv \wmso/{\bis}  \qquad  \text{ (over the class of finitely 
+branching trees)},
 \end{equation}
-\btbs
-\item where the alternation-free XXXX $\mudML$ is defined as the 
-fragment XXXX
-\item and it was shown in XXXX that \eqref{eq:weakfinite} indeed holds.
-\etbs
-Equation \eqref{eq:weakfinite} offers only a very narrow comparison of the
-expressiveness of these two logics. 
-The equivalence is stated on finitely branching trees, whereas \eqref{eq:vB} and
-\eqref{eq:JW} work at the level of arbitrary LTSs. 
+where a tree is said to be \emph{finitely branching} if each node has only 
+finitely many immediate successors, and the logic $\AFMC$ is the 
+alternation-free fragment of $\muML$, or, as we shall explain futher on, the 
+`noetherian' version of the modal $\mu$-calculus.
+Note that this logic $\AFMC$ is a very natural fragment of the full 
+$\mu$-calculus; in particular, since the alternation depth of a fixpoint formula 
+is one of the key parameters that determine the complexity of model checking 
+algorithms for $\muML$~\cite{calu:deci17},
+the alternation-free fragment is of special interest for applications.
+Similarly, \emph{weak} $\mso$, the logic featuring on the right-hand side of 
+\eqref{eq:weakfinite}, is a well-known variation of standard $\mso$, and it also
+has been studied in the setting of applications in software verification (see 
+e.g. \cite[Ch. 3]{ALG02}).
+
+In other words, \eqref{eq:weakfinite} is an interesting expressive completeness 
+statement, linking two well-known logical systems.
+Nevertheless, while we will show that \eqref{eq:weakfinite} holds indeed, our
+investigations take a wider scope.
+Note that \eqref{eq:weakfinite} only offers a comparison of the logics $\AFMC$
+and $\wmso$ on finitely branching trees, whereas \eqref{eq:vB} and \eqref{eq:JW} 
+work at the level of arbitrary models. 
 In fact, it turns out that the picture in the more general setting is far more
 subtle. 
-First of all, we know that $\AFMC \not\equiv \wmso/{\bis}$ already on (arbitrary) trees, because the class of well-founded trees, definable by the formula $\mu x.\square x$ of $\AFMC$, is not $\wmso$-definable. 
-Moreover, whereas $\wmso$ is a fragment of $\smso$ on finitely branching trees ---in fact, 
-on all finitely branching trees--- as soon as we allow for infinite branching 
-the two logics turn out to have \emph{incomparable} expressive power, 
-see~\cite{CateF11,Zanasi:Thesis:2012}. 
-For instance, the property ``each node has finitely many successors'' is 
-expressible in $\wmso$ but not in $\smso$.
+First of all, we know that already at the level of arbitrary trees, the equation
+$\AFMC \equiv \wmso/{\bis}$ is \emph{false}, since the class of conversely
+well-founded trees, definable by the formula $\mu x.\square x$ of $\AFMC$, is 
+not $\wmso$-definable. 
+Moreover, whereas $\wmso$ is a fragment of $\smso$ on finitely branching trees,
+as soon as we allow for infinite branching the two logics turn out to have
+\emph{incomparable} expressive power --- we will discuss the details 
+in Section~\ref{s:mso-mu}.
 
-It is thus the main question of this work to clarify the status of 
+One of the main questions of this work, then, is to clarify the relation between
 $\wmso/{\bis}$ and $\AFMC$ on arbitrary LTSs. 
-We shall prove that, in this more general setting, \eqref{eq:weakfinite}
-``splits'' into the following two results, in the picture referring to a 
-relatively unknown fragment $\mucML$ of the modal $\mu$-calculus, and 
-introducing a new second-order logic $\nmso$.
+We shall prove that, in this more general setting, the equation 
+\eqref{eq:weakfinite} ``splits'' into the following two results, which refer to 
+a relatively unknown fragment $\mucML$ of the modal $\mu$-calculus, and 
+introduce a new second-order logic $\nmso$.
 
 \begin{theorem}~
    \label{t:11}
@@ -130,8 +126,9 @@ interpreted over a finite subset of an LTS.
 We identify a notion of \emph{continuity} as the modal counterpart of this 
 constraint, and call the resulting logic $\mucML$, the \emph{continuous} 
 $\mu$-calculus. 
-This fragment of $\muML$, which was introduced by van Benthem~\cite{xxxx},
-is defined by the same grammar as the full $\muML$,
+This fragment of $\muML$, which was introduced in~\cite{bent06:moda}
+under the name of ``$\omega$-$\mu$-calculus'', can defined by the same grammar as 
+the full $\muML$,
 \begin{equation*}
 %\label{eq:syntmu}
 \phi\ ::= q \mid \neg\phi \mid 
@@ -141,10 +138,10 @@ is defined by the same grammar as the full $\muML$,
 with the difference that $\phi'$ does not just need to be positive in $p$, but 
 also continuous in $p$.
 This terminology refers to the fact that $\phi'$ is interpreted by a function 
-that is continuous with respect to the Scott topology; as we shall see, 
-$p$-continuity can be given a \emph{syntactic} characterisation, as a certain
-fragment $\cont{\muML}{p}$ of $\muML$--- see also~\cite{Fontaine08,FV12} for
-more details. 
+that is continuous with respect to the Scott topology; as we shall see
+in Section~\ref{s:mso-mu}, $p$-continuity can be given a \emph{syntactic} 
+characterisation, as a certain fragment of $\muML$ which will be used to define
+the logic $\mucML$.
 
 For our second result \eqref{eq:afmc=nmso}, we move in the opposite direction.
 That is, we look for a natural second-order logic of which $\AFMC$ is the 
@@ -154,32 +151,30 @@ crucial aspect is to identify which constraint on second-order quantification
 corresponds to the constraint on fixpoint alternation expressed by $\AFMC$. 
 Our analysis stems from the observation that, when a formula $\mu p.\phi$ of
 $\AFMC$ is satisfied in a tree model $\bbT$, the interpretation of $p$ must be
-a subset of a \emph{well-founded} subtree of $\bbT$, because alternation-freedom
-prevents $p$ from occurring in a $\nu$-subformula of $\phi$. 
-We introduce the concept of \emph{noetherian} subset as a generalisation of 
+a subset of a \emph{conversely well-founded} subtree of $\bbT$, because 
+alternation-freedom prevents $p$ from occurring in a $\nu$-subformula of $\phi$. 
+We introduce the concept of a \emph{noetherian} subset as a generalisation of 
 this property from trees to arbitrary LTSs: intuitively, a subset of a LTS 
 $\bbS$ is called noetherian if it is a subset of a bundle of paths that does
 not contain any infinite ascending chain. 
 (Precise definitions will be supplied in Section~\ref{s:mso-mu}.)
 The logic $\nmso$ appearing in \eqref{eq:afmc=nmso}, which we call 
-\emph{noetherian} second-order logic, is the variant of $\mso$ restricting 
+\emph{noetherian} second-order logic, is the variation of $\mso$ restricting 
 second-order quantification to noetherian subsets.
 
 A unifying perspective over these results can be given through the lens of
 K\"onig's lemma, saying that a subset of a tree $\bbT$ is finite precisely 
 when it is included in a subtree of $\bbT$ which is both finitely branching 
-and well-founded. In other words, finiteness on trees has two components, a
-\emph{horizontal} (finite branching) and a \emph{vertical} (well-foundedness)
-dimension. 
+and conversely well-founded.
+In other words, finiteness on trees has two components, a \emph{horizontal}
+(finite branching) and a \emph{vertical} (well-foundedness) dimension. 
 The bound imposed by $\nmso$-quantification acts only on the \emph{vertical}
 dimension, whereas $\wmso$-quantification acts on both. 
 It then comes at no surprise that \eqref{eq:mucML=wmso}-\eqref{eq:afmc=nmso}
 collapse to \eqref{eq:weakfinite} on finitely branching trees.
-The restriction to finitely branching models nullifies the difference between
-noetherian and finite, equating $\wmso$ and $\nmso$ (and thus also $\AFMC$ and
-$\mucML$).
-
-%Incidentally, our characterisation sheds light on why \eqref{eq:mucML=wmso}-\eqref{eq:afmc=nmso} collapse to \eqref{eq:weakfinite} on a restricted class of models. Noetherian quantification bounds only the \emph{vertical} dimension of models, as it yields a notion of well-founded subset of an LTS. On the other hand, quantification in $\wmso$ restricts to subsets that are finite \emph{tout-court}, both on the vertical and horizontal dimension. It then comes at no surprise that $\wmso$ and $\nmso$ (and thus also $\AFMC$ and $\mucML$) happen to coincide on finitely branching trees: in this class of models the horizontal dimension (tree width) is always finite, thus nullifying the difference between noetherian and finite.
+The restriction to (unbounded) finitely branching models nullifies the 
+difference between noetherian and finite, equating $\wmso$ and $\nmso$ (and 
+thus also $\AFMC$ and $\mucML$).
 
 Another interesting observation concerns the relative expressive power of 
 $\wmso$ with respect to standard $\mso$. 
@@ -260,7 +255,7 @@ However, we cannot proceed in the same manner, as the class $\AutW(\ofoe)$,
 unlike $\Aut(\ofoe)$, is \emph{not} closed under non-deterministic simulation.
 Thus we devise a different construction, which starting from a weak automaton 
 $\bbA$ creates an equivalent automaton $\bbA'$ which acts non-deterministically 
-only on a \emph{well-founded} portion of each accepted tree.
+only on a \emph{conversely well-founded} part of each accepted tree.
 It turns out that the class $\AutW(\ofoe)$ is closed under this variation of 
 the simulation theorem; moreover, the property of $\bbA'$ is precisely what is
 needed to make a projection construction that mirrors $\nmso$-quantification.
@@ -278,9 +273,9 @@ The constraint on the vertical dimension is handled analogously to the cases
 \emph{weak} parity automata. 
 The constraint on the horizontal dimension requires more work. 
 The first problem lies in finding the right one-step logic, which should be able
-to express cardinality properties as $\wmso$ is able to do. 
+to express cardinality properties, as $\wmso$ is able to do. 
 An obvious candidate would be weak monadic second-order logic itself, or more
-precisely, its variant $\owmso$ over the signature of unary predicates 
+precisely, its variation $\owmso$ over the signature of unary predicates 
 (corresponding to the automata states).
 A very helpful observation from~\cite{vaananen77} is that we can actually work
 with an equivalent formalism which is better tailored to our aims.
@@ -342,7 +337,7 @@ In a nutshell, the two expressive completeness theorems \eqref{eq:mucML=wmso}
 and \eqref{eq:afmc=nmso} will be based respectively on the following two chains 
 of equivalences:
 \begin{eqnarray}
-\AFMC \equiv \mu_{D}\ofo \equiv \AutW(\ofo) \equiv \AutW(\ofoe)/{\bis} \equiv \nmso/{\bis}  \ \text{(over  LTSs)}.\label{eq:chain-afmc=nmso}
+\AFMC \equiv \mu_{N}\ofo \equiv \AutW(\ofo) \equiv \AutW(\ofoe)/{\bis} \equiv \nmso/{\bis}  \ \text{(over  LTSs)}.\label{eq:chain-afmc=nmso}
 \\
 	\mucML \equiv \mu_{C}\ofo \equiv \AutWC(\ofo) \equiv \AutWC(\ofoei)/{\bis} \equiv \wmso/{\bis}  \ \text{  (over LTSs)}. \label{eq:chain-mucML=wmso}
 \end{eqnarray}
@@ -354,11 +349,11 @@ a one-step language $\oslang$, both in the standard ($\Aut(\oslang)$), weak
 ($\AutW(\oslang)$) and continuous-weak ($\AutWC(\oslang)$) form. 
 With Theorems \ref{t:autofor} and \ref{t:fortoaut}, we show that
 \begin{equation}\label{sec:outlineFix=Aut}
-\mu_{D}\oslang\equiv \AutW(\oslang)  \qquad \qquad \mu_{C}\oslang \equiv \AutWC(\oslang)    \qquad\text{ (over LTSs)}
+\mu_{N}\oslang\equiv \AutW(\oslang)  \qquad \qquad \mu_{C}\oslang \equiv \AutWC(\oslang)    \qquad\text{ (over LTSs)}
 \end{equation}
-where $\mu_{D}\oslang$ and $\mu_{C}\oslang$ are extensions of $\oslang$ with fixpoint operators subject to a ``noetherianess'' and a ``continuity'' constraint respectively. Instantiating \eqref{sec:outlineFix=Aut} yield the second equivalence both in \eqref{eq:chain-afmc=nmso} and \eqref{eq:chain-mucML=wmso}:
+where $\mu_{N}\oslang$ and $\mu_{C}\oslang$ are extensions of $\oslang$ with fixpoint operators subject to a ``noetherianess'' and a ``continuity'' constraint respectively. Instantiating \eqref{sec:outlineFix=Aut} yield the second equivalence both in \eqref{eq:chain-afmc=nmso} and \eqref{eq:chain-mucML=wmso}:
 \begin{equation*}
-	 \mu_{D}\ofo \equiv \AutW(\ofo) \qquad \qquad \mu_{C}\ofo \equiv \AutWC(\ofo)  \qquad \text{ (over LTSs)}.
+	 \mu_{N}\ofo \equiv \AutW(\ofo) \qquad \qquad \mu_{C}\ofo \equiv \AutWC(\ofo)  \qquad \text{ (over LTSs)}.
 \end{equation*}
 Next, in Section \ref{sec:autwmso}, Theorem~\ref{t:wmsoauto}, we show how to construct from a $\wmso$-formula an equivalent automaton of the class $\AutWC(\ofoei)$. In Section \ref{sec:autnmso}, Theorem~\ref{t:nmsoauto}, we show the analogous characterisation for $\nmso$ and $\AutW(\ofoe)$. These two sections yield part of the last equivalence in \eqref{eq:chain-mucML=wmso} and in \eqref{eq:chain-afmc=nmso} respectively. 
 \begin{equation} \label{eq:outlineForToAut}
@@ -367,10 +362,10 @@ Next, in Section \ref{sec:autwmso}, Theorem~\ref{t:wmsoauto}, we show how to con
 Notice that, differently from all the other proof pieces, \eqref{eq:outlineForToAut} only holds on trees, because the projection construction for automata relies on the input LTSs being tree shaped. 
 
 Section \ref{sec:fixpointToSO} yields the remaining bit of the automata characterisations. Theorem~\ref{t:mfl2mso} shows
-\[ \mu_{D}\ofoe \leq \nmso \qquad \qquad \mu_{C}\ofoei \leq \wmso  \qquad \text{ (over LTSs)},\]
+\[ \mu_{N}\ofoe \leq \nmso \qquad \qquad \mu_{C}\ofoei \leq \wmso  \qquad \text{ (over LTSs)},\]
 which, paired with \eqref{sec:outlineFix=Aut}, yields
 \begin{equation*}%\label{eq:outlineAutToFor}
-	 \AutW(\ofoe) \equiv \mu_{D}\ofoe \leq \nmso \quad \AutWC(\ofoei) \equiv \mu_{C}\ofoei \leq \wmso \ \text{ (over LTSs)}.
+	 \AutW(\ofoe) \equiv \mu_{N}\ofoe \leq \nmso \quad \AutWC(\ofoei) \equiv \mu_{C}\ofoei \leq \wmso \ \text{ (over LTSs)}.
 \end{equation*}
  Putting the last equation and \eqref{eq:outlineForToAut} together we have our automata characterisations
  \begin{equation*}
@@ -380,12 +375,12 @@ which, paired with \eqref{sec:outlineFix=Aut}, yields
   \begin{equation*}
  \AutW(\ofoe)/{\bis} \equiv \nmso/{\bis} \qquad \qquad {\AutWC(\ofoei)}/{\bis} \equiv \wmso/{\bis} \qquad \text{ (over LTSs)}.
  \end{equation*}
-At last, Section \eqref{sec:expresso} is split into two parts. 
+At last, Section \ref{sec:expresso} is split into two parts. 
 First, Theorem \ref{t:mlaut} extends the results in Section \ref{sec:parityaut} 
 to complete the following chains of equivalences, yielding the first block 
 in \eqref{eq:chain-afmc=nmso} and in \eqref{eq:chain-mucML=wmso}.
 \[ 
-\AFMC \equiv \mu_{D}\ofo \equiv \AutW(\ofo) \qquad \qquad 
+\AFMC \equiv \mu_{N}\ofo \equiv \AutW(\ofo) \qquad \qquad 
 \mucML \equiv \mu_{C}\ofo \equiv \AutWC(\ofo)  \qquad \text{ (over LTSs)}. 
 \]
 As a final step, Subsection \ref{ss:bisinv} fills the last gap 
@@ -404,9 +399,9 @@ and a PhD dissertation \cite{carr:frag2015}.
 Each of the two conference papers focussed on a single expressive completeness 
 theorem between \eqref{eq:mucML=wmso} and \eqref{eq:afmc=nmso}: presenting both
 results in a mostly uniform way has required an extensive overhaul, involving
-the development of new pieces of theory, as in particular the entirety of 
-Sections~\ref{sec:parity-to-mc}, \ref{sec:mc-to-parity} 
-and \ref{sec:fixpointToSO}. 
+the development of new pieces of theory, as in particular in the
+Sections~\ref{sec:parityaut}, \ref{sec:fixpointToSO} and~\ref{sec:expresso}.
+%\ref{sec:parity-to-mc}, \ref{sec:mc-to-parity} and \ref{sec:fixpointToSO}. 
 All missing proofs of the conference papers are included and the simulation
 theorem for $\nmso$- and $\wmso$-automata is simplified, as it is now based
 on macro-states that are sets instead of relations. 

@@ -110,7 +110,7 @@ and that the dual property holds for cocontinuity.
 
 Most of the clauses of the definition of the translation $(\cdot)^{t}$ are 
 completely standard: for the atomic clause we take $p^{t} \isdef p$ and
-$(\neg p)^{t} \isdef \neg p)$, for the boolean connectives we define 
+$(\neg p)^{t} \isdef \neg p$, for the boolean connectives we define 
 $(\phi_{0}\lor\phi_{1})^{t} \isdef \phi_{0}^{t} \lor \phi_{1}^{t}$ and 
 $(\phi_{0}\land\phi_{1})^{t} \isdef \phi_{0}^{t} \land \phi_{1}^{t}$, and 
 for the fixpoint operators we take $(\mu p. \phi)^{t} \isdef \mu p. \phi^{t}$ 
@@ -134,7 +134,7 @@ that $\phi_{i}^{t} \in \cont{\muML}{\qprop}$ for each $1 \leq i \leq k$,
 and that  the formula $\phi_{j}^{t}$ is $\qprop$-free for each $k+1\leq j \leq n$.
 The key observation is now that by Theorem~\ref{t:osnf-cont} we may without 
 loss of generality assume that $\al$ is in \emph{normal form}; that is, a 
-disjunction of formulas of the form $\al_{\Sigma} = \posdgbnfofo{\Sigma}{\Pi}$,
+disjunction of formulas of the form $\al_{\Sigma,\Pi} = \posdgbnfofo{\Sigma}{\Pi}$,
 where every $\Sigma$ and $\Pi$ is a subset of $\pow (A)$, $B \cap \bigcup\Pi =
 \nada$ for every $\Pi$, and 
 \[
@@ -144,11 +144,13 @@ where every $\Sigma$ and $\Pi$ is a subset of $\pow (A)$, $B \cap \bigcup\Pi =
 \]
 We now define
 \[\begin{array}{rll}
-\bigvee \big(\nxt{\al_{\Sigma}}(\ol{\phi})\big)^{t} & \isdef &
+%\bigvee \big(\nxt{\al_{\Sigma}}(\ol{\phi})\big)^{t} 
+ \big(\nxt{\al_{\Sigma,\Pi}}(\ol{\phi})\big)^{t} 
+& \isdef &
     \bigwedge_{S\in\Sigma} \Diamond \bigwedge_{a_{l} \in S} \phi_{l}^{t}
      \;\land\; 
      \Box \bigvee_{S\in\Pi} \bigwedge_{a_{j} \in S} \phi_{j}^{t} 
-\\ \phi^{t} & \isdef & {\bigvee}_{\Sigma} \big(\nxt{\al_{\Sigma}}(\ol{\phi})\big)^{t}
+\\ \phi^{t} & \isdef & {\bigvee} \big(\nxt{\al_{\Sigma,\Pi}}(\ol{\phi})\big)^{t}
 \end{array}\]
 It is then obvious that $\phi$ and $\phi^{t}$ are equivalent, so it remains to 
 verify \eqref{eq:zz1}.

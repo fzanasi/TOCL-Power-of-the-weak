@@ -30,6 +30,8 @@
 \usepackage[shortlabels]{enumitem}
 \usepackage[e]{esvect}
 \usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{subcaption}
 
 
 \usepackage{fixme}
@@ -44,18 +46,15 @@
 \input{commands-fz.tex}
 
 \includeonly{%
-yde/sec-introduction,
-yde/sec-prel,
-yde/mso-mu,
-neutral/sec-3,
+neutral/sec-introduction,
+neutral/sec-prel,
+neutral/sec-mso-mu,
+neutral/sec4,
 neutral/sec-wmso-automata,
 neutral/sec-nmso-automata,
 neutral/sec-mu2so,
 neutral/sec-expr
 }
-%\section{Expressiveness modulo bisimilarity}\label{sec:expresso}
-%\clearpage
-
 
 
 %%%%
@@ -116,14 +115,17 @@ Fabio Zanasi
 
 \maketitle
 
-\include{neutral/sec-introduction}
-\include{neutral/sec-prel}
-\include{neutral/mso-mu}
-\include{neutral/sec-3}
-\include{neutral/sec-wmso-automata}
-\include{neutral/sec-nmso-automata}
-\include{neutral/sec-mu2so}
-\include{neutral/sec-expr}
+%\newcommand{\invoeg}[1]{\input{#1}}
+\newcommand{\invoeg}[1]{\include{#1}}
+
+\invoeg{neutral/sec-introduction}
+\invoeg{neutral/sec-prel}
+\invoeg{neutral/sec-mso-mu}
+\invoeg{neutral/sec4}
+\invoeg{neutral/sec-wmso-automata}
+\invoeg{neutral/sec-nmso-automata}
+\invoeg{neutral/sec-mu2so}
+\invoeg{neutral/sec-expr}
 
 
 

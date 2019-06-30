@@ -5,15 +5,19 @@ equivalent modulo bisimilarity to standard monadic second-order logic (here
 abbreviated as $\smso$), over the class of labelled transition systems (LTSs
 for short). 
 Our work proves two results of the same kind, one for the alternation-free 
-or \emph{noetherian} fragment of $\muML$ ($\mudML$) and one for weak $\mso$
-($\wmso$). 
-Whereas it was known in the setting of binary trees that $\wmso$ is equivalent 
-to an appropriate version of $\mudML$, our analysis shows that the picture 
-radically changes once we reason over arbitrary LTSs.
+or \emph{noetherian} fragment $\mudML$ of $\muML$ on the modal side, and one
+for $\wmso$, weak monadic second-order logic, on the second-order side. 
+In the setting of binary trees, with explicit functions accessing the left- and
+right successor of a node,  it was known that $\wmso$ is equivalent to the 
+appropriate version of alternation-free $\mu$-calculus.
+Our analysis shows that the picture changes radically once we consider, as 
+Janin \& Walukiewicz did, the standard modal $\mu$-calculus, interpreted over 
+arbitrary LTSs.
+
 The first theorem that we prove is that, over LTSs, $\mudML$ is equivalent
 modulo bisimilarity to \emph{noetherian} $\mso$ ($\nmso$), a newly introduced 
-variant of $\smso$ where second-order quantification ranges over ``well-founded''
-subsets only. 
+variant of $\smso$ where second-order quantification ranges over 
+``conversely well-founded'' subsets only. 
 Our second theorem starts from $\wmso$, and proves it equivalent modulo 
 bisimilarity to a fragment of $\mudML$ defined by a notion of continuity. 
 Analogously to Janin \& Walukiewicz's result, our proofs are automata-theoretic

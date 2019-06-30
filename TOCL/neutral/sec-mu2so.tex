@@ -13,7 +13,7 @@ $\wmso$ and $\nmso$:
 \begin{eqnarray*}
    \mu_{C}(\ofoei) \equiv \wmso 
    && \qquad  \text{ (over the class of all tree models)} 
-\\ \mu_{D}(\ofoe)  \equiv \nmso 
+\\ \mu_{N}(\ofoe)  \equiv \nmso 
    && \qquad  \text{ (over the class of all tree models)}. 
 \end{eqnarray*}
 
@@ -25,14 +25,14 @@ More specifically, our aim in this Section is to prove the following result.
 \label{t:mfl2mso}
 \begin{enumerate}[(1)]
 \item
-There is an effective translation $(\cdot)^{*}: \mu_{D}\ofoe \to \nmso$
-such that $\phi \equiv \phi^{*}$ for every $\phi \in \mu_{D}\ofoe$; that is:
+There is an effective translation $(\cdot)^{*}: \mu_{N}\ofoe \to \nmso$
+such that $\phi \equiv \phi^{*}$ for every $\phi \in \mu_{N}\ofoe$; that is:
 \[
-\mu_{D}\ofoe \leq \nmso.
+\mu_{N}\ofoe \leq \nmso.
 \]
 % and as a corollary of this we obtain that 
 % \[
-% \mu_{D}\ML \leq \nmso.
+% \mu_{N}\ML \leq \nmso.
 % \]
 
 \item
@@ -52,7 +52,7 @@ Consequently, in the remainder we will speak of a single translation
 $(\cdot)^{*}$.
 Second, as the target language of the translation $(\cdot)^{*}$ we will take 
 the \emph{two-sorted} version of second-order logic, as discussed in 
-section~\ref{sec:prel-so}, and thus we will need Fact~\ref{fact:msovs2mso}
+section~\ref{sec:prel-so}, and thus we will need Proposition~\ref{p:msovs2mso}
 to obtain the result as formulated in Theorem~\ref{t:mfl2mso}, that is,
 for the one-sorted versions of \mso.
 % although in the Preliminaries we state that in this paper we will work with 
@@ -87,7 +87,7 @@ As a result, \eqref{eq:st} does not give the right translation for the formula
 $\mu p.\phi$ into \wmso.
 
 To overcome this problem, we will prove that least fixpoints in restricted 
-calculi like $\mu_{D}\ofoe$, $\mu_{C}\ofoei$ and many others, in fact satisfy a
+calculi like $\mu_{N}\ofoe$, $\mu_{C}\ofoei$ and many others, in fact satisfy a
 rather special property, which enables an alternative translation.
 We need the following definition to formulate this property.
 
@@ -96,11 +96,15 @@ We need the following definition to formulate this property.
 Let $F: \pow(S)\to \pow(S)$ be a functional; for a given $X \subseteq S$ we define
 the \emph{restricted} map $F_{\rst{X}}: \pow(S)\to \pow(S)$ by putting 
 $F_{\rst{X}}(Y) \isdef FY \cap X$.
+\textcolor{red}{
+In case $F$ is monotone, we will use $\LFP.F$ to denote its least fixpoint.
+} 
 \end{definition}
+
 
 The observations formulated in the proposition below provide the crucial insight
 underlying our embedding of various alternation-free and continuous 
-$\mu$-calculi into, respectively, $\nmso$ and $\wmso$.
+$\mu$-calculi into, respectively, $\nmso$ and $\wmso$. 
 
 \begin{proposition}
 \label{p:afmc-rstGen}
@@ -108,7 +112,7 @@ $\mu$-calculi into, respectively, $\nmso$ and $\wmso$.
 Let $\bbS$ be an LTS, and let $r$ be a point in $\bbS$.
 \begin{enumerate}[(1)]
 \item
- For any formula $\phi$ with $\mu p. \phi \in \mu_{D}\ofoe$ we have
+ For any formula $\phi$ with $\mu p. \phi \in \mu_{N}\ofoe$ we have
 \begin{equation}
 \label{eq:foe-d}
 r \in \ext{\mu p.\phi}^{\bbS} \text{ iff there is a noetherian set $X$ such 
@@ -131,20 +135,41 @@ setting of a fixpoint logic $\mu\oslang$ associated with an arbitrary one-step
 language $\oslang$.
 \end{remark}
 
-The right-to-left direction of both \eqref{eq:foe-d} and \eqref{eq:foei-c} follow
-from the following, more general, statement, which can be proved by a routine 
-transfinite induction argument.
+% \textcolor{blue}{For the right-to-left direction of both \eqref{eq:foe-d} and 
+% \eqref{eq:foei-c} we reason as follows. 
+% Let $F,G:  \pow(S)\to \pow(S)$ be monotone, and such that 
+% $F(X) \subseteq G(X)$, for every $X \in  \pow(S)$. Then 
+% any prefixpoint of $G$ is also a prefixpoint of $F$. In particular, this means that $\LFP. F_{\rst{X}}\subseteq 
+% \LFP.F$, for every subset $X \subseteq S$.}
 
+\textcolor{red}{
+The right-to-left direction of both \eqref{eq:foe-d} and \eqref{eq:foei-c} 
+follow from the following, more general, statement, which can be proved by a 
+routine argument.
+%
 \begin{proposition}
 % \label{p:afmc-1}
 \label{p:rstfix}
-Let $F:  \pow(S)\to \pow(S)$ be monotone.
-Then for every subset $X \subseteq S$ it holds that $\LFP. F\rst{X}\subseteq 
-\LFP.F$.
+Let $F,G:  \pow(S)\to \pow(S)$ be monotone, and assume that 
+$F(Y) \subseteq G(Y)$, for every $Y \in  \pow(S)$.
+Then $\LFP. F \subseteq \LFP.G$.
 \end{proposition}
+}
+
+%The right-to-left direction of both \eqref{eq:foe-d} and \eqref{eq:foei-c} follow
+%from the following, more general, statement.%, which can be proved by a routine  transfinite induction argument.
+%
+%\begin{proposition}
+%% \label{p:afmc-1}
+%\label{p:rstfix}
+%Let $F:  \pow(S)\to \pow(S)$ be monotone.
+%Then for every subset $X \subseteq S$ it holds that $\LFP. F_{\rst{X}}\subseteq 
+%\LFP.F$.
+%\end{proposition}
+
 
 The left-to-right direction of \eqref{eq:foe-d} and \eqref{eq:foei-c} 
-will be proved in the next two sections.
+will be proved in the next two subsections.
 Note that in the continuous case we will in fact prove a slightly stronger
 result, which applies to \emph{arbitrary} continuous functionals.
 % , we discuss this case separately.
@@ -177,15 +202,16 @@ translation.
 First an auxiliary definition.
 
 \begin{definition}\label{def:exp}
-Let $\bbS = \tup{T,R,\tscolors, s_I}$ be a $\pprop$-LTS, $A$ be a set of
-new variables, and $V: A \to \pow(X)$ be a valuation on a subset $X\subseteq T$. 
-The $\pprop\cup A$-LTS $\bbS^{V}\isdef \tup{T,R,\tscolors^V, s_I}$ given by 
+Let $\bbS = \tup{T,R,\tscolors, s_I}$ be a $\pprop$-LTS, let $A$ be a set of
+new variables, and let $V: A \to \pow(X)$ be a valuation on a subset $X\subseteq
+T$. 
+The $(\pprop\cup A)$-LTS $\bbS^{V}\isdef \tup{T,R,\tscolors^V, s_I}$, given by 
 defining the marking $\tscolors^V: T \to \pow{(\pprop \cup A)}$ where
 \[\tscolors^V(s)\isdef  
 \begin{cases} \tscolors(s) & \text{ if } s \notin X \\
 \tscolors(s) \cup \{ a \in A \mid s \in V(a)\}& \text{ else,}
 \end{cases}\]
-is called the $V$-expansion of $\bbS$.
+is called the \emph{$V$-expansion} of $\bbS$.
 \end{definition}
 
 The following proposition states that at the one-step level, the formulas that 
@@ -352,7 +378,7 @@ Then for any $s \in S$:
 \begin{equation}
 \label{eq:fixcont}
 s \in \LFP. F \text{ iff }
-s \in \LFP.F\rst{X}, \text{ for some finite } X \subseteq S.
+s \in \LFP.F_{\rst{X}}, \text{ for some finite } X \subseteq S.
 \end{equation}
 \end{theorem}
 
@@ -385,9 +411,9 @@ Finally, given the sequence $U_{n},\ldots,U_{1}$, we define
 \[
 X \isdef  \bigcup_{0<i\leq n} U_{i}.
 \]
-It is then straightforward to prove that $U_{i} \sse \LFP. F\rst{X}$, for each 
+It is then straightforward to prove that $U_{i} \sse \LFP. F_{\rst{X}}$, for each 
 $i$ with $0<i\leq n$, and so in particular we find that $s \in U_{n} \sse \LFP.
-F\rst{X}$.
+F_{\rst{X}}$.
 This finishes the proof of the implication from left to right in 
 \eqref{eq:fixcont}.
 \end{proof}
@@ -413,7 +439,7 @@ Theorem~\ref{t:fixcont}.
 
 We will now see how to prove Proposition~\ref{p:keyfix}(1), which is the key 
 result that we need to embed alternation-free $\mu$-calculi such as 
-$\mu_{D}\ofoe$ and $\mu_{D}\ML$ into noetherian second-order logic.
+$\mu_{N}\ofoe$ and $\mu_{N}\ML$ into noetherian second-order logic.
 Perhaps suprisingly, this case is slightly more subtle than the characterisation of
 fixpoints of continuous maps.
 
@@ -485,7 +511,7 @@ $\ystrat$ be a descending winning strategy for $\eloise$ in $\UG_{F}$.
 Then
 \begin{equation}
 \label{eq:afmc3}
-r \in \LFP. F \text{ implies } r \in \LFP. F\rst{T_{\ystrat,r}}.
+r \in \LFP. F \text{ implies } r \in \LFP. F_{\rst{T_{\ystrat,r}}}.
 \end{equation}
 \end{proposition}
 
@@ -498,7 +524,7 @@ Abbreviate $T \isdef T_{\ystrat,r}$.
 It then suffices to show that for all ordinals $\alpha$ we have
 \begin{equation}
 \label{eq:unf1}
-F^{\al}(\nada) \cap T \sse (F\rst{T})^{\alpha}(\nada).
+F^{\al}(\nada) \cap T \sse (F_{\rst{T}})^{\alpha}(\nada).
 \end{equation}
 We will prove \eqref{eq:unf1} by transfinite induction.
 The base case, where $\alpha = 0$, and the inductive case where $\alpha$ is a 
@@ -508,20 +534,20 @@ Take an arbitrary state $u \in F^{\beta+1}(\nada) \cap T$, then we
 find $\ystrat(u) \sse F^{\beta}(\nada)$ by our assumption \eqref{eq:dec}, and 
 $\ystrat(u) \sse T$ by definition of $T$.
 Then the induction hypothesis yields that 
-$\ystrat(u) \sse (F\rst{T})^{\beta}(\nada)$, and so we have 
-$\ystrat(u) \sse (F\rst{T})^{\beta}(\nada) \cap T$.
+$\ystrat(u) \sse (F_{\rst{T}})^{\beta}(\nada)$, and so we have 
+$\ystrat(u) \sse (F_{\rst{T}})^{\beta}(\nada) \cap T$.
 But since $\ystrat$ is a winning strategy, and $u$ is a winning position for 
 $\eloise$ in $\UG_{F}$ by Claim~\ref{p:unfg}(i), $\ystrat(u)$ is a
 legitimate move for $\eloise$, and so we have $u \in F(\ystrat(u))$.
 Thus by monotonicity of $F$ we obtain $u \in 
-F((F\rst{T})^{\beta}(\nada) \cap T)$, and since $u \in T$ 
-by assumption, this means that $u \in (F\rst{T})^{\beta+1}(\nada)$ as 
+F((F_{\rst{T}})^{\beta}(\nada) \cap T)$, and since $u \in T$ 
+by assumption, this means that $u \in (F_{\rst{T}})^{\beta+1}(\nada)$ as 
 required.
 \end{proof}
 
 We now turn to the specific case where we consider the least fixed point of a 
 functional $F$ which is induced by some formula $\phi(p) \in 
-\mu_{D}\oslang$ on some LTS $\bbS$.   
+\mu_{N}\oslang$ on some LTS $\bbS$.   
 By Proposition \ref{p:unfg} and Fact~\ref{f:adeqmu}, $\eloise$ has a winning
 strategy in  $\egame(\mu p.\phi(p),\bbS)@(\mu p.\phi(p),s)$ if and only if she
 has a winning strategy in $\UG_{F}@s$ too, where $F \isdef  \phi_{p}^{\bbS}$ is the 
@@ -542,7 +568,7 @@ s)$. We call $\ystrat$ and  $\ystrat'$  \emph{compatible} if
 each point in $T_{\ystrat,s}$ occurs on some path belonging to $B(\ystrat')$. 
 
 \begin{proposition}\label{p:unfold=evalgame2}
-Let $\phi(p) \in \mu_{D}\foe{p}$ and $s \in \ext{\mu p.\phi}^{\bbS}$. 
+Let $\phi(p) \in \mu_{N}\foe{p}$ and $s \in \ext{\mu p.\phi}^{\bbS}$. 
 Then there is a descending winning strategy for $\eloise$ in $\UG_F@s$ 
 compatible with a  winning strategy for $\eloise$ in 
 $\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$
@@ -565,7 +591,7 @@ set of all nodes $t \in \ystrat(s)$ such that there is a $\ystrat_s$-guided
 match in $B(\ystrat_s)$ whose last position is $(p,t)$.
 \item 
 Each time a position $(p,t)$ is reached in the evaluation games $\egame$, 
-distinguisg cases:
+distinguish cases:
 \begin{enumerate}
 %necessarily 
 \item 
@@ -662,8 +688,8 @@ $\abelard$ is such that there is a winning match $\pi \in B(\xi_t)$ for
 $\eloise$ with $\last(\pi)=(p,w)$.
 \end{proof}
 
-%Notice that the evaluation game for the modal $\mu$ calculus can be easily adapted to $\mu_{D}\foe$ and provide a corresponding Adequacy Theorem (Proposition \ref{p:unfold=evalgame}). In particular, we would have that 
-%$\eloise$ has a winning strategy in  $\egame(\mu p.\phi(p),\bbS)@(\mu p.\phi(p),s)$ if and only if $s \in \ext{\mu p.\phi(p)}^{\bbS}$, with $\phi(p) \in \mu_{D}\foe{p}$.
+%Notice that the evaluation game for the modal $\mu$ calculus can be easily adapted to $\mu_{N}\foe$ and provide a corresponding Adequacy Theorem (Proposition \ref{p:unfold=evalgame}). In particular, we would have that 
+%$\eloise$ has a winning strategy in  $\egame(\mu p.\phi(p),\bbS)@(\mu p.\phi(p),s)$ if and only if $s \in \ext{\mu p.\phi(p)}^{\bbS}$, with $\phi(p) \in \mu_{N}\foe{p}$.
 
 \begin{proofof}{Proposition~\ref{p:keyfix}(1)}
 %    
@@ -671,7 +697,7 @@ $\eloise$ with $\last(\pi)=(p,w)$.
 %\item
 %the argument below needs to be thoroughly checked.
 %\etbs
-Let $\bbS$ be an LTS and $\phi(p) \in \mu_{D}\ofoe{p}$. 
+Let $\bbS$ be an LTS and $\phi(p) \in \mu_{N}\ofoe{p}$. 
 
 The right-to-left direction of \eqref{eq:foe-d} being proved by 
 Proposition \ref{p:rstfix}, we check the left-to-right direction.
@@ -706,7 +732,7 @@ Assume that $s \in \ext{\mu p.\phi}^{\bbS}$, and let $F \isdef  \phi_{p}^{\bbS}$
 By Proposition \ref{p:unfold=evalgame2}, $\eloise$ has a winning strategy 
 $\ystrat'$ in $\egame(\mu p.\phi,\bbS)@(\mu p.\phi,s)$ compatible with a descending winning strategy $\ystrat$ in $\UG_{F}@s$.
 By Proposition~\ref{p:afmc-2}, we obtain 
-that $s \in \LFP. F\rst{T_{\ystrat,s}}$. 
+that $s \in \LFP. F_{\rst{T_{\ystrat,s}}}$. 
 Because of compatibility, every node in $T_{\ystrat, s}$ occurs on some path of 
 $B(\ystrat')$. 
 From the Claim

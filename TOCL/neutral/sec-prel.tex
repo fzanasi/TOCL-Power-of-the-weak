@@ -39,13 +39,21 @@ the distinguished node $s_I$ is called the \emph{root} of $\bbS$.
 Each node $s \in T$ uniquely defines a subtree of $\bbS$ with carrier
 $R^{*}[s]$ and root $s$. We denote this subtree by ${\bbS.s}$.
 
+A \emph{path} through an LTS $\bbS = \tup{T,R,\tscolors,s_I}$ is a sequence
+$(s_{i})_{i<\al}$, where $\al$ is finite but non-zero, or $\al = \om$, and 
+$(s_{i},s_{i+1}) \in R$ whenever $i+1 < \al$. 
+In particular we allow paths of the form $s$, for any $s \in S$.
+A tree is called \emph{conversely well-founded} if it does not contain any
+infinite path.
+
 The \emph{tree unravelling} of an LTS $\bbS$ is given by $\unravel{\bbS} 
 \isdef \tup{T_P,R_P,\tscolors',s_I}$ where $T_P$ is the set of finite paths in 
 $\bbS$ stemming from $s_I$, $R_P(t,t')$ iff $t'$ is a one-step extension of $t$ 
 and the colour of a path $t\in T_P$ is given by the colour of its last node in
 $T$.
-The \emph{$\omega$-unravelling} $\omegaunrav{\bbS}$ of $\bbS$ is an 
-unravelling which has $\omega$-many copies of each node different from the root.
+The \emph{$\omega$-unravelling} $\omegaunrav{\bbS}$ of $\bbS$ is defined 
+similarly, now taking as nodes all ``generalised'' paths of the form 
+$(s_{I},n_{1},s_{1},\ldots,n_{k},s_{k})$ where $n_{i} \in \om$ for each $i$.
 
 A \emph{$p$-variant} of a transition system $\bbS = \tup{T,R,\tscolors,s_I}$
 is a $\pprop\cup\{p\}$-transition system $\tup{T,R,\tscolors',s_I}$

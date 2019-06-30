@@ -1,0 +1,171 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf830
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red25\green25\blue25;}
+{\*\expandedcolortbl;;\cssrgb\c12941\c12941\c12941;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs20 \cf2 \expnd0\expndtw0\kerning0
+Referee: 2\
+\
+Recommendation: Needs Minor Revision\
+\
+Comments:\
+The authors contribute to a research program that compares the\
+expressive power of various logical constructs,\'a0 in particular monadic\
+quantifiers\'a0 vs. modal operators and fixed points.\'a0 \
+The origin of this program goes back to a discovery by van Benthem pairing\
+modal logic with 1st order logic, later\'a0 extended by Janin and\
+Walukiewicz in the well-known way: the modal Mu-calculus is\
+equivalent, in its expressive power, to the bisimulation invariant\
+fragment of monadic second-order order logic (MSO).\'a0 The authors of\
+the present paper search for a refinement of this result, and focus on a relevant sub-logic of the\
+Mu-calculus, namely its alternation-free fragment.\'a0 \'a0It was known that\
+for ranked trees (of bounded arity) this logic is equivalent to WMSO\
+(where the quantifiers range over finite sets only).\'a0 However,\'a0 for\
+arbitrary labeled transition systems the equivalence does not hold\
+even modulo bisimilarity (for rather fundamental reasons).\
+\
+The authors argue that a right analogue of the Janin-Walukiewicz theorem\
+consists here of two equivalencies involving two new logics:\'a0 \'a0\
+WMSO is equivalent modulo bisimilarity\'a0 to a continuous (rather than\
+alternation-free) fragment of the Mu-calculus,\'a0 \'a0whereas the\
+alternation-free fragment corresponds to the so-called Noetherian\
+fragment of MSO, where quantifiers are restricted to Noetherian\
+(rather than finite) sets.\
+\
+In my opinion, it is a highly valuable contribution to computer science logic and\
+I strongly recommend acceptance of the paper.\
+\
+The proof uses automata and on a very general level follows the line\
+of the original proof of Janin and Walukiewicz. However,\'a0 it brings\
+much new insight into the matter, which is now more complex. The first\
+step was to find the missing\'a0 counterparts in the\
+characterizations mentioned above.\'a0 \'a0The next\'a0 step was the choice of a\
+right variant of automata. Indeed, the proof was a real tour de force\
+of the automata-theoretic techniques.\'a0 \'a0In particular,\'a0 it involved\
+two novel\'a0 variants of the simulation theorem (transforming\
+alternating automata into deterministic ones) adapted to the\
+automata in consideration.\'a0 \
+\
+The use of the infinity quantifier in the\'a0 "one step logic" (instead of\
+full WMSO) was a quite ingenious idea.\
+I have also much appreciated the results of section 7,\'a0 that give\
+an interesting\'a0 insight into the relation between the\'a0 Mu-calculus and MSO,\
+independently of automata. (The results translate the restricted\
+mu-calculi into the corresponding fragments of the MSO.)\
+\
+The present paper is based on two conference papers and two dissertations.\
+The authors discuss this issue in the introduction, and I am\'a0 \
+convinced that the amounts and quality of new elements\'a0 justifies a journal publication.\
+\
+The paper is generally well-written,\'a0 I have only a couple of minor comments\
+that should not be difficult to implement.\
+\
+\
+Minor comments\
+\
+Page 2\
+The fact that our best model-checking algorithms for \uc0\u956 ML\
+are exponential in the alternation depth of fixpoint operators...\
+\
+Since the discovery in 2017 of a new algorithm for parity games running in\
+deterministic time n^\{log n\},\'a0 this claim is no more true (the paper\
+by Calude et al. at STOC 2017, and many followers).\'a0 \'a0Clearly,\
+the alternation depth has impact on the\'a0 complexity, however if it goes\
+above log n, the exponent can be reduced to log n.\'a0 You may\
+still evoke the complexity argument in the motivation,\'a0 but in a more\
+careful way.\
+\
+Page 6, line 20: At last, Section (7) -->\'a0 Section 7\
+\
+Page 9,\'a0 the paragraph after Proposition 2.2\
+It can also be also given...\
+\
+Def. 2.3\'a0 ...co-noetherian fragment... dually...\'a0 I understand that\
+duality here means just replacing \\mu by \\nu (?), but\
+suggest to state this explicitly.\
+\
+Page 10,\'a0 Def. 2.6.\'a0 Again,\'a0 I think it will be instructive to define\
+the dual fragment explicitly (which now comprises both fixed points\
+and modalities). \
+\
+Page 12 line 28: sublety (subtlety?)\
+\
+Page 13,\'a0 Definition 3.1. Is A in the second paragraph ("any set A") a\
+set of predicates, as in the previous paragraph?\'a0 If not,\'a0 maybe some\
+other letter would be appropriate.\
+The English in the lines 29-30 should checked,\'a0 in my understanding it\
+is rather\'a0 L_1(A), which is assigned to A, and not vice-versa.\'a0 Alternatively,\'a0 one can say\
+that A is sent to L_1(A).\
+\
+Definition 3.2. It is a nuance,\'a0 but the comments (like "very simple")\
+would be more appropriate before or after the definition.\'a0 \'a0Placing\
+it inside the definition looks as if "very simple" was a new concept\
+introduced here.\
+\
+Page 16.\'a0 The first formula (line 10) should be verified; the letters\
+seem incorrect (what is T_i here?).\'a0 Also, in the definition of phi just\
+before, what is the scope of the disjunction (\\bigvee)?\'a0 (Presumably\
+all sets of types \\Sigma ?)\
+\
+After the second formula (line 17),\'a0 I guess the inclusion Pi\
+\\subseteq \\vec\{T\} is componentwise,\'a0 but it should be said.\
+\
+Theorem 3.12 (1).\'a0 Is the prime (\\Sigma') intentional?\'a0 It makes sense\
+but is not quite compatible with the definition of basic form for FO_1 above.\
+\
+Page 17,\'a0 Definition 3.14.\'a0 \'a0The notation V^\{-1\}(d) should definitely\
+be explained, or perhaps changed.\'a0 \'a0I suppose it means \{ a :\'a0 \'a0d in\
+V(a)\}, so that separation means that each d belongs to at most one\
+V(b) with b\'a0 \\in B. But it is rather non-standard usage of the\
+notation V^\{-1\}(d), which could be also understood as the inverse\
+image of\'a0 the singleton \{d\},\'a0 \'a0i.e., \{ a : \{d\} = V(a)\}.\
+\
+\
+Page 18, lines 13--16. Rather: loses immediately (one may loose\
+patience, but lose the game :)\
+\
+Page 23, line 8: A^0, A^1 -->\'a0 A_0, A_1.\
+\
+\
+Lines 44-46. The definition of the ordering is indeed natural, but it\
+is not clear (at this moment), which of the two clusters is called "higher".\
+\
+Page 35,\'a0 Definition 5.3,\'a0 ")" superfluous.\
+\
+Page 38, Proposition 6.3. Unless I have overlooked something, the\
+notation LFP appears here for the first time, and although it is known\
+for many readers, it would be suitable to explain it briefly.\
+\
+Page 39,\'a0 Proposition 6.5. It is a tiny detail,\'a0 but in the previous\
+formulas (e.g. Prop. 6.3), harpoon occurred as a subscript.\
+BTW\'a0 (cf. the remark before Prop. 6.5),\'a0 I think that a transfinite induction is\
+in\'a0 not needed there. It two monotone functions satisfy F \\leq G then\
+any prefixpoint of G is also a prefixpoint of F (which implies the claim).\
+\
+Page 41,\'a0 the proof of Theorem 6.9. Alternatively you could show that\
+the set of points r satisfying condition (31) of Proposition 6.3 is a\
+prefix point (omitting induction).\'a0 A similar remark applies to the\
+proof of Proposition 6.13.\'a0 \'a0(But I don't impose this solution.)\
+\
+Definition 6.10. Please tell who starts the game.\
+\
+Page 43, condition (2) (line 14): distinguisg --> distinguishing\
+(?)\
+\
+Page 45,\'a0 line 36, ")" superfluous.\'a0 \
+\
+Page 46, the first formula (line 6): the first symbol (\\bigvee ) seems\
+to be superfluous.\'a0 Also,\'a0 \'a0as far as I understand,\'a0 the formula\
+\\alpha_\{\\Sigma \}\'a0 occurring there (defined on the previous page)\
+depends on both \\Sigma and \\Pi,\'a0 which is not reflected in the notation.\
+\
+End of the report.\
+\
+\
+Additional Questions:\
+Please help ACM create a more efficient time-to-publication process: Using your best judgment, what amount of copy editing do you think this paper needs?: Light\
+\
+Most ACM journal papers are researcher-oriented. Is this paper of potential interest to developers and engineers?: Maybe}
